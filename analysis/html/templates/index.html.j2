@@ -1,32 +1,299 @@
 {% extends "base.html.j2" %}
-
-{% block title %}OFBiz Architekturdokumentation — Modulübersicht{% endblock %}
+{% block title %}OFBiz Architekturdokumentation — Übersicht{% endblock %}
 
 {% block content %}
 <div class="page-header">
-  <h1><i class="bi bi-diagram-3 me-2 text-primary"></i>Apache OFBiz — Modulübersicht</h1>
-  <p class="text-muted mb-0 mt-1">Statische Code-Analyse · {{ modules | length }} Module dokumentiert</p>
+  <h1><i class="bi bi-diagram-3 me-2 text-primary"></i>Apache OFBiz — Architekturdokumentation</h1>
+  {% if architektur.meta %}
+  <p class="text-muted mb-0 mt-1 small">
+    {{ architektur.meta.methode }} &middot;
+    {{ architektur.meta.datum }} &middot;
+    {{ architektur.meta.objekt }}
+  </p>
+  {% endif %}
 </div>
 
 <div class="content-area">
-  <div class="row g-3">
-    {% for mod in modules %}
-    <div class="col-md-6 col-xl-4">
-      <a href="{{ mod.id }}/index.html" class="text-decoration-none">
-        <div class="class-card card h-100 p-3">
-          <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-box text-primary me-2 fs-5"></i>
-            <span class="fw-semibold fs-5">{{ mod.name }}</span>
-          </div>
-          <p class="text-muted small mb-3" style="min-height:3em">{{ mod.overview[:160] }}{% if mod.overview|length > 160 %}…{% endif %}</p>
-          <div class="d-flex gap-2 mt-auto">
-            <span class="stat-pill"><i class="bi bi-layers me-1"></i>{{ mod.stats.classes }} Klassen</span>
-            <span class="stat-pill"><i class="bi bi-lightning me-1"></i>{{ mod.stats.methods }} Methoden</span>
-          </div>
-        </div>
-      </a>
+
+  {# ── 1. Tech Foundation ──────────────────────────────── #}
+  {% if architektur.tech_foundation %}
+  <section class="mb-5">
+    <h4 class="section-title">1. Technologisches Fundament</h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light"><tr><th>Eigenschaft</th><th>Wert</th></tr></thead>
+        <tbody>
+          {% for row in architektur.tech_foundation %}
+          <tr><td class="fw-semibold text-nowrap">{{ row.Eigenschaft }}</td><td>{{ row.Wert }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-    {% endfor %}
-  </div>
+  </section>
+  {% endif %}
+
+  {# ── 2. Module cards ──────────────────────────────────── #}
+  <section class="mb-5">
+    <h4 class="section-title">2. Dokumentierte Module</h4>
+    <div class="row g-3">
+      {% for mod in modules %}
+      <div class="col-md-6 col-xl-4">
+        <a href="{{ mod.id }}/index.html" class="text-decoration-none">
+          <div class="class-card card h-100 p-3">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-box text-primary me-2 fs-5"></i>
+              <span class="fw-semibold fs-5">{{ mod.name }}</span>
+            </div>
+            <p class="text-muted small mb-3" style="min-height:3em">
+              {{ mod.overview[:150] }}{% if mod.overview|length > 150 %}…{% endif %}
+            </p>
+            <div class="d-flex gap-2 mt-auto">
+              <span class="stat-pill"><i class="bi bi-layers me-1"></i>{{ mod.stats.classes }} Klassen</span>
+              <span class="stat-pill"><i class="bi bi-lightning me-1"></i>{{ mod.stats.methods }} Methoden</span>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  {# ── 3. Risks ─────────────────────────────────────────── #}
+  {% if architektur.risks %}
+  <section class="mb-5">
+    <h4 class="section-title">3. Identifizierte Risiken</h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light"><tr><th>Risiko</th><th>Schwere</th><th>Indikator</th></tr></thead>
+        <tbody>
+          {% for r in architektur.risks %}
+          <tr class="{% if r.severity == 'high' %}table-danger{% elif r.severity == 'medium' %}table-warning{% endif %}">
+            <td class="fw-semibold">{{ r.Risiko }}</td>
+            <td class="text-nowrap">{{ r.Schwere }}</td>
+            <td class="small text-muted">{{ r.Indikator }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ── 4. God Objects ───────────────────────────────────── #}
+  {% if architektur.god_objects %}
+  <section class="mb-5">
+    <h4 class="section-title">4. Komplexitäts-Hotspots (God Objects)</h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Klasse</th><th>Modul</th><th class="text-end">Methoden</th><th>Bewertung</th></tr>
+        </thead>
+        <tbody>
+          {% for g in architektur.god_objects %}
+          <tr>
+            <td><code>{{ g.Klasse }}</code></td>
+            <td><span class="badge bg-secondary">{{ g.Modul }}</span></td>
+            <td class="text-end fw-semibold
+              {% if g['Public Methoden']|int > 200 %}text-danger{% elif g['Public Methoden']|int > 100 %}text-warning{% endif %}">
+              {{ g['Public Methoden'] }}
+            </td>
+            <td class="small text-muted">{{ g.Bewertung }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ── 5. SBOM ──────────────────────────────────────────── #}
+  {% if architektur.sbom %}
+  <section class="mb-5">
+    <h4 class="section-title">5. Externe Abhängigkeiten (SBOM) — 191 Pakete</h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light"><tr><th>Kategorie</th><th class="text-end">Pakete</th><th>Wichtigste Bibliotheken</th></tr></thead>
+        <tbody>
+          {% for row in architektur.sbom %}
+          <tr>
+            <td class="fw-semibold text-nowrap">{{ row.Kategorie }}</td>
+            <td class="text-end">{{ row.Pakete }}</td>
+            <td class="small text-muted">{{ row['Wichtigste Bibliotheken'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if architektur.jee_packages %}
+    <div class="alert alert-warning py-2 mt-2 small">
+      <i class="bi bi-exclamation-triangle me-1"></i>
+      <strong>Java-EE-Namespace (javax.*):</strong>
+      {% for pkg in architektur.jee_packages %}<code class="me-2">{{ pkg }}</code>{% endfor %}
+      — Migration zu Jakarta EE erforderlich.
+    </div>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  {# ── 6. Integrationspunkte ────────────────────────────── #}
+  <section class="mb-5">
+    <h4 class="section-title">6. Integrationspunkte</h4>
+    <div class="row g-4">
+
+      {% if architektur.payment_gateways %}
+      <div class="col-lg-6">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Payment-Gateways</h6>
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Provider</th><th>Typ</th></tr></thead>
+          <tbody>
+            {% for g in architektur.payment_gateways %}
+            <tr><td class="fw-semibold small">{{ g.Provider }}</td><td class="small text-muted">{{ g.Typ }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if architektur.shipping_carriers %}
+      <div class="col-lg-3">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Carrier</h6>
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Carrier</th><th class="text-end">Methoden</th></tr></thead>
+          <tbody>
+            {% for c in architektur.shipping_carriers %}
+            <tr><td class="small fw-semibold">{{ c.Carrier }}</td><td class="text-end small">{{ c.Klasse }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if architektur.integration_channels %}
+      <div class="col-lg-3">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Integrationskanäle</h6>
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Kanal</th><th>Technologie</th></tr></thead>
+          <tbody>
+            {% for c in architektur.integration_channels %}
+            <tr><td class="small fw-semibold">{{ c.Kanal }}</td><td class="small text-muted">{{ c.Technologie }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+    </div>
+  </section>
+
+  {# ── 7. Architekturmuster ─────────────────────────────── #}
+  <section class="mb-5">
+    <h4 class="section-title">7. Architekturmuster</h4>
+    <div class="row g-4">
+
+      {% if architektur.patterns %}
+      <div class="col-lg-6">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Erkennbare Muster</h6>
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Muster</th><th>Bewertung</th></tr></thead>
+          <tbody>
+            {% for p in architektur.patterns %}
+            <tr>
+              <td class="fw-semibold small">{{ p.Muster }}</td>
+              <td class="small text-muted">{{ p.Bewertung }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if architektur.missing_patterns %}
+      <div class="col-lg-6">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Fehlende moderne Muster</h6>
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Muster</th><th>Implikation</th></tr></thead>
+          <tbody>
+            {% for p in architektur.missing_patterns %}
+            <tr>
+              <td class="small fw-semibold text-danger">{{ p.Muster }}</td>
+              <td class="small text-muted">{{ p.Implikation }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+    </div>
+  </section>
+
+  {# ── 8. Dependency Cycles ─────────────────────────────── #}
+  {% if architektur.dependency_cycles or architektur.dependency_structure %}
+  <section class="mb-5">
+    <h4 class="section-title">8. Interne Modul-Abhängigkeiten</h4>
+    <div class="row g-4">
+      {% if architektur.dependency_cycles %}
+      <div class="col-lg-4">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Zyklische Abhängigkeiten</h6>
+        {% for c in architektur.dependency_cycles %}
+        <div class="alert alert-danger py-1 px-2 mb-1 small">
+          <i class="bi bi-arrow-left-right me-1"></i><code>{{ c.cycle }}</code>
+          <span class="text-muted ms-1">— {{ c.note }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% if architektur.dependency_structure %}
+      <div class="col-lg-8">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Kern-Abhängigkeitsstruktur</h6>
+        <pre class="bg-light border rounded p-3 small" style="font-size:.78rem">{{ architektur.dependency_structure }}</pre>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
+
+  {# ── 9. Replacement ───────────────────────────────────── #}
+  <section class="mb-5">
+    <h4 class="section-title">9. Bewertung für Ablösung</h4>
+    <div class="row g-4">
+
+      {% if architektur.replacement_assessment %}
+      <div class="col-lg-6">
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Aspekt</th><th>Befund</th></tr></thead>
+          <tbody>
+            {% for row in architektur.replacement_assessment %}
+            <tr>
+              <td class="fw-semibold small text-nowrap">{{ row.Aspekt }}</td>
+              <td class="small text-muted">{{ row.Befund }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if architektur.replacement_phases %}
+      <div class="col-lg-6">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Empfohlene Ablöse-Reihenfolge</h6>
+        <pre class="bg-light border rounded p-3 small" style="font-size:.78rem">{{ architektur.replacement_phases }}</pre>
+      </div>
+      {% endif %}
+
+    </div>
+  </section>
+
 </div>
+
+<style>
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e2430;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: .4rem;
+  margin-bottom: 1rem;
+}
+</style>
 {% endblock %}

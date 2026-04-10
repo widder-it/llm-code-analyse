@@ -43,11 +43,17 @@ def main():
     index_data = load_json(DATA_DIR / "index.json")
     modules_meta = index_data["modules"]
 
+    architektur = {}
+    architektur_path = DATA_DIR / "architektur.json"
+    if architektur_path.exists():
+        architektur = load_json(architektur_path)
+
     targets = sys.argv[1:] if sys.argv[1:] else [m["id"] for m in modules_meta]
 
     # --- index.html ---
     write_html(env, "index.html.j2", OUTPUT_DIR / "index.html",
-               modules=modules_meta, root=relative_root(0), active_module=None)
+               modules=modules_meta, architektur=architektur,
+               root=relative_root(0), active_module=None)
     print("  index.html")
 
     for module_id in targets:

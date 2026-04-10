@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OFBiz Architekturdokumentation — Modulübersicht</title>
+  <title>OFBiz Architekturdokumentation — Übersicht</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
@@ -129,63 +129,729 @@
 <div id="main">
   
 <div class="page-header">
-  <h1><i class="bi bi-diagram-3 me-2 text-primary"></i>Apache OFBiz — Modulübersicht</h1>
-  <p class="text-muted mb-0 mt-1">Statische Code-Analyse · 3 Module dokumentiert</p>
+  <h1><i class="bi bi-diagram-3 me-2 text-primary"></i>Apache OFBiz — Architekturdokumentation</h1>
+  
+  <p class="text-muted mb-0 mt-1 small">
+    Statische Analyse aus Java Class-Files (kein Quellcode vorhanden) &middot;
+    April 2026 &middot;
+    /java/org/ — 2.932 Class-Files
+  </p>
+  
 </div>
 
 <div class="content-area">
-  <div class="row g-3">
-    
-    <div class="col-md-6 col-xl-4">
-      <a href="party/index.html" class="text-decoration-none">
-        <div class="class-card card h-100 p-3">
-          <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-box text-primary me-2 fs-5"></i>
-            <span class="fw-semibold fs-5">party</span>
+
+  
+  
+  <section class="mb-5">
+    <h4 class="section-title">1. Technologisches Fundament</h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light"><tr><th>Eigenschaft</th><th>Wert</th></tr></thead>
+        <tbody>
+          
+          <tr><td class="fw-semibold text-nowrap">Framework</td><td>Apache OFBiz (erkennbar an Paketstruktur org.apache.ofbiz.*)</td></tr>
+          
+          <tr><td class="fw-semibold text-nowrap">Java-Version (Kompilat)</td><td>Java 17 (Class-File Major Version 61)</td></tr>
+          
+          <tr><td class="fw-semibold text-nowrap">Kompiliert am</td><td>06.01.2026</td></tr>
+          
+          <tr><td class="fw-semibold text-nowrap">Sprachen</td><td>Java + Groovy (ca. 70 / 30 %)</td></tr>
+          
+          <tr><td class="fw-semibold text-nowrap">Gesamtklassen</td><td>2.932 (inkl. innere Klassen und Groovy-Closures)</td></tr>
+          
+          <tr><td class="fw-semibold text-nowrap">Top-Level-Klassen</td><td>1.568</td></tr>
+          
+          <tr><td class="fw-semibold text-nowrap">Module</td><td>25</td></tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+
+  
+  <section class="mb-5">
+    <h4 class="section-title">2. Dokumentierte Module</h4>
+    <div class="row g-3">
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="party/index.html" class="text-decoration-none">
+          <div class="class-card card h-100 p-3">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-box text-primary me-2 fs-5"></i>
+              <span class="fw-semibold fs-5">party</span>
+            </div>
+            <p class="text-muted small mb-3" style="min-height:3em">
+              Das Modul `party` ist die zentrale Stammdatenverwaltung für alle Akteure im OFBiz-System. Es modelliert Personen, Organisationen (PartyGroups) und der…
+            </p>
+            <div class="d-flex gap-2 mt-auto">
+              <span class="stat-pill"><i class="bi bi-layers me-1"></i>22 Klassen</span>
+              <span class="stat-pill"><i class="bi bi-lightning me-1"></i>173 Methoden</span>
+            </div>
           </div>
-          <p class="text-muted small mb-3" style="min-height:3em">Das Modul `party` ist die zentrale Stammdatenverwaltung für alle Akteure im OFBiz-System. Es modelliert Personen, Organisationen (PartyGroups) und deren Beziehu…</p>
-          <div class="d-flex gap-2 mt-auto">
-            <span class="stat-pill"><i class="bi bi-layers me-1"></i>22 Klassen</span>
-            <span class="stat-pill"><i class="bi bi-lightning me-1"></i>173 Methoden</span>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="order/index.html" class="text-decoration-none">
+          <div class="class-card card h-100 p-3">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-box text-primary me-2 fs-5"></i>
+              <span class="fw-semibold fs-5">order</span>
+            </div>
+            <p class="text-muted small mb-3" style="min-height:3em">
+              Das Modul `order` ist der Kern des Bestellwesens in Apache OFBiz und deckt den vollständigen Order-to-Cash-Prozess ab. Es umfasst die Verwaltung des W…
+            </p>
+            <div class="d-flex gap-2 mt-auto">
+              <span class="stat-pill"><i class="bi bi-layers me-1"></i>37 Klassen</span>
+              <span class="stat-pill"><i class="bi bi-lightning me-1"></i>170 Methoden</span>
+            </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="product/index.html" class="text-decoration-none">
+          <div class="class-card card h-100 p-3">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-box text-primary me-2 fs-5"></i>
+              <span class="fw-semibold fs-5">product</span>
+            </div>
+            <p class="text-muted small mb-3" style="min-height:3em">
+              Das Modul `product` ist das zentrale Produktmanagement-Modul von Apache OFBiz. Es deckt die vollständige Lebenszyklus-Verwaltung von Produkten ab: von…
+            </p>
+            <div class="d-flex gap-2 mt-auto">
+              <span class="stat-pill"><i class="bi bi-layers me-1"></i>58 Klassen</span>
+              <span class="stat-pill"><i class="bi bi-lightning me-1"></i>257 Methoden</span>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+    </div>
+  </section>
+
+  
+  
+  <section class="mb-5">
+    <h4 class="section-title">3. Identifizierte Risiken</h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light"><tr><th>Risiko</th><th>Schwere</th><th>Indikator</th></tr></thead>
+        <tbody>
+          
+          <tr class="table-danger">
+            <td class="fw-semibold">Zyklische Modul-Abhängigkeiten</td>
+            <td class="text-nowrap">🔴 Hoch</td>
+            <td class="small text-muted">order↔accounting, order↔product, party↔accounting, party↔product</td>
+          </tr>
+          
+          <tr class="table-danger">
+            <td class="fw-semibold">God-Object ShoppingCart (388 Methoden)</td>
+            <td class="text-nowrap">🔴 Hoch</td>
+            <td class="small text-muted">Unverhältnismäßige Konzentration von Geschäftslogik</td>
+          </tr>
+          
+          <tr class="table-danger">
+            <td class="fw-semibold">Monolithische Services (OrderServices 84 Methoden)</td>
+            <td class="text-nowrap">🔴 Hoch</td>
+            <td class="small text-muted">Schwer testbar, schwer isoliert ablösbar</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td class="fw-semibold">Veraltete Java-EE-APIs (javax.*)</td>
+            <td class="text-nowrap">🟡 Mittel</td>
+            <td class="small text-muted">5 javax.*-Pakete — Migration zu Jakarta EE erforderlich</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td class="fw-semibold">Groovy-Code nicht rekonstruierbar</td>
+            <td class="text-nowrap">🟡 Mittel</td>
+            <td class="small text-muted">~30 % der Logik nur als .class vorhanden, Quelltext verloren</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td class="fw-semibold">Hohe externe Dependency-Zahl (191 Pakete)</td>
+            <td class="text-nowrap">🟡 Mittel</td>
+            <td class="small text-muted">Supply-Chain-Risiko, viele Updates nötig</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td class="fw-semibold">Keine erkennbare Schichtentrennung</td>
+            <td class="text-nowrap">🟡 Mittel</td>
+            <td class="small text-muted">Business-Module greifen direkt auf DB-Engine zu</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td class="fw-semibold">8 Payment-Provider eingebaut</td>
+            <td class="text-nowrap">🟡 Mittel</td>
+            <td class="small text-muted">Jeder Provider: eigene API, Update-Pflicht, PCI-DSS-Scope</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td class="fw-semibold">Legacy-Kryptographie in EntityCrypto</td>
+            <td class="text-nowrap">🟡 Mittel</td>
+            <td class="small text-muted">DES-basierte LegacyStorageHandler noch aktiv als Fallback</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+
+  
+  
+  <section class="mb-5">
+    <h4 class="section-title">4. Komplexitäts-Hotspots (God Objects)</h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Klasse</th><th>Modul</th><th class="text-end">Methoden</th><th>Bewertung</th></tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><code>ShoppingCart</code></td>
+            <td><span class="badge bg-secondary">order</span></td>
+            <td class="text-end fw-semibold
+              text-danger">
+              388
+            </td>
+            <td class="small text-muted">Extremes God-Object — enthält Warenkorb, Pricing, Tax, Shipping, Payment-State</td>
+          </tr>
+          
+          <tr>
+            <td><code>OrderReadHelper</code></td>
+            <td><span class="badge bg-secondary">order</span></td>
+            <td class="text-end fw-semibold
+              text-warning">
+              192
+            </td>
+            <td class="small text-muted">Lese-Fassade für Bestellungen</td>
+          </tr>
+          
+          <tr>
+            <td><code>ShoppingCartItem</code></td>
+            <td><span class="badge bg-secondary">order</span></td>
+            <td class="text-end fw-semibold
+              text-warning">
+              180
+            </td>
+            <td class="small text-muted">Item-Level God-Object</td>
+          </tr>
+          
+          <tr>
+            <td><code>ModelEntity</code></td>
+            <td><span class="badge bg-secondary">entity</span></td>
+            <td class="text-end fw-semibold
+              text-warning">
+              145
+            </td>
+            <td class="small text-muted">Kern-Entity-Metadaten</td>
+          </tr>
+          
+          <tr>
+            <td><code>ModelService</code></td>
+            <td><span class="badge bg-secondary">service</span></td>
+            <td class="text-end fw-semibold
+              text-warning">
+              114
+            </td>
+            <td class="small text-muted">Service-Definition/Metadaten</td>
+          </tr>
+          
+          <tr>
+            <td><code>Delegator (Interface)</code></td>
+            <td><span class="badge bg-secondary">entity</span></td>
+            <td class="text-end fw-semibold
+              text-warning">
+              108
+            </td>
+            <td class="small text-muted">Datenzugriffs-Kontrakt</td>
+          </tr>
+          
+          <tr>
+            <td><code>UtilDateTime</code></td>
+            <td><span class="badge bg-secondary">base</span></td>
+            <td class="text-end fw-semibold
+              text-warning">
+              105
+            </td>
+            <td class="small text-muted">Date/Time-Utility (God-Util)</td>
+          </tr>
+          
+          <tr>
+            <td><code>ModelForm</code></td>
+            <td><span class="badge bg-secondary">widget</span></td>
+            <td class="text-end fw-semibold
+              ">
+              99
+            </td>
+            <td class="small text-muted">Formular-Metadaten</td>
+          </tr>
+          
+          <tr>
+            <td><code>GenericDelegator</code></td>
+            <td><span class="badge bg-secondary">entity</span></td>
+            <td class="text-end fw-semibold
+              text-warning">
+              114
+            </td>
+            <td class="small text-muted">Zentrale Datenzugriffs-Fassade</td>
+          </tr>
+          
+          <tr>
+            <td><code>UtilHttp</code></td>
+            <td><span class="badge bg-secondary">base</span></td>
+            <td class="text-end fw-semibold
+              ">
+              84
+            </td>
+            <td class="small text-muted">HTTP-Utility</td>
+          </tr>
+          
+          <tr>
+            <td><code>OrderServices</code></td>
+            <td><span class="badge bg-secondary">order</span></td>
+            <td class="text-end fw-semibold
+              ">
+              84
+            </td>
+            <td class="small text-muted">Monolithischer Bestell-Service</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+
+  
+  
+  <section class="mb-5">
+    <h4 class="section-title">5. Externe Abhängigkeiten (SBOM) — 191 Pakete</h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light"><tr><th>Kategorie</th><th class="text-end">Pakete</th><th>Wichtigste Bibliotheken</th></tr></thead>
+        <tbody>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Web / HTTP</td>
+            <td class="text-end">41</td>
+            <td class="small text-muted">Tomcat 10.x (Catalina, Coyote, Jasper), Commons FileUpload</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Utilities</td>
+            <td class="text-end">31</td>
+            <td class="small text-muted">Apache Commons (Lang3, IO, Collections4, CSV, Pool2, DBCP2), Guava, Jackson</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Scripting</td>
+            <td class="text-end">15</td>
+            <td class="small text-muted">Groovy 4.x, Clojure, Apache Oro (Regex)</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Integration</td>
+            <td class="text-end">11</td>
+            <td class="small text-muted">Apache Axis2 (SOAP), Apache CXF (REST/JAX-RS), Axiom, WSDL4J, ROME</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Messaging</td>
+            <td class="text-end">10</td>
+            <td class="small text-muted">JavaMail, JMS, Apache MINA SSHD</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Security</td>
+            <td class="text-end">9</td>
+            <td class="small text-muted">Apache Shiro, OWASP ESAPI, OWASP HTML Sanitizer, Auth0 JWT</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">XML/Daten</td>
+            <td class="text-end">9</td>
+            <td class="small text-muted">Xerces, JDOM, JAXB</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Dokumente</td>
+            <td class="text-end">12</td>
+            <td class="small text-muted">Apache FOP (PDF), Apache POI (Excel), PDFBox, iText, Batik (SVG), Mustang (ZUGFeRD)</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Templating</td>
+            <td class="text-end">8</td>
+            <td class="small text-muted">Apache FreeMarker</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Kalender/Kontakt</td>
+            <td class="text-end">8</td>
+            <td class="small text-muted">iCal4j, ez-vcard</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Persistenz</td>
+            <td class="text-end">6</td>
+            <td class="small text-muted">Geronimo Transaction Manager, Commons DBCP2/Pool2</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Testing</td>
+            <td class="text-end">3</td>
+            <td class="small text-muted">JUnit 4, Spring Test</td>
+          </tr>
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">Sonstiges</td>
+            <td class="text-end">28</td>
+            <td class="small text-muted">ICU4J, ZXing (QR), libphonenumber, Tika, ConcurrentLinkedHashMap, ...</td>
+          </tr>
+          
+        </tbody>
+      </table>
     </div>
     
-    <div class="col-md-6 col-xl-4">
-      <a href="order/index.html" class="text-decoration-none">
-        <div class="class-card card h-100 p-3">
-          <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-box text-primary me-2 fs-5"></i>
-            <span class="fw-semibold fs-5">order</span>
-          </div>
-          <p class="text-muted small mb-3" style="min-height:3em">Das Modul `order` ist der Kern des Bestellwesens in Apache OFBiz und deckt den vollständigen Order-to-Cash-Prozess ab. Es umfasst die Verwaltung des Warenkorbs,…</p>
-          <div class="d-flex gap-2 mt-auto">
-            <span class="stat-pill"><i class="bi bi-layers me-1"></i>37 Klassen</span>
-            <span class="stat-pill"><i class="bi bi-lightning me-1"></i>170 Methoden</span>
-          </div>
-        </div>
-      </a>
+    <div class="alert alert-warning py-2 mt-2 small">
+      <i class="bi bi-exclamation-triangle me-1"></i>
+      <strong>Java-EE-Namespace (javax.*):</strong>
+      <code class="me-2">javax.*</code><code class="me-2">javax.servlet.*</code><code class="me-2">javax.mail.*</code><code class="me-2">javax.jms.*</code><code class="me-2">javax.xml.bind.*</code>
+      — Migration zu Jakarta EE erforderlich.
     </div>
     
-    <div class="col-md-6 col-xl-4">
-      <a href="product/index.html" class="text-decoration-none">
-        <div class="class-card card h-100 p-3">
-          <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-box text-primary me-2 fs-5"></i>
-            <span class="fw-semibold fs-5">product</span>
-          </div>
-          <p class="text-muted small mb-3" style="min-height:3em">Das Modul `product` ist das zentrale Produktmanagement-Modul von Apache OFBiz. Es deckt die vollständige Lebenszyklus-Verwaltung von Produkten ab: von der Produ…</p>
-          <div class="d-flex gap-2 mt-auto">
-            <span class="stat-pill"><i class="bi bi-layers me-1"></i>58 Klassen</span>
-            <span class="stat-pill"><i class="bi bi-lightning me-1"></i>257 Methoden</span>
-          </div>
-        </div>
-      </a>
+  </section>
+  
+
+  
+  <section class="mb-5">
+    <h4 class="section-title">6. Integrationspunkte</h4>
+    <div class="row g-4">
+
+      
+      <div class="col-lg-6">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Payment-Gateways</h6>
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Provider</th><th>Typ</th></tr></thead>
+          <tbody>
+            
+            <tr><td class="fw-semibold small">PayPal Express Checkout</td><td class="small text-muted">REST/NVP</td></tr>
+            
+            <tr><td class="fw-semibold small">Authorize.Net AIM</td><td class="small text-muted">HTTP-POST</td></tr>
+            
+            <tr><td class="fw-semibold small">ClearCommerce</td><td class="small text-muted">XML/HTTPS</td></tr>
+            
+            <tr><td class="fw-semibold small">eWay</td><td class="small text-muted">HTTP</td></tr>
+            
+            <tr><td class="fw-semibold small">GoSoftware (PcCharge, Rita)</td><td class="small text-muted">proprietär</td></tr>
+            
+            <tr><td class="fw-semibold small">SagePay</td><td class="small text-muted">Form/Server</td></tr>
+            
+            <tr><td class="fw-semibold small">ValueLink (Gift Cards)</td><td class="small text-muted">proprietär</td></tr>
+            
+            <tr><td class="fw-semibold small">WorldPay</td><td class="small text-muted">Redirect</td></tr>
+            
+          </tbody>
+        </table>
+      </div>
+      
+
+      
+      <div class="col-lg-3">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Carrier</h6>
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Carrier</th><th class="text-end">Methoden</th></tr></thead>
+          <tbody>
+            
+            <tr><td class="small fw-semibold">UPS</td><td class="text-end small">UpsServices</td></tr>
+            
+            <tr><td class="small fw-semibold">USPS</td><td class="text-end small">UspsServices</td></tr>
+            
+            <tr><td class="small fw-semibold">DHL</td><td class="text-end small">DhlServices</td></tr>
+            
+            <tr><td class="small fw-semibold">FedEx</td><td class="text-end small">FedexServices</td></tr>
+            
+          </tbody>
+        </table>
+      </div>
+      
+
+      
+      <div class="col-lg-3">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Integrationskanäle</h6>
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Kanal</th><th>Technologie</th></tr></thead>
+          <tbody>
+            
+            <tr><td class="small fw-semibold">SFTP</td><td class="small text-muted">Apache MINA SSHD (sshd-core, sshd-sftp)</td></tr>
+            
+            <tr><td class="small fw-semibold">JMS</td><td class="small text-muted">javax.jms, service.jms</td></tr>
+            
+            <tr><td class="small fw-semibold">SOAP</td><td class="small text-muted">Apache Axis2</td></tr>
+            
+            <tr><td class="small fw-semibold">REST/JAX-RS</td><td class="small text-muted">Apache CXF</td></tr>
+            
+            <tr><td class="small fw-semibold">E-Mail</td><td class="small text-muted">JavaMail, SMTP</td></tr>
+            
+            <tr><td class="small fw-semibold">FTP</td><td class="small text-muted">Apache Commons Net</td></tr>
+            
+          </tbody>
+        </table>
+      </div>
+      
+
     </div>
-    
-  </div>
+  </section>
+
+  
+  <section class="mb-5">
+    <h4 class="section-title">7. Architekturmuster</h4>
+    <div class="row g-4">
+
+      
+      <div class="col-lg-6">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Erkennbare Muster</h6>
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Muster</th><th>Bewertung</th></tr></thead>
+          <tbody>
+            
+            <tr>
+              <td class="fw-semibold small">Service-Layer</td>
+              <td class="small text-muted">OFBiz Service-Engine (120+ Service-Klassen)</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small">Repository/DAO</td>
+              <td class="small text-muted">Proprietäres ORM (kein JPA/Hibernate)</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small">MVC</td>
+              <td class="small text-muted">OFBiz Widget-Framework</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small">Script-Engine</td>
+              <td class="small text-muted">Konfigurierbare Business-Regeln (~30% der Klassen)</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small">Event-System</td>
+              <td class="small text-muted">HTTP-Request-Handler (39 Klassen, ~250 Endpunkte)</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small">Visitor-Pattern</td>
+              <td class="small text-muted">Widget-Tree-Traversal</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small">Strategy-Pattern</td>
+              <td class="small text-muted">Krypto-Strategie (Shiro/DES/Legacy)</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small">Job Scheduler</td>
+              <td class="small text-muted">Interner OFBiz-eigener Scheduler (kein Quartz/Spring Batch)</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small">Plugin/Gateway</td>
+              <td class="small text-muted">Austauschbare externe Integrationen</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      
+
+      
+      <div class="col-lg-6">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Fehlende moderne Muster</h6>
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Muster</th><th>Implikation</th></tr></thead>
+          <tbody>
+            
+            <tr>
+              <td class="small fw-semibold text-danger">Dependency Injection</td>
+              <td class="small text-muted">Kein Spring, kein CDI — manuelle Objekt-Verdrahtung</td>
+            </tr>
+            
+            <tr>
+              <td class="small fw-semibold text-danger">REST-Controller-Schicht</td>
+              <td class="small text-muted">Nur Servlet-basierte Controller in webapp</td>
+            </tr>
+            
+            <tr>
+              <td class="small fw-semibold text-danger">Reaktive Programmierung</td>
+              <td class="small text-muted">Klassisches blocking I/O</td>
+            </tr>
+            
+            <tr>
+              <td class="small fw-semibold text-danger">Event Sourcing / CQRS</td>
+              <td class="small text-muted">Klassisches CRUD-Muster</td>
+            </tr>
+            
+            <tr>
+              <td class="small fw-semibold text-danger">API-Versionierung</td>
+              <td class="small text-muted">Kein versioning in Events-Klassen sichtbar</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      
+
+    </div>
+  </section>
+
+  
+  
+  <section class="mb-5">
+    <h4 class="section-title">8. Interne Modul-Abhängigkeiten</h4>
+    <div class="row g-4">
+      
+      <div class="col-lg-4">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Zyklische Abhängigkeiten</h6>
+        
+        <div class="alert alert-danger py-1 px-2 mb-1 small">
+          <i class="bi bi-arrow-left-right me-1"></i><code>order ↔ accounting</code>
+          <span class="text-muted ms-1">— gegenseitige Abhängigkeit</span>
+        </div>
+        
+        <div class="alert alert-danger py-1 px-2 mb-1 small">
+          <i class="bi bi-arrow-left-right me-1"></i><code>order ↔ product</code>
+          <span class="text-muted ms-1">— gegenseitige Abhängigkeit</span>
+        </div>
+        
+        <div class="alert alert-danger py-1 px-2 mb-1 small">
+          <i class="bi bi-arrow-left-right me-1"></i><code>party ↔ accounting</code>
+          <span class="text-muted ms-1">— gegenseitige Abhängigkeit</span>
+        </div>
+        
+        <div class="alert alert-danger py-1 px-2 mb-1 small">
+          <i class="bi bi-arrow-left-right me-1"></i><code>party ↔ product</code>
+          <span class="text-muted ms-1">— gegenseitige Abhängigkeit</span>
+        </div>
+        
+      </div>
+      
+      
+      <div class="col-lg-8">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Kern-Abhängigkeitsstruktur</h6>
+        <pre class="bg-light border rounded p-3 small" style="font-size:.78rem">Kern-Framework (Basis aller Module):
+  base ← entity ← service ← security
+         ↓           ↓
+       minilang    testtools
+
+Business-Module (bauen aufeinander auf):
+  accounting → entity, service, order, party, product, security
+  order      → accounting, entity, service, party, product, marketing, content
+  product    → entity, service, party, order, shipment, content
+  party      → entity, service, accounting, product, content
+
+Infrastruktur (querschnittlich):
+  webapp   → base, entity, service, security, widget, minilang
+  widget   → entity, service, security, minilang
+  webtools → entity, service, webapp, testtools</pre>
+      </div>
+      
+    </div>
+  </section>
+  
+
+  
+  <section class="mb-5">
+    <h4 class="section-title">9. Bewertung für Ablösung</h4>
+    <div class="row g-4">
+
+      
+      <div class="col-lg-6">
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Aspekt</th><th>Befund</th></tr></thead>
+          <tbody>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Modularisierbarkeit</td>
+              <td class="small text-muted">Schwierig wegen Zyklen; Entity- und Service-Kern müssten zuerst extrahiert werden</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">HTTP-API-Oberfläche</td>
+              <td class="small text-muted">~250 Endpunkte in 39 Events-Klassen — dokumentierbar und testbar</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Service-API-Oberfläche</td>
+              <td class="small text-muted">120+ Service-Klassen = interne Schnittstellen bei Strangler-Fig-Migration</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Testabdeckung</td>
+              <td class="small text-muted">testtools-Modul vorhanden; Groovy-Testklassen für alle Module erkennbar</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Ablöse-Kandidaten</td>
+              <td class="small text-muted">Payment-Gateway-Modul (klar abgegrenzt), Shipment-Carrier (isoliert)</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Risiko-Kandidaten</td>
+              <td class="small text-muted">ShoppingCart (388 Methoden), OrderServices (84 Methoden) — zuletzt ablösen</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Empfehlung</td>
+              <td class="small text-muted">Strangler-Fig-Pattern: schrittweise Ablösung über Events-Layer von außen nach innen</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      
+
+      
+      <div class="col-lg-6">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Empfohlene Ablöse-Reihenfolge</h6>
+        <pre class="bg-light border rounded p-3 small" style="font-size:.78rem">Phase 1 (Niedrigstes Risiko):
+  → Shipment-Carrier-Integrationen (UPS/FedEx/DHL/USPS)
+  → Payment-Gateway-Adapter (8 Provider, klar isoliert)
+  → Reporting/Content-Module
+
+Phase 2 (Mittleres Risiko):
+  → Party-Modul (Stammdaten)
+  → Product-Katalog-Funktionen
+  → Manufacturing/WorkEffort
+
+Phase 3 (Höchstes Risiko — zuletzt):
+  → Order/ShoppingCart-Kern (God-Objects)
+  → Entity-Engine (zentrale DB-Abstraktion)
+  → Service-Engine (Framework-Kern)</pre>
+      </div>
+      
+
+    </div>
+  </section>
+
 </div>
+
+<style>
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e2430;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: .4rem;
+  margin-bottom: 1rem;
+}
+</style>
 
 </div>
 

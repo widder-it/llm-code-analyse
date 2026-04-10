@@ -1,0 +1,646 @@
+{
+  "meta": {
+    "methode": "Statische Analyse aus Java Class-Files (kein Quellcode vorhanden)",
+    "werkzeuge": "jdeps (JDK 21), javap (JDK 21), CFR 0.152, eigene Skripte",
+    "datum": "April 2026",
+    "objekt": "/java/org/ — 2.932 Class-Files"
+  },
+  "tech_foundation": [
+    {
+      "Eigenschaft": "Framework",
+      "Wert": "Apache OFBiz (erkennbar an Paketstruktur org.apache.ofbiz.*)"
+    },
+    {
+      "Eigenschaft": "Java-Version (Kompilat)",
+      "Wert": "Java 17 (Class-File Major Version 61)"
+    },
+    {
+      "Eigenschaft": "Kompiliert am",
+      "Wert": "06.01.2026"
+    },
+    {
+      "Eigenschaft": "Sprachen",
+      "Wert": "Java + Groovy (ca. 70 / 30 %)"
+    },
+    {
+      "Eigenschaft": "Gesamtklassen",
+      "Wert": "2.932 (inkl. innere Klassen und Groovy-Closures)"
+    },
+    {
+      "Eigenschaft": "Top-Level-Klassen",
+      "Wert": "1.568"
+    },
+    {
+      "Eigenschaft": "Module",
+      "Wert": "25"
+    }
+  ],
+  "language_split": "Von den 2.932 Class-Files stammen:\n- **~70 % (≈2.050)** aus Java-Quellcode — sauber dekompilierbar\n- **~30 % (≈880)** aus Groovy-Skripten — als `.class` vorhanden, Quellcode nicht rekonstruierbar\n\nDie Groovy-Klassen sind Groovy-Skripte des OFBiz-Service-Frameworks (Business-Logik als Groovy-Scripts konfiguriert), erkennbar an `extends groovy.lang.Script` und Closure-Klassen (`$_run_closure`).\n\n---",
+  "dependency_cycles": [
+    {
+      "cycle": "order ↔ accounting",
+      "note": "gegenseitige Abhängigkeit"
+    },
+    {
+      "cycle": "order ↔ product",
+      "note": "gegenseitige Abhängigkeit"
+    },
+    {
+      "cycle": "party ↔ accounting",
+      "note": "gegenseitige Abhängigkeit"
+    },
+    {
+      "cycle": "party ↔ product",
+      "note": "gegenseitige Abhängigkeit"
+    }
+  ],
+  "dependency_structure": "Kern-Framework (Basis aller Module):\n  base ← entity ← service ← security\n         ↓           ↓\n       minilang    testtools\n\nBusiness-Module (bauen aufeinander auf):\n  accounting → entity, service, order, party, product, security\n  order      → accounting, entity, service, party, product, marketing, content\n  product    → entity, service, party, order, shipment, content\n  party      → entity, service, accounting, product, content\n\nInfrastruktur (querschnittlich):\n  webapp   → base, entity, service, security, widget, minilang\n  widget   → entity, service, security, minilang\n  webtools → entity, service, webapp, testtools",
+  "sbom": [
+    {
+      "Kategorie": "Web / HTTP",
+      "Pakete": "41",
+      "Wichtigste Bibliotheken": "Tomcat 10.x (Catalina, Coyote, Jasper), Commons FileUpload"
+    },
+    {
+      "Kategorie": "Utilities",
+      "Pakete": "31",
+      "Wichtigste Bibliotheken": "Apache Commons (Lang3, IO, Collections4, CSV, Pool2, DBCP2), Guava, Jackson"
+    },
+    {
+      "Kategorie": "Scripting",
+      "Pakete": "15",
+      "Wichtigste Bibliotheken": "Groovy 4.x, Clojure, Apache Oro (Regex)"
+    },
+    {
+      "Kategorie": "Integration",
+      "Pakete": "11",
+      "Wichtigste Bibliotheken": "Apache Axis2 (SOAP), Apache CXF (REST/JAX-RS), Axiom, WSDL4J, ROME"
+    },
+    {
+      "Kategorie": "Messaging",
+      "Pakete": "10",
+      "Wichtigste Bibliotheken": "JavaMail, JMS, Apache MINA SSHD"
+    },
+    {
+      "Kategorie": "Security",
+      "Pakete": "9",
+      "Wichtigste Bibliotheken": "Apache Shiro, OWASP ESAPI, OWASP HTML Sanitizer, Auth0 JWT"
+    },
+    {
+      "Kategorie": "XML/Daten",
+      "Pakete": "9",
+      "Wichtigste Bibliotheken": "Xerces, JDOM, JAXB"
+    },
+    {
+      "Kategorie": "Dokumente",
+      "Pakete": "12",
+      "Wichtigste Bibliotheken": "Apache FOP (PDF), Apache POI (Excel), PDFBox, iText, Batik (SVG), Mustang (ZUGFeRD)"
+    },
+    {
+      "Kategorie": "Templating",
+      "Pakete": "8",
+      "Wichtigste Bibliotheken": "Apache FreeMarker"
+    },
+    {
+      "Kategorie": "Kalender/Kontakt",
+      "Pakete": "8",
+      "Wichtigste Bibliotheken": "iCal4j, ez-vcard"
+    },
+    {
+      "Kategorie": "Persistenz",
+      "Pakete": "6",
+      "Wichtigste Bibliotheken": "Geronimo Transaction Manager, Commons DBCP2/Pool2"
+    },
+    {
+      "Kategorie": "Testing",
+      "Pakete": "3",
+      "Wichtigste Bibliotheken": "JUnit 4, Spring Test"
+    },
+    {
+      "Kategorie": "Sonstiges",
+      "Pakete": "28",
+      "Wichtigste Bibliotheken": "ICU4J, ZXing (QR), libphonenumber, Tika, ConcurrentLinkedHashMap, ..."
+    }
+  ],
+  "jee_packages": [
+    "javax.*",
+    "javax.servlet.*",
+    "javax.mail.*",
+    "javax.jms.*",
+    "javax.xml.bind.*"
+  ],
+  "http_entrypoints": [
+    {
+      "Events-Klasse": "ShoppingCartEvents",
+      "Modul": "order",
+      "Endpunkte": "42"
+    },
+    {
+      "Events-Klasse": "CheckOutEvents",
+      "Modul": "order",
+      "Endpunkte": "25"
+    },
+    {
+      "Events-Klasse": "ProductEvents",
+      "Modul": "product",
+      "Endpunkte": "22"
+    },
+    {
+      "Events-Klasse": "ShoppingListEvents",
+      "Modul": "order",
+      "Endpunkte": "17"
+    },
+    {
+      "Events-Klasse": "ShippingEvents",
+      "Modul": "order",
+      "Endpunkte": "16"
+    },
+    {
+      "Events-Klasse": "ExpressCheckoutEvents (PayPal)",
+      "Modul": "order",
+      "Endpunkte": "9"
+    },
+    {
+      "Events-Klasse": "CoreEvents",
+      "Modul": "webapp",
+      "Endpunkte": "9"
+    },
+    {
+      "Events-Klasse": "TrackingCodeEvents",
+      "Modul": "marketing",
+      "Endpunkte": "8"
+    },
+    {
+      "Events-Klasse": "LayoutEvents",
+      "Modul": "content",
+      "Endpunkte": "8"
+    },
+    {
+      "Events-Klasse": "LoginEvents",
+      "Modul": "securityext",
+      "Endpunkte": "7"
+    },
+    {
+      "Events-Klasse": "ProductSearchEvents",
+      "Modul": "product",
+      "Endpunkte": "7"
+    },
+    {
+      "Events-Klasse": "CommonEvents",
+      "Modul": "common",
+      "Endpunkte": "10"
+    },
+    {
+      "Events-Klasse": "(weitere 27 Events-Klassen)",
+      "Modul": "diverse",
+      "Endpunkte": "je 1–5"
+    }
+  ],
+  "top_services": [
+    {
+      "Service-Klasse": "ModelService",
+      "Modul": "service",
+      "Public Methoden": "114"
+    },
+    {
+      "Service-Klasse": "OrderServices",
+      "Modul": "order",
+      "Public Methoden": "84"
+    },
+    {
+      "Service-Klasse": "PaymentGatewayServices",
+      "Modul": "accounting",
+      "Public Methoden": "47"
+    },
+    {
+      "Service-Klasse": "PaymentServices",
+      "Modul": "accounting",
+      "Public Methoden": "30"
+    },
+    {
+      "Service-Klasse": "ContentManagementServices",
+      "Modul": "content",
+      "Public Methoden": "30"
+    },
+    {
+      "Service-Klasse": "OrderReturnServices",
+      "Modul": "order",
+      "Public Methoden": "29"
+    },
+    {
+      "Service-Klasse": "ValueLinkServices (Gift Cards)",
+      "Modul": "accounting",
+      "Public Methoden": "22"
+    },
+    {
+      "Service-Klasse": "PartyServices",
+      "Modul": "party",
+      "Public Methoden": "23"
+    },
+    {
+      "Service-Klasse": "ProductionRunServices",
+      "Modul": "manufacturing",
+      "Public Methoden": "32"
+    },
+    {
+      "Service-Klasse": "ShipmentServices",
+      "Modul": "product",
+      "Public Methoden": "36"
+    }
+  ],
+  "payment_gateways": [
+    {
+      "Provider": "PayPal Express Checkout",
+      "Klassen": "ExpressCheckoutEvents, PayPalEvents",
+      "Typ": "REST/NVP"
+    },
+    {
+      "Provider": "Authorize.Net AIM",
+      "Klassen": "AIMPaymentServices, AuthorizeResponse",
+      "Typ": "HTTP-POST"
+    },
+    {
+      "Provider": "ClearCommerce",
+      "Klassen": "CCPaymentServices",
+      "Typ": "XML/HTTPS"
+    },
+    {
+      "Provider": "eWay",
+      "Klassen": "EwayServices, GatewayConnector, GatewayRequest",
+      "Typ": "HTTP"
+    },
+    {
+      "Provider": "GoSoftware (PcCharge, Rita)",
+      "Klassen": "PcChargeServices, RitaServices",
+      "Typ": "proprietär"
+    },
+    {
+      "Provider": "SagePay",
+      "Klassen": "SagePayPaymentServices, SagePayServices",
+      "Typ": "Form/Server"
+    },
+    {
+      "Provider": "ValueLink (Gift Cards)",
+      "Klassen": "ValueLinkApi, ValueLinkServices",
+      "Typ": "proprietär"
+    },
+    {
+      "Provider": "WorldPay",
+      "Klassen": "WorldPayEvents",
+      "Typ": "Redirect"
+    }
+  ],
+  "shipping_carriers": [
+    {
+      "Carrier": "UPS",
+      "Klasse": "UpsServices",
+      "Methoden": "20"
+    },
+    {
+      "Carrier": "USPS",
+      "Klasse": "UspsServices",
+      "Methoden": "14"
+    },
+    {
+      "Carrier": "DHL",
+      "Klasse": "DhlServices",
+      "Methoden": "10"
+    },
+    {
+      "Carrier": "FedEx",
+      "Klasse": "FedexServices",
+      "Methoden": "6"
+    }
+  ],
+  "key_interfaces": [
+    {
+      "Interface": "Delegator",
+      "Methoden": "108",
+      "Bedeutung": "Zentraler Datenzugriffs-Kontrakt"
+    },
+    {
+      "Interface": "FormStringRenderer",
+      "Methoden": "58",
+      "Bedeutung": "Formular-Rendering-Pipeline"
+    },
+    {
+      "Interface": "LocalDispatcher",
+      "Methoden": "45",
+      "Bedeutung": "Service-Dispatching-Kontrakt"
+    },
+    {
+      "Interface": "ScreenStringRenderer",
+      "Methoden": "31",
+      "Bedeutung": "Screen-Rendering"
+    },
+    {
+      "Interface": "ModelWidgetVisitor",
+      "Methoden": "33",
+      "Bedeutung": "Widget-Tree-Traversal"
+    },
+    {
+      "Interface": "EntityCondition",
+      "Methoden": "22",
+      "Bedeutung": "Query-Builder-Kontrakt"
+    },
+    {
+      "Interface": "Security",
+      "Methoden": "13",
+      "Bedeutung": "Autorisierungs-Kontrakt"
+    },
+    {
+      "Interface": "RemoteDispatcher",
+      "Methoden": "15",
+      "Bedeutung": "RMI-Service-Kontrakt"
+    },
+    {
+      "Interface": "IShoppingCartItems",
+      "Methoden": "14",
+      "Bedeutung": "ShoppingCart-Komponente"
+    },
+    {
+      "Interface": "GenericHelper",
+      "Methoden": "14",
+      "Bedeutung": "DB-Zugriffskontrakt"
+    }
+  ],
+  "god_objects": [
+    {
+      "Klasse": "ShoppingCart",
+      "Modul": "order",
+      "Public Methoden": "388",
+      "Bewertung": "Extremes God-Object — enthält Warenkorb, Pricing, Tax, Shipping, Payment-State"
+    },
+    {
+      "Klasse": "OrderReadHelper",
+      "Modul": "order",
+      "Public Methoden": "192",
+      "Bewertung": "Lese-Fassade für Bestellungen"
+    },
+    {
+      "Klasse": "ShoppingCartItem",
+      "Modul": "order",
+      "Public Methoden": "180",
+      "Bewertung": "Item-Level God-Object"
+    },
+    {
+      "Klasse": "ModelEntity",
+      "Modul": "entity",
+      "Public Methoden": "145",
+      "Bewertung": "Kern-Entity-Metadaten"
+    },
+    {
+      "Klasse": "ModelService",
+      "Modul": "service",
+      "Public Methoden": "114",
+      "Bewertung": "Service-Definition/Metadaten"
+    },
+    {
+      "Klasse": "Delegator (Interface)",
+      "Modul": "entity",
+      "Public Methoden": "108",
+      "Bewertung": "Datenzugriffs-Kontrakt"
+    },
+    {
+      "Klasse": "UtilDateTime",
+      "Modul": "base",
+      "Public Methoden": "105",
+      "Bewertung": "Date/Time-Utility (God-Util)"
+    },
+    {
+      "Klasse": "ModelForm",
+      "Modul": "widget",
+      "Public Methoden": "99",
+      "Bewertung": "Formular-Metadaten"
+    },
+    {
+      "Klasse": "GenericDelegator",
+      "Modul": "entity",
+      "Public Methoden": "114",
+      "Bewertung": "Zentrale Datenzugriffs-Fassade"
+    },
+    {
+      "Klasse": "UtilHttp",
+      "Modul": "base",
+      "Public Methoden": "84",
+      "Bewertung": "HTTP-Utility"
+    },
+    {
+      "Klasse": "OrderServices",
+      "Modul": "order",
+      "Public Methoden": "84",
+      "Bewertung": "Monolithischer Bestell-Service"
+    }
+  ],
+  "risks": [
+    {
+      "Risiko": "Zyklische Modul-Abhängigkeiten",
+      "Schwere": "🔴 Hoch",
+      "Indikator": "order↔accounting, order↔product, party↔accounting, party↔product",
+      "severity": "high"
+    },
+    {
+      "Risiko": "God-Object ShoppingCart (388 Methoden)",
+      "Schwere": "🔴 Hoch",
+      "Indikator": "Unverhältnismäßige Konzentration von Geschäftslogik",
+      "severity": "high"
+    },
+    {
+      "Risiko": "Monolithische Services (OrderServices 84 Methoden)",
+      "Schwere": "🔴 Hoch",
+      "Indikator": "Schwer testbar, schwer isoliert ablösbar",
+      "severity": "high"
+    },
+    {
+      "Risiko": "Veraltete Java-EE-APIs (javax.*)",
+      "Schwere": "🟡 Mittel",
+      "Indikator": "5 javax.*-Pakete — Migration zu Jakarta EE erforderlich",
+      "severity": "medium"
+    },
+    {
+      "Risiko": "Groovy-Code nicht rekonstruierbar",
+      "Schwere": "🟡 Mittel",
+      "Indikator": "~30 % der Logik nur als .class vorhanden, Quelltext verloren",
+      "severity": "medium"
+    },
+    {
+      "Risiko": "Hohe externe Dependency-Zahl (191 Pakete)",
+      "Schwere": "🟡 Mittel",
+      "Indikator": "Supply-Chain-Risiko, viele Updates nötig",
+      "severity": "medium"
+    },
+    {
+      "Risiko": "Keine erkennbare Schichtentrennung",
+      "Schwere": "🟡 Mittel",
+      "Indikator": "Business-Module greifen direkt auf DB-Engine zu",
+      "severity": "medium"
+    },
+    {
+      "Risiko": "8 Payment-Provider eingebaut",
+      "Schwere": "🟡 Mittel",
+      "Indikator": "Jeder Provider: eigene API, Update-Pflicht, PCI-DSS-Scope",
+      "severity": "medium"
+    },
+    {
+      "Risiko": "Legacy-Kryptographie in EntityCrypto",
+      "Schwere": "🟡 Mittel",
+      "Indikator": "DES-basierte LegacyStorageHandler noch aktiv als Fallback",
+      "severity": "medium"
+    }
+  ],
+  "patterns": [
+    {
+      "Muster": "Service-Layer",
+      "Fundstelle": "*Services.java, service-Modul",
+      "Bewertung": "OFBiz Service-Engine (120+ Service-Klassen)"
+    },
+    {
+      "Muster": "Repository/DAO",
+      "Fundstelle": "GenericDelegator, EntityQuery",
+      "Bewertung": "Proprietäres ORM (kein JPA/Hibernate)"
+    },
+    {
+      "Muster": "MVC",
+      "Fundstelle": "webapp, widget, Controller-Klassen",
+      "Bewertung": "OFBiz Widget-Framework"
+    },
+    {
+      "Muster": "Script-Engine",
+      "Fundstelle": "minilang, Groovy-Scripts",
+      "Bewertung": "Konfigurierbare Business-Regeln (~30% der Klassen)"
+    },
+    {
+      "Muster": "Event-System",
+      "Fundstelle": "*Events.java-Klassen",
+      "Bewertung": "HTTP-Request-Handler (39 Klassen, ~250 Endpunkte)"
+    },
+    {
+      "Muster": "Visitor-Pattern",
+      "Fundstelle": "ModelWidgetVisitor, ModelConditionVisitor",
+      "Bewertung": "Widget-Tree-Traversal"
+    },
+    {
+      "Muster": "Strategy-Pattern",
+      "Fundstelle": "StorageHandler in EntityCrypto",
+      "Bewertung": "Krypto-Strategie (Shiro/DES/Legacy)"
+    },
+    {
+      "Muster": "Job Scheduler",
+      "Fundstelle": "PersistedServiceJob, JobManager, JobPoller in service",
+      "Bewertung": "Interner OFBiz-eigener Scheduler (kein Quartz/Spring Batch)"
+    },
+    {
+      "Muster": "Plugin/Gateway",
+      "Fundstelle": "thirdparty.* in accounting, shipment",
+      "Bewertung": "Austauschbare externe Integrationen"
+    }
+  ],
+  "missing_patterns": [
+    {
+      "Muster": "Dependency Injection",
+      "Status": "Nicht vorhanden",
+      "Implikation": "Kein Spring, kein CDI — manuelle Objekt-Verdrahtung"
+    },
+    {
+      "Muster": "REST-Controller-Schicht",
+      "Status": "Nicht vorhanden",
+      "Implikation": "Nur Servlet-basierte Controller in webapp"
+    },
+    {
+      "Muster": "Reaktive Programmierung",
+      "Status": "Nicht vorhanden",
+      "Implikation": "Klassisches blocking I/O"
+    },
+    {
+      "Muster": "Event Sourcing / CQRS",
+      "Status": "Nicht vorhanden",
+      "Implikation": "Klassisches CRUD-Muster"
+    },
+    {
+      "Muster": "API-Versionierung",
+      "Status": "Nicht erkennbar",
+      "Implikation": "Kein versioning in Events-Klassen sichtbar"
+    }
+  ],
+  "integration_channels": [
+    {
+      "Kanal": "SFTP",
+      "Technologie": "Apache MINA SSHD (sshd-core, sshd-sftp)",
+      "Fundstelle": "tief in content-Modul eingebettet"
+    },
+    {
+      "Kanal": "JMS",
+      "Technologie": "javax.jms, service.jms",
+      "Fundstelle": "direkt in Service-Engine integriert"
+    },
+    {
+      "Kanal": "SOAP",
+      "Technologie": "Apache Axis2",
+      "Fundstelle": "integration-relevante SOAP-Dienste"
+    },
+    {
+      "Kanal": "REST/JAX-RS",
+      "Technologie": "Apache CXF",
+      "Fundstelle": "JAX-RS-Schnittstellen (begrenzt)"
+    },
+    {
+      "Kanal": "E-Mail",
+      "Technologie": "JavaMail, SMTP",
+      "Fundstelle": "common.email-Modul"
+    },
+    {
+      "Kanal": "FTP",
+      "Technologie": "Apache Commons Net",
+      "Fundstelle": "content.ftp.FtpServices"
+    }
+  ],
+  "minilang_risks": [
+    {
+      "key": "Abhängig von 10+ Modulen",
+      "value": "— weit verbreitet im System"
+    },
+    {
+      "key": "Seit OFBiz 18.12 offiziell als Deprecated markiert",
+      "value": "— vorliegender Code nutzt es noch aktiv"
+    },
+    {
+      "key": "Sicherheitsrisiko",
+      "value": "unkontrollierter Datenfluss aus externen Quellen in MiniLang-Ausdrücke kann Injection-Angriffe ermöglichen"
+    },
+    {
+      "key": "Analyse-Blocker",
+      "value": "MiniLang-Scripts liegen als XML-Konfiguration vor (nicht in Class-Files) — statische Analyse nicht möglich"
+    }
+  ],
+  "replacement_assessment": [
+    {
+      "Aspekt": "Modularisierbarkeit",
+      "Befund": "Schwierig wegen Zyklen; Entity- und Service-Kern müssten zuerst extrahiert werden"
+    },
+    {
+      "Aspekt": "HTTP-API-Oberfläche",
+      "Befund": "~250 Endpunkte in 39 Events-Klassen — dokumentierbar und testbar"
+    },
+    {
+      "Aspekt": "Service-API-Oberfläche",
+      "Befund": "120+ Service-Klassen = interne Schnittstellen bei Strangler-Fig-Migration"
+    },
+    {
+      "Aspekt": "Testabdeckung",
+      "Befund": "testtools-Modul vorhanden; Groovy-Testklassen für alle Module erkennbar"
+    },
+    {
+      "Aspekt": "Ablöse-Kandidaten",
+      "Befund": "Payment-Gateway-Modul (klar abgegrenzt), Shipment-Carrier (isoliert)"
+    },
+    {
+      "Aspekt": "Risiko-Kandidaten",
+      "Befund": "ShoppingCart (388 Methoden), OrderServices (84 Methoden) — zuletzt ablösen"
+    },
+    {
+      "Aspekt": "Empfehlung",
+      "Befund": "Strangler-Fig-Pattern: schrittweise Ablösung über Events-Layer von außen nach innen"
+    }
+  ],
+  "replacement_phases": "Phase 1 (Niedrigstes Risiko):\n  → Shipment-Carrier-Integrationen (UPS/FedEx/DHL/USPS)\n  → Payment-Gateway-Adapter (8 Provider, klar isoliert)\n  → Reporting/Content-Module\n\nPhase 2 (Mittleres Risiko):\n  → Party-Modul (Stammdaten)\n  → Product-Katalog-Funktionen\n  → Manufacturing/WorkEffort\n\nPhase 3 (Höchstes Risiko — zuletzt):\n  → Order/ShoppingCart-Kern (God-Objects)\n  → Entity-Engine (zentrale DB-Abstraktion)\n  → Service-Engine (Framework-Kern)"
+}
