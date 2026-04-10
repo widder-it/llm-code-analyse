@@ -1,0 +1,841 @@
+{
+  "accounting": {
+    "classes_total": 113,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 955,
+    "top5_by_methods": [
+      {
+        "class": "GatewayRequest",
+        "public_methods": 60,
+        "groovy": false
+      },
+      {
+        "class": "PaymentGatewayServices",
+        "public_methods": 47,
+        "groovy": false
+      },
+      {
+        "class": "PcChargeApi",
+        "public_methods": 47,
+        "groovy": false
+      },
+      {
+        "class": "RitaApi",
+        "public_methods": 44,
+        "groovy": false
+      },
+      {
+        "class": "InvoiceWorker",
+        "public_methods": 35,
+        "groovy": false
+      }
+    ]
+  },
+  "base": {
+    "classes_total": 155,
+    "interfaces": 20,
+    "enums": 0,
+    "abstract_classes": 16,
+    "public_methods_total": 1611,
+    "top5_by_methods": [
+      {
+        "class": "UtilDateTime",
+        "public_methods": 105,
+        "groovy": false
+      },
+      {
+        "class": "UtilValidate",
+        "public_methods": 100,
+        "groovy": false
+      },
+      {
+        "class": "UtilHttp",
+        "public_methods": 83,
+        "groovy": false
+      },
+      {
+        "class": "Debug",
+        "public_methods": 67,
+        "groovy": false
+      },
+      {
+        "class": "UtilXml",
+        "public_methods": 59,
+        "groovy": false
+      }
+    ]
+  },
+  "catalina": {
+    "classes_total": 7,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 17,
+    "top5_by_methods": [
+      {
+        "class": "CatalinaContainer",
+        "public_methods": 5,
+        "groovy": false
+      },
+      {
+        "class": "HashedCredentialHandler",
+        "public_methods": 3,
+        "groovy": false
+      },
+      {
+        "class": "SimpleCredentialHandler",
+        "public_methods": 3,
+        "groovy": false
+      },
+      {
+        "class": "SslAcceleratorValve",
+        "public_methods": 3,
+        "groovy": false
+      },
+      {
+        "class": "CrossSubdomainSessionValve",
+        "public_methods": 1,
+        "groovy": false
+      }
+    ]
+  },
+  "common": {
+    "classes_total": 54,
+    "interfaces": 1,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 332,
+    "top5_by_methods": [
+      {
+        "class": "CommonServices",
+        "public_methods": 24,
+        "groovy": false
+      },
+      {
+        "class": "ContextHelper",
+        "public_methods": 24,
+        "groovy": false
+      },
+      {
+        "class": "CommonServicesScript",
+        "public_methods": 21,
+        "groovy": false
+      },
+      {
+        "class": "ScriptHelperImpl",
+        "public_methods": 17,
+        "groovy": false
+      },
+      {
+        "class": "PortalPageServices",
+        "public_methods": 15,
+        "groovy": false
+      }
+    ]
+  },
+  "commonext": {
+    "classes_total": 7,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 36,
+    "top5_by_methods": [
+      {
+        "class": "SystemInfoServices",
+        "public_methods": 10,
+        "groovy": false
+      },
+      {
+        "class": "DocTypeTemplate",
+        "public_methods": 6,
+        "groovy": false
+      },
+      {
+        "class": "ChangeOrgPartyId",
+        "public_methods": 4,
+        "groovy": false
+      },
+      {
+        "class": "FindFacility",
+        "public_methods": 4,
+        "groovy": false
+      },
+      {
+        "class": "GetProdCatalog",
+        "public_methods": 4,
+        "groovy": false
+      }
+    ]
+  },
+  "content": {
+    "classes_total": 77,
+    "interfaces": 2,
+    "enums": 0,
+    "abstract_classes": 1,
+    "public_methods_total": 602,
+    "top5_by_methods": [
+      {
+        "class": "ContentWorker",
+        "public_methods": 65,
+        "groovy": false
+      },
+      {
+        "class": "DataResourceWorker",
+        "public_methods": 34,
+        "groovy": false
+      },
+      {
+        "class": "ContentServicesScript",
+        "public_methods": 31,
+        "groovy": false
+      },
+      {
+        "class": "ContentManagementServices",
+        "public_methods": 30,
+        "groovy": false
+      },
+      {
+        "class": "ContentManagementWorker",
+        "public_methods": 30,
+        "groovy": false
+      }
+    ]
+  },
+  "datafile": {
+    "classes_total": 9,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 124,
+    "top5_by_methods": [
+      {
+        "class": "ModelDataFile",
+        "public_methods": 30,
+        "groovy": false
+      },
+      {
+        "class": "ModelRecord",
+        "public_methods": 29,
+        "groovy": false
+      },
+      {
+        "class": "ModelField",
+        "public_methods": 22,
+        "groovy": false
+      },
+      {
+        "class": "Record",
+        "public_methods": 21,
+        "groovy": false
+      },
+      {
+        "class": "DataFile",
+        "public_methods": 10,
+        "groovy": false
+      }
+    ]
+  },
+  "entity": {
+    "classes_total": 146,
+    "interfaces": 10,
+    "enums": 0,
+    "abstract_classes": 15,
+    "public_methods_total": 1882,
+    "top5_by_methods": [
+      {
+        "class": "ModelEntity",
+        "public_methods": 147,
+        "groovy": false
+      },
+      {
+        "class": "GenericDelegator",
+        "public_methods": 112,
+        "groovy": false
+      },
+      {
+        "class": "Delegator",
+        "public_methods": 106,
+        "groovy": false
+      },
+      {
+        "class": "GenericEntity",
+        "public_methods": 93,
+        "groovy": false
+      },
+      {
+        "class": "DatabaseUtil",
+        "public_methods": 48,
+        "groovy": false
+      }
+    ]
+  },
+  "entityext": {
+    "classes_total": 18,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 119,
+    "top5_by_methods": [
+      {
+        "class": "EntityPermissionChecker",
+        "public_methods": 16,
+        "groovy": false
+      },
+      {
+        "class": "EntitySyncContext",
+        "public_methods": 15,
+        "groovy": false
+      },
+      {
+        "class": "EntityEcaRule",
+        "public_methods": 13,
+        "groovy": false
+      },
+      {
+        "class": "EntityCacheServices",
+        "public_methods": 10,
+        "groovy": false
+      },
+      {
+        "class": "EntitySyncServices",
+        "public_methods": 9,
+        "groovy": false
+      }
+    ]
+  },
+  "humanres": {
+    "classes_total": 2,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 6,
+    "top5_by_methods": [
+      {
+        "class": "CategoryTree",
+        "public_methods": 4,
+        "groovy": false
+      },
+      {
+        "class": "HumanResEvents",
+        "public_methods": 2,
+        "groovy": false
+      }
+    ]
+  },
+  "manufacturing": {
+    "classes_total": 44,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 302,
+    "top5_by_methods": [
+      {
+        "class": "BOMNode",
+        "public_methods": 38,
+        "groovy": false
+      },
+      {
+        "class": "ProductionRunServices",
+        "public_methods": 32,
+        "groovy": false
+      },
+      {
+        "class": "ProductionRun",
+        "public_methods": 25,
+        "groovy": false
+      },
+      {
+        "class": "BOMTree",
+        "public_methods": 24,
+        "groovy": false
+      },
+      {
+        "class": "TechDataServices",
+        "public_methods": 12,
+        "groovy": false
+      }
+    ]
+  },
+  "marketing": {
+    "classes_total": 13,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 55,
+    "top5_by_methods": [
+      {
+        "class": "TrackingCodeEvents",
+        "public_methods": 8,
+        "groovy": false
+      },
+      {
+        "class": "LeadServices",
+        "public_methods": 7,
+        "groovy": false
+      },
+      {
+        "class": "AccountServices",
+        "public_methods": 5,
+        "groovy": false
+      },
+      {
+        "class": "GetContactListMarketingEmail",
+        "public_methods": 4,
+        "groovy": false
+      },
+      {
+        "class": "MarketingServices",
+        "public_methods": 4,
+        "groovy": false
+      }
+    ]
+  },
+  "minilang": {
+    "classes_total": 125,
+    "interfaces": 1,
+    "enums": 0,
+    "abstract_classes": 9,
+    "public_methods_total": 520,
+    "top5_by_methods": [
+      {
+        "class": "SimpleMethod",
+        "public_methods": 46,
+        "groovy": false
+      },
+      {
+        "class": "MethodContext",
+        "public_methods": 34,
+        "groovy": false
+      },
+      {
+        "class": "MiniLangValidate",
+        "public_methods": 17,
+        "groovy": false
+      },
+      {
+        "class": "MiniLangUtil",
+        "public_methods": 10,
+        "groovy": false
+      },
+      {
+        "class": "Calculate",
+        "public_methods": 9,
+        "groovy": false
+      }
+    ]
+  },
+  "order": {
+    "classes_total": 147,
+    "interfaces": 8,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 1974,
+    "top5_by_methods": [
+      {
+        "class": "ShoppingCart",
+        "public_methods": 374,
+        "groovy": false
+      },
+      {
+        "class": "OrderReadHelper",
+        "public_methods": 192,
+        "groovy": false
+      },
+      {
+        "class": "ShoppingCartItem",
+        "public_methods": 162,
+        "groovy": false
+      },
+      {
+        "class": "OrderServices",
+        "public_methods": 84,
+        "groovy": false
+      },
+      {
+        "class": "ShoppingCartPersistence",
+        "public_methods": 58,
+        "groovy": false
+      }
+    ]
+  },
+  "party": {
+    "classes_total": 52,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 362,
+    "top5_by_methods": [
+      {
+        "class": "PartyServicesScript",
+        "public_methods": 31,
+        "groovy": false
+      },
+      {
+        "class": "PartyWorker",
+        "public_methods": 24,
+        "groovy": false
+      },
+      {
+        "class": "PartyServices",
+        "public_methods": 23,
+        "groovy": false
+      },
+      {
+        "class": "ContactMechServicesScript",
+        "public_methods": 18,
+        "groovy": false
+      },
+      {
+        "class": "ContactMechWorker",
+        "public_methods": 18,
+        "groovy": false
+      }
+    ]
+  },
+  "product": {
+    "classes_total": 181,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 1218,
+    "top5_by_methods": [
+      {
+        "class": "ProductWorker",
+        "public_methods": 55,
+        "groovy": false
+      },
+      {
+        "class": "CatalogWorker",
+        "public_methods": 38,
+        "groovy": false
+      },
+      {
+        "class": "ShipmentServices",
+        "public_methods": 36,
+        "groovy": false
+      },
+      {
+        "class": "ProductServicesScript",
+        "public_methods": 35,
+        "groovy": false
+      },
+      {
+        "class": "CategoryServicesScript",
+        "public_methods": 30,
+        "groovy": false
+      }
+    ]
+  },
+  "security": {
+    "classes_total": 10,
+    "interfaces": 2,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 61,
+    "top5_by_methods": [
+      {
+        "class": "Security",
+        "public_methods": 13,
+        "groovy": false
+      },
+      {
+        "class": "CsrfUtil",
+        "public_methods": 12,
+        "groovy": false
+      },
+      {
+        "class": "CsrfDefenseStrategy",
+        "public_methods": 6,
+        "groovy": false
+      },
+      {
+        "class": "NoCsrfDefenseStrategy",
+        "public_methods": 6,
+        "groovy": false
+      },
+      {
+        "class": "ICsrfDefenseStrategy",
+        "public_methods": 5,
+        "groovy": false
+      }
+    ]
+  },
+  "securityext": {
+    "classes_total": 2,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 10,
+    "top5_by_methods": [
+      {
+        "class": "LoginEvents",
+        "public_methods": 8,
+        "groovy": false
+      },
+      {
+        "class": "CertificateServices",
+        "public_methods": 2,
+        "groovy": false
+      }
+    ]
+  },
+  "service": {
+    "classes_total": 126,
+    "interfaces": 10,
+    "enums": 0,
+    "abstract_classes": 7,
+    "public_methods_total": 1078,
+    "top5_by_methods": [
+      {
+        "class": "ModelService",
+        "public_methods": 126,
+        "groovy": false
+      },
+      {
+        "class": "ModelParam",
+        "public_methods": 53,
+        "groovy": false
+      },
+      {
+        "class": "LocalDispatcher",
+        "public_methods": 45,
+        "groovy": false
+      },
+      {
+        "class": "RecurrenceRule",
+        "public_methods": 38,
+        "groovy": false
+      },
+      {
+        "class": "MimeMessageWrapper",
+        "public_methods": 31,
+        "groovy": false
+      }
+    ]
+  },
+  "sfa": {
+    "classes_total": 1,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 3,
+    "top5_by_methods": [
+      {
+        "class": "VCard",
+        "public_methods": 3,
+        "groovy": false
+      }
+    ]
+  },
+  "shipment": {
+    "classes_total": 25,
+    "interfaces": 1,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 301,
+    "top5_by_methods": [
+      {
+        "class": "PackingSession",
+        "public_methods": 60,
+        "groovy": false
+      },
+      {
+        "class": "WeightPackageSession",
+        "public_methods": 45,
+        "groovy": false
+      },
+      {
+        "class": "PackingSessionLine",
+        "public_methods": 26,
+        "groovy": false
+      },
+      {
+        "class": "UpsServices",
+        "public_methods": 20,
+        "groovy": false
+      },
+      {
+        "class": "VerifyPickSession",
+        "public_methods": 18,
+        "groovy": false
+      }
+    ]
+  },
+  "testtools": {
+    "classes_total": 7,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 31,
+    "top5_by_methods": [
+      {
+        "class": "GroovyScriptTestCase",
+        "public_methods": 7,
+        "groovy": false
+      },
+      {
+        "class": "TestRunContainer",
+        "public_methods": 6,
+        "groovy": false
+      },
+      {
+        "class": "JunitSuiteWrapper",
+        "public_methods": 4,
+        "groovy": false
+      },
+      {
+        "class": "ModelTestSuite",
+        "public_methods": 4,
+        "groovy": false
+      },
+      {
+        "class": "SimpleMethodTest",
+        "public_methods": 4,
+        "groovy": false
+      }
+    ]
+  },
+  "webapp": {
+    "classes_total": 75,
+    "interfaces": 6,
+    "enums": 0,
+    "abstract_classes": 1,
+    "public_methods_total": 370,
+    "top5_by_methods": [
+      {
+        "class": "LoginWorker",
+        "public_methods": 32,
+        "groovy": false
+      },
+      {
+        "class": "ServerHitBin",
+        "public_methods": 28,
+        "groovy": false
+      },
+      {
+        "class": "SeoConfigUtil",
+        "public_methods": 20,
+        "groovy": false
+      },
+      {
+        "class": "ApacheFopWorker",
+        "public_methods": 20,
+        "groovy": false
+      },
+      {
+        "class": "RequestHandler",
+        "public_methods": 18,
+        "groovy": false
+      }
+    ]
+  },
+  "webtools": {
+    "classes_total": 54,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 1,
+    "public_methods_total": 370,
+    "top5_by_methods": [
+      {
+        "class": "ArtifactInfoFactory",
+        "public_methods": 46,
+        "groovy": false
+      },
+      {
+        "class": "ServiceArtifactInfo",
+        "public_methods": 26,
+        "groovy": false
+      },
+      {
+        "class": "ControllerRequestArtifactInfo",
+        "public_methods": 18,
+        "groovy": false
+      },
+      {
+        "class": "EntityArtifactInfo",
+        "public_methods": 17,
+        "groovy": false
+      },
+      {
+        "class": "FormWidgetArtifactInfo",
+        "public_methods": 16,
+        "groovy": false
+      }
+    ]
+  },
+  "widget": {
+    "classes_total": 95,
+    "interfaces": 16,
+    "enums": 0,
+    "abstract_classes": 12,
+    "public_methods_total": 939,
+    "top5_by_methods": [
+      {
+        "class": "ModelForm",
+        "public_methods": 101,
+        "groovy": false
+      },
+      {
+        "class": "ModelFormFieldBuilder",
+        "public_methods": 86,
+        "groovy": false
+      },
+      {
+        "class": "ModelFormField",
+        "public_methods": 64,
+        "groovy": false
+      },
+      {
+        "class": "MacroFormRenderer",
+        "public_methods": 46,
+        "groovy": false
+      },
+      {
+        "class": "ModelMenu",
+        "public_methods": 44,
+        "groovy": false
+      }
+    ]
+  },
+  "workeffort": {
+    "classes_total": 23,
+    "interfaces": 0,
+    "enums": 0,
+    "abstract_classes": 0,
+    "public_methods_total": 120,
+    "top5_by_methods": [
+      {
+        "class": "WorkEffortContentWrapper",
+        "public_methods": 20,
+        "groovy": false
+      },
+      {
+        "class": "WorkEffortServicesScript",
+        "public_methods": 20,
+        "groovy": false
+      },
+      {
+        "class": "WorkEffortServices",
+        "public_methods": 13,
+        "groovy": false
+      },
+      {
+        "class": "WorkEffortSearchSession",
+        "public_methods": 7,
+        "groovy": false
+      },
+      {
+        "class": "IsCalOwner",
+        "public_methods": 4,
+        "groovy": false
+      }
+    ]
+  },
+  "_totals": {
+    "classes": 1568,
+    "public_methods": 13398,
+    "modules": 26
+  }
+}

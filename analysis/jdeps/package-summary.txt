@@ -1,0 +1,11 @@
+ofbiz-original.jar -> java.base
+ofbiz-original.jar -> java.desktop
+ofbiz-original.jar -> java.management
+ofbiz-original.jar -> java.naming
+ofbiz-original.jar -> java.rmi
+ofbiz-original.jar -> java.scripting
+ofbiz-original.jar -> java.sql
+ofbiz-original.jar -> java.sql.rowset
+ofbiz-original.jar -> java.transaction.xa
+ofbiz-original.jar -> java.xml
+ofbiz-original.jar -> nicht gefunden

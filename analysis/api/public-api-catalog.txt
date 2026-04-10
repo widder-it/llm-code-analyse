@@ -1,0 +1,1076 @@
+================================================================================
+PUBLIC API CATALOG — Apache OFBiz
+Generated: 2026-04-09
+Source: class-inventory-raw.txt (javap -public output)
+Scope: public classes, interfaces, abstract classes only.
+       Groovy-generated $callSiteArray / metaclass methods excluded.
+================================================================================
+
+NOTATION
+--------
+  [C]  public class
+  [I]  public interface
+  [A]  public abstract class
+  [E]  public enum
+
+================================================================================
+MODULE: accounting  (org.apache.ofbiz.accounting.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.accounting ---
+[C] AccountingException extends GenericServiceException
+[C] GlEvents
+    + updatePaymentApplications(HttpServletRequest, HttpServletResponse)
+
+--- Package: org.apache.ofbiz.accounting.agreement ---
+[C] AgreementServices
+    + createAgreement(DispatchContext, Map)
+    + copyAgreement(DispatchContext, Map)
+    + getCommissionForProduct(DispatchContext, Map)
+    + addPaymentMethodTypeGlAssignment(DispatchContext, Map)
+    ... (10 methods total)
+
+--- Package: org.apache.ofbiz.accounting.finaccount ---
+[C] FinAccountPaymentServices
+    + createPaymentFromFinAccount(DispatchContext, Map)
+    + createFinAccountPaymentTransaction(DispatchContext, Map)
+[C] FinAccountProductServices
+    + addFinAccountToProduct(DispatchContext, Map)
+[C] FinAccountServices
+    + createFinAccount(DispatchContext, Map)
+    + updateFinAccount(DispatchContext, Map)
+    + deleteFinAccount(DispatchContext, Map)
+    + createFinAccountRole(DispatchContext, Map)
+    + reconcileFinAccount(DispatchContext, Map)
+    ... (28 methods total)
+
+--- Package: org.apache.ofbiz.accounting.invoice ---
+[C] InvoiceServices
+    + createInvoice(DispatchContext, Map)
+    + updateInvoice(DispatchContext, Map)
+    + copyInvoice(DispatchContext, Map)
+    + createInvoiceFromOrder(DispatchContext, Map)
+    + createInvoiceFromShipment(DispatchContext, Map)
+    + createInvoiceForTemplate(DispatchContext, Map)
+    + addInvoiceContactMech(DispatchContext, Map)
+    + createInvoiceTerm(DispatchContext, Map)
+    + createInvoiceItem(DispatchContext, Map)
+    + updateInvoiceItem(DispatchContext, Map)
+    + removeInvoiceItem(DispatchContext, Map)
+    + setInvoiceStatus(DispatchContext, Map)
+    + createPaymentApplication(DispatchContext, Map)
+    + updatePaymentApplication(DispatchContext, Map)
+    + getInvoiceRunningTotal(DispatchContext, Map)
+    + createSalesInvoicesFromDropShipments(DispatchContext, Map)
+    ... (84 methods total — largest in accounting)
+[C] InvoiceWorker
+    + getInvoiceTotal(GenericValue)
+    + getInvoiceNotApplied(GenericValue)
+    + getInvoiceApplied(GenericValue)
+    + getInvoiceTaxTotal(GenericValue)
+    + getInvoiceSubTotal(GenericValue)
+    ... (35 methods total)
+
+--- Package: org.apache.ofbiz.accounting.ledger ---
+[C] GeneralLedgerServices
+    + createGlAccountOrganization(DispatchContext, Map)
+    + createAcctgTrans(DispatchContext, Map)
+    + postAcctgTrans(DispatchContext, Map)
+    + reverseAcctgTrans(DispatchContext, Map)
+    ... (32 methods total)
+
+--- Package: org.apache.ofbiz.accounting.payment ---
+[C] PaymentGatewayServices
+    + processPayment(DispatchContext, Map)
+    + capturePayment(DispatchContext, Map)
+    + refundPayment(DispatchContext, Map)
+    + voidPayment(DispatchContext, Map)
+    + authorizePayment(DispatchContext, Map)
+    ... (47 methods total)
+[C] PaymentServices
+    + createPayment(DispatchContext, Map)
+    + updatePayment(DispatchContext, Map)
+    + getPayments(DispatchContext, Map)
+    + createPaymentApplication(DispatchContext, Map)
+    ... (51 methods total)
+
+--- Package: org.apache.ofbiz.accounting.tax ---
+[C] TaxAuthorityServices
+    + getTaxAuthority(DispatchContext, Map)
+    + calculateTaxForDisplay(DispatchContext, Map)
+
+--- Package: org.apache.ofbiz.accounting.thirdparty.paypal ---
+[C] PayPalServices
+    + setExpressCheckout(DispatchContext, Map)
+    + getExpressCheckout(DispatchContext, Map)
+    + doExpressCheckout(DispatchContext, Map)
+    + doCapture(DispatchContext, Map)
+    + doVoid(DispatchContext, Map)
+
+--- Package: org.apache.ofbiz.accounting.thirdparty.sagepay ---
+[C] SagePayPaymentServices
+    + register(DispatchContext, Map)
+    + confirm(DispatchContext, Map)
+    + cancel(DispatchContext, Map)
+
+================================================================================
+MODULE: base  (org.apache.ofbiz.base.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.base.component ---
+[C] ComponentConfig
+    + static getAllComponents(): List<ComponentConfig>
+    + static getComponentConfig(String): ComponentConfig
+    + getName(): String
+    + getClasspath(): List<ClasspathInfo>
+    + getWebappInfos(): List<WebappInfo>
+
+--- Package: org.apache.ofbiz.base.container ---
+[I] Container
+    + init(List<StartupCommand>, String, String): void
+    + start(): boolean
+    + stop(): void
+    + getName(): String
+[C] ContainerConfig
+[C] ContainerLoader
+
+--- Package: org.apache.ofbiz.base.conversion ---
+[I] Converter<S,T>
+    + convert(S): T
+    + canConvert(Class<?>, Class<?>): boolean
+[C] Converters
+    + static getConverter(Class<S>, Class<T>): Converter<S,T>
+    + static registerConverter(Converter<?,?>): void
+    + static convert(Object, Class<T>): T
+
+--- Package: org.apache.ofbiz.base.crypto ---
+[C] HashCrypt
+    + static cryptBytes(String, String, byte[]): String
+    + static cryptUTF8(String, String, String): String
+    + static comparePassword(String, String, String): boolean
+    + static pbkdf2HashCrypt(String, String, String): String
+
+--- Package: org.apache.ofbiz.base.lang ---
+[I] Factory<T,S>
+    + getInstance(S): T
+[I] IsEmpty
+    + isEmpty(): boolean
+[I] SourceMonitored  (marker)
+[I] ThreadSafe  (marker)
+
+--- Package: org.apache.ofbiz.base.location ---
+[C] FlexibleLocation
+    + static resolveLocation(String): URL
+    + static resolveLocation(String, ClassLoader): URL
+
+--- Package: org.apache.ofbiz.base.metrics ---
+[I] Metrics
+    + getThreshold(): double
+    + getServiceRate(): double
+    + updateServerData(): void
+
+--- Package: org.apache.ofbiz.base.start ---
+[C] Start
+    + main(String[]): void [entry point]
+[C] StartupCommand
+
+--- Package: org.apache.ofbiz.base.util ---
+[C] Debug
+    + static log(int, Throwable, String, String, Object...): void
+    + static logError(Throwable, String, String): void
+    + static logWarning(String, String): void
+    + static logInfo(String, String): void
+    + static logVerbose(String, String): void
+    + static isOn(int): boolean
+    ... (67 methods total)
+[C] GeneralException extends Exception
+[C] UtilDateTime
+    + static nowTimestamp(): Timestamp
+    + static toTimestamp(Date): Timestamp
+    + static getDayStart(Timestamp, TimeZone, Locale): Timestamp
+    + static getDayEnd(Timestamp, TimeZone, Locale): Timestamp
+    + static getMonthStart(Timestamp, int, TimeZone, Locale): Timestamp
+    + static getWeek(Date, TimeZone, Locale): int
+    + static toDateString(Date, String): String
+    + static parseDateTimeString(String, String): Timestamp
+    ... (105 methods total — most in module)
+[C] UtilHttp
+    + static getParameterMap(HttpServletRequest): Map<String,Object>
+    + static getSessionMap(HttpSession): Map<String,Object>
+    + static makeRedirectSafe(String): String
+    + static getApplicationAttribute(ServletContext, String): Object
+    ... (83 methods total)
+[C] UtilMisc
+    + static toList(Object...): List
+    + static toSet(Object...): Set
+    + static toMap(Object...): Map
+    + static addToListInMap(Object, Map, Object): void
+    ... (62 methods total)
+[C] UtilNumber
+    + static setBigDecimalScale(BigDecimal, String): BigDecimal
+    + static setRounding(BigDecimal, String): BigDecimal
+[C] UtilProperties
+    + static getPropertyValue(String, String): String
+    + static getMessage(String, String, Locale): String
+    + static getResourceBundleMap(String, Locale): Map<String,Object>
+    + static setPropertyValue(String, String, String): void
+[C] UtilValidate
+    + static isEmpty(Object): boolean
+    + static isNotEmpty(Object): boolean
+    + static isEmail(String): boolean
+    + static isUrl(String): boolean
+    + static isInteger(String): boolean
+    ... (100 methods total — most in module)
+[C] UtilXml
+    + static readXmlDocument(URL): Document
+    + static parseXmlDocument(InputStream, boolean): Document
+    + static writeXmlDocument(Document, OutputStream): void
+    + static childElementList(Element, String): List<Element>
+    ... (59 methods total)
+
+--- Package: org.apache.ofbiz.base.util.cache ---
+[C] UtilCache<K,V>
+    + static getOrCreateUtilCache(String, ...): UtilCache<K,V>
+    + put(K, V): void
+    + get(K): V
+    + remove(K): V
+    + clear(): void
+    + getMaxSize(): long
+    + size(): int
+
+--- Package: org.apache.ofbiz.base.util.collections ---
+[C] FlexibleMapAccessor<T>
+    + static getInstance(String): FlexibleMapAccessor<T>
+    + get(Map<String,Object>): T
+    + put(Map<String,Object>, T): void
+[C] MapContext<K,V> implements Map<K,V>
+[C] ResourceBundleMapWrapper
+[I] LocalizedMap<V>
+    + get(String, Locale): V
+
+--- Package: org.apache.ofbiz.base.util.string ---
+[C] FlexibleStringExpander
+    + static getInstance(String): FlexibleStringExpander
+    + expandString(Map<String,Object>): String
+    + expandString(Map<String,Object>, TimeZone, Locale): String
+    + static expandString(String, Map<String,Object>): String
+
+--- Package: org.apache.ofbiz.base.util.template ---
+[C] FreeMarkerWorker
+    + static getDefaultOfbizTemplate(String): Template
+    + static renderTemplate(String, Map, Writer): void
+    + static buildSeoHrefLink(Map, ...): String
+
+================================================================================
+MODULE: entity  (org.apache.ofbiz.entity.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.entity ---
+[I] Delegator
+    + create(String, Map<String,?>): GenericValue
+    + create(GenericValue): GenericValue
+    + findOne(String, Map<String,?>, boolean): GenericValue
+    + findOne(String, boolean, Object...): GenericValue
+    + findAll(String, boolean): List<GenericValue>
+    + findList(String, EntityCondition, Set<String>, List<String>, EntityFindOptions, boolean): List<GenericValue>
+    + findByAnd(String, Map<String,?>, List<String>, boolean): List<GenericValue>
+    + find(String, EntityCondition, EntityCondition, Set<String>, List<String>, EntityFindOptions): EntityListIterator
+    + findCountByCondition(String, EntityCondition, EntityCondition, EntityFindOptions): long
+    + store(GenericValue): int
+    + storeAll(List<GenericValue>): int
+    + storeAll(List<GenericValue>, EntityStoreOptions): int
+    + storeByCondition(String, Map<String,?>, EntityCondition): int
+    + removeValue(GenericValue): int
+    + removeAll(List<? extends GenericEntity>): int
+    + removeByAnd(String, Map<String,?>): int
+    + removeByCondition(String, EntityCondition): int
+    + removeRelated(String, GenericValue): int
+    + getNextSeqId(String): String
+    + makeValue(String): GenericValue
+    + makeValue(String, Map<String,?>): GenericValue
+    + makePK(String, Map<String,?>): GenericPK
+    + getModelEntity(String): ModelEntity
+    + getModelReader(): ModelReader
+    + getCache(): Cache
+    + clearAllCaches(): void
+    + getDelegatorName(): String
+    + cloneDelegator(): Delegator
+    ... (110 methods total — primary data-access API)
+[C] GenericEntity implements Map<String,Object>, Serializable, Comparable<GenericEntity>
+    + get(String): Object
+    + set(String, Object): Object
+    + setString(String, String): void
+    + getString(String): String
+    + getTimestamp(String): Timestamp
+    + getDate(String): Date
+    + getInteger(String): Integer
+    + getLong(String): Long
+    + getBigDecimal(String): BigDecimal
+    + getBoolean(String): Boolean
+    + getAllFields(): Map<String,Object>
+    + getPrimaryKey(): GenericPK
+    ... (98 methods total)
+[C] GenericValue extends GenericEntity
+    + static create(ModelEntity): GenericValue
+    + create(): GenericValue
+    + store(): void
+    + remove(): void
+    + refresh(): void
+    + getRelated(String): List<GenericValue>
+    + getRelatedOne(String): GenericValue
+    + getRelatedOne(String, boolean): GenericValue
+    ... (30 methods total)
+[C] GenericDelegator implements Delegator
+    (implements all Delegator methods + internal helpers)
+[C] GenericEntityException extends GeneralException
+[C] GenericEntityNotFoundException extends GenericEntityException
+[C] EntityCryptoException extends GenericEntityException
+
+--- Package: org.apache.ofbiz.entity.condition ---
+[I] EntityCondition extends IsEmpty, Serializable
+    + makeCondition(Object...): EntityCondition [static factory]
+    + entityConditionList(List<? extends EntityCondition>): EntityCondition
+    + getWhereString(ModelEntity, List<EntityConditionParam>, Datasource): String
+[C] EntityJoinOperator (AND, OR operators)
+[C] EntityNotCondition
+[C] EntityFieldValue extends EntityConditionValue
+[C] EntityConditionBuilder extends BuilderSupport (Groovy DSL)
+[C] OrderByList implements Comparator<GenericEntity>
+[C] OrderByItem implements Comparator<GenericEntity>
+
+--- Package: org.apache.ofbiz.entity.datasource ---
+[I] GenericHelper
+    + getEntityHelperInfo(): GenericHelperInfo
+    + select(GenericPK): GenericValue
+    + select(GenericEntity, Collection<String>): GenericValue
+    + create(GenericValue): void
+    + store(GenericValue): int
+    + storeAll(List<GenericValue>, EntityStoreOptions): int
+    + removeAll(String, EntityCondition): int
+    + findByAnd(ModelEntity, Map<String,?>, List<String>): List<GenericValue>
+    + findListIteratorByCondition(...): EntityListIterator
+[C] GenericDAO
+[C] GenericHelperDAO implements GenericHelper
+
+--- Package: org.apache.ofbiz.entity.model ---
+[C] ModelEntity
+    + getEntityName(): String
+    + getPrimaryKeySize(): int
+    + getField(String): ModelField
+    + getAllFieldNames(): List<String>
+    + getRelation(String): ModelRelation
+    ... (147 methods total — most in module)
+[C] ModelField
+[C] ModelRelation
+[C] ModelReader
+    + getModelEntity(String): ModelEntity
+    + getEntityNames(): Collection<String>
+
+--- Package: org.apache.ofbiz.entity.transaction ---
+[C] TransactionUtil
+    + static begin(): boolean
+    + static commit(): void
+    + static rollback(): void
+    + static isTransactionInPlace(): boolean
+    + static setRollbackOnly(String, Throwable): void
+
+--- Package: org.apache.ofbiz.entity.util ---
+[C] EntityUtil
+    + static filterByDate(List<GenericValue>): List<GenericValue>
+    + static filterByCondition(List<GenericValue>, EntityCondition): List<GenericValue>
+    + static getFirst(List<GenericValue>): GenericValue
+    + static makeFields(String...): Map<String,Object>
+[C] EntityListIterator implements Closeable, ListIterator<GenericValue>
+    + next(): GenericValue
+    + hasNext(): boolean
+    + getCompleteList(): List<GenericValue>
+    + getPartialList(int, int): List<GenericValue>
+[C] EntityFindOptions implements Serializable
+    + static DISTINCT: EntityFindOptions [static factory]
+    + setDistinct(boolean): void
+    + setMaxResults(int): void
+
+================================================================================
+MODULE: service  (org.apache.ofbiz.service.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.service ---
+[I] LocalDispatcher
+    + runSync(String, Map<String,?>): Map<String,Object>
+    + runSync(String, Map<String,?>, int, boolean): Map<String,Object>
+    + runAsync(String, Map<String,?>, boolean): void
+    + runAsync(String, Map<String,?>, GenericRequester, boolean): void
+    + runAsyncWait(String, Map<String,?>): GenericResultWaiter
+    + schedule(String, String, Map<String,?>, long, int, int, int, long, int): void
+    + schedule(String, Map<String,?>, long, int, int, int, long): void
+    + addRollbackService(String, Map<String,?>, boolean): void
+    + addCommitService(String, Map<String,?>, boolean): void
+    + getJobManager(): JobManager
+    + getJMSListeneFactory(): JmsListenerFactory
+    + getDelegator(): Delegator
+    + getSecurity(): Security
+    + getName(): String
+    + getDispatchContext(): DispatchContext
+    + deregister(): void
+    + disableEcas(): void
+    + enableEcas(): void
+    ... (47 methods total — primary service invocation API)
+[C] DispatchContext implements Serializable
+    + getDelegator(): Delegator
+    + getDispatcher(): LocalDispatcher
+    + getClassLoader(): ClassLoader
+    + getService(String): ModelService
+    + getServiceNames(): Set<String>
+[C] ServiceUtil
+    + static returnSuccess(): Map<String,Object>
+    + static returnError(String): Map<String,Object>
+    + static returnFailure(String): Map<String,Object>
+    + static isSuccess(Map<String,Object>): boolean
+    + static isError(Map<String,Object>): boolean
+    + static getErrorMessage(Map<String,Object>): String
+    + static makeContext(Object...): Map<String,Object>
+    ... (35 methods total)
+[C] ModelService
+    + validate(Map<String,Object>, String, Locale): void
+    + makeValid(Map<String,Object>, String): Map<String,Object>
+    + getName(): String
+    + getEngineName(): String
+    + getLocation(): String
+    + getInvoke(): String
+    + isExport(): boolean
+    + isAuth(): boolean
+    + getMaxRetry(): int
+    + getDefinedParamNames(String): Set<String>
+    ... (126 methods total — largest in module)
+[C] GenericResultWaiter implements GenericRequester
+    + waitForResult(): Map<String,Object>
+    + waitForResult(long): Map<String,Object>
+[I] GenericRequester extends Serializable
+    + receiveResult(Map<String,Object>): void
+    + receiveThrowable(Throwable): void
+[I] GenericServiceCallback
+    + receiveEvent(Map<String,Object>): void
+[C] GenericServiceException extends GeneralException
+[C] GenericAbstractDispatcher implements LocalDispatcher (abstract base)
+
+--- Package: org.apache.ofbiz.service.calendar ---
+[C] RecurrenceInfo
+    + static makeInfo(Delegator, Timestamp, int, int, int): RecurrenceInfo
+    + next(): Timestamp
+    + isValidDate(Timestamp): boolean
+[C] RecurrenceRule
+    + isValidDate(Timestamp, Timestamp): boolean
+    + getNextOccurrence(Timestamp, Timestamp): Timestamp
+[A] TemporalExpression implements Serializable, Comparable<TemporalExpression>
+    + includesDate(Date): boolean
+    + next(Date, DateRange): Date
+[C] TemporalExpressions implements Serializable
+    + static HourRange(int, int): TemporalExpression
+    + static DayRange(int, int): TemporalExpression
+    + static DateRange(Date, Date): TemporalExpression
+    + static Difference(TemporalExpression, TemporalExpression): TemporalExpression
+    + static Intersection(Set<TemporalExpression>): TemporalExpression
+    + static Union(Set<TemporalExpression>): TemporalExpression
+    ... (278 methods total)
+[I] TemporalExpressionVisitor
+
+--- Package: org.apache.ofbiz.service.eca ---
+[C] ServiceEcaAction implements Serializable
+    + runAction(String, DispatchContext, Map, Map): void
+[C] ServiceEcaCondition implements Serializable
+    + eval(String, DispatchContext, Map): boolean
+
+--- Package: org.apache.ofbiz.service.engine ---
+[I] GenericEngine
+    + runSync(String, ModelService, Map<String,?>): Map<String,Object>
+    + runAsync(String, ModelService, Map<String,?>, boolean): void
+    + runSyncIgnore(String, ModelService, Map<String,?>): void
+[A] AbstractEngine implements GenericEngine
+[A] GenericAsyncEngine extends AbstractEngine
+[C] GroovyBaseScript extends groovy.lang.Script (abstract Groovy base)
+[C] StandardClojureEngine (Clojure service invocation)
+[C] HttpEngine (HTTP service invocation)
+[C] SoapSerializer
+
+--- Package: org.apache.ofbiz.service.jms ---
+[C] JmsListenerFactory implements Runnable
+    + getInstance(Delegator, LocalDispatcher): JmsListenerFactory
+    + run(): void
+[C] JmsServiceEngine extends AbstractEngine
+[C] JmsSerializer
+    + serialize(Map<String,Object>): MapMessage
+    + deserialize(MapMessage): Map<String,Object>
+[I] GenericMessageListener extends JMS MessageListener
+[A] AbstractJmsListener implements GenericMessageListener, JMS ExceptionListener
+
+--- Package: org.apache.ofbiz.service.job ---
+[I] Job extends Runnable
+    + isValid(): boolean
+    + getJobId(): String
+    + getServiceName(): String
+    + getStartTime(): Timestamp
+    + getJobName(): String
+    + isPersisted(): boolean
+[C] JobManager
+    + static getInstance(Delegator, LocalDispatcher): JobManager
+    + schedule(String, Map<String,?>, long, int, int, int, long): void
+    + runJob(Job): void
+    + getRunPool(): ThreadPoolExecutor
+[C] JobServices
+    + cancelJob(DispatchContext, Map): Map<String,Object>
+    + purgeOldJobs(DispatchContext, Map): Map<String,Object>
+[C] PersistedServiceJob extends GenericServiceJob
+[C] GenericServiceJob extends AbstractJob
+
+--- Package: org.apache.ofbiz.service.mail ---
+[C] JavaMailContainer implements Container
+    + init(List<StartupCommand>, String, String): void
+    + start(): boolean
+    + stop(): void
+
+--- Package: org.apache.ofbiz.service.rmi ---
+[C] RemoteDispatcher (RMI-accessible dispatcher)
+[C] RmiServiceContainer implements Container
+
+================================================================================
+MODULE: webapp  (org.apache.ofbiz.webapp.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.webapp ---
+[C] ExtendedWrapper (request wrapper)
+[I] ViewHandlerExt
+    + render(String, String, String, String, String, HttpServletRequest, HttpServletResponse): void
+
+--- Package: org.apache.ofbiz.webapp.control ---
+[C] ControlServlet extends HttpServlet
+    + init(ServletConfig): void
+    + doGet(HttpServletRequest, HttpServletResponse): void
+    + doPost(HttpServletRequest, HttpServletResponse): void
+[C] RequestHandler
+    + static getRequestHandler(ServletContext): RequestHandler
+    + doRequest(HttpServletRequest, HttpServletResponse, String, GenericValue, Delegator): void
+    + runEvent(HttpServletRequest, HttpServletResponse, ConfigXMLReader.Event, ...): String
+[C] LoginWorker
+    + checkLogin(HttpServletRequest, HttpServletResponse): String
+    + logout(HttpServletRequest, HttpServletResponse): String
+    + createSession(HttpServletRequest, HttpServletResponse): String
+    + requirePasswordChange(HttpServletRequest, HttpServletResponse): String
+    + getLoggedInUserLogin(HttpServletRequest): GenericValue
+    ... (32 methods total)
+[C] JWTManager
+    + createToken(GenericValue, LocalDispatcher): String
+    + validateToken(String, Delegator): GenericValue
+
+--- Package: org.apache.ofbiz.webapp.event ---
+[I] EventHandler
+    + init(ServletContext): void
+    + invoke(ConfigXMLReader.Event, ConfigXMLReader.RequestMap, HttpServletRequest, HttpServletResponse): String
+[C] ServiceEventHandler implements EventHandler
+[C] ScriptEventHandler implements EventHandler
+[C] SOAPEventHandler implements EventHandler
+
+--- Package: org.apache.ofbiz.webapp.ftl ---
+[C] FreeMarkerViewHandler implements ViewHandler
+
+--- Package: org.apache.ofbiz.webapp.stats ---
+[C] ServerHitBin
+    + countRequest(String, HttpServletRequest, long, long, Delegator): void
+    + getMinTime(): double
+    + getMaxTime(): double
+    + getAverageTime(): double
+    ... (28 methods total)
+
+--- Package: org.apache.ofbiz.webapp.view ---
+[I] ViewHandler
+    + init(ServletContext): void
+    + render(String, String, String, String, HttpServletRequest, HttpServletResponse): void
+[C] JspViewHandler implements ViewHandler
+[C] ViewHandlerExt (FOP PDF renderer)
+[C] ApacheFopWorker
+    + static makeResultTransformer(URL, TransformerFactory): Transformer
+    + static render(Source, String, OutputStream): void
+
+--- Package: org.apache.ofbiz.webapp.webdav ---
+[C] WebDavServlet extends HttpServlet
+[C] RequestHandler (WebDAV handler)
+
+================================================================================
+MODULE: security  (org.apache.ofbiz.security.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.security ---
+[I] Security
+    + hasPermission(String, GenericValue): boolean
+    + hasEntityPermission(String, String, GenericValue): boolean
+    + hasEntityPermission(String, String, HttpServletRequest): boolean
+    + hasRolePermission(String, String, String, List<String>, GenericValue): boolean
+    + hasRolePermission(String, String, String, String, GenericValue): boolean
+    ... (25 methods total)
+[C] OFBizSecurity implements Security
+    (implements all Security interface methods)
+[C] CsrfUtil
+    + static generateTokenList(int): List<String>
+    + static getTokenMap(HttpServletRequest, String): Map<String,String>
+    + static addOrUpdateTokenInSession(HttpServletRequest): void
+    + static checkCsrfToken(HttpServletRequest, Map<String,Object>): boolean
+    ... (17 methods total)
+[C] SecurityUtil
+    + static digestBytes(String, byte[]): byte[]
+    + static certToString(Certificate): String
+    + static getExternalServerRootUrl(HttpServletRequest): String
+[C] SecurityFactory
+    + static getInstance(Delegator): Security
+
+================================================================================
+MODULE: content  (org.apache.ofbiz.content.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.content ---
+[C] ContentWorker
+    + static findAlternateLocale(Delegator, GenericValue, Locale): GenericValue
+    + static renderContentAsText(LocalDispatcher, GenericValue, Appendable, Map, Locale, String, boolean): void
+    + static getContentFields(Delegator, String, ...): Map<String,Object>
+    ... (65 methods total — most in module)
+
+--- Package: org.apache.ofbiz.content.data ---
+[C] DataResourceWorker
+    + static makeFromFile(String, String, GenericValue, LocalDispatcher): GenericValue
+    + static streamDataResource(LocalDispatcher, Delegator, GenericValue, ...): void
+    + static getDataResourceMimeType(Delegator, String): String
+    ... (34 methods total)
+
+--- Package: org.apache.ofbiz.content.ftp ---
+[C] FtpClient
+    + static createFtpClient(GenericValue): FtpClient
+    + upload(String, InputStream): boolean
+    + download(String, OutputStream): boolean
+    + list(): List<String>
+    + close(): void
+
+--- Package: org.apache.ofbiz.content.survey ---
+[C] SurveyWrapper
+    + createSurveyPage(int): String
+    + getSurveyTemplate(): Template
+
+================================================================================
+MODULE: order  (org.apache.ofbiz.order.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.order.shoppingcart ---
+[C] ShoppingCart implements Serializable
+    + addItemToEnd(ShoppingCartItem): int
+    + findCartItem(String, Map<String,Object>): ShoppingCartItem
+    + removeCartItem(int, LocalDispatcher): void
+    + updateCartItem(int, double): void
+    + getItemTotal(): BigDecimal
+    + getGrandTotal(): BigDecimal
+    + getTaxTotal(): BigDecimal
+    + getShippingTotal(): BigDecimal
+    + applyPromoCode(String, LocalDispatcher): String
+    + makeOrderItems(boolean, boolean, LocalDispatcher): List<GenericValue>
+    + makeAllAdjustments(): List<GenericValue>
+    ... (374 methods total — largest class in system)
+[C] ShoppingCartItem implements Serializable
+    + getName(): String
+    + getProductId(): String
+    + getQuantity(): BigDecimal
+    + getBasePrice(): BigDecimal
+    + getTotalPrice(): BigDecimal
+    + getAdjustments(): List<GenericValue>
+    ... (162 methods total)
+
+--- Package: org.apache.ofbiz.order.order ---
+[C] OrderReadHelper
+    + getOrderHeader(): GenericValue
+    + getOrderItems(): List<GenericValue>
+    + getOrderTotal(): BigDecimal
+    + getBillingAddress(): GenericValue
+    + getShippingAddress(String): GenericValue
+    + getPaymentPreferences(): List<GenericValue>
+    ... (192 methods total)
+[C] OrderServices
+    + createOrder(DispatchContext, Map): Map<String,Object>
+    + updateOrderItems(DispatchContext, Map): Map<String,Object>
+    + cancelOrderItem(DispatchContext, Map): Map<String,Object>
+    + getOrderItemInvoicedQuantity(DispatchContext, Map): Map<String,Object>
+    ... (84 methods total)
+
+================================================================================
+MODULE: product  (org.apache.ofbiz.product.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.product.product ---
+[C] ProductWorker
+    + static getProduct(Delegator, String): GenericValue
+    + static isVirtual(Delegator, String): boolean
+    + static getVariantVirtualAssocs(GenericValue): List<GenericValue>
+    + static getAllProductIds(Delegator, String): Set<String>
+    ... (55 methods total)
+
+--- Package: org.apache.ofbiz.product.catalog ---
+[C] CatalogWorker
+    + static getCatalog(HttpServletRequest): GenericValue
+    + static getCatalogId(HttpServletRequest): String
+    + static getCurrentCatalogId(HttpServletRequest): String
+    + static getPrimaryStoreGroupId(Delegator): String
+    ... (38 methods total)
+
+--- Package: org.apache.ofbiz.product.price ---
+[C] PriceServices
+    + calculateProductPrice(DispatchContext, Map): Map<String,Object>
+    + getProductPrice(DispatchContext, Map): Map<String,Object>
+    + updateProductPrice(DispatchContext, Map): Map<String,Object>
+    + deleteProductPrice(DispatchContext, Map): Map<String,Object>
+
+--- Package: org.apache.ofbiz.product.inventory ---
+[C] InventoryServices
+    + assignInventoryAndDeductReserved(DispatchContext, Map): Map<String,Object>
+    + reserveStoreInventory(DispatchContext, Map): Map<String,Object>
+    + updateLowStockReport(DispatchContext, Map): Map<String,Object>
+
+--- Package: org.apache.ofbiz.product.imagemanagement ---
+[C] ImageManagementServices
+    + createContentAndImage(DispatchContext, Map): Map<String,Object>
+    + resizeImageAndSave(DispatchContext, Map): Map<String,Object>
+
+================================================================================
+MODULE: widget  (org.apache.ofbiz.widget.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.widget.model ---
+[C] ModelForm
+    + getFields(): List<ModelFormField>
+    + getFieldsMap(): Map<String,ModelFormField>
+    + getTitle(): String
+    + getPaginateTarget(): String
+    + getSingleFormFieldList(): List<List<ModelFormField>>
+    ... (101 methods total — most in module)
+[C] ModelFormField
+    + getName(): String
+    + getEntityName(): String
+    + getFieldType(): FieldInfo
+    + getTitle(): String
+    + getRequiredField(): boolean
+    ... (64 methods total)
+[C] ModelFormFieldBuilder
+    (Builder pattern — 86 public setter/builder methods)
+[C] ModelScreen
+    + getSection(String): ModelScreenSection
+    + renderSection(Appendable, Map<String,Object>, ...): void
+[C] ModelTree
+[C] ModelMenu
+    + getMenuItems(): List<ModelMenuItem>
+    + getCurrentMenuItems(HttpServletRequest): List<ModelMenuItem>
+    ... (44 methods total)
+
+--- Package: org.apache.ofbiz.widget.renderer ---
+[I] FormStringRenderer
+    + renderField(Appendable, Map<String,Object>, ModelFormField, ModelForm): void
+[I] ScreenStringRenderer
+    + renderSectionBegin(Appendable, Map<String,Object>, ModelScreenWidget.Section): void
+[C] MacroFormRenderer implements FormStringRenderer
+    + renderTextField(Appendable, Map<String,Object>, ModelFormField): void
+    + renderDropDownField(Appendable, Map<String,Object>, ModelFormField): void
+    ... (46 methods total)
+[C] MacroScreenRenderer implements ScreenStringRenderer
+    + renderSectionBegin(Appendable, Map<String,Object>, ModelScreenWidget.Section): void
+    + renderSectionEnd(Appendable, Map<String,Object>, ModelScreenWidget.Section): void
+    ... (25 methods total)
+
+================================================================================
+MODULE: datafile  (org.apache.ofbiz.datafile.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.datafile ---
+[C] DataFile
+    + static readFile(URL, String): DataFile
+    + writeDataFile(String): void
+    + addRecord(Record): void
+    + getRecords(): List<Record>
+[C] Record
+    + readField(String): Object
+    + writeField(String, Object): void
+    + getRecordName(): String
+    + getParentRecord(): Record
+    + getChildRecords(String): List<Record>
+[C] ModelDataFile
+    + getName(): String
+    + getSeparatorStyle(): String
+    + getRecordType(String): ModelRecord
+[C] ModelRecord
+    + getName(): String
+    + getFields(): List<ModelField>
+[C] ModelField
+    + getName(): String
+    + getType(): String
+    + getLength(): int
+
+================================================================================
+MODULE: minilang  (org.apache.ofbiz.minilang.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.minilang ---
+[C] SimpleMethod
+    + static getSimpleMethod(String, String, ClassLoader): SimpleMethod
+    + static runSimpleMethod(String, String, MethodContext): Map<String,Object>
+    + execute(MethodContext): String
+    + getMethodName(): String
+    ... (46 methods total)
+[C] MethodContext
+    + getRequest(): HttpServletRequest
+    + getResponse(): HttpServletResponse
+    + getDelegator(): Delegator
+    + getDispatcher(): LocalDispatcher
+    + getUserLogin(): GenericValue
+    + getEnv(FlexibleMapAccessor<?>): Object
+    + putEnv(String, Object): void
+    ... (34 methods total)
+
+================================================================================
+MODULE: catalina  (org.apache.ofbiz.catalina.container.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.catalina.container ---
+[C] CatalinaContainer implements Container
+    + init(List<StartupCommand>, String, String): void
+    + start(): boolean
+    + stop(): void
+    + getName(): String
+[C] HashedCredentialHandler (Tomcat realm credential handler)
+[C] SimpleCredentialHandler
+[C] SslAcceleratorValve extends ValveBase
+[C] CrossSubdomainSessionValve extends ValveBase
+
+================================================================================
+MODULE: manufacturing  (org.apache.ofbiz.manufacturing.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.manufacturing.bom ---
+[C] BOMNode
+    + constructor(String, Delegator, LocalDispatcher, GenericValue)
+    + loadComponents(Timestamp): void
+    + getQtyMultiplier(): BigDecimal
+    + getProductId(): String
+    + getProduct(): GenericValue
+    + getChildNodes(): List<BOMNode>
+    ... (38 methods total)
+[C] BOMTree
+    + loadTree(String, int, Timestamp, Delegator, LocalDispatcher, GenericValue): void
+    + getProductQuantities(): Map<String,BigDecimal>
+    ... (24 methods total)
+
+--- Package: org.apache.ofbiz.manufacturing.jobshopmgt ---
+[C] ProductionRunServices
+    + createProductionRun(DispatchContext, Map): Map<String,Object>
+    + changeProductionRunStatus(DispatchContext, Map): Map<String,Object>
+    + addProductionRunComponent(DispatchContext, Map): Map<String,Object>
+    ... (32 methods total)
+
+================================================================================
+MODULE: shipment  (org.apache.ofbiz.shipment.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.shipment.packing ---
+[C] PackingSession implements Serializable
+    + addOrIncreaseLine(String, String, BigDecimal, boolean): boolean
+    + complete(boolean, LocalDispatcher): String
+    + getPackedQuantity(String): BigDecimal
+    + getTotalWeight(): BigDecimal
+    ... (60 methods total)
+
+--- Package: org.apache.ofbiz.shipment.shipment ---
+[C] ShipmentServices
+    + createShipment(DispatchContext, Map): Map<String,Object>
+    + updateShipment(DispatchContext, Map): Map<String,Object>
+    + createShipmentRouteSegment(DispatchContext, Map): Map<String,Object>
+    + confirmShipment(DispatchContext, Map): Map<String,Object>
+    + receiveInventoryProduct(DispatchContext, Map): Map<String,Object>
+    ... (42 methods total)
+
+================================================================================
+MODULE: party  (org.apache.ofbiz.party.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.party.party ---
+[C] PartyServices
+    + createPerson(DispatchContext, Map): Map<String,Object>
+    + updateParty(DispatchContext, Map): Map<String,Object>
+    + createPartyRelationship(DispatchContext, Map): Map<String,Object>
+    + checkPartyTaxId(DispatchContext, Map): Map<String,Object>
+    ... (23 methods total)
+[C] PartyWorker
+    + static getPartyByIdOrEmail(String, Delegator): GenericValue
+    + static getPartyByEmail(String, Delegator): GenericValue
+    + static findMatchingPersons(Delegator, Map<String,Object>): List<GenericValue>
+    + static getPrimaryPostalAddress(Delegator, String): GenericValue
+    ... (24 methods total)
+
+--- Package: org.apache.ofbiz.party.contact ---
+[C] ContactMechServices
+    + createContactMech(DispatchContext, Map): Map<String,Object>
+    + updateContactMech(DispatchContext, Map): Map<String,Object>
+    + createPartyContactMech(DispatchContext, Map): Map<String,Object>
+    + verifyContactMech(DispatchContext, Map): Map<String,Object>
+
+--- Package: org.apache.ofbiz.party.communication ---
+[C] CommunicationEventServices
+    + createCommunicationEvent(DispatchContext, Map): Map<String,Object>
+    + updateCommunicationEvent(DispatchContext, Map): Map<String,Object>
+    + sendEmailToEventContacts(DispatchContext, Map): Map<String,Object>
+
+================================================================================
+MODULE: common  (org.apache.ofbiz.common.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.common ---
+[C] CommonServices
+    + createNote(DispatchContext, Map): Map<String,Object>
+    + createCustomMethod(DispatchContext, Map): Map<String,Object>
+    + uploadFile(DispatchContext, Map): Map<String,Object>
+
+--- Package: org.apache.ofbiz.common.email ---
+[C] EmailServices
+    + sendMail(DispatchContext, Map): Map<String,Object>
+    + sendMailFromScreen(DispatchContext, Map): Map<String,Object>
+    + sendMailMultiPart(DispatchContext, Map): Map<String,Object>
+
+--- Package: org.apache.ofbiz.common.image ---
+[C] ImageTransform
+    + static getBufferedImageFileType(File): String
+    + static copyFile(InputStream, MapContext<String,Object>): Map<String,Object>
+
+--- Package: org.apache.ofbiz.common.authentication ---
+[I] Authenticator
+    + authenticate(String, String, boolean): boolean
+    + isAliasUser(String): boolean
+    + updatePassword(String, String, String): boolean
+    + getWeight(): float
+    + isEnabled(): boolean
+
+================================================================================
+MODULE: webtools  (org.apache.ofbiz.webtools.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.webtools ---
+[C] GenericWebEvent
+    + static viewGenericEntityData(HttpServletRequest, HttpServletResponse): String
+
+--- Package: org.apache.ofbiz.webtools.artifactinfo ---
+[C] ArtifactInfoFactory
+    + static getArtifactInfoFactory(String): ArtifactInfoFactory
+    + getServiceArtifactInfo(String): ServiceArtifactInfo
+    + getEntityArtifactInfo(String): EntityArtifactInfo
+    + getAllServiceArtifactInfo(): Map<String,ServiceArtifactInfo>
+    ... (46 methods total — most in module)
+
+--- Package: org.apache.ofbiz.webtools.labelmanager ---
+[C] LabelManagerFactory
+    + static getLabelManagerFactory(): LabelManagerFactory
+    + getLabelList(String): List<LabelInfo>
+    + updateLabel(String, String, String, String, String): void
+
+================================================================================
+MODULE: workeffort  (org.apache.ofbiz.workeffort.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.workeffort.workeffort ---
+[C] WorkEffortServices
+    + createWorkEffort(DispatchContext, Map): Map<String,Object>
+    + updateWorkEffort(DispatchContext, Map): Map<String,Object>
+    + assignWorkEffortParty(DispatchContext, Map): Map<String,Object>
+    ... (13 methods total)
+
+--- Package: org.apache.ofbiz.workeffort.ical ---
+[C] ICalConverter
+    + static fromWorkEffort(GenericValue, Delegator): VCalendar
+    + static toWorkEffort(VCalendar, Delegator): Map<String,Object>
+
+================================================================================
+MODULE: sfa  (org.apache.ofbiz.sfa.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.sfa.vcard ---
+[C] VCard
+    + static importVCard(Delegator, LocalDispatcher, String): void
+    + static exportVCard(Delegator, String): String
+
+================================================================================
+MODULE: marketing  (org.apache.ofbiz.marketing.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.marketing.tracking ---
+[C] TrackingCodeEvents
+    + trackBouncePage(HttpServletRequest, HttpServletResponse): String
+    + keepCartItems(HttpServletRequest, HttpServletResponse): String
+    + removeCartItems(HttpServletRequest, HttpServletResponse): String
+
+--- Package: org.apache.ofbiz.marketing.marketing ---
+[C] MarketingServices
+    + createMarketingCampaign(DispatchContext, Map): Map<String,Object>
+    + updateMarketingCampaign(DispatchContext, Map): Map<String,Object>
+    + getContactListMarketingEmail(DispatchContext, Map): Map<String,Object>
+
+================================================================================
+MODULE: entityext  (org.apache.ofbiz.entityext.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.entityext.data ---
+[C] EntityDataServices
+    + importEntityXmlUrl(DispatchContext, Map): Map<String,Object>
+    + exportEntityXmlToDirectory(DispatchContext, Map): Map<String,Object>
+    + parseEntitiesJson(DispatchContext, Map): Map<String,Object>
+
+--- Package: org.apache.ofbiz.entityext.synchronization ---
+[C] EntitySyncContext
+    + runEntitySync(DispatchContext, Map): Map<String,Object>
+    + storeSyncData(DispatchContext, Map): Map<String,Object>
+
+================================================================================
+MODULE: securityext  (org.apache.ofbiz.securityext.*)
+================================================================================
+
+--- Package: org.apache.ofbiz.securityext.login ---
+[C] LoginEvents
+    + checkLogin(HttpServletRequest, HttpServletResponse): String
+    + ajaxCheckLogin(HttpServletRequest, HttpServletResponse): String
+    + logout(HttpServletRequest, HttpServletResponse): String
+    + forgotPassword(HttpServletRequest, HttpServletResponse): String
+    + view(HttpServletRequest, HttpServletResponse): String
+    ... (8 methods total)
+
+--- Package: org.apache.ofbiz.securityext.cert ---
+[C] CertUtil
+    + static pemToCertificate(String): X509Certificate
+    + static certificateToPem(X509Certificate): String
+
+================================================================================
+END OF CATALOG
+================================================================================
+SUMMARY STATISTICS
+  Total public classes:          1098
+  Total public interfaces:         77
+  Total public abstract classes:   61
+  Grand total types:             1236
+  Total public methods:         ~13398  (per metrics/class-metrics.json)
+
+TOP 10 CLASSES BY PUBLIC METHOD COUNT (system-wide)
+  1.  ShoppingCart           (order)   374 methods
+  2.  OrderReadHelper         (order)   192 methods
+  3.  ShoppingCartItem        (order)   162 methods
+  4.  ModelEntity             (entity)  147 methods
+  5.  ModelService            (service) 126 methods
+  6.  TemporalExpressions     (service) ~278 methods (static factories)
+  7.  GenericDelegator        (entity)  112 methods
+  8.  Delegator (interface)   (entity)  110 methods
+  9.  UtilDateTime            (base)    105 methods
+ 10.  ModelForm               (widget)  101 methods
+
+KEY INTEGRATION INTERFACES
+  - LocalDispatcher      : service invocation (sync/async/JMS/schedule)
+  - Delegator            : entity data access (CRUD + query)
+  - Security             : permission checking
+  - Job / JobManager     : job scheduling and execution
+  - FtpClient            : file transfer (SFTP/FTP)
+  - JmsListenerFactory   : JMS message consumption
+  - Container            : lifecycle management
+================================================================================
