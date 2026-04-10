@@ -1,0 +1,31 @@
+{
+  "modules": [
+    {
+      "id": "party",
+      "name": "party",
+      "overview": "Das Modul `party` ist die zentrale Stammdatenverwaltung für alle Akteure im OFBiz-System. Es modelliert Personen, Organisationen (PartyGroups) und deren Beziehungen untereinander sowie alle zugehörige…",
+      "stats": {
+        "classes": 22,
+        "methods": 173
+      }
+    },
+    {
+      "id": "order",
+      "name": "order",
+      "overview": "Das Modul `order` ist der Kern des Bestellwesens in Apache OFBiz und deckt den vollständigen Order-to-Cash-Prozess ab. Es umfasst die Verwaltung des Warenkorbs, die Auftragserfassung und -verarbeitung…",
+      "stats": {
+        "classes": 37,
+        "methods": 170
+      }
+    },
+    {
+      "id": "product",
+      "name": "product",
+      "overview": "Das Modul `product` ist das zentrale Produktmanagement-Modul von Apache OFBiz. Es deckt die vollständige Lebenszyklus-Verwaltung von Produkten ab: von der Produktstammdaten-Pflege über Kategorie- und …",
+      "stats": {
+        "classes": 58,
+        "methods": 257
+      }
+    }
+  ]
+}

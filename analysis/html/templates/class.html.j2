@@ -1,0 +1,96 @@
+{% extends "base.html.j2" %}
+
+{% block title %}{{ cls.name }} — {{ module.module }} — OFBiz Docs{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="{{ root }}index.html">Module</a></li>
+      <li class="breadcrumb-item"><a href="index.html">{{ module.module }}</a></li>
+      <li class="breadcrumb-item active">{{ cls.name }}</li>
+    </ol>
+  </nav>
+  <div class="d-flex align-items-center gap-3 flex-wrap">
+    <h1 class="mb-0">{{ cls.name }}</h1>
+    <span class="badge fs-6
+      {% if 'Interface' in cls.type %}bg-warning text-dark
+      {% elif 'Groovy' in cls.type %}bg-success
+      {% else %}bg-primary{% endif %}">
+      {{ cls.type }}
+    </span>
+  </div>
+  {% if cls.package %}
+  <div class="mt-1"><code class="text-muted">{{ cls.package }}</code></div>
+  {% endif %}
+</div>
+
+<div class="content-area">
+
+  <!-- Description -->
+  {% if cls.description %}
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Zweck</h5>
+    <p>{{ cls.description }}</p>
+  </section>
+  {% endif %}
+
+  {% if cls.is_group %}
+  <!-- Group members -->
+  <section>
+    <h5 class="text-muted text-uppercase mb-3" style="font-size:.75rem;letter-spacing:.08em">
+      Enthaltene Scripts ({{ cls.members | length }})
+    </h5>
+    <div class="table-responsive">
+      <table class="table table-sm table-hover table-bordered">
+        <thead class="table-light">
+          <tr>
+            <th style="width:30%">Klasse</th>
+            <th>Fachliche Funktion</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for member in cls.members %}
+          <tr>
+            <td><span class="method-sig">{{ member.name }}</span></td>
+            <td class="small">{{ member.description }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  {% else %}
+  <!-- Methods -->
+  <section>
+    <h5 class="text-muted text-uppercase mb-3" style="font-size:.75rem;letter-spacing:.08em">
+      Public Methoden ({{ cls.methods | length }})
+    </h5>
+    {% if cls.methods %}
+    <div class="table-responsive">
+      <table class="table table-sm table-hover table-bordered method-table">
+        <thead class="table-light">
+          <tr>
+            <th style="width:38%">Methode</th>
+            <th>Beschreibung</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for method in cls.methods %}
+          <tr>
+            <td><span class="method-sig">{{ method.signature }}</span></td>
+            <td class="small">{{ method.description }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-muted fst-italic">Keine public Methoden dokumentiert.</p>
+    {% endif %}
+  </section>
+  {% endif %}
+
+</div>
+{% endblock %}

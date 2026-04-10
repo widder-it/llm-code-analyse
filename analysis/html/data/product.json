@@ -1,0 +1,1750 @@
+{
+  "module": "product",
+  "overview": "Das Modul `product` ist das zentrale Produktmanagement-Modul von Apache OFBiz. Es deckt die vollständige Lebenszyklus-Verwaltung von Produkten ab: von der Produktstammdaten-Pflege über Kategorie- und Kataloghierarchien, Preisfindung, Lagerhaltung und Lieferung bis hin zu Aktionen, Abonnements und Bilddatei-Verwaltung. Das Modul bildet die fachliche Domäne eines klassischen B2B/B2C-Produktkatalogs ab und stellt sowohl Service-APIs als auch HTTP-Servlet- und FreeMarker-Integrationspunkte bereit.",
+  "submodules": [
+    {
+      "name": "org.apache.ofbiz.product.product",
+      "description": "Kerndatenmodell und Hilfsfunktionen für Produkte (Worker, Services, Events, Suche, Keyword-Index, Content-Wrapper)"
+    },
+    {
+      "name": "org.apache.ofbiz.product.catalog",
+      "description": "Katalogstruktur und -verwaltung; Zugriff auf Kataloglisten und Store-Katalog-Zuordnungen"
+    },
+    {
+      "name": "org.apache.ofbiz.product.category",
+      "description": "Produktkategorien, SEO-URL-Filterung, Kategorie-Navigation und FreeMarker-Transforms für URL-Generierung"
+    },
+    {
+      "name": "org.apache.ofbiz.product.config",
+      "description": "Konfigurierbare Produkte (Aggregated Products): Wrapper für Konfigurationsoptionen und Preisberechnung"
+    },
+    {
+      "name": "org.apache.ofbiz.product.feature",
+      "description": "Produktmerkmale (Features): parametrische Suche und CRUD-Services für Feature-Typen und -Gruppen"
+    },
+    {
+      "name": "org.apache.ofbiz.product.image",
+      "description": "Skalierung von Produktbildern in mehrere Standardgrößen (small, medium, large, detail)"
+    },
+    {
+      "name": "org.apache.ofbiz.product.imagemanagement",
+      "description": "Erweiterte Bildverwaltung: Upload, Zuschneiden, Drehen, Rahmen, Statusworkflow (Genehmigung/Ablehnung)"
+    },
+    {
+      "name": "org.apache.ofbiz.product.inventory",
+      "description": "Lagerhaltung: Bestandsprüfung, Umbuchung, Verbrauchsbuchung und durchschnittliche Einstandspreisermittlung"
+    },
+    {
+      "name": "org.apache.ofbiz.product.migrate",
+      "description": "Migrationsdienste für Datenbankschema-Upgrades"
+    },
+    {
+      "name": "org.apache.ofbiz.product.price",
+      "description": "Preisfindungslogik inklusive Regelauswertung, Mengenstaffeln, Steuerberechnung und Vereinbarungspreise"
+    },
+    {
+      "name": "org.apache.ofbiz.product.promo",
+      "description": "Aktionsverwaltung: Promo-Code-Generierung, Aktionsbedingungen und -aktionen (Rabatt, Gratisartikel, Versandkosten)"
+    },
+    {
+      "name": "org.apache.ofbiz.product.shipment",
+      "description": "Versandabwicklung: Sendungserstellung, Verpackung, Kommissionierung, Wareneingang und Statusübergänge"
+    },
+    {
+      "name": "org.apache.ofbiz.product.spreadsheetimport",
+      "description": "Import von Produktdaten aus Excel-Dateien (Apache POI)"
+    },
+    {
+      "name": "org.apache.ofbiz.product.store",
+      "description": "Produktshop-Konfiguration: Store-Einstellungen, Inventory-Prüfung, Umfragen und Event-Handler"
+    },
+    {
+      "name": "org.apache.ofbiz.product.subscription",
+      "description": "Abonnement-Verwaltung: Laufzeitverlängerung, Berechtigungsprüfung"
+    },
+    {
+      "name": "org.apache.ofbiz.product.supplier",
+      "description": "Lieferanten-Produkt-Zuordnungen: Abfrage von Lieferantenkonditionen"
+    },
+    {
+      "name": "org.apache.ofbiz.product.facility.* (Groovy-Views)",
+      "description": "Lager-/Facility-Verwaltungs-Screens: Inventur, Bestandsübersichten, Versand, Kommissionierlisten"
+    },
+    {
+      "name": "org.apache.ofbiz.product.catalog.* (Groovy-Views)",
+      "description": "Admin-Screens für Katalog, Kategorien, Features, Preisregeln, Aktionen, Bilddatei-Management"
+    },
+    {
+      "name": "org.apache.ofbiz.product.*.test",
+      "description": "Automatisierte Integrationstests (OFBizTestCase-Subklassen)"
+    }
+  ],
+  "classes": [
+    {
+      "id": "ProductWorker",
+      "name": "ProductWorker",
+      "package": "org.apache.ofbiz.product.product",
+      "type": "Java-Klasse (Utility, final, nicht instantiierbar)",
+      "description": "Zentrale Hilfsbibliothek für produktbezogene Geschäftslogik. Wird von Services, Events und Views überall im Modul verwendet.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "shippingApplies(product)",
+          "description": "Prüft, ob für ein Produkt Versandkosten anfallen (Services und digitale Produkte ausgenommen)"
+        },
+        {
+          "signature": "isBillableToAddress(product, postalAddress)",
+          "description": "Prüft, ob ein Produkt an eine Rechnungsadresse geliefert werden darf (Geo-Einschränkungen)"
+        },
+        {
+          "signature": "isShippableToAddress(product, postalAddress)",
+          "description": "Prüft, ob ein Produkt an eine Lieferadresse verschickt werden darf (Geo-Include/Exclude-Logik)"
+        },
+        {
+          "signature": "isSerialized(delegator, productId)",
+          "description": "Gibt an, ob Lagerartikel für dieses Produkt serialisiert verwaltet werden"
+        },
+        {
+          "signature": "taxApplies(product)",
+          "description": "Gibt zurück, ob das Produkt steuerpflichtig ist"
+        },
+        {
+          "signature": "getInstanceAggregatedId(delegator, instanceProductId)",
+          "description": "Ermittelt die übergeordnete Aggregated-Product-ID für eine konfigurierte Instanz"
+        },
+        {
+          "signature": "getAggregatedInstanceId(delegator, aggregatedProductId, configId)",
+          "description": "Findet die konkrete Variante eines konfigurierbaren Produkts anhand der Konfigurations-ID"
+        },
+        {
+          "signature": "getVariantVirtualId(variantProduct)",
+          "description": "Liefert die ID des übergeordneten virtuellen Produkts für eine Variante"
+        },
+        {
+          "signature": "getVariantDistinguishingFeatures(variantProduct)",
+          "description": "Gibt die Merkmale zurück, die eine Variante von anderen Varianten des gleichen virtuellen Produkts unterscheiden"
+        },
+        {
+          "signature": "getProductFeaturesByApplTypeId(product, typeId)",
+          "description": "Liefert alle Merkmale eines Produkts für einen bestimmten Anwendungstyp (z.B. SELECTABLE_FEATURE)"
+        },
+        {
+          "signature": "getSelectableProductFeaturesByTypesAndSeq(product)",
+          "description": "Gibt alle wählbaren Merkmale gruppiert nach Merkmaltyp und Reihenfolge zurück (für Variantenauswahl)"
+        },
+        {
+          "signature": "getVariantSelectionFeatures(variantProduct)",
+          "description": "Ermittelt die für die Auswahl dieser Variante relevanten Merkmale"
+        },
+        {
+          "signature": "getOptionalProductFeatures(delegator, productId)",
+          "description": "Liefert optionale Produktmerkmale, geordnet nach Merkmaltyp"
+        },
+        {
+          "signature": "getVariantFromFeatureTree(productId, selectedFeatures, delegator)",
+          "description": "Sucht die passende Variante anhand einer Merkmalauswahl; legt bei Bedarf eine neue Variante an"
+        },
+        {
+          "signature": "calcOrderAdjustments(adjustments, subTotal, ...)",
+          "description": "Berechnet die Summe aller Auftragsanpassungen (Steuern, Versand, Sonstiges)"
+        },
+        {
+          "signature": "calcOrderAdjustment(orderAdjustment, subTotal)",
+          "description": "Berechnet den Betrag einer einzelnen Auftragsanpassung (Absolutbetrag oder prozentualer Anteil)"
+        },
+        {
+          "signature": "filterOrderAdjustments(adjustments, ...)",
+          "description": "Filtert eine Liste von Auftragsanpassungen nach Typen (Steuer, Versand, Sonstiges)"
+        },
+        {
+          "signature": "getAverageProductRating(product, reviews, storeId, delegator)",
+          "description": "Berechnet die Durchschnittsbewertung eines Produkts aus Rezensionen, mit Unterstützung für Mindestwert/Maximalwert-Konfiguration"
+        },
+        {
+          "signature": "getCurrentProductCategories(product)",
+          "description": "Gibt alle aktiven Kategorien zurück, in denen das Produkt gelistet ist"
+        },
+        {
+          "signature": "getParentProduct(productId, delegator)",
+          "description": "Ermittelt das übergeordnete (virtuelle) Produkt über PRODUCT_VARIANT- oder UNIQUE_ITEM-Assoziationen"
+        },
+        {
+          "signature": "isDigital(product) / isPhysical(product)",
+          "description": "Prüft den Produkttyp auf digitale bzw. physische Natur"
+        },
+        {
+          "signature": "isVirtual(delegator, productId)",
+          "description": "Prüft, ob ein Produkt als virtuelles Produkt (Hülle für Varianten) markiert ist"
+        },
+        {
+          "signature": "isSellable(product, atTime)",
+          "description": "Prüft, ob das Produkt zum gegebenen Zeitpunkt verkäuflich ist (Einführungs-/Abkündigungsdatum)"
+        },
+        {
+          "signature": "isAlternativePacking(delegator, productId, virtualVariantId)",
+          "description": "Stellt fest, ob ein Produkt als alternative Verpackungsvariante zu einem anderen verknüpft ist"
+        },
+        {
+          "signature": "findProductsById(delegator, idToFind, typeId, ...)",
+          "description": "Sucht Produkte nach Produkt-ID oder Fremdidentifikator (GoodIdentification)"
+        },
+        {
+          "signature": "findProduct(delegator, idToFind)",
+          "description": "Gibt das erste gefundene Produkt für einen Identifikator zurück"
+        },
+        {
+          "signature": "getProductWeight(product, desiredUomId, ...)",
+          "description": "Liefert das Produktgewicht, ggf. nach Einheitenumrechnung"
+        },
+        {
+          "signature": "filterOutOfStockProducts(products, dispatcher, delegator)",
+          "description": "Filtert nicht lagerhaltige Produkte aus einer Liste heraus (berücksichtigt Marketing-Pakete und virtuelle Produkte)"
+        },
+        {
+          "signature": "isDecimalQuantityOrderAllowed(delegator, productId, storeId)",
+          "description": "Prüft, ob Dezimalmengen bei der Bestellung erlaubt sind (Produkt- und Shop-Einstellung)"
+        },
+        {
+          "signature": "isAggregateService(delegator, productId)",
+          "description": "Prüft, ob es sich um einen konfigurierbaren Service-Produkttyp handelt"
+        },
+        {
+          "signature": "getRefurbishedProductIdSet(productId, delegator)",
+          "description": "Liefert alle aufbereiteten (refurbishten) Varianten-IDs eines Produkts"
+        }
+      ]
+    },
+    {
+      "id": "ProductServices",
+      "name": "ProductServices",
+      "package": "org.apache.ofbiz.product.product",
+      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "description": "Service-Methoden für Produktvarianten, Merkmalbaum-Aufbau und Bildverwaltung. Wird als OFBiz-Service-Implementierung registriert.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "prodFindAllVariants(dctx, context)",
+          "description": "Gibt alle aktiven Varianten eines virtuellen Produkts zurück"
+        },
+        {
+          "signature": "prodFindSelectedVariant(dctx, context)",
+          "description": "Sucht die Variante, die zu einer gewählten Merkmalskombination passt"
+        },
+        {
+          "signature": "prodFindFeatureTypes(dctx, context)",
+          "description": "Liefert alle distinkten Merkmaltypen eines Produkts für einen Anwendungstyp"
+        },
+        {
+          "signature": "prodMakeFeatureTree(dctx, context)",
+          "description": "Baut den hierarchischen Merkmalsbaum für die Variantenauswahl auf, inklusive Lagerprüfung"
+        },
+        {
+          "signature": "prodGetFeatures(dctx, context)",
+          "description": "Liest Produktmerkmale nach Typ und Anwendungsart aus"
+        },
+        {
+          "signature": "prodFindProduct(dctx, context)",
+          "description": "Gibt ein Produkt zurück; bei Varianten wird automatisch zum übergeordneten virtuellen Produkt navigiert"
+        },
+        {
+          "signature": "prodFindAssociatedByType(dctx, context)",
+          "description": "Liefert alle Produktassoziationen eines bestimmten Typs (bidirektional möglich)"
+        },
+        {
+          "signature": "quickAddVariant(dctx, context)",
+          "description": "Legt eine neue Variante an und verknüpft sie mit dem virtuellen Produkt sowie den gewählten Merkmalen"
+        },
+        {
+          "signature": "quickCreateVirtualWithVariants(dctx, context)",
+          "description": "Erstellt ein neues virtuelles Produkt und ordnet ihm bestehende oder neue Varianten zu"
+        },
+        {
+          "signature": "updateProductIfAvailableFromShipment(dctx, context)",
+          "description": "Reaktiviert ein abgekündigtes Produkt, wenn nach einem Wareneingang wieder Bestand vorhanden ist"
+        },
+        {
+          "signature": "addAdditionalViewForProduct(dctx, context)",
+          "description": "Lädt ein zusätzliches Produktbild hoch, validiert es, speichert alle Größenvarianten und erstellt Content-Datensätze"
+        },
+        {
+          "signature": "addImageForProductPromo(dctx, context)",
+          "description": "Lädt ein Aktionsbild hoch und verknüpft es mit einem ProductPromo-Datensatz"
+        },
+        {
+          "signature": "findProductById(dctx, context)",
+          "description": "Sucht ein Produkt über Produkt-ID oder GoodIdentification-Fremdschlüssel"
+        }
+      ]
+    },
+    {
+      "id": "ProductUtilServices",
+      "name": "ProductUtilServices",
+      "package": "org.apache.ofbiz.product.product",
+      "type": "Java-Klasse (Utility-Services, final)",
+      "description": "Hilfsdienste für Datenpflege und -bereinigung im Produktstamm, insbesondere für Massendatenoperationen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "discVirtualsWithDiscVariants(dctx, context)",
+          "description": "Setzt virtuelle Produkte auf abgekündigt, sobald alle ihre Varianten abgekündigt sind"
+        },
+        {
+          "signature": "removeCategoryMembersOfDiscProducts(dctx, context)",
+          "description": "Entfernt abgekündigte Produkte aus Kategorien"
+        },
+        {
+          "signature": "removeDuplicateOpenEndedCategoryMembers(dctx, context)",
+          "description": "Bereinigt Kategorie-Mitgliedschaften ohne Enddatum, die doppelt vorhanden sind"
+        },
+        {
+          "signature": "makeStandAloneFromSingleVariantVirtuals(dctx, context)",
+          "description": "Konvertiert virtuelle Produkte mit nur einer Variante in eigenständige Produkte"
+        },
+        {
+          "signature": "mergeVirtualWithSingleVariant(dctx, context)",
+          "description": "Fügt ein virtuelles Produkt mit seiner einzigen Variante zu einem einzelnen Produkt zusammen"
+        },
+        {
+          "signature": "setAllProductImageNames(dctx, context)",
+          "description": "Benennt Produktbilder nach einem konfigurierten Schema für alle Produkte"
+        },
+        {
+          "signature": "clearAllVirtualProductImageNames(dctx, context)",
+          "description": "Löscht Bildnamen aus allen virtuellen Produktdatensätzen"
+        },
+        {
+          "signature": "attachProductFeaturesToCategory(dctx, context)",
+          "description": "Ordnet die Merkmale aller Produkte einer Kategorie auch der Kategorie selbst zu"
+        }
+      ]
+    },
+    {
+      "id": "ProductSearch",
+      "name": "ProductSearch",
+      "package": "org.apache.ofbiz.product.product",
+      "type": "Java-Klasse (Suchanfragen-Framework mit inneren Klassen)",
+      "description": "Implementiert die datenbankbasierte Produktsuche mit austauschbaren Einschränkungen und Sortierungen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "parametricKeywordSearch(...)",
+          "description": "Führt eine kombinierte Keyword- und Merkmalssuche durch und gibt eine geordnete Produkt-ID-Liste zurück"
+        },
+        {
+          "signature": "searchProducts(constraintList, sortOrder, delegator, visitId)",
+          "description": "Führt eine Suche mit beliebig kombinierbaren Einschränkungsobjekten und einer Sortierungsstrategie aus"
+        },
+        {
+          "signature": "getAllSubCategoryIds(categoryId, idSet, ...)",
+          "description": "Sammelt rekursiv alle Unterkategorie-IDs einer Elternkategorie"
+        },
+        {
+          "signature": "ProductSearchContext (innere Klasse)",
+          "description": "Verwaltet den Zustand einer laufenden Suche, baut SQL-Anfragen auf und führt sie aus"
+        },
+        {
+          "signature": "ProductSearchConstraint (abstrakt)",
+          "description": "Basistyp für alle Sucheinschränkungen; konkrete Implementierungen: CategoryConstraint, KeywordConstraint, FeatureConstraint, FeatureSetConstraint, FeatureGroupConstraint, FeatureCategoryConstraint, ListPriceRangeConstraint, AvailabilityDateConstraint, ExcludeVariantsConstraint, ProductFieldConstraint, GoodIdentificationConstraint, CatalogConstraint, SupplierConstraint, StoreGroupPriceConstraint, LastUpdatedRangeConstraint"
+        },
+        {
+          "signature": "ResultSortOrder / Implementierungen",
+          "description": "Sortierstrategien: SortKeywordRelevancy, SortProductField, SortProductPrice, SortProductFeature"
+        }
+      ]
+    },
+    {
+      "id": "ProductSearchSession",
+      "name": "ProductSearchSession",
+      "package": "org.apache.ofbiz.product.product",
+      "type": "Java-Klasse (HTTP-Session-Management für Suche)",
+      "description": "Persistiert Suchzustand (Constraints, Sortierung, Verlauf) in der HTTP-Session und koordiniert die Ausführung einer Suche aus Request-Parametern.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getProductSearchOptions(session)",
+          "description": "Liest die aktuellen Suchoptionen aus der Session oder legt neue an"
+        },
+        {
+          "signature": "processSearchParameters(params, request)",
+          "description": "Parst HTTP-Request-Parameter und überträgt sie in Sucheinschränkungsobjekte"
+        },
+        {
+          "signature": "searchDo(session, delegator, catalogId)",
+          "description": "Führt die gespeicherte Suche aus und gibt eine Liste von Produkt-IDs zurück"
+        },
+        {
+          "signature": "searchClear(session)",
+          "description": "Setzt alle Sucheinschränkungen der Session zurück"
+        },
+        {
+          "signature": "searchGetConstraintStrings(detailed, session, delegator)",
+          "description": "Gibt eine lesbare Beschreibung der aktiven Einschränkungen zurück"
+        },
+        {
+          "signature": "getProductSearchResult(request, delegator, catalogId)",
+          "description": "Führt Suche aus und bereitet das Suchergebnis (Produkte, Facetten, Seitenzahlen) für die Ansicht auf"
+        },
+        {
+          "signature": "listCountByFeatureForType(featureTypeId, session, delegator)",
+          "description": "Zählt, wie viele Suchergebnisse pro Merkmalwert eines Typs existieren (Facettierung)"
+        },
+        {
+          "signature": "getCountForListPriceRange(min, max, session, delegator)",
+          "description": "Zählt Suchergebnisse innerhalb eines Preisbereichs"
+        },
+        {
+          "signature": "checkSaveSearchOptionsHistory(session)",
+          "description": "Speichert den aktuellen Suchzustand im Session-Verlauf"
+        },
+        {
+          "signature": "makeSearchParametersString(session)",
+          "description": "Serialisiert aktive Suchparameter als URL-Query-String"
+        }
+      ]
+    },
+    {
+      "id": "ProductEvents",
+      "name": "ProductEvents",
+      "package": "org.apache.ofbiz.product.product",
+      "type": "Java-Klasse (HTTP-Event-Handler)",
+      "description": "Verarbeitet HTTP-Formulare für Produktdatenpflege und Session-Management für kürzlich angesehene Artikel und Vergleichslisten.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "updateAllKeywords(request, response)",
+          "description": "Löst die Neuindizierung aller Produkt-Keywords aus"
+        },
+        {
+          "signature": "updateProductAssoc(request, response)",
+          "description": "Speichert eine Produktassoziation aus einem Formular"
+        },
+        {
+          "signature": "clearLastViewedCategories/Products/AllLastViewed(...)",
+          "description": "Bereinigt die zuletzt angesehenen Kategorien bzw. Produkte in der Session"
+        },
+        {
+          "signature": "updateProductQuickAdminShipping(request, response)",
+          "description": "Aktualisiert Versandeinstellungen eines Produkts über die Schnellbearbeitung"
+        },
+        {
+          "signature": "updateProductQuickAdminSelFeat(request, response)",
+          "description": "Aktualisiert wählbare Merkmale eines virtuellen Produkts über die Schnellbearbeitung"
+        },
+        {
+          "signature": "addProductToCategories(request, response)",
+          "description": "Fügt ein Produkt zu mehreren Kategorien gleichzeitig hinzu"
+        },
+        {
+          "signature": "addProductToComparisonList / removeProductFromComparisonList",
+          "description": "Verwaltet die Session-basierte Produktvergleichsliste"
+        },
+        {
+          "signature": "addProductTags(request, response)",
+          "description": "Speichert Tag-Keywords für ein Produkt"
+        },
+        {
+          "signature": "tellAFriend(request, response)",
+          "description": "Sendet eine Empfehlungs-E-Mail mit Produktinformationen"
+        }
+      ]
+    },
+    {
+      "id": "ProductSearchEvents",
+      "name": "ProductSearchEvents",
+      "package": "org.apache.ofbiz.product.product",
+      "type": "Java-Klasse (HTTP-Event-Handler für Suchergebnisse)",
+      "description": "Ermöglicht Batch-Operationen auf Suchergebnissen (Kategoriezuordnung, Merkmalzuordnung, Export).",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "searchAddToCategory / searchRemoveFromCategory / searchExpireFromCategory",
+          "description": "Ordnet alle Suchergebnis-Produkte einer Kategorie zu, entfernt sie oder setzt sie auf abgelaufen"
+        },
+        {
+          "signature": "searchAddFeature / searchRemoveFeature",
+          "description": "Ordnet ein Produktmerkmal allen Suchergebnis-Produkten zu oder entfernt es"
+        },
+        {
+          "signature": "searchExportProductList(request, response)",
+          "description": "Exportiert die Suchergebnisliste in eine CSV-Datei für den Download"
+        }
+      ]
+    },
+    {
+      "id": "KeywordIndex",
+      "name": "KeywordIndex",
+      "package": "org.apache.ofbiz.product.product",
+      "type": "Java-Klasse (Utility)",
+      "description": "Baut den Keyword-Suchindex für ein Produkt auf, indem Texte aus Produktdaten, Merkmalen und Content-Datensätzen extrahiert und gewichtet werden.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "indexKeywords(product)",
+          "description": "Aktualisiert den Keyword-Index für ein Produkt, respektiert Konfigurationsflags (autoCreateKeywords, Varianten, abgekündigt)"
+        },
+        {
+          "signature": "forceIndexKeywords(product)",
+          "description": "Erzwingt eine vollständige Neuindizierung unabhängig von den Konfigurationsflags"
+        },
+        {
+          "signature": "addWeightedDataResourceString(dataResource, weight, strings, ...)",
+          "description": "Extrahiert Text aus einem DataResource-Objekt und fügt ihn gewichtet zum Index hinzu"
+        },
+        {
+          "signature": "addWeightedKeywordSourceString(product, string, strings)",
+          "description": "Tokenisiert eine Zeichenkette und fügt ihre Begriffe gewichtet zur Indexliste hinzu"
+        }
+      ]
+    },
+    {
+      "id": "ProductContentWrapper",
+      "name": "ProductContentWrapper",
+      "package": "org.apache.ofbiz.product.product",
+      "type": "Java-Klasse (implementiert ContentWrapper)",
+      "description": "Kapselt den Zugriff auf produktbezogene Content-Daten (Namen, Beschreibungen, Bilder) und liefert sie lokalisiert und im gewünschten MIME-Typ.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "makeProductContentWrapper(product, request)",
+          "description": "Fabrikmethode: erstellt einen Wrapper aus einem HTTP-Request-Kontext"
+        },
+        {
+          "signature": "get(contentTypeId, mimeTypeId)",
+          "description": "Gibt den Inhalt eines bestimmten Content-Typs als StringWrapper zurück"
+        },
+        {
+          "signature": "getProductContentAsText(product, contentTypeId, ...)",
+          "description": "Liest Produkt-Content als Text, mit Fallback auf Parent-Produkte; unterstützt mehrere Signaturen für unterschiedliche Aufrufkontexte"
+        }
+      ]
+    },
+    {
+      "id": "ProductPromoContentWrapper",
+      "name": "ProductPromoContentWrapper",
+      "package": "org.apache.ofbiz.product.product",
+      "type": "Java-Klasse (implementiert ContentWrapper)",
+      "description": "Analog zu `ProductContentWrapper`, aber für Aktions-Content (Bilder und Texte zu ProductPromo-Datensätzen).",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "makeProductPromoContentWrapper(productPromo, request)",
+          "description": "Fabrikmethode für Aktions-Content-Wrapper"
+        },
+        {
+          "signature": "get(contentTypeId, mimeTypeId)",
+          "description": "Liefert Aktions-Content lokalisiert zurück"
+        },
+        {
+          "signature": "getProductPromoContentAsText(productPromo, contentTypeId, ...)",
+          "description": "Liest Aktions-Content als Text mit Caching"
+        }
+      ]
+    },
+    {
+      "id": "CatalogWorker",
+      "name": "CatalogWorker",
+      "package": "org.apache.ofbiz.product.catalog",
+      "type": "Java-Klasse (Utility, final)",
+      "description": "Zugriffshilfe auf Katalogdaten aus HTTP-Session und Datenbank; verwaltet den aktuell gewählten Katalog im Request.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getAllCatalogIds(request)",
+          "description": "Gibt eine sortierte Liste aller Katalog-IDs aus der Datenbank zurück"
+        },
+        {
+          "signature": "getStoreCatalogs(delegator, productStoreId)",
+          "description": "Gibt die dem Shop zugeordneten Kataloge in Anzeigereihenfolge zurück"
+        },
+        {
+          "signature": "getCurrentCatalogId(request)",
+          "description": "Ermittelt den aktiven Katalog aus Session oder Request-Parameter"
+        },
+        {
+          "signature": "getCatalogName(delegator, prodCatalogId)",
+          "description": "Gibt den Anzeigenamen eines Katalogs zurück"
+        },
+        {
+          "signature": "getCatalogTopCategoryId(delegator, prodCatalogId)",
+          "description": "Liefert die Wurzelkategorie des Katalogs"
+        },
+        {
+          "signature": "getCatalogViewAllowCategoryId(delegator, prodCatalogId)",
+          "description": "Gibt die Kategorie zurück, auf die der Sichtbarkeitszugriff beschränkt ist"
+        },
+        {
+          "signature": "getCatalogQuickaddCategoryId(delegator, prodCatalogId)",
+          "description": "Liefert die Standardkategorie für die Schnellanlage"
+        },
+        {
+          "signature": "isProductInCatalog(delegator, product, prodCatalogId, ...)",
+          "description": "Prüft, ob ein Produkt in einem Katalog sichtbar ist"
+        }
+      ]
+    },
+    {
+      "id": "CategoryWorker",
+      "name": "CategoryWorker",
+      "package": "org.apache.ofbiz.product.category",
+      "type": "Java-Klasse (Utility, final)",
+      "description": "Navigationshilfe für die Kategoriehierarchie: Pfadberechnung, Filterung von Produktlisten und Session-Management für Trail/Breadcrumb.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getCatalogTopCategory(request, defaultTopCategory)",
+          "description": "Liest die Wurzelkategorie des Katalogs aus Session oder Request und speichert sie für Folgeaufrufe"
+        },
+        {
+          "signature": "getCategoriesWithNoParent(request, attributeName)",
+          "description": "Gibt alle Kategorien ohne Elternkategorie zurück (Wurzelknoten)"
+        },
+        {
+          "signature": "getRelatedCategories(delegator, parentCategoryId, ...)",
+          "description": "Gibt die Unterkategorien einer Elternkategorie zurück"
+        },
+        {
+          "signature": "filterProductsInCategory(delegator, productAssocList, productCategoryId, ...)",
+          "description": "Filtert eine Assoziationsliste auf Produkte, die in einer bestimmten Kategorie vorhanden sind"
+        },
+        {
+          "signature": "setTrail(request, currentCategory)",
+          "description": "Setzt den Kategoriepfad (Breadcrumb) in der Session"
+        },
+        {
+          "signature": "getTrail(request)",
+          "description": "Liest den gespeicherten Kategoriepfad aus der Session"
+        },
+        {
+          "signature": "adjustTrail(trail, currentCategory)",
+          "description": "Kürzt oder verlängert den Pfad um die aktuelle Kategorie"
+        },
+        {
+          "signature": "checkTrailItem(request, category)",
+          "description": "Prüft, ob eine Kategorie im aktuellen Trail enthalten ist"
+        }
+      ]
+    },
+    {
+      "id": "CategoryServices",
+      "name": "CategoryServices",
+      "package": "org.apache.ofbiz.product.category",
+      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "description": "Service-Methoden für Kategorie-Navigation und -Pflege, insbesondere für die Vor-/Zurück-Navigation innerhalb einer Kategorie.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getCategoryMembers(dctx, context)",
+          "description": "Gibt alle aktiven Mitglieder einer Produktkategorie sortiert nach Reihenfolge zurück"
+        },
+        {
+          "signature": "getPreviousNextProducts(dctx, context)",
+          "description": "Ermittelt das vorherige und nächste Produkt innerhalb einer Kategorie für die Detailseitennavigation"
+        },
+        {
+          "signature": "getProductCategoryAndLimitedMembers(dctx, context)",
+          "description": "Gibt eine Kategorie mit einer begrenzten Anzahl an Produktmitgliedern zurück (Paginierung)"
+        }
+      ]
+    },
+    {
+      "id": "CatalogUrlFilter",
+      "name": "CatalogUrlFilter",
+      "package": "org.apache.ofbiz.product.category",
+      "type": "Servlet / Servlet-Filter",
+      "description": "URL-Routing-Infrastruktur für SEO-freundliche Katalog- und Kategorie-URLs. Die Filter rewrite eingehende SEO-URLs auf interne OFBiz-Pfade; die Servlets bedienen direkte Katalog-Requests. `CategoryControlServlet` erweitert den OFBiz-Standard-ControlServlet für Kategorie-Kontext.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "Klassen-FreeMarker-Transforms-im-Paket-org-apache-ofbiz-product-category-ftl",
+      "name": "Klassen: FreeMarker-Transforms im Paket `org.apache.ofbiz.product.category.ftl`",
+      "package": "",
+      "type": "Java-Klassen (implementieren TemplateTransformModel bzw. TemplateDirectiveModel)",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "OfbizCatalogUrlTransform",
+          "description": "FreeMarker-Transform für Standard-Katalog-URLs"
+        },
+        {
+          "name": "OfbizCatalogAltUrlTransform",
+          "description": "FreeMarker-Transform für alternative (SEO) Katalog-URLs"
+        },
+        {
+          "name": "CatalogUrlSeoTransform",
+          "description": "FreeMarker-Transform für SEO-optimierte Katalog-URLs"
+        },
+        {
+          "name": "CatalogAltUrlSeoTransform",
+          "description": "FreeMarker-Transform für SEO-Alternative-URLs"
+        },
+        {
+          "name": "SeoTransform",
+          "description": "Allgemeiner SEO-URL-Transform"
+        },
+        {
+          "name": "UrlRegexpTransform",
+          "description": "Transform zur regulären Ausdrucks-basierten URL-Manipulation"
+        },
+        {
+          "name": "CatalogUrlDirective",
+          "description": "FreeMarker-Direktive für Katalog-URL-Ausgabe"
+        }
+      ]
+    },
+    {
+      "id": "CategoryContentWrapper",
+      "name": "CategoryContentWrapper",
+      "package": "org.apache.ofbiz.product.category",
+      "type": "Java-Klasse (implementiert ContentWrapper)",
+      "description": "Liefert lokalisierte Textinhalte (Name, Beschreibung, Bilder) für Produktkategorien, mit Caching-Unterstützung.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ProductConfigWrapper",
+      "name": "ProductConfigWrapper",
+      "package": "org.apache.ofbiz.product.config",
+      "type": "Java-Klasse (serialisierbar, Session-fähig)",
+      "description": "Kapselung des Konfigurationszustands eines konfigurierbaren Produkts (AGGREGATED). Verwaltet die Konfigurationsfragen (`ConfigItem`), die gewählten Optionen und berechnet den konfigurierten Preis.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "init(...)",
+          "description": "Lädt das Produkt und seine Konfigurationsfragen aus der Datenbank"
+        },
+        {
+          "signature": "setSelected(index, optionIndex)",
+          "description": "Wählt eine Option für eine Konfigurationsfrage aus"
+        },
+        {
+          "signature": "isCompleted()",
+          "description": "Prüft, ob alle Pflichtfragen beantwortet wurden"
+        },
+        {
+          "signature": "getTotalPrice()",
+          "description": "Berechnet den Gesamtpreis der aktuellen Konfiguration"
+        },
+        {
+          "signature": "getSelectedOptions()",
+          "description": "Gibt die gewählten Konfigurationsoptionen zurück"
+        },
+        {
+          "signature": "resetConfig()",
+          "description": "Setzt alle Auswahlen zurück"
+        },
+        {
+          "signature": "saveConfig(delegator, configId)",
+          "description": "Speichert die aktuelle Konfiguration unter einer Konfigurations-ID"
+        }
+      ]
+    },
+    {
+      "id": "ProductConfigWorker",
+      "name": "ProductConfigWorker",
+      "package": "org.apache.ofbiz.product.config",
+      "type": "Java-Klasse (Utility, final)",
+      "description": "Fabrik und Verwaltung von `ProductConfigWrapper`-Instanzen mit eingebautem Cache.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getProductConfigWrapper(productId, currencyUomId, request)",
+          "description": "Gibt einen gecachten oder neuen Konfigurations-Wrapper zurück"
+        },
+        {
+          "signature": "fillProductConfigWrapper(configWrapper, request)",
+          "description": "Befüllt einen Wrapper mit den Auswahlen aus einem HTTP-Request"
+        },
+        {
+          "signature": "createProductConfigWrapper(delegator, dispatcher, productId, ...)",
+          "description": "Erstellt einen neuen Wrapper ohne HTTP-Request-Kontext"
+        }
+      ]
+    },
+    {
+      "id": "ProductConfigItemContentWrapper",
+      "name": "ProductConfigItemContentWrapper",
+      "package": "org.apache.ofbiz.product.config",
+      "type": "Java-Klasse (implementiert ContentWrapper)",
+      "description": "Liefert lokalisierte Inhalte (Name, Beschreibung) für einzelne Konfigurationspositionen (ProductConfigItem).",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ProductConfigWrapperException",
+      "name": "ProductConfigWrapperException",
+      "package": "org.apache.ofbiz.product.config",
+      "type": "Java-Exception-Klasse",
+      "description": "Geprüfte Ausnahme für Fehler beim Aufbau oder der Validierung von Produktkonfigurationen.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ProductFeatureServices",
+      "name": "ProductFeatureServices",
+      "package": "org.apache.ofbiz.product.feature",
+      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "description": "Service-Methoden zum Abfragen und Verwalten von Produktmerkmalen und Merkmaltypen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getProductFeaturesByType(dctx, context)",
+          "description": "Gibt Merkmale nach Merkmaltyp, Merkmalsgruppe oder Produkt-ID zurück"
+        },
+        {
+          "signature": "applyFeaturesFromCategory(dctx, context)",
+          "description": "Ordnet alle Merkmale einer Kategorie einem Produkt zu"
+        }
+      ]
+    },
+    {
+      "id": "ParametricSearch",
+      "name": "ParametricSearch",
+      "package": "org.apache.ofbiz.product.feature",
+      "type": "Java-Klasse",
+      "description": "Führt eine parametrische Produktsuche durch, bei der Produkte anhand einer Kombination aus Merkmalen gefiltert werden.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ScaleImage",
+      "name": "ScaleImage",
+      "package": "org.apache.ofbiz.product.image",
+      "type": "Java-Klasse (Utility)",
+      "description": "Skaliert ein hochgeladenes Produktbild auf alle konfigurierten Standardgrößen (small, medium, large, detail) gemäß `ImageProperties.xml` und gibt die URL-Map zurück.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "scaleImageInAllSize(context, filenameToUse, viewType, viewNumber)",
+          "description": "Liest die Bildgrößenkonfiguration aus XML, skaliert das Originalbild und speichert alle Größenvarianten"
+        }
+      ]
+    },
+    {
+      "id": "Klassen-im-Paket-org-apache-ofbiz-product-imagemanagement",
+      "name": "Klassen im Paket `org.apache.ofbiz.product.imagemanagement`",
+      "package": "",
+      "type": "Java-Klassen (Service-Implementierungen)",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "ImageManagementServices",
+          "description": "Kernservices: Bild-Upload, Statuswechsel (genehmigen/ablehnen), Größenanpassung, Sortierung"
+        },
+        {
+          "name": "CropImage",
+          "description": "Schneidet ein Bild auf einen definierten Ausschnitt zu"
+        },
+        {
+          "name": "RotateImage",
+          "description": "Dreht ein Bild um einen definierten Winkel"
+        },
+        {
+          "name": "FrameImage",
+          "description": "Überlagert ein Bild mit einem Rahmen"
+        },
+        {
+          "name": "ReplaceImage",
+          "description": "Ersetzt ein bestehendes Produktbild durch eine neue Datei"
+        },
+        {
+          "name": "ImageManagementHelper",
+          "description": "Hilfsmethoden für die Bildverwaltung (Pfadberechnung, Dateioperationen)"
+        },
+        {
+          "name": "ImageUrlServlet",
+          "description": "Servlet zur direkten Auslieferung von verwalteten Bildwürfen über URL"
+        }
+      ]
+    },
+    {
+      "id": "InventoryServices",
+      "name": "InventoryServices",
+      "package": "org.apache.ofbiz.product.inventory",
+      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "description": "Kernservices für Lagerbestandsverwaltung: Umbuchungen, Reservierungen und Bestandsabfragen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "prepareInventoryTransfer(dctx, context)",
+          "description": "Bereitet einen Lagertransfer vor: teilt bei Bedarf nicht-serialisierte Artikel auf"
+        },
+        {
+          "signature": "completeInventoryTransfer(dctx, context)",
+          "description": "Schließt einen Lagertransfer ab und aktualisiert Bestand am Zielort"
+        },
+        {
+          "signature": "cancelInventoryTransfer(dctx, context)",
+          "description": "Storniert einen offenen Lagertransfer"
+        },
+        {
+          "signature": "getInventoryAvailableByFacility(dctx, context)",
+          "description": "Gibt verfügbaren und reservierten Bestand für ein Produkt an einem Lager zurück"
+        },
+        {
+          "signature": "getProductInventoryAvailable(dctx, context)",
+          "description": "Gibt den globalen verfügbaren Bestand eines Produkts über alle Lager zurück"
+        },
+        {
+          "signature": "getProductInventorySummaryForItems(dctx, context)",
+          "description": "Liefert Bestandszusammenfassungen für eine Liste von Auftragspositionen"
+        },
+        {
+          "signature": "checkInventoryAvailableAndReserve(dctx, context)",
+          "description": "Prüft Verfügbarkeit und legt bei ausreichend Bestand eine Reservierung an"
+        },
+        {
+          "signature": "getMktgPackagesAvailable(dctx, context)",
+          "description": "Berechnet die verfügbare Menge fertigstellbarer Marketing-Pakete"
+        },
+        {
+          "signature": "updateProductAverageCost(dctx, context)",
+          "description": "Aktualisiert den durchschnittlichen Einstandspreis nach einem Wareneingang"
+        }
+      ]
+    },
+    {
+      "id": "InventoryWorker",
+      "name": "InventoryWorker",
+      "package": "org.apache.ofbiz.product.inventory",
+      "type": "Java-Klasse (Utility)",
+      "description": "Statische Hilfsmethoden für Bestandsberechnungen, insbesondere für Marketing-Pakete.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "PriceServices",
+      "name": "PriceServices",
+      "package": "org.apache.ofbiz.product.price",
+      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "description": "Berechnet den aktuellen Produktpreis unter Berücksichtigung von Preisregeln, Mengenstaffeln, Vereinbarungspreisen, Kundengruppen und Steuern.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "calculateProductPrice(dctx, context)",
+          "description": "Hauptpreisfindungsroutine: wertet alle aktiven Preisregeln aus und gibt Listenpreis, Basispreis und berechneten Preis zurück"
+        },
+        {
+          "signature": "calculateProductPrices(dctx, context)",
+          "description": "Berechnet gleichzeitig mehrere Preistypen (DEFAULT, PROMO, MINIMUM) für eine Mengenreihe"
+        },
+        {
+          "signature": "getProductPrice(dctx, context)",
+          "description": "Gibt den direkt hinterlegten Produktpreis ohne Regelauswertung zurück"
+        },
+        {
+          "signature": "setBasePrice(dctx, context)",
+          "description": "Setzt den Basispreis für eine Produktpreisregel"
+        }
+      ]
+    },
+    {
+      "id": "PromoServices",
+      "name": "PromoServices",
+      "package": "org.apache.ofbiz.product.promo",
+      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "description": "Verwaltung von Aktionscodes: Massengenerierung, Import aus Dateien und Bereinigung abgelaufener Shop-Aktionen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createProductPromoCodeSet(dctx, context)",
+          "description": "Generiert eine definierte Menge zufälliger Aktionscodes in konfigurierbaren Layouts (smart/normal)"
+        },
+        {
+          "signature": "purgeOldStoreAutoPromos(dctx, context)",
+          "description": "Entfernt abgelaufene automatische Shop-Aktionen"
+        },
+        {
+          "signature": "importPromoCodesFromFile(dctx, context)",
+          "description": "Importiert Aktionscodes aus einer hochgeladenen Textdatei"
+        },
+        {
+          "signature": "importPromoCodeEmailsFromFile(dctx, context)",
+          "description": "Importiert E-Mail-Adressen für Code-Zuordnungen aus einer Datei"
+        }
+      ]
+    },
+    {
+      "id": "SubscriptionServices",
+      "name": "SubscriptionServices",
+      "package": "org.apache.ofbiz.product.subscription",
+      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "description": "Verwaltung von Produktabonnements: Laufzeitverlängerung und Ablaufprüfung.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "processExtendSubscription(dctx, context)",
+          "description": "Verlängert ein bestehendes Abonnement oder legt bei Erstabschluss ein neues an; berechnet die neue Laufzeit"
+        },
+        {
+          "signature": "processExtendSubscriptionByProduct(dctx, context)",
+          "description": "Verlängert Abonnements auf Basis eines Produkts und Lagerartikels"
+        },
+        {
+          "signature": "runSubscriptionExpired(dctx, context)",
+          "description": "Batch-Job: Verarbeitet abgelaufene Abonnements und triggert definierte Folgeaktionen"
+        }
+      ]
+    },
+    {
+      "id": "SupplierProductServices",
+      "name": "SupplierProductServices",
+      "package": "org.apache.ofbiz.product.supplier",
+      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "description": "Abfrage von Lieferanten-Produkt-Kombinationen mit Preis- und Staffelangaben.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getSuppliersForProduct(dctx, context)",
+          "description": "Gibt alle Lieferanten für ein Produkt zurück, gefiltert nach Partei, Währung, Menge und Drop-Ship-Fähigkeit; navigiert bei Varianten automatisch zum virtuellen Produkt"
+        }
+      ]
+    },
+    {
+      "id": "ProductStoreWorker",
+      "name": "ProductStoreWorker",
+      "package": "org.apache.ofbiz.product.store",
+      "type": "Java-Klasse (Utility, final)",
+      "description": "Zugriffshilfe auf Shop-Konfigurationsdaten aus HTTP-Session und Datenbank.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getProductStore(productStoreId, delegator)",
+          "description": "Gibt den Shop-Datensatz zurück"
+        },
+        {
+          "signature": "getProductStoreId(request)",
+          "description": "Ermittelt die aktive Shop-ID aus Session oder Web-Site"
+        },
+        {
+          "signature": "isStoreInventoryRequired(request, product)",
+          "description": "Prüft, ob der Shop Lagerbestand für dieses Produkt erfordert"
+        },
+        {
+          "signature": "isStoreInventoryAvailable(request, product, quantity)",
+          "description": "Prüft, ob ausreichend Bestand für die angeforderte Menge vorhanden ist"
+        },
+        {
+          "signature": "determineSingleFacilityForStore(productStore)",
+          "description": "Gibt das einzige Lager des Shops zurück, falls vorhanden"
+        },
+        {
+          "signature": "getRandomProductStorePromotion(request, productPromoTypeId)",
+          "description": "Wählt eine zufällige aktive Promotion des Shops aus"
+        }
+      ]
+    },
+    {
+      "id": "ProductStoreEvents",
+      "name": "ProductStoreEvents",
+      "package": "org.apache.ofbiz.product.store",
+      "type": "Java-Klasse (HTTP-Event-Handler)",
+      "description": "Event-Handler für Shop-bezogene HTTP-Requests (Zahlungseinrichtung).",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ProductStoreSurveyWrapper",
+      "name": "ProductStoreSurveyWrapper",
+      "package": "org.apache.ofbiz.product.store",
+      "type": "Java-Klasse (erweitert SurveyWrapper)",
+      "description": "Kapselt produkt- oder kategoriebezogene Umfragen eines Shops und stellt sie für FreeMarker-Templates bereit.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "Klassen-im-Paket-org-apache-ofbiz-product-spreadsheetimport",
+      "name": "Klassen im Paket `org.apache.ofbiz.product.spreadsheetimport`",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "ImportProductServices",
+          "description": "Service productImportFromSpreadsheet: liest Excel-Dateien (Apache POI HSSF) und legt Produkte und Lagerartikel an"
+        },
+        {
+          "name": "ImportProductHelper",
+          "description": "Hilfsmethoden: Produkt-Map aufbauen, Lagerartikel-Map aufbauen, Existenzprüfung"
+        }
+      ]
+    },
+    {
+      "id": "MigrationServices",
+      "name": "MigrationServices",
+      "package": "org.apache.ofbiz.product.migrate",
+      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "description": "Datenbankmigrationen zwischen OFBiz-Versionen (z.B. Umschlüsselung von Entitäten).",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "CatalogServices",
+      "name": "CatalogServices",
+      "package": "org.apache.ofbiz.product.product.catalog",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getAllCategories()",
+          "description": "Gibt alle Kategorien des aktuellen Katalogs zurück"
+        },
+        {
+          "signature": "getRelatedCategories()",
+          "description": "Gibt Unterkategorien einer Kategorie zurück"
+        },
+        {
+          "signature": "checkImageUrlForAllCategories()",
+          "description": "Prüft für alle Kategorien und Produkte, ob Bildpfade existieren"
+        },
+        {
+          "signature": "checkImageUrlForCategory() / checkImageUrlForProduct() / checkImageUrl()",
+          "description": "Prüft einzelne Bild-URLs auf Existenz im Dateisystem"
+        },
+        {
+          "signature": "catalogPermissionCheck() / prodCatalogToPartyPermissionCheck()",
+          "description": "Berechtigungsprüfung für Katalogzugriff"
+        },
+        {
+          "signature": "createMissingCategoryAndProductAltUrls()",
+          "description": "Legt fehlende SEO-Alt-URLs für Kategorien und Produkte an"
+        }
+      ]
+    },
+    {
+      "id": "CategoryContentServicesScript",
+      "name": "CategoryContentServicesScript",
+      "package": "org.apache.ofbiz.product.product.category",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createCategoryContent() / updateCategoryContent()",
+          "description": "Erstellt/aktualisiert eine Kategorie-Content-Verknüpfung"
+        },
+        {
+          "signature": "createSimpleTextContentForCategory()",
+          "description": "Legt einen einfachen Textinhalt (z.B. Name, Beschreibung) für eine Kategorie an"
+        },
+        {
+          "signature": "updateContentSEOForCategory()",
+          "description": "Aktualisiert SEO-Metadaten für eine Kategorie"
+        },
+        {
+          "signature": "createRelatedUrlContentForCategory() / updateRelatedUrlContentForCategory()",
+          "description": "Verwaltet URL-Content-Verknüpfungen für Kategorien"
+        },
+        {
+          "signature": "createDownloadContentForCategory() / updateDownloadContentForCategory()",
+          "description": "Verwaltet Download-Content für Kategorien"
+        }
+      ]
+    },
+    {
+      "id": "CategoryServicesScript",
+      "name": "CategoryServicesScript",
+      "package": "org.apache.ofbiz.product.product.category",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createProductCategory() / updateProductCategory()",
+          "description": "Anlage und Pflege von Produktkategorien"
+        },
+        {
+          "signature": "addProductToCategories() / removeProductFromCategory()",
+          "description": "Verknüpft oder entfernt ein Produkt aus Kategorien"
+        },
+        {
+          "signature": "addPartyToCategory() / updatePartyToCategory() / removePartyFromCategory()",
+          "description": "Verwaltet Parteizuordnungen (z.B. Kategorie-Verantwortliche)"
+        },
+        {
+          "signature": "addProductCategoryToCategory() / removeProductCategoryFromCategory()",
+          "description": "Verwaltung der Kategoriehierarchie (Eltern-Kind-Beziehungen)"
+        },
+        {
+          "signature": "copyCategoryProductMembers() / duplicateCategoryEntities()",
+          "description": "Kopiert Kategoriemitgliedschaften und -datensätze"
+        },
+        {
+          "signature": "expireAllCategoryProductMembers() / removeExpiredCategoryProductMembers()",
+          "description": "Setzt Ablaufdaten oder entfernt abgelaufene Mitgliedschaften"
+        },
+        {
+          "signature": "createProductInCategory()",
+          "description": "Legt ein neues Produkt direkt mit Kategoriemitgliedschaft an"
+        },
+        {
+          "signature": "duplicateProductCategory()",
+          "description": "Dupliziert eine Kategorie inklusive ihrer Unterstruktur"
+        },
+        {
+          "signature": "productCategoryGenericPermission() / checkCategoryRelatedPermission(...)",
+          "description": "Berechtigungsprüfung für Kategorie-Operationen"
+        },
+        {
+          "signature": "getAssociatedProductsList()",
+          "description": "Gibt Produkte zurück, die mit einer Kategorie assoziiert sind"
+        }
+      ]
+    },
+    {
+      "id": "CostServices",
+      "name": "CostServices",
+      "package": "org.apache.ofbiz.product.product.cost",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getProductCost() / getTaskCost()",
+          "description": "Gibt die Stückkosten eines Produkts oder einer Arbeitsaufgabe zurück"
+        },
+        {
+          "signature": "calculateAllProductsCosts() / calculateProductCosts()",
+          "description": "Berechnet die Kosten aller bzw. eines bestimmten Produkts auf Basis von Kostenkomponenten"
+        },
+        {
+          "signature": "calculateProductAverageCost() / getProductAverageCost()",
+          "description": "Berechnet und liest den gewichteten Durchschnittseinstandspreis"
+        },
+        {
+          "signature": "updateProductAverageCostOnReceiveInventory()",
+          "description": "Aktualisiert den Einstandspreis nach einem Wareneingang"
+        },
+        {
+          "signature": "productCostPercentageFormula()",
+          "description": "Berechnet Kostenaufschläge nach Prozentregel"
+        },
+        {
+          "signature": "cancelCostComponents() / recreateCostComponent()",
+          "description": "Storniert und erneuert Kostenkomponenten für ein Produkt"
+        }
+      ]
+    },
+    {
+      "id": "ProductFeatureServicesScript",
+      "name": "ProductFeatureServicesScript",
+      "package": "org.apache.ofbiz.product.product.feature",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "applyFeatureToProductFromTypeAndCode()",
+          "description": "Ordnet ein Merkmal einem Produkt zu, identifiziert über Typ und Code"
+        },
+        {
+          "signature": "createProductFeatureType()",
+          "description": "Legt einen neuen Merkmaltyp an"
+        },
+        {
+          "signature": "createProductFeatureApplAttr()",
+          "description": "Erstellt ein Attribut für eine Merkmalsanwendung"
+        }
+      ]
+    },
+    {
+      "id": "ImageManagementServicesScript",
+      "name": "ImageManagementServicesScript",
+      "package": "org.apache.ofbiz.product.product.imagemanagement",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "uploadProductImages()",
+          "description": "Koordiniert den Upload und die Validierung mehrerer Produktbilder"
+        },
+        {
+          "signature": "removeProductContentAndImageFile()",
+          "description": "Löscht Content-Verknüpfung und Bilddatei vom Dateisystem"
+        },
+        {
+          "signature": "setImageDetail()",
+          "description": "Setzt Detaileigenschaften eines Produktbildes (Beschriftung, Sortierung)"
+        },
+        {
+          "signature": "updateStatusImageManagement()",
+          "description": "Ändert den Genehmigungsstatus eines Bildes im Workflow"
+        },
+        {
+          "signature": "addRejectedReasonImageManagement()",
+          "description": "Speichert den Ablehnungsgrund für ein Bild"
+        },
+        {
+          "signature": "createImageContentApproval() / removeImageContentApproval()",
+          "description": "Verwaltet Genehmigungseinträge für Bildcontent"
+        },
+        {
+          "signature": "resizeImages() / removeImageBySize()",
+          "description": "Erstellt oder entfernt skalierte Bildversionen"
+        }
+      ]
+    },
+    {
+      "id": "InventoryIssueServices",
+      "name": "InventoryIssueServices",
+      "package": "org.apache.ofbiz.product.product.inventory",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "issueImmediatelyFulfilledOrder() / issueImmediatelyFulfilledOrderItem()",
+          "description": "Bucht Bestand sofort für einen Auftrag oder eine Auftragsposition aus (digitale/sofort erfüllte Artikel)"
+        },
+        {
+          "signature": "issueImmediateForInventoryItemInline(inventoryItem)",
+          "description": "Interne Hilfsmethode: führt die Ausbuchtransaktion für einen einzelnen Lagerartikel durch"
+        }
+      ]
+    },
+    {
+      "id": "InventoryServicesScript",
+      "name": "InventoryServicesScript",
+      "package": "org.apache.ofbiz.product.product.inventory",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createInventoryItem()",
+          "description": "Legt einen neuen Lagerartikel an"
+        },
+        {
+          "signature": "checkFacilityRelatedPermission(...) / facilityGenericPermission() / checkProductFacilityRelatedPermission()",
+          "description": "Berechtigungsprüfungen für Lager- und Facility-Operationen"
+        }
+      ]
+    },
+    {
+      "id": "PriceServicesScript",
+      "name": "PriceServicesScript",
+      "package": "org.apache.ofbiz.product.product.price",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createProductPrice() / updateProductPrice() / deleteProductPrice()",
+          "description": "CRUD-Operationen für Produktpreiseinträge"
+        },
+        {
+          "signature": "inlineHandlePriceWithTaxIncluded()",
+          "description": "Berechnet Netto- und Bruttopreise für steuerinklusive Preise"
+        },
+        {
+          "signature": "createProductPriceCond() / updateProductPriceCond()",
+          "description": "Erstellt und pflegt Preisregelbedingungen"
+        },
+        {
+          "signature": "getAssociatedPriceRulesConds()",
+          "description": "Gibt alle Bedingungen zurück, die mit Preisregeln eines Produkts verknüpft sind"
+        }
+      ]
+    },
+    {
+      "id": "ProductContentServicesScript",
+      "name": "ProductContentServicesScript",
+      "package": "org.apache.ofbiz.product.product.product",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createProductContent() / updateProductContent()",
+          "description": "Verknüpft und aktualisiert Content-Datensätze für ein Produkt"
+        },
+        {
+          "signature": "createSimpleTextContentForProduct() / createSimpleTextContentForAlternateLocale()",
+          "description": "Legt einfachen Textinhalt (Name, Beschreibung) für ein Produkt in einer Sprache an"
+        },
+        {
+          "signature": "createDownloadContentForProduct() / createEmailContentForProduct()",
+          "description": "Erstellt Download- oder E-Mail-Content für ein Produkt"
+        },
+        {
+          "signature": "uploadProductAdditionalViewImages()",
+          "description": "Verarbeitet den Upload zusätzlicher Produktansichten"
+        },
+        {
+          "signature": "updateContentSEOForProduct()",
+          "description": "Aktualisiert SEO-Metadaten für ein Produkt"
+        }
+      ]
+    },
+    {
+      "id": "ProductServicesScript",
+      "name": "ProductServicesScript",
+      "package": "org.apache.ofbiz.product.product.product",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createProduct() / updateProduct()",
+          "description": "Anlage und Pflege von Produktstammdaten"
+        },
+        {
+          "signature": "duplicateProduct()",
+          "description": "Kopiert ein Produkt inklusive seiner assoziierten Daten"
+        },
+        {
+          "signature": "forceIndexProductKeywords() / deleteProductKeywords() / indexProductKeywords()",
+          "description": "Steuert den Keyword-Suchindex für ein Produkt"
+        },
+        {
+          "signature": "discontinueProductSales()",
+          "description": "Setzt das Verkaufsabkündigungsdatum eines Produkts"
+        },
+        {
+          "signature": "countProductView()",
+          "description": "Erhöht den Seitenaufrufzähler eines Produkts"
+        },
+        {
+          "signature": "createProductReview() / updateProductReview() / setProductReviewStatus()",
+          "description": "Verwaltung von Produktrezensionen und ihrem Genehmigungsstatus"
+        },
+        {
+          "signature": "copyToProductVariants()",
+          "description": "Überträgt Produktdatenfelder auf alle Varianten des virtuellen Produkts"
+        },
+        {
+          "signature": "checkProductRelatedPermission(...) / productGenericPermission()",
+          "description": "Berechtigungsprüfung für Produktoperationen"
+        },
+        {
+          "signature": "addPartyToProduct() / removePartyFromProduct()",
+          "description": "Verwaltet Parteizuordnungen zu Produkten (z.B. Hersteller)"
+        },
+        {
+          "signature": "createProductGroupOrder() / updateProductGroupOrder() / checkOrderItemForProductGroupOrder()",
+          "description": "Verwaltung von Gruppenbestellungen (Sammelbestellungen)"
+        }
+      ]
+    },
+    {
+      "id": "ProductPromoActionServices",
+      "name": "ProductPromoActionServices",
+      "package": "org.apache.ofbiz.product.product.promo",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "productGWP()",
+          "description": "Gratisartikel-Aktion (Gift With Purchase)"
+        },
+        {
+          "signature": "productActFreeShip()",
+          "description": "Kostenloser Versand-Aktion"
+        },
+        {
+          "signature": "productDISC()",
+          "description": "Prozentualer Rabatt auf Produktpreis"
+        },
+        {
+          "signature": "productAMDISC()",
+          "description": "Absoluter Rabatt auf Produktpreis"
+        },
+        {
+          "signature": "productPrice()",
+          "description": "Fixpreisrabatt"
+        },
+        {
+          "signature": "productOrderPercent() / productOrderAmount()",
+          "description": "Rabatt auf den Gesamtauftragswert"
+        },
+        {
+          "signature": "productSpecialPrice()",
+          "description": "Sonderpreis für ausgewählte Produkte"
+        },
+        {
+          "signature": "productShipCharge()",
+          "description": "Versandkostenrabatt"
+        },
+        {
+          "signature": "productTaxPercent()",
+          "description": "Steuerrabatt"
+        }
+      ]
+    },
+    {
+      "id": "ProductPromoCondServices",
+      "name": "ProductPromoCondServices",
+      "package": "org.apache.ofbiz.product.product.promo",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "productAmount() / productTotal()",
+          "description": "Mindestbestellwert-Bedingungen"
+        },
+        {
+          "signature": "productQuant()",
+          "description": "Mindestmenge-Bedingung"
+        },
+        {
+          "signature": "productPartyID() / productPartyGM() / productPartyClass() / productRoleType()",
+          "description": "Kundenbezogene Bedingungen (Party-ID, Gruppe, Klasse, Rolle)"
+        },
+        {
+          "signature": "productGeoID()",
+          "description": "Geografische Bedingung (Land/Region)"
+        },
+        {
+          "signature": "productOrderTotal() / productOrderHist() / productOrderYear() / productOrderLastYear()",
+          "description": "Historische Bestellwert-Bedingungen"
+        },
+        {
+          "signature": "productPromoRecurrence()",
+          "description": "Bedingung auf Basis der Nutzungshäufigkeit einer Aktion"
+        },
+        {
+          "signature": "productShipTotal()",
+          "description": "Bedingung auf Basis der Versandkosten"
+        },
+        {
+          "signature": "productListPriceMinAmount() / productListPriceMinPercent()",
+          "description": "Listenpreis-Mindestbedingungen"
+        }
+      ]
+    },
+    {
+      "id": "PromoServicesScript",
+      "name": "PromoServicesScript",
+      "package": "org.apache.ofbiz.product.product.promo",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createProductPromoCond() / updateProductPromoCond()",
+          "description": "Anlage und Pflege von Aktionsbedingungen"
+        }
+      ]
+    },
+    {
+      "id": "ProductStoreServices",
+      "name": "ProductStoreServices",
+      "package": "org.apache.ofbiz.product.product.store",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createProductStore() / updateProductStore()",
+          "description": "Anlage und Pflege von Shop-Konfigurationen"
+        },
+        {
+          "signature": "reserveStoreInventory()",
+          "description": "Reserviert Bestand für eine Bestellung im Shop-Kontext"
+        },
+        {
+          "signature": "isStoreInventoryRequired() / isStoreInventoryAvailable() / isStoreInventoryAvailableOrNotRequired()",
+          "description": "Prüft Bestandspflicht und -verfügbarkeit aus Shop-Perspektive"
+        },
+        {
+          "signature": "checkProductStoreGroupRollup()",
+          "description": "Prüft hierarchische Shop-Gruppen-Zuordnungen"
+        }
+      ]
+    },
+    {
+      "id": "SubscriptionServicesScript",
+      "name": "SubscriptionServicesScript",
+      "package": "org.apache.ofbiz.product.product.subscription",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createSubscription()",
+          "description": "Legt ein neues Abonnement an"
+        },
+        {
+          "signature": "isSubscribed()",
+          "description": "Prüft, ob eine Partei aktiv abonniert ist"
+        },
+        {
+          "signature": "getSubscription()",
+          "description": "Gibt das aktive Abonnement einer Partei zurück"
+        },
+        {
+          "signature": "updateSubscriptionAttribute()",
+          "description": "Aktualisiert ein Attribut eines Abonnements"
+        },
+        {
+          "signature": "subscriptionPermissionCheck()",
+          "description": "Berechtigungsprüfung für Abonnement-Operationen"
+        }
+      ]
+    },
+    {
+      "id": "SupplierProductServicesScript",
+      "name": "SupplierProductServicesScript",
+      "package": "org.apache.ofbiz.product.supplier",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getSupplierProductFeatures()",
+          "description": "Gibt Merkmale zurück, die für Lieferanten-Produkt-Einträge relevant sind"
+        }
+      ]
+    },
+    {
+      "id": "ShipmentServices",
+      "name": "ShipmentServices",
+      "package": "",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "updateShipment()",
+          "description": "Aktualisiert Sendungsstammdaten"
+        },
+        {
+          "signature": "createShipmentForReturn() / createShipmentAndItemsForReturn()",
+          "description": "Erstellt Rücksendungen"
+        },
+        {
+          "signature": "createShipmentAndItemsForVendorReturn()",
+          "description": "Erstellt Lieferantenrücksendungen"
+        },
+        {
+          "signature": "setShipmentSettingsFromPrimaryOrder() / setShipmentSettingsFromFacilities()",
+          "description": "Übernimmt Einstellungen aus Auftrag oder Lager in die Sendung"
+        },
+        {
+          "signature": "createShipmentPackage() / updateShipmentPackage() / deleteShipmentPackage()",
+          "description": "Verwaltung von Versandpaketen"
+        },
+        {
+          "signature": "addShipmentContentToPackage()",
+          "description": "Fügt Sendungsinhalt einem Paket hinzu"
+        },
+        {
+          "signature": "checkCanChangeShipmentStatus*(...)",
+          "description": "Prüft, ob ein Statuswechsel der Sendung zulässig ist"
+        },
+        {
+          "signature": "quickShipEntireOrder() / quickDropShipOrder() / quickReceivePurchaseOrder()",
+          "description": "Schnellversand: versendet einen ganzen Auftrag oder empfängt eine Lieferung"
+        },
+        {
+          "signature": "createOrderShipmentPlan()",
+          "description": "Plant die Versandaufteilung für einen Auftrag"
+        },
+        {
+          "signature": "quickShipOrderByItem()",
+          "description": "Versendet einzelne Auftragspositionen"
+        },
+        {
+          "signature": "removeOrderShipmentFromShipment() / addOrderShipmentToShipment()",
+          "description": "Verwaltet die Zuordnung von Auftragspositionen zu Sendungen"
+        }
+      ]
+    },
+    {
+      "id": "ShipmentReceiptServices",
+      "name": "ShipmentReceiptServices",
+      "package": "",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createShipmentReceipt()",
+          "description": "Bucht einen Wareneingang und legt Lagerartikel an"
+        },
+        {
+          "signature": "receiveInventoryProduct()",
+          "description": "Wareneingang mit vollständiger Bestandsbuchung"
+        },
+        {
+          "signature": "quickReceiveReturn()",
+          "description": "Schnelleinbuchung einer Rücksendung"
+        },
+        {
+          "signature": "issueOrderItemToShipmentAndReceiveAgainstPO()",
+          "description": "Bucht eine Bestellposition aus und empfängt gegen Bestellung"
+        },
+        {
+          "signature": "cancelReceivedItems()",
+          "description": "Storniert eingegangene Warenpositionen"
+        }
+      ]
+    },
+    {
+      "id": "IssuanceServices",
+      "name": "IssuanceServices",
+      "package": "",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "issueImmediatelyFulfilledOrder() / issueImmediatelyFulfilledOrderItem()",
+          "description": "Sofortausbuchung für digital oder sofort erfüllte Aufträge"
+        }
+      ]
+    },
+    {
+      "id": "PicklistServices",
+      "name": "PicklistServices",
+      "package": "",
+      "type": "",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "migrateOldPicklistStatusHistoryToPickListStatus()",
+          "description": "Datenmigration: überführt Statushistorie in das aktuelle Schema"
+        }
+      ]
+    },
+    {
+      "id": "ProductConfigItemContentServicesScript",
+      "name": "ProductConfigItemContentServicesScript",
+      "package": "org.apache.ofbiz.product.product.config",
+      "type": "Groovy-Script",
+      "description": "",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createProductConfigItemContent() / updateProductConfigItemContent()",
+          "description": "Verknüpft und aktualisiert Inhalte (Beschreibungen) für Konfigurationspositionen"
+        },
+        {
+          "signature": "createSimpleTextContentForProductConfigItem()",
+          "description": "Legt einfachen Textinhalt für eine Konfigurationsposition an"
+        }
+      ]
+    },
+    {
+      "id": "SeoUrlUtil",
+      "name": "SeoUrlUtil",
+      "package": "org.apache.ofbiz.product.category",
+      "type": "Java-Klasse (Utility)",
+      "description": "Hilfsfunktionen für die Verarbeitung und Konvertierung von SEO-freundlichen URLs (Normalisierung, Segment-Extraktion).",
+      "is_group": false,
+      "methods": []
+    }
+  ],
+  "stats": {
+    "classes": 58,
+    "methods": 257
+  }
+}

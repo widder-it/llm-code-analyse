@@ -1,0 +1,88 @@
+{% extends "base.html.j2" %}
+
+{% block title %}Modul: {{ module.module }} — OFBiz Docs{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="{{ root }}index.html">Module</a></li>
+      <li class="breadcrumb-item active">{{ module.module }}</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-box me-2 text-primary"></i>{{ module.module }}</h1>
+  <div class="d-flex gap-2 mt-2">
+    <span class="stat-pill"><i class="bi bi-layers me-1"></i>{{ module.stats.classes }} Klassen</span>
+    <span class="stat-pill"><i class="bi bi-lightning me-1"></i>{{ module.stats.methods }} public Methoden</span>
+  </div>
+</div>
+
+<div class="content-area">
+
+  <!-- Overview -->
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Überblick</h5>
+    <p>{{ module.overview }}</p>
+  </section>
+
+  <!-- Submodules -->
+  {% if module.submodules %}
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Submodule</h5>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Paket</th><th>Beschreibung</th></tr>
+        </thead>
+        <tbody>
+          {% for sm in module.submodules %}
+          <tr>
+            <td><code>{{ sm.name }}</code></td>
+            <td class="text-muted small">{{ sm.description }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Class list -->
+  <section>
+    <h5 class="text-muted text-uppercase mb-3" style="font-size:.75rem;letter-spacing:.08em">Klassen</h5>
+    <div class="row g-2">
+      {% for cls in module.classes %}
+      <div class="col-md-6 col-xl-4">
+        <a href="{{ cls.id }}.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">{{ cls.name }}</span>
+              <span class="badge badge-type
+                {% if 'Interface' in cls.type %}bg-warning text-dark
+                {% elif 'Groovy' in cls.type %}bg-success
+                {% else %}bg-primary{% endif %}">
+                {{ cls.type | truncate(12, True, '') }}
+              </span>
+            </div>
+            {% if cls.package %}
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">{{ cls.package }}</div>
+            {% endif %}
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              {{ cls.description[:120] }}{% if cls.description|length > 120 %}…{% endif %}
+            </p>
+            <div class="mt-2">
+              {% if cls.is_group %}
+                <span class="stat-pill"><i class="bi bi-collection me-1"></i>{{ cls.members | length }} Scripts</span>
+              {% else %}
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>{{ cls.methods | length }} Methoden</span>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+</div>
+{% endblock %}

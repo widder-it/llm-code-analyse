@@ -1,0 +1,1233 @@
+{
+  "module": "order",
+  "overview": "Das Modul `order` ist der Kern des Bestellwesens in Apache OFBiz und deckt den vollständigen Order-to-Cash-Prozess ab. Es umfasst die Verwaltung des Warenkorbs, die Auftragserfassung und -verarbeitung (für Verkaufs- und Einkaufsbestellungen), das Retourenmanagement, die Angebotserstellung, Einkaufsanforderungen und Einkaufslisten. Das Modul stellt sowohl die Geschäftslogik (Java-Services) als auch UI-Skripte (Groovy) für alle order-bezogenen Screens bereit.",
+  "submodules": [
+    {
+      "name": "org.apache.ofbiz.order.shoppingcart",
+      "description": "Warenkorb-Kernlogik: ShoppingCart, ShoppingCartItem, Checkout-Prozess, Events und Services für den sessionbasierten Warenkorb"
+    },
+    {
+      "name": "org.apache.ofbiz.order.shoppingcart.component",
+      "description": "Interfaces (IShoppingCart*) für die komponentenbasierte Architektur des Warenkorbs"
+    },
+    {
+      "name": "org.apache.ofbiz.order.shoppingcart.components",
+      "description": "Konkrete Implementierungen der Warenkorb-Komponenten (Shipping, Taxes, Pricing, Payment, Promotion, Validator, ItemManager, Persistence)"
+    },
+    {
+      "name": "org.apache.ofbiz.order.shoppingcart.product",
+      "description": "Produktbezogene Hilfsfunktionen im Warenkorb-Kontext: Promotionsberechnung, Produktanzeige"
+    },
+    {
+      "name": "org.apache.ofbiz.order.shoppingcart.shipping",
+      "description": "Versandkostenberechnung und Versand-Events"
+    },
+    {
+      "name": "org.apache.ofbiz.order.order",
+      "description": "Auftragsverarbeitung: Erstellen, Lesen, Ändern, Löschen von Orders; Rückgabe-Services; Events und UI-Skripte"
+    },
+    {
+      "name": "org.apache.ofbiz.order.order.test",
+      "description": "Automatisierte Groovy-Testklassen für Order-Funktionalitäten"
+    },
+    {
+      "name": "org.apache.ofbiz.order.quote",
+      "description": "Angebotsverwaltung: Erstellen, Versenden und Verwalten von Angeboten"
+    },
+    {
+      "name": "org.apache.ofbiz.order.requirement",
+      "description": "Beschaffungsanforderungen: Generierung und Konsolidierung von Einkaufsanforderungen"
+    },
+    {
+      "name": "org.apache.ofbiz.order.shoppinglist",
+      "description": "Einkaufslisten: Gespeicherte, automatisch wiederkehrende und öffentliche Listen"
+    },
+    {
+      "name": "org.apache.ofbiz.order.finaccount",
+      "description": "Hilfsfunktionen für Finanzkonten (Gift Cards, Geschenkgutscheine)"
+    },
+    {
+      "name": "org.apache.ofbiz.order.task",
+      "description": "Aufgaben- und Workflow-Management zu Bestellprozessen"
+    },
+    {
+      "name": "org.apache.ofbiz.order.allocationplan",
+      "description": "Groovy-Scripts zur Zuteilungsplanung"
+    },
+    {
+      "name": "org.apache.ofbiz.order.communications",
+      "description": "Groovy-Script für bestellbezogene Kommunikationsdienste"
+    },
+    {
+      "name": "org.apache.ofbiz.order.entry",
+      "description": "Groovy-Scripts für die Auftragserfassung (Checkout, Warenkorb-Anzeige, Katalog, Zahlungseinstellungen)"
+    },
+    {
+      "name": "org.apache.ofbiz.order.lookup",
+      "description": "Groovy-Script zur Produktverknüpfungssuche"
+    },
+    {
+      "name": "org.apache.ofbiz.order.orderReturn",
+      "description": "Groovy-Scripts für Retourenvorgänge und Rücksendungshistorie"
+    },
+    {
+      "name": "org.apache.ofbiz.order.reports",
+      "description": "Groovy-Script für offene-Positionen-Report"
+    },
+    {
+      "name": "org.apache.ofbiz.order.request",
+      "description": "Groovy-Scripts für Kundenanfragen und CRM-Quoten"
+    },
+    {
+      "name": "org.apache.ofbiz.order.setup",
+      "description": "Groovy-Script für Zahlungskonfiguration"
+    },
+    {
+      "name": "org.apache.ofbiz.order.thirdparty.paypal",
+      "description": "PayPal ExpressCheckout-Integration"
+    },
+    {
+      "name": "org.apache.ofbiz.order.thirdparty.zipsales",
+      "description": "Steuerberechnung über ZIP-Code-basierte Steuertabellen"
+    },
+    {
+      "name": "org.apache.ofbiz.order.test",
+      "description": "Java-Testklassen für das gesamte Order-Modul"
+    }
+  ],
+  "classes": [
+    {
+      "id": "ShoppingCart",
+      "name": "ShoppingCart",
+      "package": "org.apache.ofbiz.order.shoppingcart",
+      "type": "Java-Klasse (implementiert Iterable<ShoppingCartItem>, Serializable)",
+      "description": "Zentrales Datenobjekt des Bestellprozesses. Der ShoppingCart repräsentiert eine laufende Bestellung — entweder als Verkaufsauftrag (SALES_ORDER) oder Einkaufsbestellung (PURCHASE_ORDER). Die Klasse hält alle Positionen, Zahlungsinformationen, Versandgruppen, Werbeaktionen und Bestellmetadaten für die gesamte Lebensdauer einer Bestellung im Speicher. Sie ist über eine komponentenbasierte Architektur (8 IShoppingCart*-Interfaces) aufgebaut, sodass einzelne Verhaltensaspekte ausgetauscht werden können.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "addOrIncreaseItem(productId, quantity, ...)",
+          "description": "Fügt ein Produkt zum Warenkorb hinzu oder erhöht die Menge einer bereits vorhandenen identischen Position; prüft dabei Mindestbestellmengen, Verfügbarkeit (für Mietartikel) und Lieferanteninformationen (bei Einkaufsbestellungen)"
+        },
+        {
+          "signature": "addNonProductItem(itemType, description, ...)",
+          "description": "Fügt eine nicht-produktgebundene Position (z.B. Gebühren, Dienstleistungen) zum Warenkorb hinzu"
+        },
+        {
+          "signature": "addItem(index, item)",
+          "description": "Fügt eine bereits erstellte ShoppingCartItem-Instanz an einem bestimmten Index ein; prüft Kompatibilität mit Rechnungsadresse und ProductGeos-Regeln"
+        },
+        {
+          "signature": "addItemToEnd(productId, amount, quantity, ...)",
+          "description": "Fügt ein Produkt am Ende der Positionsliste hinzu; in vielen überladenen Varianten für Mietartikel, konfigurierbare Produkte, Beherbergung etc."
+        },
+        {
+          "signature": "removeCartItem(item/index, dispatcher)",
+          "description": "Entfernt eine Position aus dem Warenkorb und setzt deren Menge auf null (löst Neukalkulation aus)"
+        },
+        {
+          "signature": "findCartItem(productId, features, ...)",
+          "description": "Sucht eine Warenkorb-Position anhand von Produkt-ID, Features und Attributen"
+        },
+        {
+          "signature": "findAllCartItems(productId, groupNumber)",
+          "description": "Liefert alle Positionen für eine bestimmte Produkt-ID, optional gefiltert nach Positionsgruppe"
+        },
+        {
+          "signature": "findAllCartItemsInCategory(productCategoryId, groupNumber)",
+          "description": "Liefert alle Positionen, deren Produkt einer bestimmten Produktkategorie angehört"
+        },
+        {
+          "signature": "removeEmptyCartItems()",
+          "description": "Entfernt alle Positionen mit Menge null aus dem Warenkorb"
+        },
+        {
+          "signature": "addItemGroup(groupName, parentGroupNumber)",
+          "description": "Erstellt eine neue Positionsgruppe (z.B. für Bundles) und gibt die neue Gruppennummer zurück"
+        },
+        {
+          "signature": "deleteItemGroup(groupNumber)",
+          "description": "Löscht eine Positionsgruppe und hebt die Gruppenzuordnung aller enthaltenen Positionen auf"
+        },
+        {
+          "signature": "setUserLogin(userLogin, dispatcher)",
+          "description": "Setzt den angemeldeten Benutzer und löst eine Neuberechnung aller Preise sowie eine Überprüfung aller Aktionscodes aus"
+        },
+        {
+          "signature": "handleNewUser(dispatcher)",
+          "description": "Reagiert auf einen Benutzerwechsel: aktualisiert Preise aller Positionen und entfernt nicht mehr gültige Promotion-Codes"
+        },
+        {
+          "signature": "setCurrency(dispatcher, currencyUom)",
+          "description": "Wechselt die Währung des Warenkorbs und aktualisiert alle Positionspreise"
+        },
+        {
+          "signature": "setOrderType(orderType)",
+          "description": "Setzt den Bestelltyp (SALES_ORDER oder PURCHASE_ORDER)"
+        },
+        {
+          "signature": "addPaymentAmount(id, amount, ...)",
+          "description": "Fügt eine Zahlungsart (Kreditkarte, Geschenkkarte etc.) mit Betrag zum Warenkorb hinzu; prüft ProductGeos-Kompatibilität der Rechnungsadresse"
+        },
+        {
+          "signature": "addPaymentRef(id, ref, authCode)",
+          "description": "Hinterlegt eine Transaktionsreferenz und Autorisierungscode für eine Zahlungsart"
+        },
+        {
+          "signature": "clearPayments()",
+          "description": "Entfernt alle Zahlungsinformationen und läuft Single-Use-Zahlungsmittel ab"
+        },
+        {
+          "signature": "clearDeclinedPaymentMethods(delegator)",
+          "description": "Entfernt alle als abgelehnt markierten Zahlungsmittel anhand gespeicherter OrderPaymentPreference-Datensätze"
+        },
+        {
+          "signature": "setShippingContactMechId(idx, contactMechId)",
+          "description": "Setzt die Lieferadresse für eine Versandgruppe; prüft ProductGeos-Kompatibilität der Produkte"
+        },
+        {
+          "signature": "setShipmentMethodTypeId(idx, methodTypeId)",
+          "description": "Setzt die Versandmethode für eine Versandgruppe"
+        },
+        {
+          "signature": "setItemShipGroupQty(item, quantity, idx)",
+          "description": "Weist einer bestimmten Versandgruppe eine Teilmenge einer Position zu"
+        },
+        {
+          "signature": "positionItemToGroup(item, quantity, fromIndex, toIndex, ...)",
+          "description": "Verschiebt eine Teilmenge einer Position von einer Versandgruppe in eine andere"
+        },
+        {
+          "signature": "addShipInfo()",
+          "description": "Erstellt eine neue (zusätzliche) Versandgruppe"
+        },
+        {
+          "signature": "cleanUpShipGroups()",
+          "description": "Entfernt leere Versandgruppen"
+        },
+        {
+          "signature": "createDropShipGroups(dispatcher)",
+          "description": "Erstellt automatisch Versandgruppen für Direktlieferungen (Drop-Shipment) bei mehreren Lieferanten"
+        },
+        {
+          "signature": "getSubTotal()",
+          "description": "Berechnet die Positionssumme (Summe aller Zeilensummen vor Anpassungen)"
+        },
+        {
+          "signature": "getGrandTotal()",
+          "description": "Berechnet den Gesamtbetrag inklusive Versand, Steuern und aller Anpassungen"
+        },
+        {
+          "signature": "getDisplaySubTotal()",
+          "description": "Liefert die Anzeigesumme (kann bereits enthaltene Steuern beinhalten)"
+        },
+        {
+          "signature": "getTotalSalesTax()",
+          "description": "Summiert die Verkaufssteuern aller Versandgruppen"
+        },
+        {
+          "signature": "getTotalShipping()",
+          "description": "Summiert die Versandkosten aller Versandgruppen"
+        },
+        {
+          "signature": "getProductPromoTotal()",
+          "description": "Berechnet den Gesamtrabatt durch Promotionsanpassungen"
+        },
+        {
+          "signature": "getSubTotalForPromotions()",
+          "description": "Liefert die für Promotionsberechnungen relevante Basissumme"
+        },
+        {
+          "signature": "addProductPromoCode(promoCodeId, dispatcher)",
+          "description": "Überprüft einen Aktionscode auf Gültigkeit und Nutzungsberechtigung und wendet ihn auf den Warenkorb an"
+        },
+        {
+          "signature": "addProductPromoUse(promoId, promoCodeId, ...)",
+          "description": "Erfasst die Nutzung einer Promotion mit Rabattbetrag und Mengendetails"
+        },
+        {
+          "signature": "clearAllPromotionInformation()",
+          "description": "Entfernt alle Promotions-Anpassungen, Free-Shipping-Aktionen und Promotion-Nutzungshistorie"
+        },
+        {
+          "signature": "addOrderTerm(termTypeId, termValue, termDays, ...)",
+          "description": "Fügt Bestellbedingungen (z.B. Zahlungsziele) zum Auftrag hinzu"
+        },
+        {
+          "signature": "makeOrderItems(explodeItems, replaceAggregatedId, dispatcher)",
+          "description": "Wandelt alle Warenkorb-Positionen in persistierbare OrderItem-GenericValues um; bei Bedarf werden konfigurierte Produkte als aggregierte Instanzen angelegt"
+        },
+        {
+          "signature": "makeAllAdjustments()",
+          "description": "Sammelt alle Anpassungen (Rabatte, Aufschläge, Steuern) aus Kopf und Positionen für die Persistierung"
+        },
+        {
+          "signature": "makeAllShipGroupInfos(dispatcher)",
+          "description": "Erstellt alle Versandgruppen-Datensätze mit Positionszuordnungen für die Persistierung"
+        },
+        {
+          "signature": "makeAllOrderPaymentInfos(dispatcher)",
+          "description": "Erstellt alle Zahlungspräferenz-Datensätze mit automatischer Restbetragsverteilung"
+        },
+        {
+          "signature": "makeCartMap(dispatcher, explodeItems)",
+          "description": "Erzeugt eine vollständige Map-Repräsentation des Warenkorbs als Eingabe für den createOrder-Service"
+        },
+        {
+          "signature": "getSupplierProduct(productId, quantity, dispatcher)",
+          "description": "Ermittelt Lieferantenproduktdaten (inkl. Preis) für den aktuellen Lieferanten und eine bestimmte Bestellmenge"
+        },
+        {
+          "signature": "getMinimumOrderQuantity(delegator, basePrice, productId)",
+          "description": "Prüft konfigurierte Mindestbestellmengen für ein Produkt"
+        },
+        {
+          "signature": "setDefaultCheckoutOptions(dispatcher)",
+          "description": "Befüllt Versandadresse, -methode und -präferenzen mit sinnvollen Standardwerten für den Checkout"
+        },
+        {
+          "signature": "clear()",
+          "description": "Setzt den gesamten Warenkorb zurück (löscht alle Positionen, Zahlungen, Versandgruppen, Notizen etc.)"
+        },
+        {
+          "signature": "isPurchaseOrder() / isSalesOrder()",
+          "description": "Gibt an, ob es sich um eine Einkaufs- oder Verkaufsbestellung handelt"
+        },
+        {
+          "signature": "isReadOnlyCart()",
+          "description": "Gibt an, ob der Warenkorb schreibgeschützt ist (z.B. bei abgeschlossenen Orders)"
+        }
+      ]
+    },
+    {
+      "id": "ShoppingCartItem",
+      "name": "ShoppingCartItem",
+      "package": "org.apache.ofbiz.order.shoppingcart",
+      "type": "Java-Klasse (implementiert Serializable)",
+      "description": "Repräsentiert eine einzelne Position im Warenkorb. Hält alle positionsspezifischen Daten: Produkt-ID, Menge, Basis- und Listenpreis, Sonderpreise, Features, Attribute, Versanddaten, Reservierungsinformationen (für Mietartikel), Anpassungen und Promotionsnutzung. Enthält Fabrikmethoden (`makeItem`, `makePurchaseOrderItem`) zur Validierung und Initialisierung aus dem Produktkatalog.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "makeItem(...)",
+          "description": "Statische Fabrikmethode: Erstellt eine neue Verkaufsposition mit vollständiger Produktvalidierung (Verfügbarkeit, Preisberechnung, Produktkonfiguration, externe Operationen)"
+        },
+        {
+          "signature": "makePurchaseOrderItem(...)",
+          "description": "Statische Fabrikmethode: Erstellt eine Einkaufsposition mit Lieferantenpreisen"
+        },
+        {
+          "signature": "setQuantity(quantity, dispatcher, cart)",
+          "description": "Setzt die Menge und löst Neuberechnung von Preisen und Bestand aus"
+        },
+        {
+          "signature": "updatePrice(dispatcher, cart)",
+          "description": "Berechnet den Preis der Position neu anhand der aktuellen Warenkorb- und Benutzerinformationen"
+        },
+        {
+          "signature": "getItemSubTotal()",
+          "description": "Berechnet die Zeilensumme (Basispreis × Menge + Anpassungen)"
+        },
+        {
+          "signature": "getDisplayItemSubTotal()",
+          "description": "Liefert die angezeigte Zeilensumme (kann enthaltene Steuern umfassen)"
+        },
+        {
+          "signature": "checkAvailability(productId, quantity, ...)",
+          "description": "Statische Methode: Prüft die Verfügbarkeit eines Mietprodukts für einen Reservierungszeitraum"
+        },
+        {
+          "signature": "equals(productId, features, attributes, ...)",
+          "description": "Vergleicht die Position mit einem Produktbezeichner zur Erkennung identischer Positionen (für die addOrIncreaseItem-Logik)"
+        },
+        {
+          "signature": "explodeItem(cart, dispatcher)",
+          "description": "Zerlegt eine Position in Einzelpositionen (Quantity-Explosion) für Lagerentnahmen"
+        },
+        {
+          "signature": "getProduct()",
+          "description": "Gibt das zugehörige Produkt-Entity zurück (lazy loaded)"
+        },
+        {
+          "signature": "getAdjustments()",
+          "description": "Liefert die Liste der positionsspezifischen Anpassungen (Rabatte, Steuern)"
+        },
+        {
+          "signature": "addProductPromoAdjustment(adjustment)",
+          "description": "Fügt einen Promotionsrabatt zur Position hinzu"
+        },
+        {
+          "signature": "resetPromoRuleUse(promoId, ruleId)",
+          "description": "Setzt den Promotions-Regelnutzungszähler zurück (für Neuberechnung)"
+        },
+        {
+          "signature": "confirmPromoRuleUse(promoId, ruleId)",
+          "description": "Bestätigt die Nutzung einer Promotionsregel (nach erfolgreicher Berechnung)"
+        },
+        {
+          "signature": "getOrderItemPriceInfos()",
+          "description": "Liefert Preisdetail-Datensätze (Rabattketten, Preisregeln) für die Persistierung"
+        },
+        {
+          "signature": "getPurchaseOrderItemDescription(product, supplierProduct, locale, dispatcher)",
+          "description": "Ermittelt die Positionsbeschreibung für Einkaufsbestellungen aus Lieferantendaten"
+        },
+        {
+          "signature": "setStatusId(statusId)",
+          "description": "Setzt den Status der Bestellposition"
+        }
+      ]
+    },
+    {
+      "id": "CheckOutHelper",
+      "name": "CheckOutHelper",
+      "package": "org.apache.ofbiz.order.shoppingcart",
+      "type": "Java-Klasse",
+      "description": "Koordiniert den mehrstufigen Checkout-Prozess. Nimmt einen bestehenden ShoppingCart und führt sequenzielle Validierungs- und Berechnungsschritte durch: Lieferadresse setzen, Versandmethode wählen, Zahlungsdaten validieren, Steuer berechnen und schließlich den Auftrag platzieren.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "setCheckOutShippingAddress(shippingContactMechId)",
+          "description": "Setzt die Lieferadresse für den Checkout und validiert ihre Vollständigkeit"
+        },
+        {
+          "signature": "setCheckOutShippingOptions(shippingMethod, shippingInstructions, ...)",
+          "description": "Setzt Versandmethode, Sonderhinweise, Lieferzeitfenster und Geschenkoptionen für alle Versandgruppen"
+        },
+        {
+          "signature": "setCheckOutPayment(selectedPaymentMethods, singleUsePayments, billingAccountId)",
+          "description": "Weist Zahlungsmethoden mit Beträgen zu und validiert die Gesamtdeckung der Bestellsumme"
+        },
+        {
+          "signature": "setCheckOutOptions(shippingMethod, shippingContactMechId, selectedPaymentMethods, ...)",
+          "description": "Fasst das Setzen aller Checkout-Optionen in einem Schritt zusammen"
+        },
+        {
+          "signature": "calcAndAddTax()",
+          "description": "Berechnet die Verkaufssteuer über den externen Steuer-Service und trägt sie als Anpassungen in den Warenkorb ein"
+        },
+        {
+          "signature": "createOrder(userLogin)",
+          "description": "Überführt den Warenkorb in eine persistente Bestellung durch Aufruf des createOrder-Services"
+        },
+        {
+          "signature": "processPayment(productStore, userLogin, ...)",
+          "description": "Autorisiert alle Zahlungsmittel der Bestellung über die konfigurierten Zahlungs-Services"
+        },
+        {
+          "signature": "availableAccountBalance(billingAccountId, dispatcher)",
+          "description": "Statische Hilfsmethode: Ermittelt den verfügbaren Saldo eines Rechnungskontos"
+        }
+      ]
+    },
+    {
+      "id": "ShoppingCartFactory",
+      "name": "ShoppingCartFactory",
+      "package": "org.apache.ofbiz.order.shoppingcart",
+      "type": "Java-Klasse (Factory)",
+      "description": "Zentraler Einstiegspunkt zur Erzeugung von ShoppingCart-Instanzen. Abstrahiert die Konstruktoraufrufe und ermöglicht über den Builder-Pattern-Einstieg (`builder()`) die vollständige Konfiguration aller Komponenten vor dem Anlegen des Warenkorbs.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createShoppingCart(delegator, productStoreId, locale, currencyUom)",
+          "description": "Erzeugt einen Standard-Warenkorb für einen gegebenen Store"
+        },
+        {
+          "signature": "createSalesOrderCart(...)",
+          "description": "Erzeugt einen Warenkorb explizit als Verkaufsauftrag"
+        },
+        {
+          "signature": "createPurchaseOrderCart(...)",
+          "description": "Erzeugt einen Warenkorb explizit als Einkaufsbestellung"
+        },
+        {
+          "signature": "cloneShoppingCart(cart)",
+          "description": "Erstellt eine vollständige Kopie eines bestehenden Warenkorbs (Deep Copy aller Positionen und Einstellungen)"
+        },
+        {
+          "signature": "createShoppingCartWithComponents(...)",
+          "description": "Erzeugt einen Warenkorb mit individuell angegebenen Komponent-Implementierungen (für Anpassungen im Projekt)"
+        },
+        {
+          "signature": "builder()",
+          "description": "Gibt einen ShoppingCartBuilder zurück für den fluenten Aufbau eines konfigurierten Warenkorbs"
+        }
+      ]
+    },
+    {
+      "id": "ShoppingCartBuilder",
+      "name": "ShoppingCartBuilder",
+      "package": "org.apache.ofbiz.order.shoppingcart",
+      "type": "Java-Klasse (Builder)",
+      "description": "Implementiert das Builder-Pattern für die Erstellung von ShoppingCart-Instanzen. Erlaubt die schrittweise Konfiguration aller Pflicht- und optionalen Parameter sowie die Auswahl individueller Komponenten-Implementierungen vor dem `build()`-Aufruf.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "WebShoppingCart",
+      "name": "WebShoppingCart",
+      "package": "org.apache.ofbiz.order.shoppingcart",
+      "type": "Java-Klasse (erweitert ShoppingCart)",
+      "description": "Web-spezifische Unterklasse des ShoppingCart. Initialisiert sich direkt aus einem `HttpServletRequest` — liest Store, Website, Locale, Währung und Benutzerinformationen aus der HTTP-Session aus, ohne dass diese Parameter explizit übergeben werden müssen.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ShoppingCartHelper",
+      "name": "ShoppingCartHelper",
+      "package": "org.apache.ofbiz.order.shoppingcart",
+      "type": "Java-Klasse",
+      "description": "Hilfsfunktionen für häufige Warenkorb-Operationen aus dem Web-Kontext, insbesondere das Verarbeiten von Form-Parametern (Massenzuordnung von Produkten, Mengenänderungen, Produktkonfigurationen) und das Anwenden von Bestellbedingungen.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ShoppingCartEvents",
+      "name": "ShoppingCartEvents",
+      "package": "org.apache.ofbiz.order.shoppingcart",
+      "type": "Java-Klasse (Event-Handler)",
+      "description": "Implementiert HTTP-Event-Handler für alle Warenkorb-Aktionen im Web-Frontend: Produkt hinzufügen, Menge ändern, Position entfernen, Aktionscode eingeben, Warenkorb leeren, Warenkorb aus der Session lesen/schreiben. Dient als Schicht zwischen Web-Requests und der ShoppingCart-Geschäftslogik.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "CheckOutEvents",
+      "name": "CheckOutEvents",
+      "package": "org.apache.ofbiz.order.shoppingcart",
+      "type": "Java-Klasse (Event-Handler)",
+      "description": "HTTP-Event-Handler für den Checkout-Ablauf: Validierung und Weiterleitung bei jedem Checkout-Schritt (Adresse, Versand, Zahlung, Bestätigung), Integration von Single-Page-Checkout und Schnittstelle zu externen Checkout-Providern (z.B. PayPal).",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ShoppingCartServices",
+      "name": "ShoppingCartServices",
+      "package": "org.apache.ofbiz.order.shoppingcart",
+      "type": "Java-Klasse (Service-Implementierungen)",
+      "description": "OFBiz-Services rund um den Warenkorb: Positionen zwischen Versandgruppen verschieben, Warenkorb aus einer bestehenden Bestellung wiederherstellen und Warenkorb-Zustände persistieren.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "assignItemShipGroup(dctx, context)",
+          "description": "Verschiebt eine Warenkorb-Position von einer Versandgruppe in eine andere"
+        },
+        {
+          "signature": "loadCartFromOrder(dctx, context)",
+          "description": "Lädt einen bestehenden Auftrag zurück in einen ShoppingCart (z.B. für Nachbestellungen oder Änderungen)"
+        },
+        {
+          "signature": "getShoppingCartData(dctx, context)",
+          "description": "Serialisiert relevante Warenkorb-Daten für externe Verwendung"
+        }
+      ]
+    },
+    {
+      "id": "CartEventListener",
+      "name": "CartEventListener",
+      "package": "org.apache.ofbiz.order.shoppingcart",
+      "type": "Java-Klasse (implementiert HttpSessionListener)",
+      "description": "Reagiert auf das Ablaufen einer HTTP-Session: Speichert den aktuellen Warenkorb automatisch in eine Shopping-Liste (Auto-Save), sofern der Produktstore dies konfiguriert hat, sodass der Benutzer beim nächsten Login seinen Warenkorb wiederherstellen kann.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ProductPromoWorker",
+      "name": "ProductPromoWorker",
+      "package": "org.apache.ofbiz.order.shoppingcart.product",
+      "type": "Java-Klasse (Utility, final, nur statische Methoden)",
+      "description": "Motor für die gesamte Promotionsberechnung. Wertet Promotionsregeln gegen den Warenkorb aus, wendet Aktionen an (Rabatte, Gratis-Versand, Geschenkartikel) und verwaltet die Nutzungsgrenzen von Aktionscodes.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "doPromotions(cart, dispatcher)",
+          "description": "Haupteinstiegspunkt: Wertet alle für den Produktstore gültigen Promotionen der Reihe nach gegen den Warenkorb aus und trägt die Ergebnisse (Anpassungen, Gratis-Artikel) ein"
+        },
+        {
+          "signature": "getStoreProductPromos(delegator, dispatcher, request)",
+          "description": "Lädt alle aktiven Promotionen für den aktuellen Store aus der Datenbank"
+        },
+        {
+          "signature": "checkCanUsePromoCode(promoCodeId, partyId, delegator, cart, locale)",
+          "description": "Prüft ob ein Aktionscode für den Kunden gültig ist (Nutzungslimit, Party-Zugehörigkeit, Gültigkeit)"
+        },
+        {
+          "signature": "runProductPromoRules(cart, cartTotal, productPromo, ...)",
+          "description": "Wendet alle Regeln einer einzelnen Promotion gegen den Warenkorb an und löst die zugehörigen Aktionen aus"
+        }
+      ]
+    },
+    {
+      "id": "ProductDisplayWorker",
+      "name": "ProductDisplayWorker",
+      "package": "org.apache.ofbiz.order.shoppingcart.product",
+      "type": "Java-Klasse",
+      "description": "Hilfsfunktionen für die Produktanzeige im Store-Kontext: Sortierung von Produktlisten, Ermittlung von empfohlenen Produkten und Berechnung von Mengenpreisen für die Darstellung.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ProductStoreCartAwareEvents",
+      "name": "ProductStoreCartAwareEvents",
+      "package": "org.apache.ofbiz.order.shoppingcart.product",
+      "type": "Java-Klasse (Event-Handler)",
+      "description": "Store-spezifische Event-Handler, die den Warenkorb-Zustand berücksichtigen, z.B. beim Wechsel des Produktstores innerhalb einer Session.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ShippingEstimateWrapper",
+      "name": "ShippingEstimateWrapper",
+      "package": "org.apache.ofbiz.order.shoppingcart.shipping",
+      "type": "Java-Klasse",
+      "description": "Berechnet und zwischenspeichert Versandkostenschätzungen für alle verfügbaren Versandmethoden eines Warenkorbs. Wird im Checkout zur Anzeige der Versandoptionen mit Preisvorschau eingesetzt.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getWrapper(dispatcher, cart, shipGroupIndex)",
+          "description": "Statische Fabrikmethode: Erstellt und initialisiert den Wrapper für eine Versandgruppe"
+        },
+        {
+          "signature": "getShippingMethods()",
+          "description": "Liefert alle verfügbaren Versandmethoden für den aktuellen Store"
+        },
+        {
+          "signature": "getShippingEstimate(carrierShipmentMethod)",
+          "description": "Gibt die berechneten Versandkosten für eine bestimmte Methode zurück"
+        }
+      ]
+    },
+    {
+      "id": "ShippingEvents",
+      "name": "ShippingEvents",
+      "package": "org.apache.ofbiz.order.shoppingcart.shipping",
+      "type": "Java-Klasse (Event-Handler und Services)",
+      "description": "Event-Handler und Service-Methoden für Versandkostenberechnungen; koordiniert die Kommunikation mit externen Versanddienstleistern-Services.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "OrderServices",
+      "name": "OrderServices",
+      "package": "org.apache.ofbiz.order.order",
+      "type": "Java-Klasse (Service-Implementierungen)",
+      "description": "Kernservices für die Auftragsverarbeitung. Implementiert den kompletten Lebenszyklus einer Bestellung: Erstellen, Statusänderungen, Anpassungen, Storno, Inventarbuchungen und Zahlungsabwicklung. Mit 84 öffentlichen Methoden ist dies nach dem ShoppingCart die komplexeste Klasse des Moduls.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createOrder(ctx, context)",
+          "description": "Erstellt einen neuen Auftrag aus einem Warenkorb-Daten-Map: Validiert Produkte (Verfügbarkeit, Einführungs-/Auslaufdaten), reserviert Lagerbestand, erstellt alle Datenbankdatensätze (Order-Header, -Positionen, -Rollen, -Kontaktdaten, -Zahlungen, -Versandgruppen, Tracking-Codes) in einer Transaktion"
+        },
+        {
+          "signature": "updateOrderItems(ctx, context)",
+          "description": "Aktualisiert Mengen und Attribute bestehender Bestellpositionen mit Neuberechnung"
+        },
+        {
+          "signature": "cancelOrderItem(ctx, context)",
+          "description": "Storniert eine einzelne Bestellposition und gibt reservierten Bestand frei"
+        },
+        {
+          "signature": "cancelOrderItemShipGrpInvRes(ctx, context)",
+          "description": "Hebt Bestandsreservierungen für eine Versandgruppen-Position auf"
+        },
+        {
+          "signature": "updateOrderStatus(ctx, context)",
+          "description": "Ändert den Status eines Auftrags-Headers"
+        },
+        {
+          "signature": "updateOrderItemStatus(ctx, context)",
+          "description": "Ändert den Status einzelner Bestellpositionen"
+        },
+        {
+          "signature": "quickChangeItemStatus(ctx, context)",
+          "description": "Schnelle Statusänderung einer Bestellposition ohne aufwändige Validierungskette"
+        },
+        {
+          "signature": "addOrderItemShipGroup(ctx, context)",
+          "description": "Fügt einem bestehenden Auftrag eine neue Versandgruppe hinzu"
+        },
+        {
+          "signature": "updateOrderItemShipGroup(ctx, context)",
+          "description": "Aktualisiert Versandadresse und -methode einer bestehenden Versandgruppe"
+        },
+        {
+          "signature": "deleteOrderItemShipGroup(ctx, context)",
+          "description": "Löscht eine Versandgruppe aus einem Auftrag"
+        },
+        {
+          "signature": "addOrderItem(ctx, context)",
+          "description": "Fügt nachträglich eine Position zu einem bestehenden Auftrag hinzu"
+        },
+        {
+          "signature": "removeOrderItem(ctx, context)",
+          "description": "Entfernt eine Position aus einem Auftrag und korrigiert Bestandsreservierungen"
+        },
+        {
+          "signature": "adjustOrderItems(ctx, context)",
+          "description": "Wendet Preisanpassungen auf Bestellpositionen an"
+        },
+        {
+          "signature": "resetGrandTotal(ctx, context)",
+          "description": "Neuberechnung des Gesamtbetrags eines Auftrags anhand aller aktuellen Positionen und Anpassungen"
+        },
+        {
+          "signature": "createOrderNote(ctx, context)",
+          "description": "Hängt eine Notiz an einen Auftrag an"
+        },
+        {
+          "signature": "sendOrderConfirmation(ctx, context)",
+          "description": "Sendet die Auftragsbestätigungs-E-Mail an den Kunden"
+        },
+        {
+          "signature": "massChangeOrderStatus(ctx, context)",
+          "description": "Ändert den Status mehrerer Aufträge auf einmal (Massenverarbeitung)"
+        },
+        {
+          "signature": "checkOrderExternalInventory(ctx, context)",
+          "description": "Prüft externe Lagerverfügbarkeit und gibt Meldungen bei Engpässen zurück"
+        },
+        {
+          "signature": "processOrderPayments(ctx, context)",
+          "description": "Löst die Zahlungsabwicklung für einen Auftrag aus (Autorisierung und ggf. Buchung)"
+        },
+        {
+          "signature": "countProductQuantityOrdered(ctx, context)",
+          "description": "Zählt die bisher bestellte Gesamtmenge eines Produkts (für Limits)"
+        },
+        {
+          "signature": "getOrderItemInvoicedAmountAndQuantity(ctx, context)",
+          "description": "Ermittelt die bereits in Rechnung gestellten Beträge und Mengen einer Bestellposition"
+        },
+        {
+          "signature": "getOrderItemShippedQuantity(ctx, context)",
+          "description": "Liefert die tatsächlich versendete Menge einer Bestellposition"
+        },
+        {
+          "signature": "getOrderItemsTotalNumber(ctx, context)",
+          "description": "Gibt die Gesamtanzahl der Bestellpositionen zurück"
+        }
+      ]
+    },
+    {
+      "id": "OrderReadHelper",
+      "name": "OrderReadHelper",
+      "package": "org.apache.ofbiz.order.order",
+      "type": "Java-Klasse (Read-Only-Zugriff)",
+      "description": "Zentrales Lesehilfsobjekt für gespeicherte Aufträge. Kapselt alle Datenbankzugriffe auf einen persistierten Auftrag und bietet berechnete Aggregatwerte. Wird überall dort verwendet, wo auf Bestelldaten lesend zugegriffen werden muss, ohne einen ShoppingCart zu laden.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getOrderId() / getOrderTypeId() / getOrderName()",
+          "description": "Liefert Basis-Metadaten des Auftrags aus dem OrderHeader"
+        },
+        {
+          "signature": "getOrderItems()",
+          "description": "Lädt alle Positionen des Auftrags"
+        },
+        {
+          "signature": "getAdjustments()",
+          "description": "Lädt alle Preisanpassungen des Auftrags"
+        },
+        {
+          "signature": "getPaymentPreferences()",
+          "description": "Lädt alle Zahlungspräferenzen des Auftrags"
+        },
+        {
+          "signature": "getOrderPayments(orderPaymentPreference)",
+          "description": "Liefert alle Zahlungstransaktionen, optional gefiltert nach Zahlungspräferenz"
+        },
+        {
+          "signature": "getReceivedPaymentTotalsByPaymentMethod()",
+          "description": "Summiert eingegangene Zahlungen gruppiert nach Zahlungsmethode"
+        },
+        {
+          "signature": "getReturnedTotalsByPaymentMethod()",
+          "description": "Summiert Rückerstattungen gruppiert nach Zahlungsmethode"
+        },
+        {
+          "signature": "getOrderStatuses()",
+          "description": "Liefert die Statushistorie des Auftrags"
+        },
+        {
+          "signature": "getOrderTerms() / getOrderTermNetDays()",
+          "description": "Liefert Zahlungsbedingungen; berechnet das Nettozahlungsziel in Tagen"
+        },
+        {
+          "signature": "getShippingMethod(shipGroupSeqId)",
+          "description": "Gibt die Versandmethode einer Versandgruppe als lesbaren String zurück"
+        },
+        {
+          "signature": "getShippingAddress(shipGroupSeqId)",
+          "description": "Liefert die Lieferadresse einer bestimmten Versandgruppe"
+        },
+        {
+          "signature": "getShippingLocations()",
+          "description": "Liefert alle Lieferadressen des Auftrags (über alle Versandgruppen)"
+        },
+        {
+          "signature": "getBillingLocations()",
+          "description": "Liefert alle Rechnungsadressen des Auftrags"
+        },
+        {
+          "signature": "getOrderItemShipGroups()",
+          "description": "Gibt alle Versandgruppen des Auftrags zurück"
+        },
+        {
+          "signature": "hasPhysicalProductItems()",
+          "description": "Prüft, ob der Auftrag physische (versendbare) Produkte enthält"
+        },
+        {
+          "signature": "getOrderContactMechs(contactMechPurposeTypeId)",
+          "description": "Liefert Kommunikationswege eines bestimmten Zwecks (Rechnungsadresse, Lieferadresse etc.)"
+        },
+        {
+          "signature": "getPlacingParty() / getEndUserParty() / getBillToParty()",
+          "description": "Ermittelt die jeweilige Partei in ihrer spezifischen Rolle im Auftrag"
+        },
+        {
+          "signature": "getProductStoreFromOrder(delegator, orderId)",
+          "description": "Statische Hilfsmethode: Lädt den Produktstore zu einem Auftrag"
+        },
+        {
+          "signature": "calcOrderAdjustments(adjustments, subTotal, ...)",
+          "description": "Statische Methode: Berechnet den Gesamtwert von Anpassungen (Rabatt, Versand, Sonstiges)"
+        },
+        {
+          "signature": "getOrderItemAdjustmentTotal(orderItem, adjustments)",
+          "description": "Berechnet die Summe aller Anpassungen für eine einzelne Bestellposition"
+        },
+        {
+          "signature": "getOrderItemSubTotal(orderItem, adjustments)",
+          "description": "Berechnet die Zeilensumme einer Position inklusive Anpassungen"
+        },
+        {
+          "signature": "getOrderGrandTotal(orderItems, adjustments)",
+          "description": "Berechnet den Gesamtbetrag eines Auftrags"
+        },
+        {
+          "signature": "getItemStatusString(orderItem, locale)",
+          "description": "Liefert den lesbaren Status einer Bestellposition"
+        }
+      ]
+    },
+    {
+      "id": "OrderReturnServices",
+      "name": "OrderReturnServices",
+      "package": "org.apache.ofbiz.order.order",
+      "type": "Java-Klasse (Service-Implementierungen)",
+      "description": "Services für die Retourenabwicklung: Rückgabeanträge erstellen und verwalten, Erstattungsbeträge berechnen, Rückgabepositionen verwalten und Gutschriften/Rückerstattungen auslösen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getReturnItemInitialCost(dctx, context)",
+          "description": "Ermittelt die ursprünglichen Kosten einer Rückgabeposition aus den Bestelldaten"
+        },
+        {
+          "signature": "getOrderAvailableReturnedTotal(dctx, context)",
+          "description": "Berechnet den noch erstattbaren Betrag für eine Bestellung abzüglich bereits genehmigter Rückgaben"
+        },
+        {
+          "signature": "createReturnHeader(dctx, context)",
+          "description": "Erstellt einen neuen Rückgabeantrag (ReturnHeader)"
+        },
+        {
+          "signature": "createReturnItem(dctx, context)",
+          "description": "Fügt eine Position einem Rückgabeantrag hinzu"
+        },
+        {
+          "signature": "updateReturnHeader(dctx, context)",
+          "description": "Aktualisiert Metadaten eines Rückgabeantrags"
+        },
+        {
+          "signature": "updateReturnItem(dctx, context)",
+          "description": "Ändert Menge oder Rückgabegrund einer Rückgabeposition"
+        },
+        {
+          "signature": "processReturn(dctx, context)",
+          "description": "Verarbeitet einen genehmigten Rückgabeantrag: löst Gutschriften, Rückzahlungen und ggf. Lagereinbuchungen aus"
+        },
+        {
+          "signature": "updateReturnToBillingAccount(dctx, context)",
+          "description": "Schreibt Rückerstattungsbeträge einem Rechnungskonto gut"
+        },
+        {
+          "signature": "getReturnAmountByOrder(dctx, context)",
+          "description": "Summiert alle Rückgabebeträge zu einer Bestellung"
+        }
+      ]
+    },
+    {
+      "id": "OrderChangeHelper",
+      "name": "OrderChangeHelper",
+      "package": "org.apache.ofbiz.order.order",
+      "type": "Java-Klasse (Utility, final, nur statische Methoden)",
+      "description": "Workflow-Hilfsmethoden für Auftragsstatusübergänge: Genehmigen, Ablehnen und Stornieren von Aufträgen mit den zugehörigen Folgeoperationen (Bestandsreservierungen, Zahlungsfreigaben).",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "approveOrder(dispatcher, userLogin, orderId, holdOrder)",
+          "description": "Genehmigt einen Auftrag und setzt Header- und Positions-Status entsprechend der Store-Konfiguration"
+        },
+        {
+          "signature": "rejectOrder(dispatcher, userLogin, orderId)",
+          "description": "Lehnt einen Auftrag ab, setzt Status auf REJECTED und gibt Bestandsreservierungen sowie Zahlungsautorisierungen frei"
+        },
+        {
+          "signature": "cancelOrder(dispatcher, userLogin, orderId)",
+          "description": "Storniert einen Auftrag vollständig"
+        },
+        {
+          "signature": "orderStatusChanges(dispatcher, userLogin, orderId, ...)",
+          "description": "Führt koordinierte Statusänderungen über mehrere OrderItem-Status-Update-Services durch"
+        },
+        {
+          "signature": "cancelInventoryReservations(dispatcher, userLogin, orderId)",
+          "description": "Gibt alle Bestandsreservierungen für einen Auftrag frei"
+        },
+        {
+          "signature": "releasePaymentAuthorizations(dispatcher, userLogin, orderId)",
+          "description": "Gibt alle Zahlungsautorisierungen eines abgelehnten Auftrags frei"
+        }
+      ]
+    },
+    {
+      "id": "OrderEvents",
+      "name": "OrderEvents",
+      "package": "org.apache.ofbiz.order.order",
+      "type": "Java-Klasse (Event-Handler)",
+      "description": "HTTP-Event-Handler für auftragsgebundene Aktionen: Download digitaler Produkte nach Bestellabschluss und Stornierung ausgewählter Positionen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "downloadDigitalProduct(request, response)",
+          "description": "Prüft die Kaufberechtigung des Benutzers und liefert das digitale Produkt als Datei-Download aus"
+        },
+        {
+          "signature": "cancelSelectedOrderItems(request, response)",
+          "description": "Storniert ausgewählte Bestellpositionen über den zugehörigen Service"
+        }
+      ]
+    },
+    {
+      "id": "OrderLookupServices",
+      "name": "OrderLookupServices",
+      "package": "org.apache.ofbiz.order.order",
+      "type": "Java-Klasse (Service-Implementierungen)",
+      "description": "Flexibler Auftrags-Suchdienst mit umfangreichen Filtermöglichkeiten: Suche nach Auftrags-ID, Kundennummer, Produkt-ID, Status, Store, Datumsbereich, Tracking-Code, interner Nummer und weiteren Kriterien. Liefert paginierte Ergebnisse.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "findOrders(dctx, context)",
+          "description": "Führt eine dynamische Auftrags-Suche mit beliebig kombinierbaren Filterkriterien durch und liefert eine paginierte Ergebnisliste"
+        }
+      ]
+    },
+    {
+      "id": "OrderListState",
+      "name": "OrderListState",
+      "package": "org.apache.ofbiz.order.order",
+      "type": "Java-Klasse (implementiert Serializable)",
+      "description": "Persistente Session-Repräsentation des Zustands einer Auftragslisten-Anzeige (aktive Filter, aktuelle Seite, Sortierung). Wird als Session-Attribut gespeichert, damit der Benutzer zwischen Auftrags-Detail und -Liste navigieren kann ohne den Filterkontext zu verlieren.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "OrderContentWrapper",
+      "name": "OrderContentWrapper",
+      "package": "org.apache.ofbiz.order.order",
+      "type": "Java-Klasse (implementiert ContentWrapper)",
+      "description": "Stellt lokalisierte Content-Inhalte (z.B. Beschreibungen) für Auftragsobjekte bereit, integriert in das OFBiz-Content-Framework.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "QuoteServices",
+      "name": "QuoteServices",
+      "package": "org.apache.ofbiz.order.quote",
+      "type": "Java-Klasse (Service-Implementierungen)",
+      "description": "Services für die Angebotsverwaltung: Angebots-E-Mails versenden, Angebote in Aufträge umwandeln und Angebots-Preisdetails berechnen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "sendQuoteReportMail(dctx, context)",
+          "description": "Versendet ein Angebot per E-Mail an einen Empfänger unter Verwendung des Store-E-Mail-Templates"
+        },
+        {
+          "signature": "createQuoteFromCart(dctx, context)",
+          "description": "Erstellt ein Angebot aus einem bestehenden Warenkorb"
+        },
+        {
+          "signature": "createOrderFromQuote(dctx, context)",
+          "description": "Wandelt ein genehmigtes Angebot in eine Bestellung um"
+        },
+        {
+          "signature": "calculateQuoteCoefficients(dctx, context)",
+          "description": "Berechnet Deckungsbeiträge und Marge für ein Angebot"
+        }
+      ]
+    },
+    {
+      "id": "RequirementServices",
+      "name": "RequirementServices",
+      "package": "org.apache.ofbiz.order.requirement",
+      "type": "Java-Klasse (Service-Implementierungen)",
+      "description": "Services für die Einkaufsanforderungsverwaltung: Anforderungen für einen Lieferanten zusammenstellen, in Einkaufsbestellungen überführen und offene Anforderungen verwalten.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getRequirementsForSupplier(ctx, context)",
+          "description": "Listet alle offenen genehmigten Produktanforderungen für einen Lieferanten auf, optional nach Status gefiltert"
+        },
+        {
+          "signature": "createAutoRequirementsForMfgTasks(ctx, context)",
+          "description": "Erstellt automatisch Materialanforderungen für geplante Fertigungsaufgaben"
+        },
+        {
+          "signature": "createRequirementFromShoppingList(ctx, context)",
+          "description": "Konvertiert Einkaufslisten-Einträge in Einkaufsanforderungen"
+        }
+      ]
+    },
+    {
+      "id": "ShoppingListServices",
+      "name": "ShoppingListServices",
+      "package": "org.apache.ofbiz.order.shoppinglist",
+      "type": "Java-Klasse (Service-Implementierungen)",
+      "description": "Services für persistente Einkaufslisten: automatisch gespeicherte Listen (Auto-Save), Wunschlisten, wiederkehrende Einkaufslisten mit konfigurierbaren Wiederholungsintervallen und Listen-zu-Warenkorb-Konvertierung.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "setShoppingListRecurrence(dctx, context)",
+          "description": "Konfiguriert die Wiederholungsregel (täglich, wöchentlich, monatlich) für eine Einkaufsliste"
+        },
+        {
+          "signature": "addListToCart(dctx, context)",
+          "description": "Überträgt alle Positionen einer Einkaufsliste in den aktiven Warenkorb"
+        },
+        {
+          "signature": "calculateShoppingListTotal(dctx, context)",
+          "description": "Berechnet den Gesamtpreis einer Einkaufsliste"
+        },
+        {
+          "signature": "createShoppingListsFromOrder(dctx, context)",
+          "description": "Erstellt aus einem abgeschlossenen Auftrag eine neue Einkaufsliste für Nachbestellungen"
+        },
+        {
+          "signature": "makeShoppingListFromOrder(dctx, context)",
+          "description": "Konvertiert eine Bestellung direkt in eine wiederverwendbare Einkaufsliste"
+        },
+        {
+          "signature": "updateShoppingListQuantitiesFromOrder(dctx, context)",
+          "description": "Aktualisiert Mengen in einer gespeicherten Einkaufsliste anhand einer Bestellung"
+        }
+      ]
+    },
+    {
+      "id": "ShoppingListEvents",
+      "name": "ShoppingListEvents",
+      "package": "org.apache.ofbiz.order.shoppinglist",
+      "type": "Java-Klasse (Event-Handler)",
+      "description": "HTTP-Event-Handler für Einkaufslisten-Operationen im Web-Frontend: Liste in Warenkorb übertragen, Auto-Save-Logik bei Seitenaufruf, Listen-Verwaltung.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "FinAccountHelper",
+      "name": "FinAccountHelper",
+      "package": "org.apache.ofbiz.order.finaccount",
+      "type": "Java-Klasse (Utility, final)",
+      "description": "Hilfsmethoden für Finanzkonten (Geschenkgutscheine, Store-Kredite): Validierung, Kontonummern-Generierung und Saldoberechnungen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "addFirstEntryAmount(initialValue, transactions, fieldName, ...)",
+          "description": "Addiert den Betrag des ersten Eintrags aus einer Transaktionsliste auf einen Startwert"
+        },
+        {
+          "signature": "getRandomString(length)",
+          "description": "Generiert einen kryptographisch sicheren Zufallsstring für Kontonummern und PINs"
+        },
+        {
+          "signature": "getZeroAmount(delegator)",
+          "description": "Liefert den gerundeten Nullbetrag gemäß Systemkonfiguration"
+        },
+        {
+          "signature": "getGiftCertFinAccountTypeId()",
+          "description": "Gibt die konfigurierte Geschenkgutschein-Kontenart-ID zurück"
+        }
+      ]
+    },
+    {
+      "id": "OrderManagerEvents",
+      "name": "OrderManagerEvents",
+      "package": "org.apache.ofbiz.order",
+      "type": "Java-Klasse (Event-Handler)",
+      "description": "Event-Handler für den Order-Manager im Back-Office: Auftragsübersichten filtern, Statusänderungen aus der Listansicht heraus, Massenfunktionen.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ExpressCheckoutEvents",
+      "name": "ExpressCheckoutEvents",
+      "package": "org.apache.ofbiz.order.thirdparty.paypal",
+      "type": "Java-Klasse (Event-Handler)",
+      "description": "Integration des PayPal-ExpressCheckout-Verfahrens: Weiterleitung zu PayPal, Rückverarbeitung nach PayPal-Bestätigung, Fehlerbehandlung und Konvertierung der PayPal-Antwortdaten in OFBiz-Zahlungseinträge.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ZipSalesServices",
+      "name": "ZipSalesServices",
+      "package": "org.apache.ofbiz.order.thirdparty.zipsales",
+      "type": "Java-Klasse (Service-Implementierungen)",
+      "description": "Steuerberechnung anhand von ZIP-Code-basierten Steuertabellen (US-spezifisch): Importiert Steuertabellen-Daten und berechnet Verkaufssteuern auf Basis der Lieferpostleitzahl.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "TaskEvents",
+      "name": "TaskEvents",
+      "package": "org.apache.ofbiz.order.task",
+      "type": "Java-Klasse (Event-Handler)",
+      "description": "Event-Handler für auftragsbezogene Aufgaben (Tasks): Bearbeitung und Statusänderung von aufgabengebundenen Bestellprozessen.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "TaskWorker",
+      "name": "TaskWorker",
+      "package": "org.apache.ofbiz.order.task",
+      "type": "Java-Klasse (Utility)",
+      "description": "Hilfsmethoden für die Aufgaben-/Workflow-Verarbeitung zu Bestellungen.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "Groovy-Scripts-Auftragsmanagement-org-apache-ofbiz-order-order",
+      "name": "Groovy-Scripts: Auftragsmanagement (`org.apache.ofbiz.order.order`)",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "OrderView",
+          "description": "Hauptscreen Auftragsanzeige: lädt alle Detaildaten eines Auftrags"
+        },
+        {
+          "name": "OrderViewWebSecure",
+          "description": "Sicherheitsgeprüfte Variante der Auftragsanzeige für Kunden-Self-Service"
+        },
+        {
+          "name": "OrderList / FindOrders / FilterOrderList",
+          "description": "Auftragssuche und -listansicht"
+        },
+        {
+          "name": "OrderHistory",
+          "description": "Statushistorie eines Auftrags"
+        },
+        {
+          "name": "OrderStats",
+          "description": "Bestellstatistiken (Mengen, Umsätze)"
+        },
+        {
+          "name": "OrderDeliveryScheduleInfo / OrderDeliveryServices",
+          "description": "Liefertermin-Informationen"
+        },
+        {
+          "name": "ShipGroups",
+          "description": "Verwaltung der Versandgruppen-Ansicht"
+        },
+        {
+          "name": "NewNote",
+          "description": "Neue Notiz zu einem Auftrag erfassen"
+        },
+        {
+          "name": "CompanyHeader",
+          "description": "Firmen-Kopfzeile für Bestelldrucke"
+        },
+        {
+          "name": "AddOrderAttachments",
+          "description": "Anhänge zu einem Auftrag verwalten"
+        },
+        {
+          "name": "CheckoutServices",
+          "description": "Checkout-Service-Auslösung aus dem Back-Office"
+        },
+        {
+          "name": "ReceivePayment",
+          "description": "Manuelle Zahlungserfassung zu einem Auftrag"
+        },
+        {
+          "name": "SendConfirmationEmail",
+          "description": "Auftragsbestätigungs-E-Mail manuell auslösen"
+        },
+        {
+          "name": "OrderRequirementServicesScript / OrderServicesScript / OrderReturnServicesScript",
+          "description": "Groovy-Wrapper für Java-Services (delegieren an OrderServices, OrderReturnServices)"
+        },
+        {
+          "name": "ViewImage",
+          "description": "Bilddaten für auftragsgebundene Produkte anzeigen"
+        }
+      ]
+    },
+    {
+      "id": "Groovy-Scripts-Retouren-Angebote-Anforderungen-weitere-Bereiche",
+      "name": "Groovy-Scripts: Retouren, Angebote, Anforderungen, weitere Bereiche",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "QuickReturn",
+          "description": "Schnellerfassung einer Rückgabe"
+        },
+        {
+          "name": "ReturnHeader",
+          "description": "Kopfdaten eines Rückgabeantrags anzeigen/bearbeiten"
+        },
+        {
+          "name": "ReturnHistory",
+          "description": "Rückgabehistorie anzeigen"
+        },
+        {
+          "name": "ReturnItems",
+          "description": "Positionen eines Rückgabeantrags verwalten"
+        }
+      ]
+    },
+    {
+      "id": "Tests",
+      "name": "Tests",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "OrderTest",
+          "description": "Basistest-Klasse; prüft grundlegende Order-Service-Funktionalitäten"
+        },
+        {
+          "name": "SalesOrderTest",
+          "description": "End-to-end Tests für Verkaufsaufträge (Erstellen, Statusübergänge, Zahlungen)"
+        },
+        {
+          "name": "PurchaseOrderTest",
+          "description": "Tests für Einkaufsbestellungen und Lieferanten-Workflows"
+        },
+        {
+          "name": "FinAccountTest",
+          "description": "Tests für Finanzkonto-Funktionalitäten (Gift Cards, Konten-Validierung)"
+        },
+        {
+          "name": "OrderTestServices",
+          "description": "Hilfsdienste speziell für Testszenarien (Testdaten anlegen/bereinigen)"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "classes": 37,
+    "methods": 170
+  }
+}

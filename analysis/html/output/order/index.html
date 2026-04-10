@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modul: order — OFBiz Docs</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --sidebar-width: 220px;
+      --accent: #0d6efd;
+    }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      background: #1e2430;
+      color: #c9d1d9;
+      position: fixed;
+      top: 0; left: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      padding: 1.25rem 1rem .75rem;
+      display: block;
+      text-decoration: none;
+      border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0;
+      padding: .35rem 1rem;
+      font-size: .85rem;
+      border-radius: 0;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff;
+      background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #4a5568;
+      padding: .75rem 1rem .25rem;
+    }
+    #main {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+    }
+    .page-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .badge-type {
+      font-size: .7rem;
+      font-weight: 500;
+    }
+    .method-table th { white-space: nowrap; }
+    .method-sig {
+      font-family: SFMono-Regular, Menlo, monospace;
+      font-size: .82rem;
+      color: #0550ae;
+    }
+    .class-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: box-shadow .15s;
+    }
+    .class-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .class-card .card-title { font-size: .95rem; }
+    .breadcrumb { font-size: .82rem; }
+    .stat-pill {
+      background: #eef2ff;
+      color: #3730a3;
+      border-radius: 20px;
+      padding: .15rem .65rem;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>OFBiz Docs
+  </a>
+  <div class="nav-section">Module</div>
+  <ul class="nav flex-column">
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../party/index.html">
+        <i class="bi bi-box me-1"></i>party
+        <span class="stat-pill ms-1">22</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active"
+         href="../order/index.html">
+        <i class="bi bi-box me-1"></i>order
+        <span class="stat-pill ms-1">37</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../product/index.html">
+        <i class="bi bi-box me-1"></i>product
+        <span class="stat-pill ms-1">58</span>
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+<!-- Main -->
+<div id="main">
+  
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="../index.html">Module</a></li>
+      <li class="breadcrumb-item active">order</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-box me-2 text-primary"></i>order</h1>
+  <div class="d-flex gap-2 mt-2">
+    <span class="stat-pill"><i class="bi bi-layers me-1"></i>37 Klassen</span>
+    <span class="stat-pill"><i class="bi bi-lightning me-1"></i>170 public Methoden</span>
+  </div>
+</div>
+
+<div class="content-area">
+
+  <!-- Overview -->
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Überblick</h5>
+    <p>Das Modul `order` ist der Kern des Bestellwesens in Apache OFBiz und deckt den vollständigen Order-to-Cash-Prozess ab. Es umfasst die Verwaltung des Warenkorbs, die Auftragserfassung und -verarbeitung (für Verkaufs- und Einkaufsbestellungen), das Retourenmanagement, die Angebotserstellung, Einkaufsanforderungen und Einkaufslisten. Das Modul stellt sowohl die Geschäftslogik (Java-Services) als auch UI-Skripte (Groovy) für alle order-bezogenen Screens bereit.</p>
+  </section>
+
+  <!-- Submodules -->
+  
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Submodule</h5>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Paket</th><th>Beschreibung</th></tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.shoppingcart</code></td>
+            <td class="text-muted small">Warenkorb-Kernlogik: ShoppingCart, ShoppingCartItem, Checkout-Prozess, Events und Services für den sessionbasierten Warenkorb</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.shoppingcart.component</code></td>
+            <td class="text-muted small">Interfaces (IShoppingCart*) für die komponentenbasierte Architektur des Warenkorbs</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.shoppingcart.components</code></td>
+            <td class="text-muted small">Konkrete Implementierungen der Warenkorb-Komponenten (Shipping, Taxes, Pricing, Payment, Promotion, Validator, ItemManager, Persistence)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.shoppingcart.product</code></td>
+            <td class="text-muted small">Produktbezogene Hilfsfunktionen im Warenkorb-Kontext: Promotionsberechnung, Produktanzeige</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.shoppingcart.shipping</code></td>
+            <td class="text-muted small">Versandkostenberechnung und Versand-Events</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.order</code></td>
+            <td class="text-muted small">Auftragsverarbeitung: Erstellen, Lesen, Ändern, Löschen von Orders; Rückgabe-Services; Events und UI-Skripte</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.order.test</code></td>
+            <td class="text-muted small">Automatisierte Groovy-Testklassen für Order-Funktionalitäten</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.quote</code></td>
+            <td class="text-muted small">Angebotsverwaltung: Erstellen, Versenden und Verwalten von Angeboten</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.requirement</code></td>
+            <td class="text-muted small">Beschaffungsanforderungen: Generierung und Konsolidierung von Einkaufsanforderungen</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.shoppinglist</code></td>
+            <td class="text-muted small">Einkaufslisten: Gespeicherte, automatisch wiederkehrende und öffentliche Listen</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.finaccount</code></td>
+            <td class="text-muted small">Hilfsfunktionen für Finanzkonten (Gift Cards, Geschenkgutscheine)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.task</code></td>
+            <td class="text-muted small">Aufgaben- und Workflow-Management zu Bestellprozessen</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.allocationplan</code></td>
+            <td class="text-muted small">Groovy-Scripts zur Zuteilungsplanung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.communications</code></td>
+            <td class="text-muted small">Groovy-Script für bestellbezogene Kommunikationsdienste</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.entry</code></td>
+            <td class="text-muted small">Groovy-Scripts für die Auftragserfassung (Checkout, Warenkorb-Anzeige, Katalog, Zahlungseinstellungen)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.lookup</code></td>
+            <td class="text-muted small">Groovy-Script zur Produktverknüpfungssuche</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.orderReturn</code></td>
+            <td class="text-muted small">Groovy-Scripts für Retourenvorgänge und Rücksendungshistorie</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.reports</code></td>
+            <td class="text-muted small">Groovy-Script für offene-Positionen-Report</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.request</code></td>
+            <td class="text-muted small">Groovy-Scripts für Kundenanfragen und CRM-Quoten</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.setup</code></td>
+            <td class="text-muted small">Groovy-Script für Zahlungskonfiguration</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.thirdparty.paypal</code></td>
+            <td class="text-muted small">PayPal ExpressCheckout-Integration</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.thirdparty.zipsales</code></td>
+            <td class="text-muted small">Steuerberechnung über ZIP-Code-basierte Steuertabellen</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.order.test</code></td>
+            <td class="text-muted small">Java-Testklassen für das gesamte Order-Modul</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+
+  <!-- Class list -->
+  <section>
+    <h5 class="text-muted text-uppercase mb-3" style="font-size:.75rem;letter-spacing:.08em">Klassen</h5>
+    <div class="row g-2">
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShoppingCart.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShoppingCart</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Zentrales Datenobjekt des Bestellprozesses. Der ShoppingCart repräsentiert eine laufende Bestellung — entweder als Verka…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>48 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShoppingCartItem.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShoppingCartItem</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Repräsentiert eine einzelne Position im Warenkorb. Hält alle positionsspezifischen Daten: Produkt-ID, Menge, Basis- und …
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>17 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CheckOutHelper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CheckOutHelper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Koordiniert den mehrstufigen Checkout-Prozess. Nimmt einen bestehenden ShoppingCart und führt sequenzielle Validierungs-…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>8 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShoppingCartFactory.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShoppingCartFactory</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Zentraler Einstiegspunkt zur Erzeugung von ShoppingCart-Instanzen. Abstrahiert die Konstruktoraufrufe und ermöglicht übe…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShoppingCartBuilder.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShoppingCartBuilder</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Implementiert das Builder-Pattern für die Erstellung von ShoppingCart-Instanzen. Erlaubt die schrittweise Konfiguration …
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="WebShoppingCart.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">WebShoppingCart</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Web-spezifische Unterklasse des ShoppingCart. Initialisiert sich direkt aus einem `HttpServletRequest` — liest Store, We…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShoppingCartHelper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShoppingCartHelper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Hilfsfunktionen für häufige Warenkorb-Operationen aus dem Web-Kontext, insbesondere das Verarbeiten von Form-Parametern …
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShoppingCartEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShoppingCartEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Implementiert HTTP-Event-Handler für alle Warenkorb-Aktionen im Web-Frontend: Produkt hinzufügen, Menge ändern, Position…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CheckOutEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CheckOutEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              HTTP-Event-Handler für den Checkout-Ablauf: Validierung und Weiterleitung bei jedem Checkout-Schritt (Adresse, Versand, …
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShoppingCartServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShoppingCartServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              OFBiz-Services rund um den Warenkorb: Positionen zwischen Versandgruppen verschieben, Warenkorb aus einer bestehenden Be…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CartEventListener.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CartEventListener</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Reagiert auf das Ablaufen einer HTTP-Session: Speichert den aktuellen Warenkorb automatisch in eine Shopping-Liste (Auto…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductPromoWorker.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductPromoWorker</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Motor für die gesamte Promotionsberechnung. Wertet Promotionsregeln gegen den Warenkorb aus, wendet Aktionen an (Rabatte…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductDisplayWorker.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductDisplayWorker</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Hilfsfunktionen für die Produktanzeige im Store-Kontext: Sortierung von Produktlisten, Ermittlung von empfohlenen Produk…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductStoreCartAwareEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductStoreCartAwareEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Store-spezifische Event-Handler, die den Warenkorb-Zustand berücksichtigen, z.B. beim Wechsel des Produktstores innerhal…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShippingEstimateWrapper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShippingEstimateWrapper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart.shipping</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Berechnet und zwischenspeichert Versandkostenschätzungen für alle verfügbaren Versandmethoden eines Warenkorbs. Wird im …
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShippingEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShippingEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppingcart.shipping</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Event-Handler und Service-Methoden für Versandkostenberechnungen; koordiniert die Kommunikation mit externen Versanddien…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="OrderServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">OrderServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.order</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Kernservices für die Auftragsverarbeitung. Implementiert den kompletten Lebenszyklus einer Bestellung: Erstellen, Status…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>23 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="OrderReadHelper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">OrderReadHelper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.order</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Zentrales Lesehilfsobjekt für gespeicherte Aufträge. Kapselt alle Datenbankzugriffe auf einen persistierten Auftrag und …
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>23 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="OrderReturnServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">OrderReturnServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.order</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Services für die Retourenabwicklung: Rückgabeanträge erstellen und verwalten, Erstattungsbeträge berechnen, Rückgabeposi…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>9 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="OrderChangeHelper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">OrderChangeHelper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.order</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Workflow-Hilfsmethoden für Auftragsstatusübergänge: Genehmigen, Ablehnen und Stornieren von Aufträgen mit den zugehörige…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="OrderEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">OrderEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.order</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              HTTP-Event-Handler für auftragsgebundene Aktionen: Download digitaler Produkte nach Bestellabschluss und Stornierung aus…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="OrderLookupServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">OrderLookupServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.order</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Flexibler Auftrags-Suchdienst mit umfangreichen Filtermöglichkeiten: Suche nach Auftrags-ID, Kundennummer, Produkt-ID, S…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="OrderListState.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">OrderListState</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.order</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Persistente Session-Repräsentation des Zustands einer Auftragslisten-Anzeige (aktive Filter, aktuelle Seite, Sortierung)…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="OrderContentWrapper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">OrderContentWrapper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.order</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Stellt lokalisierte Content-Inhalte (z.B. Beschreibungen) für Auftragsobjekte bereit, integriert in das OFBiz-Content-Fr…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="QuoteServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">QuoteServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.quote</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Services für die Angebotsverwaltung: Angebots-E-Mails versenden, Angebote in Aufträge umwandeln und Angebots-Preisdetail…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="RequirementServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">RequirementServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.requirement</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Services für die Einkaufsanforderungsverwaltung: Anforderungen für einen Lieferanten zusammenstellen, in Einkaufsbestell…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShoppingListServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShoppingListServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppinglist</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Services für persistente Einkaufslisten: automatisch gespeicherte Listen (Auto-Save), Wunschlisten, wiederkehrende Einka…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShoppingListEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShoppingListEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.shoppinglist</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              HTTP-Event-Handler für Einkaufslisten-Operationen im Web-Frontend: Liste in Warenkorb übertragen, Auto-Save-Logik bei Se…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="FinAccountHelper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">FinAccountHelper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.finaccount</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Hilfsmethoden für Finanzkonten (Geschenkgutscheine, Store-Kredite): Validierung, Kontonummern-Generierung und Saldoberec…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="OrderManagerEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">OrderManagerEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Event-Handler für den Order-Manager im Back-Office: Auftragsübersichten filtern, Statusänderungen aus der Listansicht he…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ExpressCheckoutEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ExpressCheckoutEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.thirdparty.paypal</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Integration des PayPal-ExpressCheckout-Verfahrens: Weiterleitung zu PayPal, Rückverarbeitung nach PayPal-Bestätigung, Fe…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ZipSalesServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ZipSalesServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.thirdparty.zipsales</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Steuerberechnung anhand von ZIP-Code-basierten Steuertabellen (US-spezifisch): Importiert Steuertabellen-Daten und berec…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="TaskEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">TaskEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.task</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Event-Handler für auftragsbezogene Aufgaben (Tasks): Bearbeitung und Statusänderung von aufgabengebundenen Bestellprozes…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="TaskWorker.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">TaskWorker</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.order.task</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Hilfsmethoden für die Aufgaben-/Workflow-Verarbeitung zu Bestellungen.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="Groovy-Scripts-Auftragsmanagement-org-apache-ofbiz-order-order.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Auftragsmanagement (`org.apache.ofbiz.order.order`)</span>
+              <span class="badge badge-type
+                bg-success
+                ">
+                Groovy-Scripts
+              </span>
+            </div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-collection me-1"></i>15 Scripts</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="Groovy-Scripts-Retouren-Angebote-Anforderungen-weitere-Bereiche.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Retouren, Angebote, Anforderungen, weitere Bereiche</span>
+              <span class="badge badge-type
+                bg-success
+                ">
+                Groovy-Scripts
+              </span>
+            </div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-collection me-1"></i>4 Scripts</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="Tests.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">Tests</span>
+              <span class="badge badge-type
+                bg-success
+                ">
+                Groovy-Scripts
+              </span>
+            </div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-collection me-1"></i>5 Scripts</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+    </div>
+  </section>
+
+</div>
+
+</div>
+
+</body>
+</html>

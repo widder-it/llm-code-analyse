@@ -1,0 +1,1079 @@
+{
+  "module": "party",
+  "overview": "Das Modul `party` ist die zentrale Stammdatenverwaltung für alle Akteure im OFBiz-System. Es modelliert Personen, Organisationen (PartyGroups) und deren Beziehungen untereinander sowie alle zugehörigen Kontakt- und Kommunikationsdaten. Fachlich deckt das Modul die Verwaltung von Stammdaten für Kunden, Lieferanten, Mitarbeiter und sonstige Geschäftspartner ab, einschließlich Adressen, Telefonnummern, E-Mail-Adressen, Kommunikationsereignissen und Website-Besuchen.",
+  "submodules": [
+    {
+      "name": "party.communication",
+      "description": "Kommunikationsereignisse (E-Mail, FTP-Transfer): Versand, Empfang, Archivierung"
+    },
+    {
+      "name": "party.contact",
+      "description": "Kontaktmechanismen (Postadresse, Telefon, E-Mail, FTP): Verwaltung und Abfrage"
+    },
+    {
+      "name": "party.content",
+      "description": "Inhalte und Medien, die einem Party-Datensatz zugeordnet sind"
+    },
+    {
+      "name": "party.party",
+      "description": "Kern-Domäne: Party-Stammdaten, Rollen, Beziehungen, Suche, Berechtigungen"
+    },
+    {
+      "name": "party.visit",
+      "description": "Website-Besuchererfassung und Session-Tracking"
+    }
+  ],
+  "classes": [
+    {
+      "id": "CommunicationEventServices",
+      "name": "CommunicationEventServices",
+      "package": "org.apache.ofbiz.party.communication",
+      "type": "Java-Klasse",
+      "description": "Implementiert die OFBiz-Services für die Verwaltung von Kommunikationsereignissen. Stellt den Versand von E-Mails und FTP-Transfers als CommunicationEvent bereit, verarbeitet eingehende E-Mails und persistiert diese als Kommunikationshistorie.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "sendCommEventAsEmail(DispatchContext, Map)",
+          "description": "Sendet ein als EMAIL_COMMUNICATION erfasstes CommunicationEvent per E-Mail, inkl. Anhänge und CC/BCC-Empfänger aus der Rollenliste des Events. Bei Adressfehlern wird das Event als COM_BOUNCED markiert."
+        },
+        {
+          "signature": "sendCommEventAsFtp(DispatchContext, Map)",
+          "description": "Überträgt die Inhalte eines als FILE_TRANSFER_COMM erfassten Events per FTP. Bei mehreren Inhalten werden pro Datei Kind-Events angelegt. Fehler werden als Bounce-Status am Event notiert."
+        },
+        {
+          "signature": "sendEmailToContactList(DispatchContext, Map)",
+          "description": "Verschickt ein CommunicationEvent-E-Mail an alle Mitglieder einer Kontaktliste (Massen-E-Mail)."
+        },
+        {
+          "signature": "setCommEventComplete(DispatchContext, Map)",
+          "description": "Setzt den Status eines CommunicationEvents auf COM_COMPLETE und trägt den Endzeitpunkt ein."
+        },
+        {
+          "signature": "createCommEventFromFtpTransfer(DispatchContext, Map)",
+          "description": "Erstellt ein neues CommunicationEvent vom Typ FILE_TRANSFER_COMM für eine bereits vorbereitete FTP-Übertragung, verknüpft den Content-Datensatz."
+        },
+        {
+          "signature": "createCommEventFromEmail(DispatchContext, Map)",
+          "description": "Legt ein neues CommunicationEvent vom Typ EMAIL_COMMUNICATION auf Basis von Absender- und Empfängeradressen an. Sucht automatisch die passenden Party- und ContactMech-IDs."
+        },
+        {
+          "signature": "updateCommEventAfterEmail(DispatchContext, Map)",
+          "description": "Aktualisiert ein bestehendes CommunicationEvent nach dem Versand einer E-Mail: trägt Message-ID, Betreff, Versandzeit und E-Mail-Adressen nach und speichert Anhänge."
+        },
+        {
+          "signature": "storeIncomingEmail(DispatchContext, Map)",
+          "description": "Verarbeitet eine eingehende E-Mail und speichert sie als CommunicationEvent (Typ AUTO_EMAIL_COMM). Erkennt Spam-Markierungen, Duplikate und löst Absender/Empfänger zu Party-IDs auf. Legt Anhänge und Rollen (TO, CC, BCC) als verknüpfte Datensätze an."
+        },
+        {
+          "signature": "processBouncedMessage(DispatchContext, Map)",
+          "description": "Analysiert eingehende Delivery-Status-Berichte (Bounce-E-Mails), sucht das ursprüngliche CommunicationEvent anhand der Message-ID und markiert es als COM_BOUNCED."
+        },
+        {
+          "signature": "logIncomingMessage(DispatchContext, Map)",
+          "description": "Schreibt Metadaten einer eingehenden E-Mail (Betreff, Teileanzahl, Anhänge) zu Diagnosezwecken ins Log."
+        },
+        {
+          "signature": "markCommunicationAsRead(HttpServletRequest, HttpServletResponse)",
+          "description": "HTTP-Event-Handler: Setzt den Lesestatus eines CommunicationEvents für den Empfänger auf \"gelesen\". Wird per Tracking-Pixel in E-Mails aufgerufen; liefert ein transparentes GIF-Bild zurück."
+        }
+      ]
+    },
+    {
+      "id": "CommunicationEventServicesScript",
+      "name": "CommunicationEventServicesScript",
+      "package": "org.apache.ofbiz.party.communication",
+      "type": "Groovy-Script",
+      "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Stellt ergänzende Kommunikations-Services bereit, die in Groovy implementiert sind, insbesondere für die vollständige CRUD-Verwaltung von CommunicationEvents sowie für Rollen- und Statusoperationen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createCommunicationEvent()",
+          "description": "Legt ein neues CommunicationEvent in der Datenbank an (mit Berechtigungsprüfung)."
+        },
+        {
+          "signature": "createCommunicationEventWithoutPermission()",
+          "description": "Erstellt ein CommunicationEvent ohne vorherige Berechtigungsprüfung, z. B. für automatisierte Systemprozesse."
+        },
+        {
+          "signature": "updateCommunicationEvent()",
+          "description": "Aktualisiert die Felder eines bestehenden CommunicationEvents."
+        },
+        {
+          "signature": "deleteCommunicationEvent()",
+          "description": "Löscht ein CommunicationEvent samt zugehöriger Rollen und Inhaltsverknüpfungen."
+        },
+        {
+          "signature": "deleteCommunicationEventWorkEffort()",
+          "description": "Entfernt die Verknüpfung zwischen einem CommunicationEvent und einem WorkEffort (Aufgabe)."
+        },
+        {
+          "signature": "createCommunicationEventRole()",
+          "description": "Fügt eine Partei mit einer definierten Rolle (TO, CC, BCC, ADDRESSEE) zu einem CommunicationEvent hinzu."
+        },
+        {
+          "signature": "removeCommunicationEventRole()",
+          "description": "Entfernt eine Partei-Rolle aus einem CommunicationEvent."
+        },
+        {
+          "signature": "sendEmailDated()",
+          "description": "Löst den E-Mail-Versand für ein datumsbeschränktes CommunicationEvent aus."
+        },
+        {
+          "signature": "setCommunicationEventStatus()",
+          "description": "Setzt den Status eines CommunicationEvents auf einen gewünschten Zielstatus."
+        },
+        {
+          "signature": "setCommEventRoleToRead()",
+          "description": "Markiert die Rolle einer Partei an einem CommunicationEvent als gelesen."
+        },
+        {
+          "signature": "setCommunicationEventRoleStatus()",
+          "description": "Setzt den Status der Rollenzugehörigkeit einer Partei zu einem CommunicationEvent."
+        },
+        {
+          "signature": "sendContactUsEmailToCompany()",
+          "description": "Sendet eine Kontaktformular-E-Mail an die Unternehmens-E-Mail-Adresse."
+        }
+      ]
+    },
+    {
+      "id": "Groovy-Scripts-Abfrage-Scripts-im-Subpaket-party-communication",
+      "name": "Groovy-Scripts: Abfrage-Scripts im Subpaket `party.communication`",
+      "package": "org.apache.ofbiz.party.communication",
+      "type": "Groovy-Scripts (Datenbankabfragen / Ansichtsvorbereitungen)",
+      "description": "Die folgenden Scripts werden über die OFBiz Service-Engine ausgeführt und stellen Daten für Views bereit:",
+      "is_group": true,
+      "members": [
+        {
+          "name": "FindCommEventContactMechs",
+          "description": "Ermittelt die Kontaktmechanismen (E-Mail-Adressen, Telefonnummern) aller an einem CommunicationEvent beteiligten Parteien für die Anzeige im UI."
+        },
+        {
+          "name": "GetMyCommunicationEventRole",
+          "description": "Liest die Rolle der aktuell angemeldeten Partei an einem CommunicationEvent aus (z. B. Absender, Empfänger)."
+        },
+        {
+          "name": "GetPartyEmailAttachment",
+          "description": "Lädt Anhänge zu einer E-Mail eines Party-Kommunikationsereignisses für die Anzeige oder den Download."
+        },
+        {
+          "name": "GetPartyEmailFromCommEventInfo",
+          "description": "Ermittelt die E-Mail-Adresse einer Partei anhand der Informationen eines CommunicationEvents."
+        },
+        {
+          "name": "ListCommunications",
+          "description": "Listet alle CommunicationEvents für eine Partei oder einen Filter auf (Kommunikationsübersicht)."
+        },
+        {
+          "name": "RecentVisitor",
+          "description": "Liefert Informationen zu kürzlich auf der Webseite aktiven Besuchern für die Anzeige in Kommunikations-Dashboards."
+        }
+      ]
+    },
+    {
+      "id": "ContactHelper",
+      "name": "ContactHelper",
+      "package": "org.apache.ofbiz.party.contact",
+      "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
+      "description": "Stellt Hilfsmethoden bereit, um Kontaktmechanismen einer Partei nach Typ oder Verwendungszweck abzufragen sowie Kreditkartendaten für die Anzeige zu formatieren.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getContactMech(GenericValue party, boolean includeOld)",
+          "description": "Liefert alle Kontaktmechanismen einer Partei, wahlweise einschließlich historisch abgelaufener Einträge."
+        },
+        {
+          "signature": "getContactMechByType(GenericValue party, String contactMechTypeId, boolean includeOld)",
+          "description": "Filtert die Kontaktmechanismen einer Partei auf einen bestimmten Typ (z. B. POSTAL_ADDRESS, EMAIL_ADDRESS)."
+        },
+        {
+          "signature": "getContactMechByPurpose(GenericValue party, String contactMechPurposeTypeId, boolean includeOld)",
+          "description": "Filtert die Kontaktmechanismen einer Partei auf einen definierten Verwendungszweck (z. B. Rechnungsadresse, Lieferadresse)."
+        },
+        {
+          "signature": "getContactMech(GenericValue party, String purposeTypeId, String typeId, boolean includeOld)",
+          "description": "Kombinierte Filterung nach Typ und Verwendungszweck; bildet die Grundlage aller anderen getContactMech-Varianten."
+        },
+        {
+          "signature": "formatCreditCard(GenericValue creditCardInfo)",
+          "description": "Formatiert Kreditkarteninformationen für die Anzeige: Kartentyp, die letzten vier Stellen der Kartennummer und das Ablaufdatum."
+        }
+      ]
+    },
+    {
+      "id": "ContactMechServices",
+      "name": "ContactMechServices",
+      "package": "org.apache.ofbiz.party.contact",
+      "type": "Java-Klasse",
+      "description": "Implementiert die OFBiz-Service-Engine-Methoden für die vollständige Lebenszyklusverwaltung von Kontaktmechanismen (Adressen, Telefonnummern, E-Mail-Adressen). Arbeitet mit der OFBiz-Historienpflege: Änderungen erzeugen neue Datensätze mit neuer ID, der alte Datensatz wird mit einem `thruDate` deaktiviert.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createContactMech(DispatchContext, Map)",
+          "description": "Legt einen neuen allgemeinen Kontaktmechanismus an (nicht für Postadresse oder Telefon, da dafür eigene Services vorgesehen sind). Prüft Schreibberechtigung (PARTYMGR_PCM_CREATE)."
+        },
+        {
+          "signature": "updateContactMech(DispatchContext, Map)",
+          "description": "Aktualisiert einen allgemeinen Kontaktmechanismus mit Historisierung: Der alte Eintrag wird abgelaufen, ein neuer mit aktuellen Daten angelegt."
+        },
+        {
+          "signature": "deleteContactMech(DispatchContext, Map)",
+          "description": "Deaktiviert die Verknüpfung eines Kontaktmechanismus zur Partei durch Setzen des thruDate auf jetzt."
+        },
+        {
+          "signature": "createPostalAddress(DispatchContext, Map)",
+          "description": "Erstellt eine neue Postadresse (Straße, PLZ, Ort, Land) als Kontaktmechanismus für eine Partei."
+        },
+        {
+          "signature": "updatePostalAddress(DispatchContext, Map)",
+          "description": "Ändert eine bestehende Postadresse mit vollständiger Historisierung (alter Eintrag wird archiviert)."
+        },
+        {
+          "signature": "createTelecomNumber(DispatchContext, Map)",
+          "description": "Legt eine neue Telefonnummer (Ländervorwahl, Ortsvorwahl, Nummer) als Kontaktmechanismus an."
+        },
+        {
+          "signature": "updateTelecomNumber(DispatchContext, Map)",
+          "description": "Ändert eine bestehende Telefonnummer mit Historisierung."
+        },
+        {
+          "signature": "createEmailAddress(DispatchContext, Map)",
+          "description": "Legt eine neue E-Mail-Adresse als Kontaktmechanismus an (delegiert an createContactMech mit Typ EMAIL_ADDRESS)."
+        },
+        {
+          "signature": "updateEmailAddress(DispatchContext, Map)",
+          "description": "Ändert eine bestehende E-Mail-Adresse (delegiert an updateContactMech)."
+        },
+        {
+          "signature": "createPartyContactMechPurpose(DispatchContext, Map)",
+          "description": "Verknüpft einen bereits bestehenden Kontaktmechanismus mit einem Verwendungszweck (z. B. Rechnungsadresse, Lieferadresse). Verhindert Doppelzuordnungen."
+        },
+        {
+          "signature": "getPartyContactMechValueMaps(DispatchContext, Map)",
+          "description": "Liefert alle Kontaktmechanismen einer Partei als strukturierte Map-Liste, die UI-Formulare direkt befüllen kann."
+        },
+        {
+          "signature": "copyPartyContactMechs(DispatchContext, Map)",
+          "description": "Kopiert alle aktiven Kontaktmechanismen einer Quellpartei auf eine Zielpartei, einschließlich der Verwendungszwecke."
+        },
+        {
+          "signature": "createEmailAddressVerification(DispatchContext, Map)",
+          "description": "Erzeugt einen kryptografisch gesicherten Verifikations-Hash für eine E-Mail-Adresse und speichert ihn mit einem Ablaufdatum für den E-Mail-Bestätigungsprozess."
+        }
+      ]
+    },
+    {
+      "id": "ContactMechServicesScript",
+      "name": "ContactMechServicesScript",
+      "package": "org.apache.ofbiz.party.contact",
+      "type": "Groovy-Script",
+      "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Ergänzt die Java-seitigen ContactMechServices um Groovy-implementierte Services, insbesondere für die Verwaltung von FTP-Adressen, State/Province-Validierung und E-Mail-Verifikationsbenachrichtigungen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "updateContactMech()",
+          "description": "Aktualisiert einen allgemeinen Kontaktmechanismus (Groovy-Variante mit zusätzlicher Validierungslogik)."
+        },
+        {
+          "signature": "hasValidStateProvince(String countryGeoId, String stateProvinceGeoId)",
+          "description": "Prüft, ob eine Bundesland/Provinz-Angabe für das angegebene Land gültig ist."
+        },
+        {
+          "signature": "createPostalAddress()",
+          "description": "Legt eine neue Postadresse an (Groovy-Variante)."
+        },
+        {
+          "signature": "updatePostalAddress()",
+          "description": "Ändert eine bestehende Postadresse (Groovy-Variante)."
+        },
+        {
+          "signature": "createTelecomNumber()",
+          "description": "Legt eine neue Telefonnummer an (Groovy-Variante)."
+        },
+        {
+          "signature": "updateTelecomNumber()",
+          "description": "Ändert eine bestehende Telefonnummer (Groovy-Variante)."
+        },
+        {
+          "signature": "createEmailAddress()",
+          "description": "Legt eine neue E-Mail-Adresse an (Groovy-Variante)."
+        },
+        {
+          "signature": "updateEmailAddress()",
+          "description": "Ändert eine bestehende E-Mail-Adresse (Groovy-Variante)."
+        },
+        {
+          "signature": "createFtpAddress()",
+          "description": "Legt eine neue FTP-Server-Adresse als Kontaktmechanismus an."
+        },
+        {
+          "signature": "updateFtpAddressWithHistory()",
+          "description": "Ändert eine FTP-Adresse mit Historisierung: Der alte Eintrag wird archiviert, ein neuer angelegt."
+        },
+        {
+          "signature": "createPartyFtpAddress()",
+          "description": "Verknüpft eine FTP-Adresse direkt mit einer Partei."
+        },
+        {
+          "signature": "updatePartyFtpAddress()",
+          "description": "Aktualisiert die Verknüpfung einer FTP-Adresse mit einer Partei."
+        },
+        {
+          "signature": "sendVerifyEmailAddressNotification()",
+          "description": "Verschickt eine Bestätigungs-E-Mail mit Verifikationslink an eine neu eingetragene E-Mail-Adresse."
+        },
+        {
+          "signature": "verifyEmailAddress()",
+          "description": "Prüft einen E-Mail-Verifikations-Hash und markiert die Adresse bei Gültigkeit als bestätigt."
+        }
+      ]
+    },
+    {
+      "id": "ContactMechWorker",
+      "name": "ContactMechWorker",
+      "package": "org.apache.ofbiz.party.contact",
+      "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
+      "description": "Stellt Low-Level-Abfragemethoden bereit, um Kontaktmechanismen für Parteien, Lagerorte (Facilities), Bestellungen und Arbeitsaufgaben (WorkEfforts) als strukturierte Maps zu laden. Wird von Services und View-Preparern verwendet.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getPartyContactMechValueMaps(Delegator, String partyId, boolean showOld)",
+          "description": "Lädt alle Kontaktmechanismen einer Partei als Liste von Maps, die jeweils ContactMech, PartyContactMech, den typspezifischen Untertyp (PostalAddress, TelecomNumber, FtpAddress) und die zugeordneten Verwendungszwecke enthalten."
+        },
+        {
+          "signature": "getPartyContactMechValueMaps(Delegator, String partyId, Timestamp date, String contactMechTypeId)",
+          "description": "Wie oben, jedoch mit Stichtagsfilterung und optionaler Einschränkung auf einen Kontaktmechanismus-Typ."
+        },
+        {
+          "signature": "getFacilityContactMechValueMaps(Delegator, String facilityId, boolean showOld)",
+          "description": "Lädt alle Kontaktmechanismen eines Lagerorts (Facility) analog zur Party-Variante."
+        },
+        {
+          "signature": "getOrderContactMechValueMaps(Delegator, String orderId)",
+          "description": "Liefert die Kontaktmechanismen einer Bestellung (Liefer- und Rechnungsadressen)."
+        },
+        {
+          "signature": "getWorkEffortContactMechValueMaps(Delegator, String workEffortId)",
+          "description": "Liefert die Kontaktmechanismen zu einer Arbeitsaufgabe (aktive Einträge)."
+        },
+        {
+          "signature": "getContactMechAndRelated(ServletRequest, String partyId, Map target)",
+          "description": "Befüllt eine View-Ziel-Map mit allen für das Kontaktmechanismus-Bearbeiten-Formular benötigten Daten: aktueller Eintrag, Typ, Verwendungszwecke, verfügbare Aktionen."
+        },
+        {
+          "signature": "getFacilityContactMechByPurpose(Delegator, String facilityId, List purposeTypes)",
+          "description": "Sucht für einen Lagerort den ersten aktiven Kontaktmechanismus für einen der angegebenen Verwendungszwecke (z. B. Versandadresse)."
+        },
+        {
+          "signature": "getFacilityContactMechAndRelated(ServletRequest, String facilityId, Map target)",
+          "description": "Befüllt eine View-Ziel-Map für das Bearbeiten von Facility-Kontaktmechanismen."
+        },
+        {
+          "signature": "getPartyPostalAddresses(ServletRequest, String partyId, String curContactMechId)",
+          "description": "Liefert alle aktiven Postadressen einer Partei außer der aktuell bearbeiteten, für Auswahlfelder im Formular."
+        },
+        {
+          "signature": "getCurrentPostalAddress(ServletRequest, String partyId, String curContactMechId)",
+          "description": "Lädt die aktuell ausgewählte Postadresse einer Partei zusammen mit Verwendungszwecken für die Formularanzeige."
+        },
+        {
+          "signature": "isUspsAddress(GenericValue postalAddress)",
+          "description": "Prüft anhand eines konfigurierbaren Musters, ob eine Adresse dem USPS-Format entspricht."
+        },
+        {
+          "signature": "isCompanyAddress(GenericValue postalAddress, String companyPartyId)",
+          "description": "Prüft, ob eine Adresse mit einer der Firmenadressen einer bestimmten Organisation übereinstimmt (normalisierter Adressvergleich)."
+        },
+        {
+          "signature": "getContactMechAttribute(Delegator, String contactMechId, String attrName)",
+          "description": "Liest einen benannten Zusatzattributwert eines Kontaktmechanismus aus der ContactMechAttribute-Tabelle."
+        },
+        {
+          "signature": "getPostalAddressPostalCodeGeoId(GenericValue postalAddress, Delegator)",
+          "description": "Ermittelt die Geo-ID für die Postleitzahl einer Adresse; aktualisiert den Datensatz bei Treffer automatisch."
+        },
+        {
+          "signature": "urlEncodePostalAddress(GenericValue postalAddress)",
+          "description": "Formatiert eine Postadresse als URL-kodierte Zeichenkette (z. B. für die Übergabe an Kartendienste)."
+        }
+      ]
+    },
+    {
+      "id": "PartyContentWrapper",
+      "name": "PartyContentWrapper",
+      "package": "org.apache.ofbiz.party.content",
+      "type": "Java-Klasse (implementiert ContentWrapper)",
+      "description": "Kapselt den Zugriff auf die dem Party-Datensatz zugeordneten Content-Elemente (z. B. Profilbilder, Beschreibungstexte). Stellt gecachte Render-Methoden bereit, die Content-Typen auflösen, rendern und als String zurückgeben.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "get(String contentTypeId, boolean useCache, String encoderType)",
+          "description": "Rendert den Inhalt eines bestimmten Content-Typs der Partei (z. B. Beschreibungstext) und gibt ihn mit optionaler Ausgabe-Kodierung zurück."
+        },
+        {
+          "signature": "get(String contentTypeId, String encoderType)",
+          "description": "Wie oben, immer mit Cache; liefert einen StringWrapper für sichere Template-Ausgabe."
+        },
+        {
+          "signature": "getId(String contentTypeId)",
+          "description": "Liefert die Content-ID des ersten aktiven Inhalts eines bestimmten Content-Typs für diese Partei."
+        },
+        {
+          "signature": "getList(String contentTypeId)",
+          "description": "Gibt alle gerenderten Inhalte eines Content-Typs als String-Liste zurück (z. B. mehrere Fotos oder Dokumente)."
+        },
+        {
+          "signature": "getContent(String contentId, boolean useCache, String encoderType)",
+          "description": "Rendert einen Inhalt direkt anhand seiner Content-ID (unabhängig vom Typ)."
+        },
+        {
+          "signature": "getPartyContentAsText(GenericValue party, String partyContentTypeId, ...)",
+          "description": "Statische Variante: Rendert einen Party-Inhalt als Text, löst bei fehlendem Content-Datensatz auf Direkt-Feldwerte des Party-Datensatzes zurück (z. B. Vorname, Gruppenname)."
+        },
+        {
+          "signature": "getPartyContentTextList(GenericValue party, String partyContentTypeId, ...)",
+          "description": "Rendert alle Inhalte eines Content-Typs als Liste (z. B. für Mehrsprachigkeit)."
+        },
+        {
+          "signature": "getFirstPartyContentByType(String partyId, GenericValue party, String partyContentTypeId, Delegator)",
+          "description": "Sucht den jüngsten aktiven Content-Datensatz eines Party-Inhaltstyps."
+        },
+        {
+          "signature": "makePartyContentWrapper(GenericValue party, HttpServletRequest request)",
+          "description": "Factory-Methode: Erstellt eine PartyContentWrapper-Instanz aus einem HTTP-Request-Kontext."
+        }
+      ]
+    },
+    {
+      "id": "HasPartyPermissions",
+      "name": "HasPartyPermissions",
+      "package": "org.apache.ofbiz.party",
+      "type": "Groovy-Script",
+      "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Prüft im Rahmen von View-Berechtigungen, ob der angemeldete Benutzer die für einen bestimmten Party-Eintrag notwendigen Rechte besitzt. Das Ergebnis steuert, welche UI-Aktionen (Bearbeiten, Löschen) sichtbar geschaltet werden.",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "PartyHelper",
+      "name": "PartyHelper",
+      "package": "org.apache.ofbiz.party.party",
+      "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
+      "description": "Formatiert Anzeigenamen von Parteien für die Darstellung in Listen, Briefköpfen und Suchtreffern — sowohl für natürliche Personen (Vor-/Nachname) als auch für Organisationen (Gruppenname).",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getPartyName(GenericValue partyObject)",
+          "description": "Liefert den Anzeigenamen einer Partei in Normalreihenfolge (Vorname Nachname bzw. Gruppenname)."
+        },
+        {
+          "signature": "getPartyName(Delegator delegator, String partyId, boolean lastNameFirst)",
+          "description": "Lädt den Anzeigenamen einer Partei direkt per ID aus der PartyNameView, wahlweise in der Reihenfolge Nachname, Vorname."
+        },
+        {
+          "signature": "getPartyName(GenericValue partyObject, boolean lastNameFirst)",
+          "description": "Ermittelt den Anzeigenamen aus einem bestehenden PartyGroup- oder Person-Objekt, ohne Datenbankzugriff."
+        },
+        {
+          "signature": "formatPartyNameObject(GenericValue partyValue, boolean lastNameFirst)",
+          "description": "Formatiert Vor-, Mittel- und Nachname bzw. Gruppenname eines Parteidatensatzes zu einer lesbaren Zeichenkette, mit optionaler Nachname-zuerst-Anordnung."
+        }
+      ]
+    },
+    {
+      "id": "PartyRelationshipHelper",
+      "name": "PartyRelationshipHelper",
+      "package": "org.apache.ofbiz.party.party",
+      "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
+      "description": "Stellt Hilfsmethoden für die Suche nach aktiven Beziehungen zwischen Parteien bereit.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getActivePartyRelationships(Delegator delegator, Map partyRelationshipValues)",
+          "description": "Sucht alle aktuell gültigen Beziehungseinträge zwischen zwei Parteien mit gegebenen Rollen und Beziehungstyp. Berücksichtigt fromDate/thruDate zum Stichtag jetzt."
+        }
+      ]
+    },
+    {
+      "id": "PartyRelationshipServices",
+      "name": "PartyRelationshipServices",
+      "package": "org.apache.ofbiz.party.party",
+      "type": "Java-Klasse",
+      "description": "Implementiert Services zur Verwaltung von Parteienbeziehungen, einschließlich der Idempotenz-Logik bei Anlage neuer Beziehungen.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createUpdatePartyRelationshipAndRoles(DispatchContext, Map)",
+          "description": "Legt eine neue Parteienbeziehung an und stellt sicher, dass die notwendigen Rollen (PartyRole) auf beiden Seiten existieren. Bestehende gleichartige Beziehungen werden mit einem thruDate archiviert, bevor die neue angelegt wird. Ist bereits eine identische aktive Beziehung vorhanden, wird kein neuer Eintrag angelegt."
+        }
+      ]
+    },
+    {
+      "id": "PartyServices",
+      "name": "PartyServices",
+      "package": "org.apache.ofbiz.party.party",
+      "type": "Java-Klasse",
+      "description": "Zentraler Service-Container für die grundlegende CRUD-Verwaltung von Party-Stammdaten (Personen, Organisationen, Notizen), Parteiensuche und den CSV-Import von Adress-Normalisierungsregeln.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createPerson(DispatchContext, Map)",
+          "description": "Legt einen neuen Personendatensatz an — erstellt Party, Person und einen initialen PartyStatus-Eintrag. Verhindert rein numerische IDs."
+        },
+        {
+          "signature": "updatePerson(DispatchContext, Map)",
+          "description": "Aktualisiert Stammdaten einer Person; löst bei geändertem Status automatisch setPartyStatus aus."
+        },
+        {
+          "signature": "createPartyGroup(DispatchContext, Map)",
+          "description": "Erstellt eine neue Organisation (PARTY_GROUP); unterstützt benutzerdefinierte Party-Typ-IDs innerhalb der Gruppe."
+        },
+        {
+          "signature": "updatePartyGroup(DispatchContext, Map)",
+          "description": "Aktualisiert Stammdaten einer Organisation."
+        },
+        {
+          "signature": "setPartyStatus(DispatchContext, Map)",
+          "description": "Setzt den Status einer Partei (z. B. PARTY_ENABLED, PARTY_DISABLED). Prüft erlaubte Statusübergänge, schreibt Historieninträge und deaktiviert bei PARTY_DISABLED automatisch alle zugehörigen Benutzeranmeldungen."
+        },
+        {
+          "signature": "createAffiliate(DispatchContext, Map)",
+          "description": "Legt einen Affiliate-Eintrag für eine Partei an."
+        },
+        {
+          "signature": "updateAffiliate(DispatchContext, Map)",
+          "description": "Aktualisiert den Affiliate-Eintrag einer Partei."
+        },
+        {
+          "signature": "createPartyNote(DispatchContext, Map)",
+          "description": "Erstellt eine Notiz und verknüpft sie mit einer Partei."
+        },
+        {
+          "signature": "getPartiesFromExactEmail(DispatchContext, Map)",
+          "description": "Sucht alle Parteien mit einer exakt übereinstimmenden E-Mail-Adresse."
+        },
+        {
+          "signature": "getPartiesFromPartOfEmail(DispatchContext, Map)",
+          "description": "Sucht Parteien über eine Teilübereinstimmung der E-Mail-Adresse (Wildcardsuche)."
+        },
+        {
+          "signature": "getPartiesFromPartOfUserloginId(DispatchContext, Map)",
+          "description": "Sucht Parteien anhand eines Teilstrings der Benutzerkennung."
+        },
+        {
+          "signature": "getPartiesFromPerson(DispatchContext, Map)",
+          "description": "Sucht Parteien anhand von Personenfeldern (Vor-/Nachname)."
+        },
+        {
+          "signature": "getPartiesFromPartyGroup(DispatchContext, Map)",
+          "description": "Sucht Parteien anhand des Organisationsnamens."
+        },
+        {
+          "signature": "getPartiesFromExternalId(DispatchContext, Map)",
+          "description": "Sucht Parteien anhand einer externen Kennung (z. B. ERP-Nummer)."
+        },
+        {
+          "signature": "getPerson(DispatchContext, Map)",
+          "description": "Lädt den vollständigen Personendatensatz zu einer Party-ID."
+        },
+        {
+          "signature": "findParty(DispatchContext, Map)",
+          "description": "Kombinierte Suche nach einer Partei über verschiedene Kriterien."
+        },
+        {
+          "signature": "performFindParty(DispatchContext, Map)",
+          "description": "Führt eine gefilterte Parteiensuche mit OFBiz-Suchkriterien aus."
+        },
+        {
+          "signature": "linkParty(DispatchContext, Map)",
+          "description": "Verknüpft zwei Parteien miteinander (z. B. für Deduplizierung oder Zusammenführung)."
+        },
+        {
+          "signature": "importAddressMatchMapCsv(DispatchContext, Map)",
+          "description": "Importiert Adress-Normalisierungsregeln (Abkürzungsersetzungen wie \"Str.\" → \"Strasse\") aus einer CSV-Datei."
+        },
+        {
+          "signature": "findPartyById(DispatchContext, Map)",
+          "description": "Sucht eine Partei anhand der internen Party-ID oder einer externen Identifikationsnummer."
+        },
+        {
+          "signature": "importParty(DispatchContext, Map)",
+          "description": "Massenimport von Parteien-Stammdaten inkl. Kontaktmechanismen aus einer strukturierten Map."
+        }
+      ]
+    },
+    {
+      "id": "PartyServicesScript",
+      "name": "PartyServicesScript",
+      "package": "org.apache.ofbiz.party.party",
+      "type": "Groovy-Script",
+      "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Enthält erweiterte Party-Services, die in Groovy implementiert sind: Namenshistorie, Beziehungsnavigation, Kontaktdaten-Abfragen, E-Mail-Benachrichtigungen und Adressverwaltung.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "savePartyNameChange()",
+          "description": "Speichert eine Namensänderung für eine Partei mit Zeitstempel in der Namenshistorie."
+        },
+        {
+          "signature": "getPartyNameForDate()",
+          "description": "Ermittelt den historischen Namen einer Partei zu einem bestimmten Stichtag."
+        },
+        {
+          "signature": "getPostalAddressBoundary()",
+          "description": "Liefert die geographischen Grenzen (Geo-Polygon) zu einer Postleitzahl einer Partei."
+        },
+        {
+          "signature": "createPartyIdentifications()",
+          "description": "Legt mehrere externe Identifikationsnummern für eine Partei an (z. B. Steuer-ID, Registernummer)."
+        },
+        {
+          "signature": "setPartyProfileDefaults()",
+          "description": "Setzt Standardwerte im Profil einer Partei (z. B. bevorzugte Währung, Sprache)."
+        },
+        {
+          "signature": "getPartiesByRelationship()",
+          "description": "Gibt alle Parteien zurück, die über einen bestimmten Beziehungstyp mit einer Ausgangspartei verknüpft sind."
+        },
+        {
+          "signature": "getParentOrganizations()",
+          "description": "Ermittelt alle übergeordneten Organisationen einer Partei entlang der Beziehungshierarchie."
+        },
+        {
+          "signature": "getRelatedParties()",
+          "description": "Liefert alle Parteien, die in einer beliebigen Beziehung zur Ausgangspartei stehen."
+        },
+        {
+          "signature": "getChildRoleTypes()",
+          "description": "Bestimmt die gültigen Rollentypen, die einer untergeordneten Partei in einer Beziehung zugewiesen werden dürfen."
+        },
+        {
+          "signature": "getPartyEmail()",
+          "description": "Lädt die primäre E-Mail-Adresse einer Partei."
+        },
+        {
+          "signature": "getPartyTelephone()",
+          "description": "Lädt die primäre Telefonnummer einer Partei."
+        },
+        {
+          "signature": "getPartyPostalAddress()",
+          "description": "Lädt die primäre Postadresse einer Partei."
+        },
+        {
+          "signature": "createAddressMatchMap()",
+          "description": "Legt einen neuen Adress-Normalisierungseintrag (Abkürzungsregel) an."
+        },
+        {
+          "signature": "clearAddressMatchMap()",
+          "description": "Löscht alle vorhandenen Adress-Normalisierungseinträge."
+        },
+        {
+          "signature": "createPartyRelationship()",
+          "description": "Legt eine neue Beziehung zwischen zwei Parteien an."
+        },
+        {
+          "signature": "updatePartyRelationship()",
+          "description": "Aktualisiert eine bestehende Parteienbeziehung."
+        },
+        {
+          "signature": "deletePartyRelationship()",
+          "description": "Deaktiviert eine Parteienbeziehung durch Setzen des Enddatums."
+        },
+        {
+          "signature": "createPartyRelationshipContactAccount()",
+          "description": "Legt eine Kunden-Konto-Beziehung (Kontakt → Konto) zwischen zwei Parteien an."
+        },
+        {
+          "signature": "sendCreatePartyEmailNotification()",
+          "description": "Versendet eine Willkommensnachricht bei Neuanlage einer Partei per E-Mail."
+        },
+        {
+          "signature": "sendUpdatePersonalInfoEmailNotification()",
+          "description": "Benachrichtigt eine Partei per E-Mail über Änderungen an ihren persönlichen Stammdaten."
+        },
+        {
+          "signature": "sendAccountActivatedEmailNotification()",
+          "description": "Versendet eine Bestätigungs-E-Mail, wenn ein Benutzerkonto aktiviert wurde."
+        },
+        {
+          "signature": "createUpdatePerson()",
+          "description": "Erstellt oder aktualisiert eine Person idempotent (Upsert-Logik)."
+        },
+        {
+          "signature": "quickCreateCustomer()",
+          "description": "Legt eine Partei mit minimalen Pflichtfeldern als Schnellerfassung für neue Kunden an."
+        },
+        {
+          "signature": "getPartyMainRole()",
+          "description": "Ermittelt die primäre Rolle einer Partei im System (z. B. Kunde, Lieferant)."
+        },
+        {
+          "signature": "followPartyRelationshipsInline(...)",
+          "description": "Traversiert Parteienbeziehungen rekursiv für die Strukturdarstellung einer Hierarchie (z. B. Kontenbaum)."
+        },
+        {
+          "signature": "getChildRoleTypesInline(List)",
+          "description": "Hilfsmethode zur rekursiven Ermittlung erlaubter Kindrollen innerhalb einer Beziehungsstruktur."
+        }
+      ]
+    },
+    {
+      "id": "PartySimpleMethods",
+      "name": "PartySimpleMethods",
+      "package": "org.apache.ofbiz.party.party",
+      "type": "Groovy-Script",
+      "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Vereinfachte Service-Methoden für die Anlage von Party-Gruppen mit Rollen und Kontaktmechanismen sowie für die strukturierte Auflösung von Kontaktdaten aus Map-Parametern.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createPartyGroupRoleAndContactMechs()",
+          "description": "Legt eine Organisationspartei zusammen mit ihrer Rolle und allen Kontaktmechanismen in einem einzigen Serviceaufruf an."
+        },
+        {
+          "signature": "resolvePartyGroupMap()",
+          "description": "Extrahiert und validiert die Felder einer Organisation aus einem Eingabe-Parameter-Map und bereitet sie für die Datenbankpersistierung vor."
+        },
+        {
+          "signature": "resolvePostalAddressMap()",
+          "description": "Extrahiert und validiert Postadressfelder aus einem Eingabe-Parameter-Map."
+        },
+        {
+          "signature": "resolveTelecomNumberMap()",
+          "description": "Extrahiert und validiert Telefonnummernfelder aus einem Eingabe-Parameter-Map."
+        },
+        {
+          "signature": "resolveEmailAddressMap()",
+          "description": "Extrahiert und validiert E-Mail-Adressfelder aus einem Eingabe-Parameter-Map."
+        },
+        {
+          "signature": "resolvePartyProcessMap(String, String)",
+          "description": "Generische Hilfsmethode zur Auflösung und Validierung beliebiger Party-Kontaktdaten-Maps für unterschiedliche Kontakttypen."
+        }
+      ]
+    },
+    {
+      "id": "PartyTypeHelper",
+      "name": "PartyTypeHelper",
+      "package": "org.apache.ofbiz.party.party",
+      "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
+      "description": "Überprüft den Typen einer Partei in der Typhierarchie des OFBiz-Party-Modells.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "checkPartyType(Delegator delegator, String partyId, String checkedPartyType)",
+          "description": "Prüft, ob eine Partei dem angegebenen Typ oder einem seiner Untertypen entspricht. Gibt true zurück, wenn der tatsächliche Partytyp ein Subtyp des geprüften Typs in der OFBiz-Typhierarchie ist."
+        }
+      ]
+    },
+    {
+      "id": "PartyWorker",
+      "name": "PartyWorker",
+      "package": "org.apache.ofbiz.party.party",
+      "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
+      "description": "Stellt Suchmethoden für Parteien über verschiedene Identifikatoren bereit und verwaltet parteibezogene Hilfsdaten wie letzten Login-Zeitpunkt, Geolokation und die Generierung von Club-IDs.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getPartyOtherValues(ServletRequest, String partyId, ...)",
+          "description": "Lädt Party-, Person- und PartyGroup-Datensätze einer Partei gleichzeitig und befüllt damit benannte View-Attribute im Request."
+        },
+        {
+          "signature": "createClubId(Delegator, String prefix, int length)",
+          "description": "Generiert eine eindeutige Club-Mitgliedsnummer mit konfigurierbarem Präfix, laufender Sequenznummer und Luhn-Prüfziffer."
+        },
+        {
+          "signature": "findPartyLatestContactMech(String partyId, String contactMechTypeId, Delegator)",
+          "description": "Liefert den neuesten aktiven Kontaktmechanismus eines bestimmten Typs für eine Partei."
+        },
+        {
+          "signature": "findPartyLatestPostalAddress(String partyId, Delegator)",
+          "description": "Liefert die aktuellste Postadresse einer Partei."
+        },
+        {
+          "signature": "findPartyLatestPostalAddressGeoPoint(String partyId, Delegator)",
+          "description": "Liefert den geografischen Koordinatenpunkt (GeoPoint) der aktuellsten Postadresse einer Partei."
+        },
+        {
+          "signature": "findPartyLatestTelecomNumber(String partyId, Delegator)",
+          "description": "Liefert die aktuellste Telefonnummer einer Partei."
+        },
+        {
+          "signature": "findPartyLatestUserLogin(String partyId, Delegator)",
+          "description": "Liefert den zuletzt aktualisierten Benutzerzugang einer Partei."
+        },
+        {
+          "signature": "findPartyLastLoginTime(String partyId, Delegator)",
+          "description": "Ermittelt den Zeitstempel des letzten erfolgreichen Logins einer Partei aus der Login-Historie."
+        },
+        {
+          "signature": "findPartyLastLocale(String partyId, Delegator)",
+          "description": "Ermittelt die zuletzt verwendete Sprach- und Regionseinstellung einer Partei anhand des letzten Benutzerlogins."
+        },
+        {
+          "signature": "findFirstMatchingPartyId(Delegator, String address1, ...)",
+          "description": "Sucht die erste Partei, die zu den angegebenen Postadress- und Personenfeldern passt; gibt nur die Party-ID zurück."
+        },
+        {
+          "signature": "findFirstMatchingPartyAndContactMechId(Delegator, ...)",
+          "description": "Wie oben, gibt zusätzlich die ContactMech-ID der gefundenen Adresse zurück."
+        },
+        {
+          "signature": "findMatchingPersonPostalAddresses(Delegator, ...)",
+          "description": "Sucht alle natürlichen Personen, deren Name und Postadresse zu den angegebenen Feldern passen (Dublettenprüfung)."
+        },
+        {
+          "signature": "findMatchingPartyPostalAddress(Delegator, ...)",
+          "description": "Sucht Parteien eines bestimmten Typs (z. B. PERSON) anhand normalisierter Adressfelder."
+        },
+        {
+          "signature": "makeMatchingString(Delegator, String address)",
+          "description": "Normalisiert eine Adresszeile für den Vergleich: Großbuchstaben, Entfernung von Sonderzeichen, Ersetzung von Abkürzungen anhand der konfigurierten AddressMatchMap."
+        },
+        {
+          "signature": "getAssociatedPartyIdsByRelationshipType(Delegator, String partyIdFrom, String relationshipTypeId)",
+          "description": "Traversiert transitiv alle Parteien, die über einen Beziehungstyp mit einer Ausgangspartei verbunden sind (Beziehungsbaum)."
+        },
+        {
+          "signature": "findPartiesById(Delegator, String idToFind, String partyIdentificationTypeId, boolean searchPartyFirst, boolean searchAllId)",
+          "description": "Flexibler Parteiensucher: sucht zuerst über die interne Party-ID, dann über externe Identifikationsnummern."
+        },
+        {
+          "signature": "findPartyId(Delegator, String idToFind, String partyIdentificationTypeId)",
+          "description": "Liefert die interne Party-ID zu einer internen oder externen Kennung."
+        },
+        {
+          "signature": "findParty(Delegator, String idToFind, String partyIdentificationTypeId)",
+          "description": "Liefert den ersten gefundenen Party-Datensatz zu einer Kennung."
+        },
+        {
+          "signature": "findParties(Delegator, String idToFind, String partyIdentificationTypeId)",
+          "description": "Liefert alle Partei-Datensätze zu einer Kennung als vollständige Party-Entity-Liste."
+        }
+      ]
+    },
+    {
+      "id": "PartyPermissionServices",
+      "name": "PartyPermissionServices",
+      "package": "org.apache.ofbiz.party.party",
+      "type": "Groovy-Script",
+      "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Implementiert fein granulare Berechtigungsprüfungen für alle Operationen im Party-Modul. Bestimmt, ob ein angemeldeter Benutzer eine bestimmte Aktion auf einem Party-Datensatz durchführen darf.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "basePermissionCheck()",
+          "description": "Grundlegende Berechtigungsprüfung: testet, ob der Benutzer die allgemeine PARTYMGR-Berechtigung besitzt."
+        },
+        {
+          "signature": "partyIdPermissionCheck(Map)",
+          "description": "Prüft, ob der Benutzer auf einen konkreten Party-Datensatz zugreifen darf (entweder als Eigentümer oder via Admin-Berechtigung)."
+        },
+        {
+          "signature": "basePlusPartyIdPermissionCheck()",
+          "description": "Kombiniert Basis- und Party-ID-Prüfung in einem Aufruf."
+        },
+        {
+          "signature": "partyStatusPermissionCheck()",
+          "description": "Prüft, ob der Benutzer den Status einer Partei ändern darf."
+        },
+        {
+          "signature": "partyGroupPermissionCheck()",
+          "description": "Prüft die Berechtigung für Operationen auf Organisationsdatensätzen."
+        },
+        {
+          "signature": "partyDatasourcePermissionCheck()",
+          "description": "Prüft, ob der Benutzer auf parteibezogene Datenquellen-Einstellungen zugreifen darf."
+        },
+        {
+          "signature": "partyRolePermissionCheck()",
+          "description": "Prüft die Berechtigung zum Anlegen, Ändern oder Löschen von Parteirollen."
+        },
+        {
+          "signature": "partyRelationshipPermissionCheck()",
+          "description": "Prüft die Berechtigung für Beziehungsverwaltungsoperationen zwischen Parteien."
+        },
+        {
+          "signature": "partyContactMechPermissionCheck()",
+          "description": "Prüft die Berechtigung zum Anlegen, Ändern oder Löschen von Kontaktmechanismen einer Partei."
+        },
+        {
+          "signature": "accAndDecPartyInvitationPermissionCheck()",
+          "description": "Prüft, ob der Benutzer eine Parteieinladung annehmen oder ablehnen darf."
+        },
+        {
+          "signature": "cancelPartyInvitationPermissionCheck()",
+          "description": "Prüft die Berechtigung zum Stornieren einer Parteieinladung."
+        },
+        {
+          "signature": "partyCommunicationEventPermissionCheck()",
+          "description": "Prüft die Berechtigung für den Zugriff auf Kommunikationsereignisse einer Partei."
+        }
+      ]
+    },
+    {
+      "id": "PartyInvitationServices",
+      "name": "PartyInvitationServices",
+      "package": "org.apache.ofbiz.party.party",
+      "type": "Groovy-Script",
+      "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Verwaltet den Lebenszyklus von Parteieinladungen: Erstellen, Aktualisieren und Annehmen einer Einladung, die eine noch nicht im System erfasste Person zur Registrierung auffordert.",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createPartyInvitation()",
+          "description": "Legt eine neue Einladung für eine externe Person an, inkl. Einladungstoken und Ablaufdatum."
+        },
+        {
+          "signature": "updatePartyInvitation()",
+          "description": "Aktualisiert Status oder Gültigkeitsdaten einer bestehenden Einladung."
+        },
+        {
+          "signature": "acceptPartyInvitation()",
+          "description": "Verknüpft eine angenommene Einladung mit dem neu erstellten Party-Datensatz und schließt den Einladungsprozess ab."
+        }
+      ]
+    },
+    {
+      "id": "Groovy-Scripts-Daten-und-View-Helfer-im-Subpaket-party-party",
+      "name": "Groovy-Scripts: Daten- und View-Helfer im Subpaket `party.party`",
+      "package": "org.apache.ofbiz.party.party",
+      "type": "Groovy-Scripts (View-Vorbereitung, Datenabfragen)",
+      "description": "Die folgenden Scripts werden über die OFBiz Service-Engine ausgeführt und stellen Daten für Views bereit:",
+      "is_group": true,
+      "members": [
+        {
+          "name": "EditContactMech",
+          "description": "Lädt alle für das Kontaktmechanismus-Bearbeiten-Formular notwendigen Daten in den View-Kontext."
+        },
+        {
+          "name": "EditPaymentMethod",
+          "description": "Lädt Daten für das Zahlungsmethoden-Bearbeiten-Formular (Kreditkarte, Bankeinzug) einer Partei."
+        },
+        {
+          "name": "EditShoppingList",
+          "description": "Lädt Daten für die Bearbeitung einer Einkaufsliste einer Partei."
+        },
+        {
+          "name": "FindLookUp",
+          "description": "Führt eine Partei-Suche für Lookup-Felder im UI durch und liefert Treffer für die Auswahlliste."
+        },
+        {
+          "name": "FindMatches",
+          "description": "Sucht potenzielle Duplikate zu einer Partei anhand von Name und Adresse."
+        },
+        {
+          "name": "FindParty",
+          "description": "Führt eine allgemeine Parteiensuche anhand verschiedener Suchfelder aus."
+        },
+        {
+          "name": "GetContactMechs",
+          "description": "Lädt alle Kontaktmechanismen einer Partei für die Profilansicht."
+        },
+        {
+          "name": "GetCurrentCart",
+          "description": "Ermittelt den aktiven Warenkorb des aktuell angemeldeten Benutzers."
+        },
+        {
+          "name": "GetGeoLocation",
+          "description": "Löst die geografischen Koordinaten (Lat/Long) für die Adresse einer Partei auf."
+        },
+        {
+          "name": "GetLoyaltyPoints",
+          "description": "Ermittelt den aktuellen Treuepunkte-Stand einer Partei."
+        },
+        {
+          "name": "GetMyCompany",
+          "description": "Lädt den Organisationsdatensatz, der dem aktuell angemeldeten Benutzer zugeordnet ist."
+        },
+        {
+          "name": "GetPaymentMethods",
+          "description": "Lädt alle hinterlegten Zahlungsmethoden einer Partei für die Profilansicht."
+        },
+        {
+          "name": "GetPostalAddressTemplate",
+          "description": "Ermittelt das länderspezifische Anzeigeformat für Postadressen."
+        },
+        {
+          "name": "GetUserLoginPrimaryEmail",
+          "description": "Liefert die primäre E-Mail-Adresse des Benutzerlogins der angemeldeten Partei."
+        },
+        {
+          "name": "LookupServices",
+          "description": "Stellt eine lookupParty()-Methode für die Autocomplete-Suche im UI bereit."
+        },
+        {
+          "name": "PartyFinancialHistory",
+          "description": "Lädt die Finanzhistorie einer Partei (offene Rechnungen, Zahlungen, Guthaben)."
+        },
+        {
+          "name": "PartyGeoLocation",
+          "description": "Speichert oder liest die Geolokation einer Partei (Koordinaten der Hauptadresse)."
+        },
+        {
+          "name": "SetRoleVars",
+          "description": "Setzt Rollenvariablen im View-Kontext (z. B. ob die aktuelle Partei ein Kunde oder Lieferant ist)."
+        },
+        {
+          "name": "StatusCondition",
+          "description": "Prüft, ob ein bestimmter Statusübergang für eine Partei erlaubt ist (Bedingungsauswertung für UI-Sichtbarkeit von Aktionen)."
+        },
+        {
+          "name": "UnAppliedInvoicesForParty",
+          "description": "Liefert alle noch nicht ausgeglichenen Rechnungen einer Partei."
+        },
+        {
+          "name": "UnAppliedPaymentsForParty",
+          "description": "Liefert alle noch nicht zugeordneten Zahlungseingänge einer Partei."
+        },
+        {
+          "name": "ViewProfile",
+          "description": "Bereitet alle Daten für die vollständige Profilansicht einer Partei auf (Stammdaten, Kontakte, Rollen, Beziehungen)."
+        }
+      ]
+    },
+    {
+      "id": "Test-Klassen-Subpaket-party-party-test",
+      "name": "Test-Klassen: Subpaket party.party.test",
+      "package": "org.apache.ofbiz.party.party.test",
+      "type": "Groovy-Tests (OFBizTestCase)",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "ContactMechWorkerTests",
+          "description": "Auflösung von Kontaktmechanismen für Parteien, Bestellungen und Arbeitsaufgaben"
+        },
+        {
+          "name": "PartyContactMechTests",
+          "description": "Anlage und Aktualisierung von E-Mail-Adressen, Telefonnummern und Postadressen einer Partei"
+        },
+        {
+          "name": "PartyStatusChangeTests",
+          "description": "Statusübergänge einer Partei (Aktivieren, Deaktivieren)"
+        },
+        {
+          "name": "PartyTests",
+          "description": "Grundlegende Party-Operationen (Anlage einer Postadresse)"
+        }
+      ]
+    },
+    {
+      "id": "Groovy-Scripts-Besuchererfassung-im-Subpaket-party-visit",
+      "name": "Groovy-Scripts: Besuchererfassung im Subpaket `party.visit`",
+      "package": "org.apache.ofbiz.party.visit",
+      "type": "Groovy-Scripts",
+      "description": "| Klasse | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "ShowVisits",
+          "description": "Listet die Website-Besuche (Sessions) auf, die einer Partei zugeordnet sind."
+        },
+        {
+          "name": "VisitDetails",
+          "description": "Lädt die vollständigen Details eines einzelnen Website-Besuchs (Zeitpunkt, verwendeter Browser, besuchte Seiten) für die Anzeige im Parteiprofil."
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "classes": 22,
+    "methods": 173
+  }
+}

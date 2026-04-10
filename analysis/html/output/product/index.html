@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modul: product — OFBiz Docs</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --sidebar-width: 220px;
+      --accent: #0d6efd;
+    }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      background: #1e2430;
+      color: #c9d1d9;
+      position: fixed;
+      top: 0; left: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      padding: 1.25rem 1rem .75rem;
+      display: block;
+      text-decoration: none;
+      border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0;
+      padding: .35rem 1rem;
+      font-size: .85rem;
+      border-radius: 0;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff;
+      background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #4a5568;
+      padding: .75rem 1rem .25rem;
+    }
+    #main {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+    }
+    .page-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .badge-type {
+      font-size: .7rem;
+      font-weight: 500;
+    }
+    .method-table th { white-space: nowrap; }
+    .method-sig {
+      font-family: SFMono-Regular, Menlo, monospace;
+      font-size: .82rem;
+      color: #0550ae;
+    }
+    .class-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: box-shadow .15s;
+    }
+    .class-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .class-card .card-title { font-size: .95rem; }
+    .breadcrumb { font-size: .82rem; }
+    .stat-pill {
+      background: #eef2ff;
+      color: #3730a3;
+      border-radius: 20px;
+      padding: .15rem .65rem;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>OFBiz Docs
+  </a>
+  <div class="nav-section">Module</div>
+  <ul class="nav flex-column">
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../party/index.html">
+        <i class="bi bi-box me-1"></i>party
+        <span class="stat-pill ms-1">22</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../order/index.html">
+        <i class="bi bi-box me-1"></i>order
+        <span class="stat-pill ms-1">37</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active"
+         href="../product/index.html">
+        <i class="bi bi-box me-1"></i>product
+        <span class="stat-pill ms-1">58</span>
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+<!-- Main -->
+<div id="main">
+  
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="../index.html">Module</a></li>
+      <li class="breadcrumb-item active">product</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-box me-2 text-primary"></i>product</h1>
+  <div class="d-flex gap-2 mt-2">
+    <span class="stat-pill"><i class="bi bi-layers me-1"></i>58 Klassen</span>
+    <span class="stat-pill"><i class="bi bi-lightning me-1"></i>257 public Methoden</span>
+  </div>
+</div>
+
+<div class="content-area">
+
+  <!-- Overview -->
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Überblick</h5>
+    <p>Das Modul `product` ist das zentrale Produktmanagement-Modul von Apache OFBiz. Es deckt die vollständige Lebenszyklus-Verwaltung von Produkten ab: von der Produktstammdaten-Pflege über Kategorie- und Kataloghierarchien, Preisfindung, Lagerhaltung und Lieferung bis hin zu Aktionen, Abonnements und Bilddatei-Verwaltung. Das Modul bildet die fachliche Domäne eines klassischen B2B/B2C-Produktkatalogs ab und stellt sowohl Service-APIs als auch HTTP-Servlet- und FreeMarker-Integrationspunkte bereit.</p>
+  </section>
+
+  <!-- Submodules -->
+  
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Submodule</h5>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Paket</th><th>Beschreibung</th></tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.product</code></td>
+            <td class="text-muted small">Kerndatenmodell und Hilfsfunktionen für Produkte (Worker, Services, Events, Suche, Keyword-Index, Content-Wrapper)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.catalog</code></td>
+            <td class="text-muted small">Katalogstruktur und -verwaltung; Zugriff auf Kataloglisten und Store-Katalog-Zuordnungen</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.category</code></td>
+            <td class="text-muted small">Produktkategorien, SEO-URL-Filterung, Kategorie-Navigation und FreeMarker-Transforms für URL-Generierung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.config</code></td>
+            <td class="text-muted small">Konfigurierbare Produkte (Aggregated Products): Wrapper für Konfigurationsoptionen und Preisberechnung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.feature</code></td>
+            <td class="text-muted small">Produktmerkmale (Features): parametrische Suche und CRUD-Services für Feature-Typen und -Gruppen</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.image</code></td>
+            <td class="text-muted small">Skalierung von Produktbildern in mehrere Standardgrößen (small, medium, large, detail)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.imagemanagement</code></td>
+            <td class="text-muted small">Erweiterte Bildverwaltung: Upload, Zuschneiden, Drehen, Rahmen, Statusworkflow (Genehmigung/Ablehnung)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.inventory</code></td>
+            <td class="text-muted small">Lagerhaltung: Bestandsprüfung, Umbuchung, Verbrauchsbuchung und durchschnittliche Einstandspreisermittlung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.migrate</code></td>
+            <td class="text-muted small">Migrationsdienste für Datenbankschema-Upgrades</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.price</code></td>
+            <td class="text-muted small">Preisfindungslogik inklusive Regelauswertung, Mengenstaffeln, Steuerberechnung und Vereinbarungspreise</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.promo</code></td>
+            <td class="text-muted small">Aktionsverwaltung: Promo-Code-Generierung, Aktionsbedingungen und -aktionen (Rabatt, Gratisartikel, Versandkosten)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.shipment</code></td>
+            <td class="text-muted small">Versandabwicklung: Sendungserstellung, Verpackung, Kommissionierung, Wareneingang und Statusübergänge</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.spreadsheetimport</code></td>
+            <td class="text-muted small">Import von Produktdaten aus Excel-Dateien (Apache POI)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.store</code></td>
+            <td class="text-muted small">Produktshop-Konfiguration: Store-Einstellungen, Inventory-Prüfung, Umfragen und Event-Handler</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.subscription</code></td>
+            <td class="text-muted small">Abonnement-Verwaltung: Laufzeitverlängerung, Berechtigungsprüfung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.supplier</code></td>
+            <td class="text-muted small">Lieferanten-Produkt-Zuordnungen: Abfrage von Lieferantenkonditionen</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.facility.* (Groovy-Views)</code></td>
+            <td class="text-muted small">Lager-/Facility-Verwaltungs-Screens: Inventur, Bestandsübersichten, Versand, Kommissionierlisten</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.catalog.* (Groovy-Views)</code></td>
+            <td class="text-muted small">Admin-Screens für Katalog, Kategorien, Features, Preisregeln, Aktionen, Bilddatei-Management</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.product.*.test</code></td>
+            <td class="text-muted small">Automatisierte Integrationstests (OFBizTestCase-Subklassen)</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+
+  <!-- Class list -->
+  <section>
+    <h5 class="text-muted text-uppercase mb-3" style="font-size:.75rem;letter-spacing:.08em">Klassen</h5>
+    <div class="row g-2">
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductWorker.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductWorker</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Zentrale Hilfsbibliothek für produktbezogene Geschäftslogik. Wird von Services, Events und Views überall im Modul verwen…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>31 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Service-Methoden für Produktvarianten, Merkmalbaum-Aufbau und Bildverwaltung. Wird als OFBiz-Service-Implementierung reg…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>13 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductUtilServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductUtilServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Hilfsdienste für Datenpflege und -bereinigung im Produktstamm, insbesondere für Massendatenoperationen.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>8 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductSearch.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductSearch</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Implementiert die datenbankbasierte Produktsuche mit austauschbaren Einschränkungen und Sortierungen.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductSearchSession.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductSearchSession</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Persistiert Suchzustand (Constraints, Sortierung, Verlauf) in der HTTP-Session und koordiniert die Ausführung einer Such…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>10 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Verarbeitet HTTP-Formulare für Produktdatenpflege und Session-Management für kürzlich angesehene Artikel und Vergleichsl…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>9 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductSearchEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductSearchEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Ermöglicht Batch-Operationen auf Suchergebnissen (Kategoriezuordnung, Merkmalzuordnung, Export).
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="KeywordIndex.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">KeywordIndex</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Baut den Keyword-Suchindex für ein Produkt auf, indem Texte aus Produktdaten, Merkmalen und Content-Datensätzen extrahie…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductContentWrapper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductContentWrapper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Kapselt den Zugriff auf produktbezogene Content-Daten (Namen, Beschreibungen, Bilder) und liefert sie lokalisiert und im…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductPromoContentWrapper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductPromoContentWrapper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Analog zu `ProductContentWrapper`, aber für Aktions-Content (Bilder und Texte zu ProductPromo-Datensätzen).
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CatalogWorker.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CatalogWorker</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.catalog</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Zugriffshilfe auf Katalogdaten aus HTTP-Session und Datenbank; verwaltet den aktuell gewählten Katalog im Request.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>8 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CategoryWorker.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CategoryWorker</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.category</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Navigationshilfe für die Kategoriehierarchie: Pfadberechnung, Filterung von Produktlisten und Session-Management für Tra…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>8 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CategoryServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CategoryServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.category</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Service-Methoden für Kategorie-Navigation und -Pflege, insbesondere für die Vor-/Zurück-Navigation innerhalb einer Kateg…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CatalogUrlFilter.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CatalogUrlFilter</span>
+              <span class="badge badge-type
+                bg-primary">
+                Servlet / Se
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.category</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              URL-Routing-Infrastruktur für SEO-freundliche Katalog- und Kategorie-URLs. Die Filter rewrite eingehende SEO-URLs auf in…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="Klassen-FreeMarker-Transforms-im-Paket-org-apache-ofbiz-product-category-ftl.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">Klassen: FreeMarker-Transforms im Paket `org.apache.ofbiz.product.category.ftl`</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klassen
+              </span>
+            </div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-collection me-1"></i>7 Scripts</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CategoryContentWrapper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CategoryContentWrapper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.category</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Liefert lokalisierte Textinhalte (Name, Beschreibung, Bilder) für Produktkategorien, mit Caching-Unterstützung.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductConfigWrapper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductConfigWrapper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.config</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Kapselung des Konfigurationszustands eines konfigurierbaren Produkts (AGGREGATED). Verwaltet die Konfigurationsfragen (`…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>7 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductConfigWorker.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductConfigWorker</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.config</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Fabrik und Verwaltung von `ProductConfigWrapper`-Instanzen mit eingebautem Cache.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductConfigItemContentWrapper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductConfigItemContentWrapper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.config</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Liefert lokalisierte Inhalte (Name, Beschreibung) für einzelne Konfigurationspositionen (ProductConfigItem).
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductConfigWrapperException.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductConfigWrapperException</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Excepti
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.config</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Geprüfte Ausnahme für Fehler beim Aufbau oder der Validierung von Produktkonfigurationen.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductFeatureServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductFeatureServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.feature</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Service-Methoden zum Abfragen und Verwalten von Produktmerkmalen und Merkmaltypen.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ParametricSearch.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ParametricSearch</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.feature</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Führt eine parametrische Produktsuche durch, bei der Produkte anhand einer Kombination aus Merkmalen gefiltert werden.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ScaleImage.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ScaleImage</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.image</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Skaliert ein hochgeladenes Produktbild auf alle konfigurierten Standardgrößen (small, medium, large, detail) gemäß `Imag…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="Klassen-im-Paket-org-apache-ofbiz-product-imagemanagement.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">Klassen im Paket `org.apache.ofbiz.product.imagemanagement`</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klassen
+              </span>
+            </div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-collection me-1"></i>7 Scripts</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="InventoryServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">InventoryServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.inventory</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Kernservices für Lagerbestandsverwaltung: Umbuchungen, Reservierungen und Bestandsabfragen.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>9 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="InventoryWorker.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">InventoryWorker</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.inventory</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Statische Hilfsmethoden für Bestandsberechnungen, insbesondere für Marketing-Pakete.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="PriceServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">PriceServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.price</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Berechnet den aktuellen Produktpreis unter Berücksichtigung von Preisregeln, Mengenstaffeln, Vereinbarungspreisen, Kunde…
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="PromoServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">PromoServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.promo</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Verwaltung von Aktionscodes: Massengenerierung, Import aus Dateien und Bereinigung abgelaufener Shop-Aktionen.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="SubscriptionServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">SubscriptionServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.subscription</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Verwaltung von Produktabonnements: Laufzeitverlängerung und Ablaufprüfung.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="SupplierProductServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">SupplierProductServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.supplier</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Abfrage von Lieferanten-Produkt-Kombinationen mit Preis- und Staffelangaben.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductStoreWorker.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductStoreWorker</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.store</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Zugriffshilfe auf Shop-Konfigurationsdaten aus HTTP-Session und Datenbank.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductStoreEvents.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductStoreEvents</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.store</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Event-Handler für Shop-bezogene HTTP-Requests (Zahlungseinrichtung).
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductStoreSurveyWrapper.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductStoreSurveyWrapper</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.store</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Kapselt produkt- oder kategoriebezogene Umfragen eines Shops und stellt sie für FreeMarker-Templates bereit.
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="Klassen-im-Paket-org-apache-ofbiz-product-spreadsheetimport.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">Klassen im Paket `org.apache.ofbiz.product.spreadsheetimport`</span>
+              <span class="badge badge-type
+                bg-success
+                ">
+                Groovy-Scripts
+              </span>
+            </div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-collection me-1"></i>2 Scripts</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="MigrationServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">MigrationServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.migrate</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Datenbankmigrationen zwischen OFBiz-Versionen (z.B. Umschlüsselung von Entitäten).
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CatalogServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CatalogServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.catalog</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CategoryContentServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CategoryContentServicesScript</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.category</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>5 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CategoryServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CategoryServicesScript</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.category</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>10 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="CostServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">CostServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.cost</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductFeatureServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductFeatureServicesScript</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.feature</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ImageManagementServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ImageManagementServicesScript</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.imagemanagement</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>7 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="InventoryIssueServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">InventoryIssueServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.inventory</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="InventoryServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">InventoryServicesScript</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.inventory</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="PriceServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">PriceServicesScript</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.price</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductContentServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductContentServicesScript</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>5 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductServicesScript</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.product</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>10 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductPromoActionServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductPromoActionServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.promo</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>9 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductPromoCondServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductPromoCondServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.promo</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>8 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="PromoServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">PromoServicesScript</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.promo</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductStoreServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductStoreServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.store</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="SubscriptionServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">SubscriptionServicesScript</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.subscription</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>5 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="SupplierProductServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">SupplierProductServicesScript</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.supplier</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShipmentServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShipmentServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>11 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ShipmentReceiptServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ShipmentReceiptServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>5 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="IssuanceServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">IssuanceServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="PicklistServices.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">PicklistServices</span>
+              <span class="badge badge-type
+                bg-primary">
+                
+              </span>
+            </div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="ProductConfigItemContentServicesScript.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">ProductConfigItemContentServicesScript</span>
+              <span class="badge badge-type
+                bg-success
+                ">
+                Groovy-Script
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.product.config</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-xl-4">
+        <a href="SeoUrlUtil.html" class="text-decoration-none">
+          <div class="class-card card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold text-dark" style="font-size:.9rem">SeoUrlUtil</span>
+              <span class="badge badge-type
+                bg-primary">
+                Java-Klasse 
+              </span>
+            </div>
+            
+            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.product.category</div>
+            
+            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+              Hilfsfunktionen für die Verarbeitung und Konvertierung von SEO-freundlichen URLs (Normalisierung, Segment-Extraktion).
+            </p>
+            <div class="mt-2">
+              
+                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+              
+            </div>
+          </div>
+        </a>
+      </div>
+      
+    </div>
+  </section>
+
+</div>
+
+</div>
+
+</body>
+</html>
