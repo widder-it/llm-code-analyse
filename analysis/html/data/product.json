@@ -1085,7 +1085,7 @@
       "id": "CatalogServices",
       "name": "CatalogServices",
       "package": "org.apache.ofbiz.product.product.catalog",
-      "type": "",
+      "type": "Java-Klasse (Service)",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1119,7 +1119,7 @@
       "id": "CategoryContentServicesScript",
       "name": "CategoryContentServicesScript",
       "package": "org.apache.ofbiz.product.product.category",
-      "type": "",
+      "type": "Groovy-Script",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1149,7 +1149,7 @@
       "id": "CategoryServicesScript",
       "name": "CategoryServicesScript",
       "package": "org.apache.ofbiz.product.product.category",
-      "type": "",
+      "type": "Groovy-Script",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1199,7 +1199,7 @@
       "id": "CostServices",
       "name": "CostServices",
       "package": "org.apache.ofbiz.product.product.cost",
-      "type": "",
+      "type": "Java-Klasse (Service)",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1233,7 +1233,7 @@
       "id": "ProductFeatureServicesScript",
       "name": "ProductFeatureServicesScript",
       "package": "org.apache.ofbiz.product.product.feature",
-      "type": "",
+      "type": "Groovy-Script",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1255,7 +1255,7 @@
       "id": "ImageManagementServicesScript",
       "name": "ImageManagementServicesScript",
       "package": "org.apache.ofbiz.product.product.imagemanagement",
-      "type": "",
+      "type": "Groovy-Script",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1293,7 +1293,7 @@
       "id": "InventoryIssueServices",
       "name": "InventoryIssueServices",
       "package": "org.apache.ofbiz.product.product.inventory",
-      "type": "",
+      "type": "Java-Klasse (Service)",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1311,7 +1311,7 @@
       "id": "InventoryServicesScript",
       "name": "InventoryServicesScript",
       "package": "org.apache.ofbiz.product.product.inventory",
-      "type": "",
+      "type": "Groovy-Script",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1329,7 +1329,7 @@
       "id": "PriceServicesScript",
       "name": "PriceServicesScript",
       "package": "org.apache.ofbiz.product.product.price",
-      "type": "",
+      "type": "Groovy-Script",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1355,7 +1355,7 @@
       "id": "ProductContentServicesScript",
       "name": "ProductContentServicesScript",
       "package": "org.apache.ofbiz.product.product.product",
-      "type": "",
+      "type": "Groovy-Script",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1385,7 +1385,7 @@
       "id": "ProductServicesScript",
       "name": "ProductServicesScript",
       "package": "org.apache.ofbiz.product.product.product",
-      "type": "",
+      "type": "Groovy-Script",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1435,7 +1435,7 @@
       "id": "ProductPromoActionServices",
       "name": "ProductPromoActionServices",
       "package": "org.apache.ofbiz.product.product.promo",
-      "type": "",
+      "type": "Java-Klasse (Service)",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1481,7 +1481,7 @@
       "id": "ProductPromoCondServices",
       "name": "ProductPromoCondServices",
       "package": "org.apache.ofbiz.product.product.promo",
-      "type": "",
+      "type": "Java-Klasse (Service)",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1523,7 +1523,7 @@
       "id": "PromoServicesScript",
       "name": "PromoServicesScript",
       "package": "org.apache.ofbiz.product.product.promo",
-      "type": "",
+      "type": "Groovy-Script",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1537,7 +1537,7 @@
       "id": "ProductStoreServices",
       "name": "ProductStoreServices",
       "package": "org.apache.ofbiz.product.product.store",
-      "type": "",
+      "type": "Java-Klasse (Service)",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1563,7 +1563,7 @@
       "id": "SubscriptionServicesScript",
       "name": "SubscriptionServicesScript",
       "package": "org.apache.ofbiz.product.product.subscription",
-      "type": "",
+      "type": "Groovy-Script",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1593,7 +1593,7 @@
       "id": "SupplierProductServicesScript",
       "name": "SupplierProductServicesScript",
       "package": "org.apache.ofbiz.product.supplier",
-      "type": "",
+      "type": "Groovy-Script",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1607,7 +1607,7 @@
       "id": "ShipmentServices",
       "name": "ShipmentServices",
       "package": "",
-      "type": "",
+      "type": "Java-Klasse (Service)",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1661,7 +1661,7 @@
       "id": "ShipmentReceiptServices",
       "name": "ShipmentReceiptServices",
       "package": "",
-      "type": "",
+      "type": "Java-Klasse (Service)",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1691,7 +1691,7 @@
       "id": "IssuanceServices",
       "name": "IssuanceServices",
       "package": "",
-      "type": "",
+      "type": "Java-Klasse (Service)",
       "description": "",
       "is_group": false,
       "methods": [
@@ -1705,7 +1705,7 @@
       "id": "PicklistServices",
       "name": "PicklistServices",
       "package": "",
-      "type": "",
+      "type": "Java-Klasse (Service)",
       "description": "",
       "is_group": false,
       "methods": [

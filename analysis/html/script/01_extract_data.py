@@ -128,6 +128,21 @@ def extract_class_meta(name: str, section: str) -> dict:
     if m:
         typ = clean(m.group(1))
 
+    # Infer type from name if not explicitly stated
+    if not typ:
+        if name.endswith("Script") or "ServicesScript" in name:
+            typ = "Groovy-Script"
+        elif re.search(r"\bextends groovy\.lang\.Script\b", section):
+            typ = "Groovy-Script"
+        elif name.endswith("Events"):
+            typ = "Java-Klasse (Event-Handler)"
+        elif name.endswith("Services") or name.endswith("Service"):
+            typ = "Java-Klasse (Service)"
+        elif name.endswith("Worker") or name.endswith("Helper"):
+            typ = "Java-Klasse (Utility)"
+        else:
+            typ = "Java-Klasse"
+
     desc = ""
     for label in ("Zweck", "Funktion", "Beschreibung"):
         m = re.search(rf"\*\*{label}:\*\*\s*([\s\S]+?)(?=\n\||\n\n\*\*|\Z)", section)
