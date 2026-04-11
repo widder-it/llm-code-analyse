@@ -1,0 +1,63 @@
+#!/usr/bin/env python3
+"""
+Extracts inter-module dependencies from decompiled Java source files.
+Adds 'business_dependencies' to analysis/html/data/architektur.json.
+"""
+
+import json
+import re
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+JAVA_SRC = ROOT / "decompiled" / "src" / "main" / "java" / "org" / "apache" / "ofbiz"
+DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+
+BUSINESS_MODULES = [
+    "party", "order", "product", "accounting", "content",
+    "manufacturing", "shipment", "workeffort", "marketing", "humanres", "sfa",
+]
+
+IMPORT_RE = re.compile(r"^import org\.apache\.ofbiz\.([a-z]+)\.", re.MULTILINE)
+
+
+def get_deps(module: str) -> set[str]:
+    mod_dir = JAVA_SRC / module
+    deps = set()
+    for java_file in mod_dir.rglob("*.java"):
+        text = java_file.read_text(encoding="utf-8", errors="ignore")
+        for m in IMPORT_RE.finditer(text):
+            dep = m.group(1)
+            if dep != module and dep in BUSINESS_MODULES:
+                deps.add(dep)
+    return deps
+
+
+def main():
+    architektur_path = DATA_DIR / "architektur.json"
+    data = json.loads(architektur_path.read_text(encoding="utf-8"))
+
+    edges = []
+    all_deps: dict[str, list[str]] = {}
+    for mod in BUSINESS_MODULES:
+        if not (JAVA_SRC / mod).exists():
+            continue
+        deps = sorted(get_deps(mod))
+        all_deps[mod] = deps
+        for dep in deps:
+            edges.append({"from": mod, "to": dep})
+
+    data["business_dependencies"] = edges
+    data["business_modules_order"] = BUSINESS_MODULES
+
+    architektur_path.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+
+    print(f"business_dependencies: {len(edges)} edges")
+    for mod, deps in all_deps.items():
+        if deps:
+            print(f"  {mod:15s} → {', '.join(deps)}")
+
+
+if __name__ == "__main__":
+    main()

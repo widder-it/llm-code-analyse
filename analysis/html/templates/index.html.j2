@@ -317,6 +317,67 @@
     </div>
   </section>
 
+  {# ── 10. Business Module Dependencies ────────────────── #}
+  {% if architektur.business_dependencies %}
+  {% set biz_mods = architektur.business_modules_order | select('in', modules | map(attribute='id') | list) | list %}
+  {% set edges = architektur.business_dependencies %}
+  <section class="mb-5">
+    <h4 class="section-title">10. Abhängigkeiten zwischen Business-Modulen</h4>
+    <div class="row g-4">
+
+      {# Mermaid graph #}
+      <div class="col-lg-7">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Abhängigkeitsgraph</h6>
+        <div class="bg-white border rounded p-3">
+          <pre class="mermaid" style="text-align:center">
+graph LR
+{% for e in edges %}  {{ e.from }} --> {{ e.to }}
+{% endfor %}
+          </pre>
+        </div>
+        <p class="text-muted small mt-2">Pfeile zeigen Import-Abhängigkeiten (A → B = A importiert Klassen aus B).</p>
+      </div>
+
+      {# Dependency matrix #}
+      <div class="col-lg-5">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Abhängigkeitsmatrix</h6>
+        {% set dep_set = {} %}
+        {% for e in edges %}{% set _ = dep_set.update({e.from + '|' + e.to: true}) %}{% endfor %}
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered" style="font-size:.72rem">
+            <thead class="table-light">
+              <tr>
+                <th style="min-width:90px">Von ↓ Nach →</th>
+                {% for m in biz_mods %}<th class="text-center px-1" title="{{ m }}">{{ m[:4] }}</th>{% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for src in biz_mods %}
+              <tr>
+                <td class="fw-semibold text-nowrap">{{ src }}</td>
+                {% for tgt in biz_mods %}
+                <td class="text-center px-0">
+                  {% if src == tgt %}
+                    <span class="text-muted">·</span>
+                  {% elif (src + '|' + tgt) in dep_set %}
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  {% else %}
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  {% endif %}
+                </td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-muted small">→ = direkte Import-Abhängigkeit</p>
+      </div>
+
+    </div>
+  </section>
+  {% endif %}
+
 </div>
 
 <style>

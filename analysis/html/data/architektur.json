@@ -826,5 +826,96 @@
       "Befund": "Strangler-Fig-Pattern: schrittweise Ablösung über Events-Layer von außen nach innen"
     }
   ],
-  "replacement_phases": "Phase 1 (Niedrigstes Risiko):\n  → Shipment-Carrier-Integrationen (UPS/FedEx/DHL/USPS)\n  → Payment-Gateway-Adapter (8 Provider, klar isoliert)\n  → Reporting/Content-Module\n\nPhase 2 (Mittleres Risiko):\n  → Party-Modul (Stammdaten)\n  → Product-Katalog-Funktionen\n  → Manufacturing/WorkEffort\n\nPhase 3 (Höchstes Risiko — zuletzt):\n  → Order/ShoppingCart-Kern (God-Objects)\n  → Entity-Engine (zentrale DB-Abstraktion)\n  → Service-Engine (Framework-Kern)"
+  "replacement_phases": "Phase 1 (Niedrigstes Risiko):\n  → Shipment-Carrier-Integrationen (UPS/FedEx/DHL/USPS)\n  → Payment-Gateway-Adapter (8 Provider, klar isoliert)\n  → Reporting/Content-Module\n\nPhase 2 (Mittleres Risiko):\n  → Party-Modul (Stammdaten)\n  → Product-Katalog-Funktionen\n  → Manufacturing/WorkEffort\n\nPhase 3 (Höchstes Risiko — zuletzt):\n  → Order/ShoppingCart-Kern (God-Objects)\n  → Entity-Engine (zentrale DB-Abstraktion)\n  → Service-Engine (Framework-Kern)",
+  "business_dependencies": [
+    {
+      "from": "party",
+      "to": "content"
+    },
+    {
+      "from": "order",
+      "to": "content"
+    },
+    {
+      "from": "order",
+      "to": "marketing"
+    },
+    {
+      "from": "order",
+      "to": "party"
+    },
+    {
+      "from": "order",
+      "to": "product"
+    },
+    {
+      "from": "product",
+      "to": "content"
+    },
+    {
+      "from": "product",
+      "to": "party"
+    },
+    {
+      "from": "accounting",
+      "to": "order"
+    },
+    {
+      "from": "accounting",
+      "to": "party"
+    },
+    {
+      "from": "accounting",
+      "to": "product"
+    },
+    {
+      "from": "manufacturing",
+      "to": "order"
+    },
+    {
+      "from": "manufacturing",
+      "to": "product"
+    },
+    {
+      "from": "shipment",
+      "to": "content"
+    },
+    {
+      "from": "shipment",
+      "to": "party"
+    },
+    {
+      "from": "shipment",
+      "to": "product"
+    },
+    {
+      "from": "workeffort",
+      "to": "content"
+    },
+    {
+      "from": "marketing",
+      "to": "product"
+    },
+    {
+      "from": "humanres",
+      "to": "party"
+    },
+    {
+      "from": "sfa",
+      "to": "party"
+    }
+  ],
+  "business_modules_order": [
+    "party",
+    "order",
+    "product",
+    "accounting",
+    "content",
+    "manufacturing",
+    "shipment",
+    "workeffort",
+    "marketing",
+    "humanres",
+    "sfa"
+  ]
 }

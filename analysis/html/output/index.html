@@ -1384,6 +1384,851 @@ Phase 3 (Höchstes Risiko — zuletzt):
     </div>
   </section>
 
+  
+  
+  
+  
+  <section class="mb-5">
+    <h4 class="section-title">10. Abhängigkeiten zwischen Business-Modulen</h4>
+    <div class="row g-4">
+
+      
+      <div class="col-lg-7">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Abhängigkeitsgraph</h6>
+        <div class="bg-white border rounded p-3">
+          <pre class="mermaid" style="text-align:center">
+graph LR
+  party --> content
+  order --> content
+  order --> marketing
+  order --> party
+  order --> product
+  product --> content
+  product --> party
+  accounting --> order
+  accounting --> party
+  accounting --> product
+  manufacturing --> order
+  manufacturing --> product
+  shipment --> content
+  shipment --> party
+  shipment --> product
+  workeffort --> content
+  marketing --> product
+  humanres --> party
+  sfa --> party
+
+          </pre>
+        </div>
+        <p class="text-muted small mt-2">Pfeile zeigen Import-Abhängigkeiten (A → B = A importiert Klassen aus B).</p>
+      </div>
+
+      
+      <div class="col-lg-5">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Abhängigkeitsmatrix</h6>
+        
+        
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered" style="font-size:.72rem">
+            <thead class="table-light">
+              <tr>
+                <th style="min-width:90px">Von ↓ Nach →</th>
+                <th class="text-center px-1" title="party">part</th><th class="text-center px-1" title="order">orde</th><th class="text-center px-1" title="product">prod</th><th class="text-center px-1" title="accounting">acco</th><th class="text-center px-1" title="content">cont</th><th class="text-center px-1" title="manufacturing">manu</th><th class="text-center px-1" title="shipment">ship</th><th class="text-center px-1" title="workeffort">work</th><th class="text-center px-1" title="marketing">mark</th><th class="text-center px-1" title="humanres">huma</th><th class="text-center px-1" title="sfa">sfa</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td class="fw-semibold text-nowrap">party</td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted">·</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+              </tr>
+              
+              <tr>
+                <td class="fw-semibold text-nowrap">order</td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted">·</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+              </tr>
+              
+              <tr>
+                <td class="fw-semibold text-nowrap">product</td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted">·</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+              </tr>
+              
+              <tr>
+                <td class="fw-semibold text-nowrap">accounting</td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted">·</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+              </tr>
+              
+              <tr>
+                <td class="fw-semibold text-nowrap">content</td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted">·</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+              </tr>
+              
+              <tr>
+                <td class="fw-semibold text-nowrap">manufacturing</td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted">·</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+              </tr>
+              
+              <tr>
+                <td class="fw-semibold text-nowrap">shipment</td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted">·</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+              </tr>
+              
+              <tr>
+                <td class="fw-semibold text-nowrap">workeffort</td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted">·</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+              </tr>
+              
+              <tr>
+                <td class="fw-semibold text-nowrap">marketing</td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted">·</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+              </tr>
+              
+              <tr>
+                <td class="fw-semibold text-nowrap">humanres</td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted">·</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+              </tr>
+              
+              <tr>
+                <td class="fw-semibold text-nowrap">sfa</td>
+                
+                <td class="text-center px-0">
+                  
+                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted" style="opacity:.2">–</span>
+                  
+                </td>
+                
+                <td class="text-center px-0">
+                  
+                    <span class="text-muted">·</span>
+                  
+                </td>
+                
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+        <p class="text-muted small">→ = direkte Import-Abhängigkeit</p>
+      </div>
+
+    </div>
+  </section>
+  
+
 </div>
 
 <style>
@@ -1399,5 +2244,8 @@ Phase 3 (Höchstes Risiko — zuletzt):
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true, theme:'default', flowchart:{curve:'basis'}});</script>
 </body>
 </html>
