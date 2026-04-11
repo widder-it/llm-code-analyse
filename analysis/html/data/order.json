@@ -102,6 +102,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse (implementiert Iterable<ShoppingCartItem>, Serializable)",
       "description": "Zentrales Datenobjekt des Bestellprozesses. Der ShoppingCart repräsentiert eine laufende Bestellung — entweder als Verkaufsauftrag (SALES_ORDER) oder Einkaufsbestellung (PURCHASE_ORDER). Die Klasse hält alle Positionen, Zahlungsinformationen, Versandgruppen, Werbeaktionen und Bestellmetadaten für die gesamte Lebensdauer einer Bestellung im Speicher. Sie ist über eine komponentenbasierte Architektur (8 IShoppingCart*-Interfaces) aufgebaut, sodass einzelne Verhaltensaspekte ausgetauscht werden können.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -304,6 +305,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse (implementiert Serializable)",
       "description": "Repräsentiert eine einzelne Position im Warenkorb. Hält alle positionsspezifischen Daten: Produkt-ID, Menge, Basis- und Listenpreis, Sonderpreise, Features, Attribute, Versanddaten, Reservierungsinformationen (für Mietartikel), Anpassungen und Promotionsnutzung. Enthält Fabrikmethoden (`makeItem`, `makePurchaseOrderItem`) zur Validierung und Initialisierung aus dem Produktkatalog.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -382,6 +384,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse",
       "description": "Koordiniert den mehrstufigen Checkout-Prozess. Nimmt einen bestehenden ShoppingCart und führt sequenzielle Validierungs- und Berechnungsschritte durch: Lieferadresse setzen, Versandmethode wählen, Zahlungsdaten validieren, Steuer berechnen und schließlich den Auftrag platzieren.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -424,6 +427,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse (Factory)",
       "description": "Zentraler Einstiegspunkt zur Erzeugung von ShoppingCart-Instanzen. Abstrahiert die Konstruktoraufrufe und ermöglicht über den Builder-Pattern-Einstieg (`builder()`) die vollständige Konfiguration aller Komponenten vor dem Anlegen des Warenkorbs.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -458,6 +462,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse (Builder)",
       "description": "Implementiert das Builder-Pattern für die Erstellung von ShoppingCart-Instanzen. Erlaubt die schrittweise Konfiguration aller Pflicht- und optionalen Parameter sowie die Auswahl individueller Komponenten-Implementierungen vor dem `build()`-Aufruf.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -467,6 +472,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse (erweitert ShoppingCart)",
       "description": "Web-spezifische Unterklasse des ShoppingCart. Initialisiert sich direkt aus einem `HttpServletRequest` — liest Store, Website, Locale, Währung und Benutzerinformationen aus der HTTP-Session aus, ohne dass diese Parameter explizit übergeben werden müssen.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -476,6 +482,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse",
       "description": "Hilfsfunktionen für häufige Warenkorb-Operationen aus dem Web-Kontext, insbesondere das Verarbeiten von Form-Parametern (Massenzuordnung von Produkten, Mengenänderungen, Produktkonfigurationen) und das Anwenden von Bestellbedingungen.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -485,6 +492,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse (Event-Handler)",
       "description": "Implementiert HTTP-Event-Handler für alle Warenkorb-Aktionen im Web-Frontend: Produkt hinzufügen, Menge ändern, Position entfernen, Aktionscode eingeben, Warenkorb leeren, Warenkorb aus der Session lesen/schreiben. Dient als Schicht zwischen Web-Requests und der ShoppingCart-Geschäftslogik.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -494,6 +502,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse (Event-Handler)",
       "description": "HTTP-Event-Handler für den Checkout-Ablauf: Validierung und Weiterleitung bei jedem Checkout-Schritt (Adresse, Versand, Zahlung, Bestätigung), Integration von Single-Page-Checkout und Schnittstelle zu externen Checkout-Providern (z.B. PayPal).",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -503,6 +512,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse (Service-Implementierungen)",
       "description": "OFBiz-Services rund um den Warenkorb: Positionen zwischen Versandgruppen verschieben, Warenkorb aus einer bestehenden Bestellung wiederherstellen und Warenkorb-Zustände persistieren.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -525,6 +535,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse (implementiert HttpSessionListener)",
       "description": "Reagiert auf das Ablaufen einer HTTP-Session: Speichert den aktuellen Warenkorb automatisch in eine Shopping-Liste (Auto-Save), sofern der Produktstore dies konfiguriert hat, sodass der Benutzer beim nächsten Login seinen Warenkorb wiederherstellen kann.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -534,6 +545,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart.product",
       "type": "Java-Klasse (Utility, final, nur statische Methoden)",
       "description": "Motor für die gesamte Promotionsberechnung. Wertet Promotionsregeln gegen den Warenkorb aus, wendet Aktionen an (Rabatte, Gratis-Versand, Geschenkartikel) und verwaltet die Nutzungsgrenzen von Aktionscodes.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -560,6 +572,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart.product",
       "type": "Java-Klasse",
       "description": "Hilfsfunktionen für die Produktanzeige im Store-Kontext: Sortierung von Produktlisten, Ermittlung von empfohlenen Produkten und Berechnung von Mengenpreisen für die Darstellung.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -569,6 +582,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart.product",
       "type": "Java-Klasse (Event-Handler)",
       "description": "Store-spezifische Event-Handler, die den Warenkorb-Zustand berücksichtigen, z.B. beim Wechsel des Produktstores innerhalb einer Session.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -578,6 +592,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart.shipping",
       "type": "Java-Klasse",
       "description": "Berechnet und zwischenspeichert Versandkostenschätzungen für alle verfügbaren Versandmethoden eines Warenkorbs. Wird im Checkout zur Anzeige der Versandoptionen mit Preisvorschau eingesetzt.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -600,6 +615,7 @@
       "package": "org.apache.ofbiz.order.shoppingcart.shipping",
       "type": "Java-Klasse (Event-Handler und Services)",
       "description": "Event-Handler und Service-Methoden für Versandkostenberechnungen; koordiniert die Kommunikation mit externen Versanddienstleistern-Services.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -609,6 +625,7 @@
       "package": "org.apache.ofbiz.order.order",
       "type": "Java-Klasse (Service-Implementierungen)",
       "description": "Kernservices für die Auftragsverarbeitung. Implementiert den kompletten Lebenszyklus einer Bestellung: Erstellen, Statusänderungen, Anpassungen, Storno, Inventarbuchungen und Zahlungsabwicklung. Mit 84 öffentlichen Methoden ist dies nach dem ShoppingCart die komplexeste Klasse des Moduls.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -711,6 +728,7 @@
       "package": "org.apache.ofbiz.order.order",
       "type": "Java-Klasse (Read-Only-Zugriff)",
       "description": "Zentrales Lesehilfsobjekt für gespeicherte Aufträge. Kapselt alle Datenbankzugriffe auf einen persistierten Auftrag und bietet berechnete Aggregatwerte. Wird überall dort verwendet, wo auf Bestelldaten lesend zugegriffen werden muss, ohne einen ShoppingCart zu laden.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -813,6 +831,7 @@
       "package": "org.apache.ofbiz.order.order",
       "type": "Java-Klasse (Service-Implementierungen)",
       "description": "Services für die Retourenabwicklung: Rückgabeanträge erstellen und verwalten, Erstattungsbeträge berechnen, Rückgabepositionen verwalten und Gutschriften/Rückerstattungen auslösen.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -859,6 +878,7 @@
       "package": "org.apache.ofbiz.order.order",
       "type": "Java-Klasse (Utility, final, nur statische Methoden)",
       "description": "Workflow-Hilfsmethoden für Auftragsstatusübergänge: Genehmigen, Ablehnen und Stornieren von Aufträgen mit den zugehörigen Folgeoperationen (Bestandsreservierungen, Zahlungsfreigaben).",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -893,6 +913,7 @@
       "package": "org.apache.ofbiz.order.order",
       "type": "Java-Klasse (Event-Handler)",
       "description": "HTTP-Event-Handler für auftragsgebundene Aktionen: Download digitaler Produkte nach Bestellabschluss und Stornierung ausgewählter Positionen.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -911,6 +932,7 @@
       "package": "org.apache.ofbiz.order.order",
       "type": "Java-Klasse (Service-Implementierungen)",
       "description": "Flexibler Auftrags-Suchdienst mit umfangreichen Filtermöglichkeiten: Suche nach Auftrags-ID, Kundennummer, Produkt-ID, Status, Store, Datumsbereich, Tracking-Code, interner Nummer und weiteren Kriterien. Liefert paginierte Ergebnisse.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -925,6 +947,7 @@
       "package": "org.apache.ofbiz.order.order",
       "type": "Java-Klasse (implementiert Serializable)",
       "description": "Persistente Session-Repräsentation des Zustands einer Auftragslisten-Anzeige (aktive Filter, aktuelle Seite, Sortierung). Wird als Session-Attribut gespeichert, damit der Benutzer zwischen Auftrags-Detail und -Liste navigieren kann ohne den Filterkontext zu verlieren.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -934,6 +957,7 @@
       "package": "org.apache.ofbiz.order.order",
       "type": "Java-Klasse (implementiert ContentWrapper)",
       "description": "Stellt lokalisierte Content-Inhalte (z.B. Beschreibungen) für Auftragsobjekte bereit, integriert in das OFBiz-Content-Framework.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -943,6 +967,7 @@
       "package": "org.apache.ofbiz.order.quote",
       "type": "Java-Klasse (Service-Implementierungen)",
       "description": "Services für die Angebotsverwaltung: Angebots-E-Mails versenden, Angebote in Aufträge umwandeln und Angebots-Preisdetails berechnen.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -969,6 +994,7 @@
       "package": "org.apache.ofbiz.order.requirement",
       "type": "Java-Klasse (Service-Implementierungen)",
       "description": "Services für die Einkaufsanforderungsverwaltung: Anforderungen für einen Lieferanten zusammenstellen, in Einkaufsbestellungen überführen und offene Anforderungen verwalten.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -991,6 +1017,7 @@
       "package": "org.apache.ofbiz.order.shoppinglist",
       "type": "Java-Klasse (Service-Implementierungen)",
       "description": "Services für persistente Einkaufslisten: automatisch gespeicherte Listen (Auto-Save), Wunschlisten, wiederkehrende Einkaufslisten mit konfigurierbaren Wiederholungsintervallen und Listen-zu-Warenkorb-Konvertierung.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1025,6 +1052,7 @@
       "package": "org.apache.ofbiz.order.shoppinglist",
       "type": "Java-Klasse (Event-Handler)",
       "description": "HTTP-Event-Handler für Einkaufslisten-Operationen im Web-Frontend: Liste in Warenkorb übertragen, Auto-Save-Logik bei Seitenaufruf, Listen-Verwaltung.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -1034,6 +1062,7 @@
       "package": "org.apache.ofbiz.order.finaccount",
       "type": "Java-Klasse (Utility, final)",
       "description": "Hilfsmethoden für Finanzkonten (Geschenkgutscheine, Store-Kredite): Validierung, Kontonummern-Generierung und Saldoberechnungen.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1060,6 +1089,7 @@
       "package": "org.apache.ofbiz.order",
       "type": "Java-Klasse (Event-Handler)",
       "description": "Event-Handler für den Order-Manager im Back-Office: Auftragsübersichten filtern, Statusänderungen aus der Listansicht heraus, Massenfunktionen.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -1069,6 +1099,7 @@
       "package": "org.apache.ofbiz.order.thirdparty.paypal",
       "type": "Java-Klasse (Event-Handler)",
       "description": "Integration des PayPal-ExpressCheckout-Verfahrens: Weiterleitung zu PayPal, Rückverarbeitung nach PayPal-Bestätigung, Fehlerbehandlung und Konvertierung der PayPal-Antwortdaten in OFBiz-Zahlungseinträge.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -1078,6 +1109,7 @@
       "package": "org.apache.ofbiz.order.thirdparty.zipsales",
       "type": "Java-Klasse (Service-Implementierungen)",
       "description": "Steuerberechnung anhand von ZIP-Code-basierten Steuertabellen (US-spezifisch): Importiert Steuertabellen-Daten und berechnet Verkaufssteuern auf Basis der Lieferpostleitzahl.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -1087,6 +1119,7 @@
       "package": "org.apache.ofbiz.order.task",
       "type": "Java-Klasse (Event-Handler)",
       "description": "Event-Handler für auftragsbezogene Aufgaben (Tasks): Bearbeitung und Statusänderung von aufgabengebundenen Bestellprozessen.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -1096,6 +1129,7 @@
       "package": "org.apache.ofbiz.order.task",
       "type": "Java-Klasse (Utility)",
       "description": "Hilfsmethoden für die Aufgaben-/Workflow-Verarbeitung zu Bestellungen.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -1167,7 +1201,8 @@
           "name": "ViewImage",
           "description": "Bilddaten für auftragsgebundene Produkte anzeigen"
         }
-      ]
+      ],
+      "section": "groovy"
     },
     {
       "id": "Groovy-Scripts-Retouren-Angebote-Anforderungen-weitere-Bereiche",
@@ -1193,7 +1228,8 @@
           "name": "ReturnItems",
           "description": "Positionen eines Rückgabeantrags verwalten"
         }
-      ]
+      ],
+      "section": "groovy"
     },
     {
       "id": "Tests",
@@ -1223,7 +1259,8 @@
           "name": "OrderTestServices",
           "description": "Hilfsdienste speziell für Testszenarien (Testdaten anlegen/bereinigen)"
         }
-      ]
+      ],
+      "section": "groovy"
     }
   ],
   "stats": {

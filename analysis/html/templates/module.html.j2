@@ -2,6 +2,33 @@
 
 {% block title %}Modul: {{ module.module }} — OFBiz Docs{% endblock %}
 
+{% macro class_card(cls) %}
+<a href="{{ cls.id }}.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">{{ cls.name }}</span>
+      {% set is_groovy = 'Groovy' in cls.type or cls.section == 'groovy' %}
+      <span class="badge badge-type ms-1 {{ 'bg-success' if is_groovy else 'bg-primary' }}">
+        {{ 'Groovy' if is_groovy else 'Java' }}
+      </span>
+    </div>
+    {% if cls.package %}
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">{{ cls.package }}</div>
+    {% endif %}
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      {{ cls.description[:120] }}{% if cls.description|length > 120 %}…{% endif %}
+    </p>
+    <div class="mt-2">
+      {% if cls.is_group %}
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>{{ cls.members | length }} Klassen</span>
+      {% else %}
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>{{ cls.methods | length }} Methoden</span>
+      {% endif %}
+    </div>
+  </div>
+</a>
+{% endmacro %}
+
 {% block content %}
 <div class="page-header">
   <nav aria-label="breadcrumb">
@@ -47,42 +74,80 @@
   </section>
   {% endif %}
 
-  <!-- Class list -->
-  <section>
-    <h5 class="text-muted text-uppercase mb-3" style="font-size:.75rem;letter-spacing:.08em">Klassen</h5>
-    <div class="row g-2">
-      {% for cls in module.classes %}
-      <div class="col-md-6 col-xl-4">
-        <a href="{{ cls.id }}.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">{{ cls.name }}</span>
-              <span class="badge badge-type
-                {% if 'Interface' in cls.type %}bg-warning text-dark
-                {% elif 'Groovy' in cls.type %}bg-success
-                {% else %}bg-primary{% endif %}">
-                {{ cls.type | truncate(12, True, '') }}
-              </span>
-            </div>
-            {% if cls.package %}
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">{{ cls.package }}</div>
-            {% endif %}
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              {{ cls.description[:120] }}{% if cls.description|length > 120 %}…{% endif %}
-            </p>
-            <div class="mt-2">
-              {% if cls.is_group %}
-                <span class="stat-pill"><i class="bi bi-collection me-1"></i>{{ cls.members | length }} Scripts</span>
-              {% else %}
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>{{ cls.methods | length }} Methoden</span>
-              {% endif %}
-            </div>
-          </div>
-        </a>
+  <!-- Tab navigation -->
+  {% set java_classes   = module.classes | selectattr('section', 'equalto', 'java')   | list %}
+  {% set groovy_classes = module.classes | selectattr('section', 'equalto', 'groovy') | list %}
+  {% set test_classes   = module.classes | selectattr('section', 'equalto', 'test')   | list %}
+
+  <ul class="nav nav-tabs mb-4" id="classTabs" role="tablist">
+    {% if java_classes %}
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="tab-java" data-bs-toggle="tab"
+              data-bs-target="#pane-java" type="button">
+        <i class="bi bi-filetype-java me-1"></i>Java
+        <span class="badge bg-primary ms-1">{{ java_classes | length }}</span>
+      </button>
+    </li>
+    {% endif %}
+    {% if groovy_classes %}
+    <li class="nav-item" role="presentation">
+      <button class="nav-link {% if not java_classes %}active{% endif %}"
+              id="tab-groovy" data-bs-toggle="tab"
+              data-bs-target="#pane-groovy" type="button">
+        <i class="bi bi-braces me-1"></i>Groovy
+        <span class="badge bg-success ms-1">{{ groovy_classes | length }}</span>
+      </button>
+    </li>
+    {% endif %}
+    {% if test_classes %}
+    <li class="nav-item" role="presentation">
+      <button class="nav-link {% if not java_classes and not groovy_classes %}active{% endif %}"
+              id="tab-test" data-bs-toggle="tab"
+              data-bs-target="#pane-test" type="button">
+        <i class="bi bi-check2-circle me-1"></i>Tests
+        <span class="badge bg-secondary ms-1">{{ test_classes | length }}</span>
+      </button>
+    </li>
+    {% endif %}
+  </ul>
+
+  <div class="tab-content">
+
+    {% if java_classes %}
+    <div class="tab-pane fade show active" id="pane-java" role="tabpanel">
+      <div class="row g-2">
+        {% for cls in java_classes %}
+        <div class="col-md-6 col-xl-4">{{ class_card(cls) }}</div>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
-  </section>
+    {% endif %}
+
+    {% if groovy_classes %}
+    <div class="tab-pane fade {% if not java_classes %}show active{% endif %}"
+         id="pane-groovy" role="tabpanel">
+      <div class="row g-2">
+        {% for cls in groovy_classes %}
+        <div class="col-md-6 col-xl-4">{{ class_card(cls) }}</div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if test_classes %}
+    <div class="tab-pane fade {% if not java_classes and not groovy_classes %}show active{% endif %}"
+         id="pane-test" role="tabpanel">
+      <div class="row g-2">
+        {% for cls in test_classes %}
+        <div class="col-md-6 col-xl-4">{{ class_card(cls) }}</div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}

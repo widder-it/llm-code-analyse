@@ -192,576 +192,626 @@
   </section>
   
 
-  <!-- Class list -->
-  <section>
-    <h5 class="text-muted text-uppercase mb-3" style="font-size:.75rem;letter-spacing:.08em">Klassen</h5>
-    <div class="row g-2">
+  <!-- Tab navigation -->
+  
+  
+  
+
+  <ul class="nav nav-tabs mb-4" id="classTabs" role="tablist">
+    
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="tab-java" data-bs-toggle="tab"
+              data-bs-target="#pane-java" type="button">
+        <i class="bi bi-filetype-java me-1"></i>Java
+        <span class="badge bg-primary ms-1">11</span>
+      </button>
+    </li>
+    
+    
+    <li class="nav-item" role="presentation">
+      <button class="nav-link "
+              id="tab-groovy" data-bs-toggle="tab"
+              data-bs-target="#pane-groovy" type="button">
+        <i class="bi bi-braces me-1"></i>Groovy
+        <span class="badge bg-success ms-1">10</span>
+      </button>
+    </li>
+    
+    
+    <li class="nav-item" role="presentation">
+      <button class="nav-link "
+              id="tab-test" data-bs-toggle="tab"
+              data-bs-target="#pane-test" type="button">
+        <i class="bi bi-check2-circle me-1"></i>Tests
+        <span class="badge bg-secondary ms-1">1</span>
+      </button>
+    </li>
+    
+  </ul>
+
+  <div class="tab-content">
+
+    
+    <div class="tab-pane fade show active" id="pane-java" role="tabpanel">
+      <div class="row g-2">
+        
+        <div class="col-md-6 col-xl-4">
+<a href="CommunicationEventServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">CommunicationEventServices</span>
       
-      <div class="col-md-6 col-xl-4">
-        <a href="CommunicationEventServices.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">CommunicationEventServices</span>
-              <span class="badge badge-type
-                bg-primary">
-                Java-Klasse
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.communication</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Implementiert die OFBiz-Services für die Verwaltung von Kommunikationsereignissen. Stellt den Versand von E-Mails und FT…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>11 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.communication</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Implementiert die OFBiz-Services für die Verwaltung von Kommunikationsereignissen. Stellt den Versand von E-Mails und FT…
+    </p>
+    <div class="mt-2">
       
-      <div class="col-md-6 col-xl-4">
-        <a href="CommunicationEventServicesScript.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">CommunicationEventServicesScript</span>
-              <span class="badge badge-type
-                bg-success
-                ">
-                Groovy-Script
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.communication</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Groovy-Script — ausgeführt über OFBiz Service-Engine. Stellt ergänzende Kommunikations-Services bereit, die in Groovy im…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>12 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="Groovy-Scripts-Abfrage-Scripts-im-Subpaket-party-communication.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Abfrage-Scripts im Subpaket `party.communication`</span>
-              <span class="badge badge-type
-                bg-success
-                ">
-                Groovy-Scrip
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.communication</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Die folgenden Scripts werden über die OFBiz Service-Engine ausgeführt und stellen Daten für Views bereit:
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-collection me-1"></i>6 Scripts</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="ContactHelper.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">ContactHelper</span>
-              <span class="badge badge-type
-                bg-primary">
-                Java-Klasse 
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.contact</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Stellt Hilfsmethoden bereit, um Kontaktmechanismen einer Partei nach Typ oder Verwendungszweck abzufragen sowie Kreditka…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>5 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="ContactMechServices.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">ContactMechServices</span>
-              <span class="badge badge-type
-                bg-primary">
-                Java-Klasse
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.contact</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Implementiert die OFBiz-Service-Engine-Methoden für die vollständige Lebenszyklusverwaltung von Kontaktmechanismen (Adre…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>13 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="ContactMechServicesScript.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">ContactMechServicesScript</span>
-              <span class="badge badge-type
-                bg-success
-                ">
-                Groovy-Script
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.contact</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Groovy-Script — ausgeführt über OFBiz Service-Engine. Ergänzt die Java-seitigen ContactMechServices um Groovy-implementi…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>14 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="ContactMechWorker.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">ContactMechWorker</span>
-              <span class="badge badge-type
-                bg-primary">
-                Java-Klasse 
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.contact</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Stellt Low-Level-Abfragemethoden bereit, um Kontaktmechanismen für Parteien, Lagerorte (Facilities), Bestellungen und Ar…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>15 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="PartyContentWrapper.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">PartyContentWrapper</span>
-              <span class="badge badge-type
-                bg-primary">
-                Java-Klasse 
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.content</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Kapselt den Zugriff auf die dem Party-Datensatz zugeordneten Content-Elemente (z. B. Profilbilder, Beschreibungstexte). …
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>9 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="HasPartyPermissions.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">HasPartyPermissions</span>
-              <span class="badge badge-type
-                bg-success
-                ">
-                Groovy-Script
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Groovy-Script — ausgeführt über OFBiz Service-Engine. Prüft im Rahmen von View-Berechtigungen, ob der angemeldete Benutz…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="PartyHelper.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">PartyHelper</span>
-              <span class="badge badge-type
-                bg-primary">
-                Java-Klasse 
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Formatiert Anzeigenamen von Parteien für die Darstellung in Listen, Briefköpfen und Suchtreffern — sowohl für natürliche…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="PartyRelationshipHelper.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">PartyRelationshipHelper</span>
-              <span class="badge badge-type
-                bg-primary">
-                Java-Klasse 
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Stellt Hilfsmethoden für die Suche nach aktiven Beziehungen zwischen Parteien bereit.
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="PartyRelationshipServices.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">PartyRelationshipServices</span>
-              <span class="badge badge-type
-                bg-primary">
-                Java-Klasse
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Implementiert Services zur Verwaltung von Parteienbeziehungen, einschließlich der Idempotenz-Logik bei Anlage neuer Bezi…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="PartyServices.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">PartyServices</span>
-              <span class="badge badge-type
-                bg-primary">
-                Java-Klasse
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Zentraler Service-Container für die grundlegende CRUD-Verwaltung von Party-Stammdaten (Personen, Organisationen, Notizen…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>21 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="PartyServicesScript.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">PartyServicesScript</span>
-              <span class="badge badge-type
-                bg-success
-                ">
-                Groovy-Script
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Groovy-Script — ausgeführt über OFBiz Service-Engine. Enthält erweiterte Party-Services, die in Groovy implementiert sin…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>26 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="PartySimpleMethods.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">PartySimpleMethods</span>
-              <span class="badge badge-type
-                bg-success
-                ">
-                Groovy-Script
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Groovy-Script — ausgeführt über OFBiz Service-Engine. Vereinfachte Service-Methoden für die Anlage von Party-Gruppen mit…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="PartyTypeHelper.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">PartyTypeHelper</span>
-              <span class="badge badge-type
-                bg-primary">
-                Java-Klasse 
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Überprüft den Typen einer Partei in der Typhierarchie des OFBiz-Party-Modells.
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="PartyWorker.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">PartyWorker</span>
-              <span class="badge badge-type
-                bg-primary">
-                Java-Klasse 
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Stellt Suchmethoden für Parteien über verschiedene Identifikatoren bereit und verwaltet parteibezogene Hilfsdaten wie le…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>19 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="PartyPermissionServices.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">PartyPermissionServices</span>
-              <span class="badge badge-type
-                bg-success
-                ">
-                Groovy-Script
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Groovy-Script — ausgeführt über OFBiz Service-Engine. Implementiert fein granulare Berechtigungsprüfungen für alle Opera…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>12 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="PartyInvitationServices.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">PartyInvitationServices</span>
-              <span class="badge badge-type
-                bg-success
-                ">
-                Groovy-Script
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Groovy-Script — ausgeführt über OFBiz Service-Engine. Verwaltet den Lebenszyklus von Parteieinladungen: Erstellen, Aktua…
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="Groovy-Scripts-Daten-und-View-Helfer-im-Subpaket-party-party.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Daten- und View-Helfer im Subpaket `party.party`</span>
-              <span class="badge badge-type
-                bg-success
-                ">
-                Groovy-Scrip
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              Die folgenden Scripts werden über die OFBiz Service-Engine ausgeführt und stellen Daten für Views bereit:
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-collection me-1"></i>22 Scripts</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="Test-Klassen-Subpaket-party-party-test.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">Test-Klassen: Subpaket party.party.test</span>
-              <span class="badge badge-type
-                bg-success
-                ">
-                Groovy-Tests
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party.test</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-collection me-1"></i>4 Scripts</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="Groovy-Scripts-Besuchererfassung-im-Subpaket-party-visit.html" class="text-decoration-none">
-          <div class="class-card card p-3 h-100">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Besuchererfassung im Subpaket `party.visit`</span>
-              <span class="badge badge-type
-                bg-success
-                ">
-                Groovy-Scripts
-              </span>
-            </div>
-            
-            <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.visit</div>
-            
-            <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
-              | Klasse | Fachliche Funktion |
-            </p>
-            <div class="mt-2">
-              
-                <span class="stat-pill"><i class="bi bi-collection me-1"></i>2 Scripts</span>
-              
-            </div>
-          </div>
-        </a>
-      </div>
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>11 Methoden</span>
       
     </div>
-  </section>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContactHelper.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContactHelper</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.contact</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Stellt Hilfsmethoden bereit, um Kontaktmechanismen einer Partei nach Typ oder Verwendungszweck abzufragen sowie Kreditka…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>5 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContactMechServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContactMechServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.contact</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Implementiert die OFBiz-Service-Engine-Methoden für die vollständige Lebenszyklusverwaltung von Kontaktmechanismen (Adre…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>13 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContactMechWorker.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContactMechWorker</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.contact</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Stellt Low-Level-Abfragemethoden bereit, um Kontaktmechanismen für Parteien, Lagerorte (Facilities), Bestellungen und Ar…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>15 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PartyContentWrapper.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PartyContentWrapper</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Kapselt den Zugriff auf die dem Party-Datensatz zugeordneten Content-Elemente (z. B. Profilbilder, Beschreibungstexte). …
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>9 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PartyHelper.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PartyHelper</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Formatiert Anzeigenamen von Parteien für die Darstellung in Listen, Briefköpfen und Suchtreffern — sowohl für natürliche…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PartyRelationshipHelper.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PartyRelationshipHelper</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Stellt Hilfsmethoden für die Suche nach aktiven Beziehungen zwischen Parteien bereit.
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PartyRelationshipServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PartyRelationshipServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Implementiert Services zur Verwaltung von Parteienbeziehungen, einschließlich der Idempotenz-Logik bei Anlage neuer Bezi…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PartyServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PartyServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Zentraler Service-Container für die grundlegende CRUD-Verwaltung von Party-Stammdaten (Personen, Organisationen, Notizen…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>21 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PartyTypeHelper.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PartyTypeHelper</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Überprüft den Typen einer Partei in der Typhierarchie des OFBiz-Party-Modells.
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PartyWorker.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PartyWorker</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Stellt Suchmethoden für Parteien über verschiedene Identifikatoren bereit und verwaltet parteibezogene Hilfsdaten wie le…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>19 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+      </div>
+    </div>
+    
+
+    
+    <div class="tab-pane fade "
+         id="pane-groovy" role="tabpanel">
+      <div class="row g-2">
+        
+        <div class="col-md-6 col-xl-4">
+<a href="CommunicationEventServicesScript.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">CommunicationEventServicesScript</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.communication</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Groovy-Script — ausgeführt über OFBiz Service-Engine. Stellt ergänzende Kommunikations-Services bereit, die in Groovy im…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>12 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Groovy-Scripts-Abfrage-Scripts-im-Subpaket-party-communication.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Abfrage-Scripts im Subpaket `party.communication`</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.communication</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Die folgenden Scripts werden über die OFBiz Service-Engine ausgeführt und stellen Daten für Views bereit:
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>6 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContactMechServicesScript.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContactMechServicesScript</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.contact</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Groovy-Script — ausgeführt über OFBiz Service-Engine. Ergänzt die Java-seitigen ContactMechServices um Groovy-implementi…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>14 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="HasPartyPermissions.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">HasPartyPermissions</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Groovy-Script — ausgeführt über OFBiz Service-Engine. Prüft im Rahmen von View-Berechtigungen, ob der angemeldete Benutz…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PartyServicesScript.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PartyServicesScript</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Groovy-Script — ausgeführt über OFBiz Service-Engine. Enthält erweiterte Party-Services, die in Groovy implementiert sin…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>26 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PartySimpleMethods.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PartySimpleMethods</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Groovy-Script — ausgeführt über OFBiz Service-Engine. Vereinfachte Service-Methoden für die Anlage von Party-Gruppen mit…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PartyPermissionServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PartyPermissionServices</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Groovy-Script — ausgeführt über OFBiz Service-Engine. Implementiert fein granulare Berechtigungsprüfungen für alle Opera…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>12 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PartyInvitationServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PartyInvitationServices</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Groovy-Script — ausgeführt über OFBiz Service-Engine. Verwaltet den Lebenszyklus von Parteieinladungen: Erstellen, Aktua…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Groovy-Scripts-Daten-und-View-Helfer-im-Subpaket-party-party.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Daten- und View-Helfer im Subpaket `party.party`</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Die folgenden Scripts werden über die OFBiz Service-Engine ausgeführt und stellen Daten für Views bereit:
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>22 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Groovy-Scripts-Besuchererfassung-im-Subpaket-party-visit.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Besuchererfassung im Subpaket `party.visit`</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.visit</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      | Klasse | Fachliche Funktion |
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>2 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+      </div>
+    </div>
+    
+
+    
+    <div class="tab-pane fade "
+         id="pane-test" role="tabpanel">
+      <div class="row g-2">
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Test-Klassen-Subpaket-party-party-test.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Test-Klassen: Subpaket party.party.test</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.party.party.test</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>4 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+      </div>
+    </div>
+    
+
+  </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </div>
 

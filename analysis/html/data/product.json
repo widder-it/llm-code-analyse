@@ -86,6 +86,7 @@
       "package": "org.apache.ofbiz.product.product",
       "type": "Java-Klasse (Utility, final, nicht instantiierbar)",
       "description": "Zentrale Hilfsbibliothek für produktbezogene Geschäftslogik. Wird von Services, Events und Views überall im Modul verwendet.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -220,6 +221,7 @@
       "package": "org.apache.ofbiz.product.product",
       "type": "Java-Klasse (OFBiz-Service-Implementierung)",
       "description": "Service-Methoden für Produktvarianten, Merkmalbaum-Aufbau und Bildverwaltung. Wird als OFBiz-Service-Implementierung registriert.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -282,6 +284,7 @@
       "package": "org.apache.ofbiz.product.product",
       "type": "Java-Klasse (Utility-Services, final)",
       "description": "Hilfsdienste für Datenpflege und -bereinigung im Produktstamm, insbesondere für Massendatenoperationen.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -324,6 +327,7 @@
       "package": "org.apache.ofbiz.product.product",
       "type": "Java-Klasse (Suchanfragen-Framework mit inneren Klassen)",
       "description": "Implementiert die datenbankbasierte Produktsuche mit austauschbaren Einschränkungen und Sortierungen.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -358,6 +362,7 @@
       "package": "org.apache.ofbiz.product.product",
       "type": "Java-Klasse (HTTP-Session-Management für Suche)",
       "description": "Persistiert Suchzustand (Constraints, Sortierung, Verlauf) in der HTTP-Session und koordiniert die Ausführung einer Suche aus Request-Parametern.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -408,6 +413,7 @@
       "package": "org.apache.ofbiz.product.product",
       "type": "Java-Klasse (HTTP-Event-Handler)",
       "description": "Verarbeitet HTTP-Formulare für Produktdatenpflege und Session-Management für kürzlich angesehene Artikel und Vergleichslisten.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -454,6 +460,7 @@
       "package": "org.apache.ofbiz.product.product",
       "type": "Java-Klasse (HTTP-Event-Handler für Suchergebnisse)",
       "description": "Ermöglicht Batch-Operationen auf Suchergebnissen (Kategoriezuordnung, Merkmalzuordnung, Export).",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -476,6 +483,7 @@
       "package": "org.apache.ofbiz.product.product",
       "type": "Java-Klasse (Utility)",
       "description": "Baut den Keyword-Suchindex für ein Produkt auf, indem Texte aus Produktdaten, Merkmalen und Content-Datensätzen extrahiert und gewichtet werden.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -502,6 +510,7 @@
       "package": "org.apache.ofbiz.product.product",
       "type": "Java-Klasse (implementiert ContentWrapper)",
       "description": "Kapselt den Zugriff auf produktbezogene Content-Daten (Namen, Beschreibungen, Bilder) und liefert sie lokalisiert und im gewünschten MIME-Typ.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -524,6 +533,7 @@
       "package": "org.apache.ofbiz.product.product",
       "type": "Java-Klasse (implementiert ContentWrapper)",
       "description": "Analog zu `ProductContentWrapper`, aber für Aktions-Content (Bilder und Texte zu ProductPromo-Datensätzen).",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -546,6 +556,7 @@
       "package": "org.apache.ofbiz.product.catalog",
       "type": "Java-Klasse (Utility, final)",
       "description": "Zugriffshilfe auf Katalogdaten aus HTTP-Session und Datenbank; verwaltet den aktuell gewählten Katalog im Request.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -588,6 +599,7 @@
       "package": "org.apache.ofbiz.product.category",
       "type": "Java-Klasse (Utility, final)",
       "description": "Navigationshilfe für die Kategoriehierarchie: Pfadberechnung, Filterung von Produktlisten und Session-Management für Trail/Breadcrumb.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -630,6 +642,7 @@
       "package": "org.apache.ofbiz.product.category",
       "type": "Java-Klasse (OFBiz-Service-Implementierung)",
       "description": "Service-Methoden für Kategorie-Navigation und -Pflege, insbesondere für die Vor-/Zurück-Navigation innerhalb einer Kategorie.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -652,6 +665,7 @@
       "package": "org.apache.ofbiz.product.category",
       "type": "Servlet / Servlet-Filter",
       "description": "URL-Routing-Infrastruktur für SEO-freundliche Katalog- und Kategorie-URLs. Die Filter rewrite eingehende SEO-URLs auf interne OFBiz-Pfade; die Servlets bedienen direkte Katalog-Requests. `CategoryControlServlet` erweitert den OFBiz-Standard-ControlServlet für Kategorie-Kontext.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -691,7 +705,8 @@
           "name": "CatalogUrlDirective",
           "description": "FreeMarker-Direktive für Katalog-URL-Ausgabe"
         }
-      ]
+      ],
+      "section": "groovy"
     },
     {
       "id": "CategoryContentWrapper",
@@ -699,6 +714,7 @@
       "package": "org.apache.ofbiz.product.category",
       "type": "Java-Klasse (implementiert ContentWrapper)",
       "description": "Liefert lokalisierte Textinhalte (Name, Beschreibung, Bilder) für Produktkategorien, mit Caching-Unterstützung.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -708,6 +724,7 @@
       "package": "org.apache.ofbiz.product.config",
       "type": "Java-Klasse (serialisierbar, Session-fähig)",
       "description": "Kapselung des Konfigurationszustands eines konfigurierbaren Produkts (AGGREGATED). Verwaltet die Konfigurationsfragen (`ConfigItem`), die gewählten Optionen und berechnet den konfigurierten Preis.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -746,6 +763,7 @@
       "package": "org.apache.ofbiz.product.config",
       "type": "Java-Klasse (Utility, final)",
       "description": "Fabrik und Verwaltung von `ProductConfigWrapper`-Instanzen mit eingebautem Cache.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -768,6 +786,7 @@
       "package": "org.apache.ofbiz.product.config",
       "type": "Java-Klasse (implementiert ContentWrapper)",
       "description": "Liefert lokalisierte Inhalte (Name, Beschreibung) für einzelne Konfigurationspositionen (ProductConfigItem).",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -777,6 +796,7 @@
       "package": "org.apache.ofbiz.product.config",
       "type": "Java-Exception-Klasse",
       "description": "Geprüfte Ausnahme für Fehler beim Aufbau oder der Validierung von Produktkonfigurationen.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -786,6 +806,7 @@
       "package": "org.apache.ofbiz.product.feature",
       "type": "Java-Klasse (OFBiz-Service-Implementierung)",
       "description": "Service-Methoden zum Abfragen und Verwalten von Produktmerkmalen und Merkmaltypen.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -804,6 +825,7 @@
       "package": "org.apache.ofbiz.product.feature",
       "type": "Java-Klasse",
       "description": "Führt eine parametrische Produktsuche durch, bei der Produkte anhand einer Kombination aus Merkmalen gefiltert werden.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -813,6 +835,7 @@
       "package": "org.apache.ofbiz.product.image",
       "type": "Java-Klasse (Utility)",
       "description": "Skaliert ein hochgeladenes Produktbild auf alle konfigurierten Standardgrößen (small, medium, large, detail) gemäß `ImageProperties.xml` und gibt die URL-Map zurück.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -857,7 +880,8 @@
           "name": "ImageUrlServlet",
           "description": "Servlet zur direkten Auslieferung von verwalteten Bildwürfen über URL"
         }
-      ]
+      ],
+      "section": "groovy"
     },
     {
       "id": "InventoryServices",
@@ -865,6 +889,7 @@
       "package": "org.apache.ofbiz.product.inventory",
       "type": "Java-Klasse (OFBiz-Service-Implementierung)",
       "description": "Kernservices für Lagerbestandsverwaltung: Umbuchungen, Reservierungen und Bestandsabfragen.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -911,6 +936,7 @@
       "package": "org.apache.ofbiz.product.inventory",
       "type": "Java-Klasse (Utility)",
       "description": "Statische Hilfsmethoden für Bestandsberechnungen, insbesondere für Marketing-Pakete.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -920,6 +946,7 @@
       "package": "org.apache.ofbiz.product.price",
       "type": "Java-Klasse (OFBiz-Service-Implementierung)",
       "description": "Berechnet den aktuellen Produktpreis unter Berücksichtigung von Preisregeln, Mengenstaffeln, Vereinbarungspreisen, Kundengruppen und Steuern.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -946,6 +973,7 @@
       "package": "org.apache.ofbiz.product.promo",
       "type": "Java-Klasse (OFBiz-Service-Implementierung)",
       "description": "Verwaltung von Aktionscodes: Massengenerierung, Import aus Dateien und Bereinigung abgelaufener Shop-Aktionen.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -972,6 +1000,7 @@
       "package": "org.apache.ofbiz.product.subscription",
       "type": "Java-Klasse (OFBiz-Service-Implementierung)",
       "description": "Verwaltung von Produktabonnements: Laufzeitverlängerung und Ablaufprüfung.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -994,6 +1023,7 @@
       "package": "org.apache.ofbiz.product.supplier",
       "type": "Java-Klasse (OFBiz-Service-Implementierung)",
       "description": "Abfrage von Lieferanten-Produkt-Kombinationen mit Preis- und Staffelangaben.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1008,6 +1038,7 @@
       "package": "org.apache.ofbiz.product.store",
       "type": "Java-Klasse (Utility, final)",
       "description": "Zugriffshilfe auf Shop-Konfigurationsdaten aus HTTP-Session und Datenbank.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1042,6 +1073,7 @@
       "package": "org.apache.ofbiz.product.store",
       "type": "Java-Klasse (HTTP-Event-Handler)",
       "description": "Event-Handler für Shop-bezogene HTTP-Requests (Zahlungseinrichtung).",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -1051,6 +1083,7 @@
       "package": "org.apache.ofbiz.product.store",
       "type": "Java-Klasse (erweitert SurveyWrapper)",
       "description": "Kapselt produkt- oder kategoriebezogene Umfragen eines Shops und stellt sie für FreeMarker-Templates bereit.",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -1070,7 +1103,8 @@
           "name": "ImportProductHelper",
           "description": "Hilfsmethoden: Produkt-Map aufbauen, Lagerartikel-Map aufbauen, Existenzprüfung"
         }
-      ]
+      ],
+      "section": "groovy"
     },
     {
       "id": "MigrationServices",
@@ -1078,6 +1112,7 @@
       "package": "org.apache.ofbiz.product.migrate",
       "type": "Java-Klasse (OFBiz-Service-Implementierung)",
       "description": "Datenbankmigrationen zwischen OFBiz-Versionen (z.B. Umschlüsselung von Entitäten).",
+      "section": "java",
       "is_group": false,
       "methods": []
     },
@@ -1087,6 +1122,7 @@
       "package": "org.apache.ofbiz.product.product.catalog",
       "type": "Java-Klasse (Service)",
       "description": "",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1121,6 +1157,7 @@
       "package": "org.apache.ofbiz.product.product.category",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1151,6 +1188,7 @@
       "package": "org.apache.ofbiz.product.product.category",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1201,6 +1239,7 @@
       "package": "org.apache.ofbiz.product.product.cost",
       "type": "Java-Klasse (Service)",
       "description": "",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1235,6 +1274,7 @@
       "package": "org.apache.ofbiz.product.product.feature",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1257,6 +1297,7 @@
       "package": "org.apache.ofbiz.product.product.imagemanagement",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1295,6 +1336,7 @@
       "package": "org.apache.ofbiz.product.product.inventory",
       "type": "Java-Klasse (Service)",
       "description": "",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1313,6 +1355,7 @@
       "package": "org.apache.ofbiz.product.product.inventory",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1331,6 +1374,7 @@
       "package": "org.apache.ofbiz.product.product.price",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1357,6 +1401,7 @@
       "package": "org.apache.ofbiz.product.product.product",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1387,6 +1432,7 @@
       "package": "org.apache.ofbiz.product.product.product",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1437,6 +1483,7 @@
       "package": "org.apache.ofbiz.product.product.promo",
       "type": "Java-Klasse (Service)",
       "description": "",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1483,6 +1530,7 @@
       "package": "org.apache.ofbiz.product.product.promo",
       "type": "Java-Klasse (Service)",
       "description": "",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1525,6 +1573,7 @@
       "package": "org.apache.ofbiz.product.product.promo",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1539,6 +1588,7 @@
       "package": "org.apache.ofbiz.product.product.store",
       "type": "Java-Klasse (Service)",
       "description": "",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1565,6 +1615,7 @@
       "package": "org.apache.ofbiz.product.product.subscription",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1595,6 +1646,7 @@
       "package": "org.apache.ofbiz.product.supplier",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1609,6 +1661,7 @@
       "package": "",
       "type": "Java-Klasse (Service)",
       "description": "",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1663,6 +1716,7 @@
       "package": "",
       "type": "Java-Klasse (Service)",
       "description": "",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1693,6 +1747,7 @@
       "package": "",
       "type": "Java-Klasse (Service)",
       "description": "",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1707,6 +1762,7 @@
       "package": "",
       "type": "Java-Klasse (Service)",
       "description": "",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -1721,6 +1777,7 @@
       "package": "org.apache.ofbiz.product.product.config",
       "type": "Groovy-Script",
       "description": "",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1739,6 +1796,7 @@
       "package": "org.apache.ofbiz.product.category",
       "type": "Java-Klasse (Utility)",
       "description": "Hilfsfunktionen für die Verarbeitung und Konvertierung von SEO-freundlichen URLs (Normalisierung, Segment-Extraktion).",
+      "section": "java",
       "is_group": false,
       "methods": []
     }

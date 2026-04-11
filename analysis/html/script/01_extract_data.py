@@ -150,12 +150,21 @@ def extract_class_meta(name: str, section: str) -> dict:
             desc = " ".join(m.group(1).strip().split())
             break
 
+    # Determine section: Test > Groovy > Java
+    if "test" in pkg.lower() or re.search(r"[Tt]est(s|Case)?$", name):
+        section = "test"
+    elif "Groovy" in typ or name.endswith("Script"):
+        section = "groovy"
+    else:
+        section = "java"
+
     return {
         "id": slugify(name),
         "name": name,
         "package": pkg,
         "type": typ,
         "description": desc,
+        "section": section,
     }
 
 
@@ -257,6 +266,7 @@ def parse_module_md(path: Path) -> dict:
                 dm = re.search(r"\*\*Typ:\*\*[^\n]+\n\n([\s\S]+?)(?=\n\||\Z)", sub)
                 if dm:
                     desc = " ".join(dm.group(1).strip().split("\n")).strip()
+                grp_section = "test" if re.match(r"Testklassen", heading_text) else "groovy"
                 classes.append({
                     "id": slugify(heading_text),
                     "name": heading_text,
@@ -265,6 +275,7 @@ def parse_module_md(path: Path) -> dict:
                     "description": desc,
                     "is_group": True,
                     "members": members,
+                    "section": grp_section,
                 })
                 continue
 

@@ -30,6 +30,7 @@
       "package": "org.apache.ofbiz.party.communication",
       "type": "Java-Klasse",
       "description": "Implementiert die OFBiz-Services für die Verwaltung von Kommunikationsereignissen. Stellt den Versand von E-Mails und FTP-Transfers als CommunicationEvent bereit, verarbeitet eingehende E-Mails und persistiert diese als Kommunikationshistorie.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -84,6 +85,7 @@
       "package": "org.apache.ofbiz.party.communication",
       "type": "Groovy-Script",
       "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Stellt ergänzende Kommunikations-Services bereit, die in Groovy implementiert sind, insbesondere für die vollständige CRUD-Verwaltung von CommunicationEvents sowie für Rollen- und Statusoperationen.",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -168,7 +170,8 @@
           "name": "RecentVisitor",
           "description": "Liefert Informationen zu kürzlich auf der Webseite aktiven Besuchern für die Anzeige in Kommunikations-Dashboards."
         }
-      ]
+      ],
+      "section": "groovy"
     },
     {
       "id": "ContactHelper",
@@ -176,6 +179,7 @@
       "package": "org.apache.ofbiz.party.contact",
       "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
       "description": "Stellt Hilfsmethoden bereit, um Kontaktmechanismen einer Partei nach Typ oder Verwendungszweck abzufragen sowie Kreditkartendaten für die Anzeige zu formatieren.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -206,6 +210,7 @@
       "package": "org.apache.ofbiz.party.contact",
       "type": "Java-Klasse",
       "description": "Implementiert die OFBiz-Service-Engine-Methoden für die vollständige Lebenszyklusverwaltung von Kontaktmechanismen (Adressen, Telefonnummern, E-Mail-Adressen). Arbeitet mit der OFBiz-Historienpflege: Änderungen erzeugen neue Datensätze mit neuer ID, der alte Datensatz wird mit einem `thruDate` deaktiviert.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -268,6 +273,7 @@
       "package": "org.apache.ofbiz.party.contact",
       "type": "Groovy-Script",
       "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Ergänzt die Java-seitigen ContactMechServices um Groovy-implementierte Services, insbesondere für die Verwaltung von FTP-Adressen, State/Province-Validierung und E-Mail-Verifikationsbenachrichtigungen.",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -334,6 +340,7 @@
       "package": "org.apache.ofbiz.party.contact",
       "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
       "description": "Stellt Low-Level-Abfragemethoden bereit, um Kontaktmechanismen für Parteien, Lagerorte (Facilities), Bestellungen und Arbeitsaufgaben (WorkEfforts) als strukturierte Maps zu laden. Wird von Services und View-Preparern verwendet.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -404,6 +411,7 @@
       "package": "org.apache.ofbiz.party.content",
       "type": "Java-Klasse (implementiert ContentWrapper)",
       "description": "Kapselt den Zugriff auf die dem Party-Datensatz zugeordneten Content-Elemente (z. B. Profilbilder, Beschreibungstexte). Stellt gecachte Render-Methoden bereit, die Content-Typen auflösen, rendern und als String zurückgeben.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -450,6 +458,7 @@
       "package": "org.apache.ofbiz.party",
       "type": "Groovy-Script",
       "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Prüft im Rahmen von View-Berechtigungen, ob der angemeldete Benutzer die für einen bestimmten Party-Eintrag notwendigen Rechte besitzt. Das Ergebnis steuert, welche UI-Aktionen (Bearbeiten, Löschen) sichtbar geschaltet werden.",
+      "section": "groovy",
       "is_group": false,
       "methods": []
     },
@@ -459,6 +468,7 @@
       "package": "org.apache.ofbiz.party.party",
       "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
       "description": "Formatiert Anzeigenamen von Parteien für die Darstellung in Listen, Briefköpfen und Suchtreffern — sowohl für natürliche Personen (Vor-/Nachname) als auch für Organisationen (Gruppenname).",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -485,6 +495,7 @@
       "package": "org.apache.ofbiz.party.party",
       "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
       "description": "Stellt Hilfsmethoden für die Suche nach aktiven Beziehungen zwischen Parteien bereit.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -499,6 +510,7 @@
       "package": "org.apache.ofbiz.party.party",
       "type": "Java-Klasse",
       "description": "Implementiert Services zur Verwaltung von Parteienbeziehungen, einschließlich der Idempotenz-Logik bei Anlage neuer Beziehungen.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -513,6 +525,7 @@
       "package": "org.apache.ofbiz.party.party",
       "type": "Java-Klasse",
       "description": "Zentraler Service-Container für die grundlegende CRUD-Verwaltung von Party-Stammdaten (Personen, Organisationen, Notizen), Parteiensuche und den CSV-Import von Adress-Normalisierungsregeln.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -607,6 +620,7 @@
       "package": "org.apache.ofbiz.party.party",
       "type": "Groovy-Script",
       "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Enthält erweiterte Party-Services, die in Groovy implementiert sind: Namenshistorie, Beziehungsnavigation, Kontaktdaten-Abfragen, E-Mail-Benachrichtigungen und Adressverwaltung.",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -721,6 +735,7 @@
       "package": "org.apache.ofbiz.party.party",
       "type": "Groovy-Script",
       "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Vereinfachte Service-Methoden für die Anlage von Party-Gruppen mit Rollen und Kontaktmechanismen sowie für die strukturierte Auflösung von Kontaktdaten aus Map-Parametern.",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -755,6 +770,7 @@
       "package": "org.apache.ofbiz.party.party",
       "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
       "description": "Überprüft den Typen einer Partei in der Typhierarchie des OFBiz-Party-Modells.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -769,6 +785,7 @@
       "package": "org.apache.ofbiz.party.party",
       "type": "Java-Klasse (finale Utility-Klasse, nicht instanziierbar)",
       "description": "Stellt Suchmethoden für Parteien über verschiedene Identifikatoren bereit und verwaltet parteibezogene Hilfsdaten wie letzten Login-Zeitpunkt, Geolokation und die Generierung von Club-IDs.",
+      "section": "java",
       "is_group": false,
       "methods": [
         {
@@ -855,6 +872,7 @@
       "package": "org.apache.ofbiz.party.party",
       "type": "Groovy-Script",
       "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Implementiert fein granulare Berechtigungsprüfungen für alle Operationen im Party-Modul. Bestimmt, ob ein angemeldeter Benutzer eine bestimmte Aktion auf einem Party-Datensatz durchführen darf.",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -913,6 +931,7 @@
       "package": "org.apache.ofbiz.party.party",
       "type": "Groovy-Script",
       "description": "Groovy-Script — ausgeführt über OFBiz Service-Engine. Verwaltet den Lebenszyklus von Parteieinladungen: Erstellen, Aktualisieren und Annehmen einer Einladung, die eine noch nicht im System erfasste Person zur Registrierung auffordert.",
+      "section": "groovy",
       "is_group": false,
       "methods": [
         {
@@ -1025,7 +1044,8 @@
           "name": "ViewProfile",
           "description": "Bereitet alle Daten für die vollständige Profilansicht einer Partei auf (Stammdaten, Kontakte, Rollen, Beziehungen)."
         }
-      ]
+      ],
+      "section": "groovy"
     },
     {
       "id": "Test-Klassen-Subpaket-party-party-test",
@@ -1033,6 +1053,7 @@
       "package": "org.apache.ofbiz.party.party.test",
       "type": "Groovy-Tests (OFBizTestCase)",
       "description": "",
+      "section": "test",
       "is_group": true,
       "members": [
         {
@@ -1069,7 +1090,8 @@
           "name": "VisitDetails",
           "description": "Lädt die vollständigen Details eines einzelnen Website-Besuchs (Zeitpunkt, verwendeter Browser, besuchte Seiten) für die Anzeige im Parteiprofil."
         }
-      ]
+      ],
+      "section": "groovy"
     }
   ],
   "stats": {
