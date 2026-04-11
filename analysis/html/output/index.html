@@ -1267,139 +1267,10 @@
 
   
   
-  <section class="mb-5">
-    <h4 class="section-title">8. Interne Modul-Abhängigkeiten</h4>
-    <div class="row g-4">
-      
-      <div class="col-lg-4">
-        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Zyklische Abhängigkeiten</h6>
-        
-        <div class="alert alert-danger py-1 px-2 mb-1 small">
-          <i class="bi bi-arrow-left-right me-1"></i><code>order ↔ accounting</code>
-          <span class="text-muted ms-1">— gegenseitige Abhängigkeit</span>
-        </div>
-        
-        <div class="alert alert-danger py-1 px-2 mb-1 small">
-          <i class="bi bi-arrow-left-right me-1"></i><code>order ↔ product</code>
-          <span class="text-muted ms-1">— gegenseitige Abhängigkeit</span>
-        </div>
-        
-        <div class="alert alert-danger py-1 px-2 mb-1 small">
-          <i class="bi bi-arrow-left-right me-1"></i><code>party ↔ accounting</code>
-          <span class="text-muted ms-1">— gegenseitige Abhängigkeit</span>
-        </div>
-        
-        <div class="alert alert-danger py-1 px-2 mb-1 small">
-          <i class="bi bi-arrow-left-right me-1"></i><code>party ↔ product</code>
-          <span class="text-muted ms-1">— gegenseitige Abhängigkeit</span>
-        </div>
-        
-      </div>
-      
-      
-      <div class="col-lg-8">
-        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Kern-Abhängigkeitsstruktur</h6>
-        <pre class="bg-light border rounded p-3 small" style="font-size:.78rem">Kern-Framework (Basis aller Module):
-  base ← entity ← service ← security
-         ↓           ↓
-       minilang    testtools
-
-Business-Module (bauen aufeinander auf):
-  accounting → entity, service, order, party, product, security
-  order      → accounting, entity, service, party, product, marketing, content
-  product    → entity, service, party, order, shipment, content
-  party      → entity, service, accounting, product, content
-
-Infrastruktur (querschnittlich):
-  webapp   → base, entity, service, security, widget, minilang
-  widget   → entity, service, security, minilang
-  webtools → entity, service, webapp, testtools</pre>
-      </div>
-      
-    </div>
-  </section>
-  
-
-  
-  <section class="mb-5">
-    <h4 class="section-title">9. Bewertung für Ablösung</h4>
-    <div class="row g-4">
-
-      
-      <div class="col-lg-6">
-        <table class="table table-sm table-bordered">
-          <thead class="table-light"><tr><th>Aspekt</th><th>Befund</th></tr></thead>
-          <tbody>
-            
-            <tr>
-              <td class="fw-semibold small text-nowrap">Modularisierbarkeit</td>
-              <td class="small text-muted">Schwierig wegen Zyklen; Entity- und Service-Kern müssten zuerst extrahiert werden</td>
-            </tr>
-            
-            <tr>
-              <td class="fw-semibold small text-nowrap">HTTP-API-Oberfläche</td>
-              <td class="small text-muted">~250 Endpunkte in 39 Events-Klassen — dokumentierbar und testbar</td>
-            </tr>
-            
-            <tr>
-              <td class="fw-semibold small text-nowrap">Service-API-Oberfläche</td>
-              <td class="small text-muted">120+ Service-Klassen = interne Schnittstellen bei Strangler-Fig-Migration</td>
-            </tr>
-            
-            <tr>
-              <td class="fw-semibold small text-nowrap">Testabdeckung</td>
-              <td class="small text-muted">testtools-Modul vorhanden; Groovy-Testklassen für alle Module erkennbar</td>
-            </tr>
-            
-            <tr>
-              <td class="fw-semibold small text-nowrap">Ablöse-Kandidaten</td>
-              <td class="small text-muted">Payment-Gateway-Modul (klar abgegrenzt), Shipment-Carrier (isoliert)</td>
-            </tr>
-            
-            <tr>
-              <td class="fw-semibold small text-nowrap">Risiko-Kandidaten</td>
-              <td class="small text-muted">ShoppingCart (388 Methoden), OrderServices (84 Methoden) — zuletzt ablösen</td>
-            </tr>
-            
-            <tr>
-              <td class="fw-semibold small text-nowrap">Empfehlung</td>
-              <td class="small text-muted">Strangler-Fig-Pattern: schrittweise Ablösung über Events-Layer von außen nach innen</td>
-            </tr>
-            
-          </tbody>
-        </table>
-      </div>
-      
-
-      
-      <div class="col-lg-6">
-        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Empfohlene Ablöse-Reihenfolge</h6>
-        <pre class="bg-light border rounded p-3 small" style="font-size:.78rem">Phase 1 (Niedrigstes Risiko):
-  → Shipment-Carrier-Integrationen (UPS/FedEx/DHL/USPS)
-  → Payment-Gateway-Adapter (8 Provider, klar isoliert)
-  → Reporting/Content-Module
-
-Phase 2 (Mittleres Risiko):
-  → Party-Modul (Stammdaten)
-  → Product-Katalog-Funktionen
-  → Manufacturing/WorkEffort
-
-Phase 3 (Höchstes Risiko — zuletzt):
-  → Order/ShoppingCart-Kern (God-Objects)
-  → Entity-Engine (zentrale DB-Abstraktion)
-  → Service-Engine (Framework-Kern)</pre>
-      </div>
-      
-
-    </div>
-  </section>
-
-  
-  
   
   
   <section class="mb-5">
-    <h4 class="section-title">10. Abhängigkeiten zwischen Business-Modulen</h4>
+    <h4 class="section-title">8. Abhängigkeiten zwischen Business-Modulen</h4>
     <div class="row g-4">
 
       
@@ -2303,6 +2174,80 @@ graph LR
     </div>
   </section>
   
+
+  
+  <section class="mb-5">
+    <h4 class="section-title">9. Bewertung für Ablösung</h4>
+    <div class="row g-4">
+
+      
+      <div class="col-lg-6">
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Aspekt</th><th>Befund</th></tr></thead>
+          <tbody>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Modularisierbarkeit</td>
+              <td class="small text-muted">Schwierig wegen Zyklen; Entity- und Service-Kern müssten zuerst extrahiert werden</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">HTTP-API-Oberfläche</td>
+              <td class="small text-muted">~250 Endpunkte in 39 Events-Klassen — dokumentierbar und testbar</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Service-API-Oberfläche</td>
+              <td class="small text-muted">120+ Service-Klassen = interne Schnittstellen bei Strangler-Fig-Migration</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Testabdeckung</td>
+              <td class="small text-muted">testtools-Modul vorhanden; Groovy-Testklassen für alle Module erkennbar</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Ablöse-Kandidaten</td>
+              <td class="small text-muted">Payment-Gateway-Modul (klar abgegrenzt), Shipment-Carrier (isoliert)</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Risiko-Kandidaten</td>
+              <td class="small text-muted">ShoppingCart (388 Methoden), OrderServices (84 Methoden) — zuletzt ablösen</td>
+            </tr>
+            
+            <tr>
+              <td class="fw-semibold small text-nowrap">Empfehlung</td>
+              <td class="small text-muted">Strangler-Fig-Pattern: schrittweise Ablösung über Events-Layer von außen nach innen</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      
+
+      
+      <div class="col-lg-6">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Empfohlene Ablöse-Reihenfolge</h6>
+        <pre class="bg-light border rounded p-3 small" style="font-size:.78rem">Phase 1 (Niedrigstes Risiko):
+  → Shipment-Carrier-Integrationen (UPS/FedEx/DHL/USPS)
+  → Payment-Gateway-Adapter (8 Provider, klar isoliert)
+  → Reporting/Content-Module
+
+Phase 2 (Mittleres Risiko):
+  → Party-Modul (Stammdaten)
+  → Product-Katalog-Funktionen
+  → Manufacturing/WorkEffort
+
+Phase 3 (Höchstes Risiko — zuletzt):
+  → Order/ShoppingCart-Kern (God-Objects)
+  → Entity-Engine (zentrale DB-Abstraktion)
+  → Service-Engine (Framework-Kern)</pre>
+      </div>
+      
+
+    </div>
+  </section>
 
 </div>
 

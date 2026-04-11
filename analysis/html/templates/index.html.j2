@@ -260,69 +260,12 @@
     </div>
   </section>
 
-  {# ── 8. Dependency Cycles ─────────────────────────────── #}
-  {% if architektur.dependency_cycles or architektur.dependency_structure %}
-  <section class="mb-5">
-    <h4 class="section-title">8. Interne Modul-Abhängigkeiten</h4>
-    <div class="row g-4">
-      {% if architektur.dependency_cycles %}
-      <div class="col-lg-4">
-        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Zyklische Abhängigkeiten</h6>
-        {% for c in architektur.dependency_cycles %}
-        <div class="alert alert-danger py-1 px-2 mb-1 small">
-          <i class="bi bi-arrow-left-right me-1"></i><code>{{ c.cycle }}</code>
-          <span class="text-muted ms-1">— {{ c.note }}</span>
-        </div>
-        {% endfor %}
-      </div>
-      {% endif %}
-      {% if architektur.dependency_structure %}
-      <div class="col-lg-8">
-        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Kern-Abhängigkeitsstruktur</h6>
-        <pre class="bg-light border rounded p-3 small" style="font-size:.78rem">{{ architektur.dependency_structure }}</pre>
-      </div>
-      {% endif %}
-    </div>
-  </section>
-  {% endif %}
-
-  {# ── 9. Replacement ───────────────────────────────────── #}
-  <section class="mb-5">
-    <h4 class="section-title">9. Bewertung für Ablösung</h4>
-    <div class="row g-4">
-
-      {% if architektur.replacement_assessment %}
-      <div class="col-lg-6">
-        <table class="table table-sm table-bordered">
-          <thead class="table-light"><tr><th>Aspekt</th><th>Befund</th></tr></thead>
-          <tbody>
-            {% for row in architektur.replacement_assessment %}
-            <tr>
-              <td class="fw-semibold small text-nowrap">{{ row.Aspekt }}</td>
-              <td class="small text-muted">{{ row.Befund }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      {% endif %}
-
-      {% if architektur.replacement_phases %}
-      <div class="col-lg-6">
-        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Empfohlene Ablöse-Reihenfolge</h6>
-        <pre class="bg-light border rounded p-3 small" style="font-size:.78rem">{{ architektur.replacement_phases }}</pre>
-      </div>
-      {% endif %}
-
-    </div>
-  </section>
-
-  {# ── 10. Business Module Dependencies ────────────────── #}
+  {# ── 8. Business Module Dependencies ────────────────── #}
   {% if architektur.business_dependencies %}
   {% set biz_mods = architektur.business_modules_order | select('in', modules | map(attribute='id') | list) | list %}
   {% set edges = architektur.business_dependencies %}
   <section class="mb-5">
-    <h4 class="section-title">10. Abhängigkeiten zwischen Business-Modulen</h4>
+    <h4 class="section-title">8. Abhängigkeiten zwischen Business-Modulen</h4>
     <div class="row g-4">
 
       {# Mermaid graph #}
@@ -387,6 +330,37 @@ graph LR
     </div>
   </section>
   {% endif %}
+
+  {# ── 9. Replacement ───────────────────────────────────── #}
+  <section class="mb-5">
+    <h4 class="section-title">9. Bewertung für Ablösung</h4>
+    <div class="row g-4">
+
+      {% if architektur.replacement_assessment %}
+      <div class="col-lg-6">
+        <table class="table table-sm table-bordered">
+          <thead class="table-light"><tr><th>Aspekt</th><th>Befund</th></tr></thead>
+          <tbody>
+            {% for row in architektur.replacement_assessment %}
+            <tr>
+              <td class="fw-semibold small text-nowrap">{{ row.Aspekt }}</td>
+              <td class="small text-muted">{{ row.Befund }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if architektur.replacement_phases %}
+      <div class="col-lg-6">
+        <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Empfohlene Ablöse-Reihenfolge</h6>
+        <pre class="bg-light border rounded p-3 small" style="font-size:.78rem">{{ architektur.replacement_phases }}</pre>
+      </div>
+      {% endif %}
+
+    </div>
+  </section>
 
 </div>
 
