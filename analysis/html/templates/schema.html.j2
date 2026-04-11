@@ -1,0 +1,262 @@
+{% extends "base.html.j2" %}
+{% block title %}DB-Schema{% endblock %}
+
+{% block content %}
+{% set total_fields = schema_entities | sum(attribute='field_count') %}
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="{{ root }}index.html">Übersicht</a></li>
+      <li class="breadcrumb-item active">DB-Schema</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-table me-2 text-primary"></i>Datenbankschema (rekonstruiert)</h1>
+  <p class="text-muted small mb-2">
+    Aus Code-Analyse abgeleitet — keine XML-Schemadateien vorhanden.
+    Felder aus <code>.get()</code> / <code>.set()</code> / <code>.where()</code> /
+    <code>makeValue()</code>-Aufrufen; Typen aus Getter-Methode + Namenskonvention.
+  </p>
+  <div class="d-flex gap-2 mt-2 flex-wrap">
+    <span class="stat-pill"><i class="bi bi-table me-1"></i>{{ schema_entities | length }} Entities</span>
+    <span class="stat-pill"><i class="bi bi-columns me-1"></i>{{ total_fields }} Felder</span>
+    <span class="stat-pill"><i class="bi bi-grid me-1"></i>{{ schema_by_module | length }} Module</span>
+  </div>
+</div>
+
+<div class="content-area">
+
+{# ── Controls ─────────────────────────────────────────────────────────── #}
+<div class="d-flex gap-2 align-items-center flex-wrap mb-3">
+  <input type="text" id="schemaSearch" class="form-control form-control-sm"
+         placeholder="Entity oder Feld suchen…" style="max-width:300px">
+
+  <div class="d-flex gap-1 ms-auto">
+    <button class="btn btn-sm btn-outline-secondary" id="expandAll"   style="font-size:.78rem">Alle aufklappen</button>
+    <button class="btn btn-sm btn-outline-secondary" id="collapseAll" style="font-size:.78rem">Alle zuklappen</button>
+  </div>
+</div>
+
+{# ── Legend ───────────────────────────────────────────────────────────── #}
+<div class="d-flex gap-2 flex-wrap mb-4 align-items-center">
+  <span class="text-muted small me-1">Feldtyp:</span>
+  <span class="field-badge field-id"><i class="bi bi-key-fill me-1" style="font-size:.65rem"></i>ID / FK</span>
+  <span class="field-badge field-type_ref">Type-Ref</span>
+  <span class="field-badge field-datetime"><i class="bi bi-calendar me-1" style="font-size:.65rem"></i>Datum/Zeit</span>
+  <span class="field-badge field-decimal"><i class="bi bi-currency-euro me-1" style="font-size:.65rem"></i>Dezimal</span>
+  <span class="field-badge field-integer">Integer</span>
+  <span class="field-badge field-boolean">Boolean</span>
+  <span class="field-badge field-text">Text</span>
+  <span class="field-badge field-longtext">Langtext</span>
+  <span class="ms-2 text-muted small"><i class="bi bi-info-circle me-1"></i>Typ aus Getter-Methode + Namenskonvention</span>
+</div>
+
+{# ── Module Sections ──────────────────────────────────────────────────── #}
+{% for group in schema_by_module %}
+<section class="mb-5 module-group" data-module="{{ group.module }}">
+  <h4 class="section-title">
+    {{ group.module | capitalize }}
+    <span class="badge bg-secondary ms-2" style="font-size:.7rem;font-weight:500;vertical-align:middle">
+      {{ group.entities | length }} Entities · {{ group.entities | sum(attribute='field_count') }} Felder
+    </span>
+  </h4>
+
+  {% for e in group.entities %}
+  <div class="entity-card mb-3"
+       data-entity="{{ e.entity | lower }}"
+       data-fields="{{ e.fields | map(attribute='name') | join(' ') | lower }}">
+
+    {# ── Entity header (collapsible trigger) ── #}
+    <div class="entity-header d-flex align-items-center gap-2 px-3 py-2"
+         role="button"
+         data-bs-toggle="collapse"
+         data-bs-target="#ent-{{ e.entity }}"
+         aria-expanded="{{ 'true' if e.access_count >= 25 else 'false' }}">
+      <i class="bi bi-table text-primary" style="font-size:.85rem"></i>
+      <code class="fw-bold entity-name" style="font-size:.92rem;color:#0550ae">{{ e.entity }}</code>
+      <span class="badge bg-light text-secondary border ms-1" style="font-size:.68rem">{{ e.field_count }} Felder</span>
+      <span class="text-muted ms-auto me-2" style="font-size:.72rem">{{ e.access_count }}× referenziert</span>
+      <i class="bi bi-chevron-down toggle-icon" style="font-size:.75rem;transition:transform .2s"></i>
+    </div>
+
+    {# ── Field table ── #}
+    <div class="collapse {% if e.access_count >= 25 %}show{% endif %}" id="ent-{{ e.entity }}">
+      <div class="table-responsive" style="border-top:1px solid #dee2e6">
+        <table class="table table-sm mb-0 field-table" style="font-size:.8rem">
+          <thead style="background:#f8f9fa">
+            <tr>
+              <th style="width:2rem"></th>
+              <th style="width:38%">Feldname</th>
+              <th style="width:14%">Java-Typ</th>
+              <th style="width:20%">SQL-Typ</th>
+              <th style="width:18%">Bedeutung</th>
+              <th class="text-end" style="width:8%">Refs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for f in e.fields %}
+            <tr class="field-row {% if f.is_pk %}row-pk{% endif %}">
+              {# PK / FK indicator #}
+              <td class="text-center" style="vertical-align:middle">
+                {% if f.is_pk %}
+                <i class="bi bi-key-fill text-warning" title="Primary Key" style="font-size:.75rem"></i>
+                {% elif f.fk_to %}
+                <i class="bi bi-arrow-right text-primary" title="FK → {{ f.fk_to }}" style="font-size:.75rem"></i>
+                {% endif %}
+              </td>
+
+              {# Field name #}
+              <td style="vertical-align:middle">
+                <span class="field-name font-monospace {% if f.is_pk %}fw-bold{% endif %}">{{ f.name }}</span>
+              </td>
+
+              {# Java type #}
+              <td style="vertical-align:middle">
+                <span class="field-badge field-{{ f.type_key }}" style="font-size:.68rem">{{ f.java_type }}</span>
+              </td>
+
+              {# SQL type #}
+              <td style="vertical-align:middle;font-family:monospace;font-size:.75rem;color:#555">
+                {{ f.sql_type }}
+              </td>
+
+              {# Human-readable label #}
+              <td style="vertical-align:middle">
+                {% if f.fk_to and not f.is_pk %}
+                <span class="text-muted" style="font-size:.75rem">
+                  FK → <a href="#ent-{{ f.fk_to }}" class="text-decoration-none">{{ f.fk_to }}</a>
+                </span>
+                {% else %}
+                <span class="text-muted" style="font-size:.75rem">{{ f.type_label }}</span>
+                {% endif %}
+              </td>
+
+              {# Code reference count #}
+              <td class="text-end" style="vertical-align:middle;color:#94a3b8;font-size:.72rem">
+                {{ f.refs }}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>{# /entity-card #}
+  {% endfor %}
+
+</section>
+{% endfor %}
+
+<div id="noResults" class="text-muted text-center py-5" style="display:none">
+  <i class="bi bi-search" style="font-size:2rem"></i>
+  <p class="mt-2">Keine Entity oder Feld gefunden.</p>
+</div>
+
+</div>{# /content-area #}
+
+<style>
+.section-title {
+  font-size: 1rem; font-weight: 600; color: #1e2430;
+  border-bottom: 2px solid #e2e8f0; padding-bottom: .4rem; margin-bottom: 1rem;
+}
+
+/* Entity card */
+.entity-card  { border: 1px solid #dee2e6; border-radius: 6px; overflow: hidden; }
+.entity-header {
+  background: #f8fafc; cursor: pointer; user-select: none;
+  border-bottom: 1px solid transparent;
+  transition: background .12s;
+}
+.entity-header:hover { background: #e9f0fb; }
+.entity-header[aria-expanded="true"] { border-bottom-color: #dee2e6; }
+.entity-header[aria-expanded="true"] .toggle-icon { transform: rotate(180deg); }
+
+/* Field table */
+.field-table thead th { font-size: .73rem; color: #64748b; font-weight: 600; letter-spacing:.03em; }
+.field-table tbody tr:last-child td { border-bottom: 0; }
+.row-pk { background: #fffbeb; }
+
+/* Field type badges */
+.field-badge {
+  display: inline-block; border-radius: 4px;
+  padding: .1rem .4rem; font-size: .72rem; font-weight: 500; white-space: nowrap;
+}
+.field-id        { background:#dbeafe; color:#1d4ed8; }
+.field-id_long   { background:#bfdbfe; color:#1e40af; }
+.field-type_ref  { background:#ede9fe; color:#6d28d9; }
+.field-datetime  { background:#f3e8ff; color:#7e22ce; }
+.field-date      { background:#fae8ff; color:#86198f; }
+.field-decimal   { background:#dcfce7; color:#166534; }
+.field-integer   { background:#cffafe; color:#164e63; }
+.field-boolean   { background:#fef9c3; color:#854d0e; }
+.field-text      { background:#f1f5f9; color:#475569; }
+.field-longtext  { background:#fee2e2; color:#991b1b; }
+</style>
+
+<script>
+// Expand / collapse all
+document.getElementById('expandAll').addEventListener('click', () => {
+  document.querySelectorAll('.entity-card .collapse').forEach(el => {
+    bootstrap.Collapse.getOrCreateInstance(el).show();
+  });
+});
+document.getElementById('collapseAll').addEventListener('click', () => {
+  document.querySelectorAll('.entity-card .collapse').forEach(el => {
+    bootstrap.Collapse.getOrCreateInstance(el).hide();
+  });
+});
+
+// Sync chevron with collapse state
+document.querySelectorAll('.entity-header[data-bs-toggle="collapse"]').forEach(trigger => {
+  const target = document.querySelector(trigger.dataset.bsTarget);
+  if (!target) return;
+  const sync = () => {
+    const open = target.classList.contains('show');
+    trigger.setAttribute('aria-expanded', open);
+    const icon = trigger.querySelector('.toggle-icon');
+    if (icon) icon.style.transform = open ? 'rotate(180deg)' : '';
+  };
+  target.addEventListener('shown.bs.collapse',  sync);
+  target.addEventListener('hidden.bs.collapse', sync);
+  sync();
+});
+
+// Live search
+const searchInput = document.getElementById('schemaSearch');
+const noResults   = document.getElementById('noResults');
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  let visibleCount = 0;
+
+  document.querySelectorAll('.module-group').forEach(group => {
+    let groupVisible = 0;
+    group.querySelectorAll('.entity-card').forEach(card => {
+      const entityName = card.dataset.entity;
+      const fields     = card.dataset.fields;
+      const match = !q || entityName.includes(q) || fields.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) groupVisible++;
+
+      // Auto-expand if a field (not entity) matched
+      if (q && match && fields.includes(q) && !entityName.includes(q)) {
+        const collapseEl = card.querySelector('.collapse');
+        if (collapseEl) bootstrap.Collapse.getOrCreateInstance(collapseEl).show();
+      }
+
+      // Highlight matching field rows
+      card.querySelectorAll('.field-row').forEach(row => {
+        const fn = row.querySelector('.field-name');
+        if (!fn) return;
+        const name = fn.textContent.toLowerCase();
+        row.style.background = (q && name.includes(q)) ? '#fef9c3' : '';
+      });
+    });
+    group.style.display = groupVisible > 0 ? '' : 'none';
+    visibleCount += groupVisible;
+  });
+
+  noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+});
+</script>
+{% endblock %}

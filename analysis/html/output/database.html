@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Datenbank &amp; Datenzugriff</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --sidebar-width: 220px;
+      --accent: #0d6efd;
+    }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      background: #1e2430;
+      color: #c9d1d9;
+      position: fixed;
+      top: 0; left: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      padding: 1.25rem 1rem .75rem;
+      display: block;
+      text-decoration: none;
+      border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0;
+      padding: .35rem 1rem;
+      font-size: .85rem;
+      border-radius: 0;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff;
+      background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #4a5568;
+      padding: .75rem 1rem .25rem;
+    }
+    #main {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+    }
+    .page-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .badge-type {
+      font-size: .7rem;
+      font-weight: 500;
+    }
+    .method-table th { white-space: nowrap; }
+    .method-sig {
+      font-family: SFMono-Regular, Menlo, monospace;
+      font-size: .82rem;
+      color: #0550ae;
+    }
+    .class-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: box-shadow .15s;
+    }
+    .class-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .class-card .card-title { font-size: .95rem; }
+    .breadcrumb { font-size: .82rem; }
+    .stat-pill {
+      background: #eef2ff;
+      color: #3730a3;
+      border-radius: 20px;
+      padding: .15rem .65rem;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <a class="sidebar-brand" href="./index.html">
+    <i class="bi bi-diagram-3 me-2"></i>OFBiz Docs
+  </a>
+  <div class="nav-section">Analyse</div>
+  <ul class="nav flex-column mb-2">
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./sbom.html">
+        <i class="bi bi-box-seam me-1"></i>SBOM
+        <span class="stat-pill ms-1">79</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./tech-debt.html">
+        <i class="bi bi-exclamation-triangle me-1"></i>Tech Debt
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active"
+         href="./database.html">
+        <i class="bi bi-database me-1"></i>Datenbank
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./schema.html">
+        <i class="bi bi-table me-1"></i>DB-Schema
+      </a>
+    </li>
+  </ul>
+  <div class="nav-section">Module</div>
+  <ul class="nav flex-column">
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./party/index.html">
+        <i class="bi bi-box me-1"></i>party
+        <span class="stat-pill ms-1">22</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./order/index.html">
+        <i class="bi bi-box me-1"></i>order
+        <span class="stat-pill ms-1">37</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./product/index.html">
+        <i class="bi bi-box me-1"></i>product
+        <span class="stat-pill ms-1">58</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./accounting/index.html">
+        <i class="bi bi-box me-1"></i>accounting
+        <span class="stat-pill ms-1">33</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./content/index.html">
+        <i class="bi bi-box me-1"></i>content
+        <span class="stat-pill ms-1">28</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./manufacturing/index.html">
+        <i class="bi bi-box me-1"></i>manufacturing
+        <span class="stat-pill ms-1">17</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./shipment/index.html">
+        <i class="bi bi-box me-1"></i>shipment
+        <span class="stat-pill ms-1">23</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./workeffort/index.html">
+        <i class="bi bi-box me-1"></i>workeffort
+        <span class="stat-pill ms-1">18</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./marketing/index.html">
+        <i class="bi bi-box me-1"></i>marketing
+        <span class="stat-pill ms-1">8</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./humanres/index.html">
+        <i class="bi bi-box me-1"></i>humanres
+        <span class="stat-pill ms-1">2</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./sfa/index.html">
+        <i class="bi bi-box me-1"></i>sfa
+        <span class="stat-pill ms-1">1</span>
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+<!-- Main -->
+<div id="main">
+  
+
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="./index.html">Übersicht</a></li>
+      <li class="breadcrumb-item active">Datenbank &amp; Datenzugriff</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-database me-2 text-primary"></i>Datenbank, Datenzugriff &amp; Transaktionsverhalten</h1>
+  <div class="d-flex gap-2 mt-2 flex-wrap">
+    <span class="stat-pill"><i class="bi bi-search me-1"></i>1900 EntityQuery-Aufrufe</span>
+    <span class="stat-pill"><i class="bi bi-pencil-square me-1"></i>617 CRUD-Operationen</span>
+    <span class="stat-pill"><i class="bi bi-lightning me-1"></i>505 Cache-Nutzungen</span>
+    <span class="stat-pill"><i class="bi bi-arrow-repeat me-1"></i>96 Transaktionen</span>
+    <span class="stat-pill"><i class="bi bi-diagram-3 me-1"></i>60 Entities</span>
+  </div>
+</div>
+
+<div class="content-area">
+
+
+<section class="mb-5">
+  <h4 class="section-title">1. Data-Access-Framework</h4>
+  <div class="row g-4">
+
+    <div class="col-lg-7">
+      <p class="text-muted small mb-3">
+        OFBiz verwendet ein eigenes ORM-ähnliches Framework statt JPA/Hibernate.
+        Der Zugriff erfolgt ausschließlich über drei zentrale Abstraktionen:
+      </p>
+      <div class="bg-light border rounded p-3 mb-3" style="font-family:monospace;font-size:.82rem;line-height:1.7">
+        <span class="text-muted">// Lesezugriff — Fluent Query Builder</span><br>
+        GenericValue order = <strong>EntityQuery</strong>.use(delegator)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;.from(<span class="text-success">"OrderHeader"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;.where(<span class="text-success">"orderId"</span>, orderId)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;.cache()&nbsp;&nbsp;&nbsp;<span class="text-muted">// aus Entity-Cache</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;.queryOne();<br><br>
+        <span class="text-muted">// Schreibzugriff — GenericDelegator</span><br>
+        delegator.<strong>create</strong>(newValue);&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// INSERT</span><br>
+        delegator.<strong>store</strong>(changedValue);&nbsp;&nbsp;<span class="text-muted">// UPDATE</span><br>
+        delegator.<strong>storeAll</strong>(valueList);&nbsp;<span class="text-muted">// Batch INSERT/UPDATE</span><br>
+        delegator.<strong>remove</strong>(value);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// DELETE</span>
+      </div>
+      <div class="bg-light border rounded p-3" style="font-family:monospace;font-size:.82rem;line-height:1.7">
+        <span class="text-muted">// Streaming großer Ergebnismengen</span><br>
+        try (EntityListIterator it = EntityQuery.use(delegator)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.from(<span class="text-success">"Product"</span>).where(cond).queryIterator()) &#123;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;GenericValue v;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;while ((v = it.next()) != null) &#123; … &#125;<br>
+        &#125;
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light"><tr><th>Komponente</th><th>Rolle</th><th class="text-end">Aufrufe</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="fw-semibold small"><code>EntityQuery</code></td>
+            <td class="small text-muted">Fluent Query Builder (Lesen)</td>
+            <td class="text-end fw-semibold">1900</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small"><code>GenericDelegator</code></td>
+            <td class="small text-muted">CRUD, Sequenzen, Batch-Ops</td>
+            <td class="text-end fw-semibold">617</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small"><code>.cache()</code></td>
+            <td class="small text-muted">Entity-Cache (In-Process)</td>
+            <td class="text-end fw-semibold">505</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small"><code>queryIterator()</code></td>
+            <td class="small text-muted">Streaming / cursor-basiert</td>
+            <td class="text-end fw-semibold">65</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small"><code>EntityListIterator</code></td>
+            <td class="small text-muted">try-with-resources Stream</td>
+            <td class="text-end fw-semibold">65</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-info py-2 small">
+        <i class="bi bi-info-circle me-1"></i>
+        <strong>Kein JPA/Hibernate:</strong> Das OFBiz-eigene Entity-Engine liest Entity-Definitionen
+        aus XML-Dateien (<code>entitymodel*.xml</code>). SQL wird zur Laufzeit generiert.
+        JPA-Annotationen existieren nicht.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="mb-5">
+  <h4 class="section-title">2. Meistgenutzte Daten-Entities</h4>
+  <p class="text-muted small mb-3">
+    Extrahiert aus <code>.from("…")</code>- und <code>delegator.findList("…")</code>-Aufrufen
+    in allen Java- und Groovy-Quelldateien. Gibt Hinweise auf die zentralen Datenstrukturen.
+  </p>
+  
+  <div class="row g-3">
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">Product</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:100%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">105</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">TestingType</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:68%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">72</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">Content</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:63%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">67</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">OrderHeader</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:61%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">65</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">UserLogin</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:50%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">53</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ContentAssoc</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:36%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">38</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductAssoc</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:32%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">34</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">Testing</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:27%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">29</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">OrderPaymentPreference</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:25%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">27</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">WorkEffort</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:25%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">27</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">Party</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:22%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">24</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductStore</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:20%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">21</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductFeatureAndAppl</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:20%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">21</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">DataResource</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:19%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">20</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">OrderItem</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:19%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">20</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">PostalAddress</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:19%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">20</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">OrderRole</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:18%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">19</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductCategory</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:18%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">19</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">FinAccount</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:18%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">19</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">Shipment</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:17%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">18</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductCategoryMember</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:17%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">18</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">Geo</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:16%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">17</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ShipmentRouteSegment</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:16%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">17</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductPriceCond</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:14%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">15</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">SurveyResponse</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:14%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">15</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductPrice</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:13%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">14</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">OrderItemShipGroup</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:12%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">13</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">PaymentMethod</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:11%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">12</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">CarrierShipmentMethod</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:11%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">12</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ContentDataResourceView</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:11%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">12</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">AllocationPlanItem</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:11%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">12</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">PartyRelationship</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:10%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">11</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductFeature</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:10%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">11</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">TestingCrypto</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:10%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">11</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">PartyContactWithPurpose</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:10%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">11</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductStoreEmailSetting</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:9%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">10</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">JobSandbox</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:9%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">10</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ContactMech</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:9%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">10</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ShoppingList</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:9%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">10</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">WebSite</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:8%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">9</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">TestingNodeMember</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:8%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">9</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">Person</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:8%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">9</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">WorkEffortAssoc</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:8%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">9</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">CommunicationEvent</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:8%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">9</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ReturnHeader</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:8%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">9</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductStoreFinActSetting</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:8%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">9</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">Invoice</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:8%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">9</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductContent</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:7%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">8</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">Enumeration</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:7%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">8</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">PartyRole</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:7%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">8</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ProductFeatureAppl</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:7%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">8</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">OrderItemShipGroupAssoc</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:7%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">8</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">PartyContactMech</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:7%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">8</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">PortalPage</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:7%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">8</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">ReturnItem</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:7%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">8</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">OrderAdjustment</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:7%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">8</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">PartyGroup</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:6%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">7</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">RoleType</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:6%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">7</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">Facility</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:6%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">7</span>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">StatusItem</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:6%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">7</span>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="mb-5">
+  <h4 class="section-title">3. Datenzugriff pro Modul</h4>
+  <div class="table-responsive">
+    <table class="table table-sm table-bordered table-hover" style="font-size:.82rem">
+      <thead class="table-light">
+        <tr>
+          <th>Modul</th>
+          <th class="text-end" title="EntityQuery.use(...) Aufrufe">EntityQuery</th>
+          <th class="text-end" title="delegator.create/store/remove Aufrufe">CRUD</th>
+          <th class="text-end" title=".cache() Aufrufe">.cache()</th>
+          <th class="text-end" title="queryIterator() Aufrufe">Streaming</th>
+          <th class="text-end" title="ServiceUtil.returnError/returnFailure">Fehler</th>
+          <th class="text-end" title="ServiceUtil.returnSuccess">Erfolg</th>
+          <th class="text-end" title="TransactionUtil.begin()">Transakt.</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <a href="./order/index.html" class="text-decoration-none">order</a>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="fw-bold text-primary">
+              384
+            </span>
+            
+          </td>
+          <td class="text-end">
+            117
+          </td>
+          <td class="text-end">
+            74
+          </td>
+          <td class="text-end">
+            7
+          </td>
+          <td class="text-end">
+            
+            <span class="text-danger fw-bold">
+              540
+            </span>
+            
+          </td>
+          <td class="text-end">
+            160
+          </td>
+          <td class="text-end">
+            
+            <span class="">5</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <a href="./product/index.html" class="text-decoration-none">product</a>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="fw-bold text-primary">
+              343
+            </span>
+            
+          </td>
+          <td class="text-end">
+            57
+          </td>
+          <td class="text-end">
+            146
+          </td>
+          <td class="text-end">
+            23
+          </td>
+          <td class="text-end">
+            
+            <span class="text-danger fw-bold">
+              276
+            </span>
+            
+          </td>
+          <td class="text-end">
+            56
+          </td>
+          <td class="text-end">
+            
+            <span class="">12</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <a href="./accounting/index.html" class="text-decoration-none">accounting</a>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="fw-bold text-primary">
+              224
+            </span>
+            
+          </td>
+          <td class="text-end">
+            67
+          </td>
+          <td class="text-end">
+            29
+          </td>
+          <td class="text-end">
+            3
+          </td>
+          <td class="text-end">
+            
+            <span class="text-danger fw-bold">
+              554
+            </span>
+            
+          </td>
+          <td class="text-end">
+            149
+          </td>
+          <td class="text-end">
+            
+            <span class="">3</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">entity</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="text-primary">
+              122
+            </span>
+            
+          </td>
+          <td class="text-end">
+            158
+          </td>
+          <td class="text-end">
+            31
+          </td>
+          <td class="text-end">
+            9
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            
+            <span class="text-warning fw-bold">34</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <a href="./content/index.html" class="text-decoration-none">content</a>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="fw-bold text-primary">
+              211
+            </span>
+            
+          </td>
+          <td class="text-end">
+            61
+          </td>
+          <td class="text-end">
+            76
+          </td>
+          <td class="text-end">
+            4
+          </td>
+          <td class="text-end">
+            
+            <span class="text-danger fw-bold">
+              170
+            </span>
+            
+          </td>
+          <td class="text-end">
+            21
+          </td>
+          <td class="text-end">
+            
+            <span class="">9</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <a href="./party/index.html" class="text-decoration-none">party</a>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="text-primary">
+              125
+            </span>
+            
+          </td>
+          <td class="text-end">
+            44
+          </td>
+          <td class="text-end">
+            36
+          </td>
+          <td class="text-end">
+            2
+          </td>
+          <td class="text-end">
+            
+            <span class="text-danger fw-bold">
+              182
+            </span>
+            
+          </td>
+          <td class="text-end">
+            25
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <a href="./manufacturing/index.html" class="text-decoration-none">manufacturing</a>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="text-primary">
+              112
+            </span>
+            
+          </td>
+          <td class="text-end">
+            15
+          </td>
+          <td class="text-end">
+            5
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            
+            <span class="text-danger fw-bold">
+              313
+            </span>
+            
+          </td>
+          <td class="text-end">
+            19
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <a href="./shipment/index.html" class="text-decoration-none">shipment</a>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="text-primary">
+              97
+            </span>
+            
+          </td>
+          <td class="text-end">
+            17
+          </td>
+          <td class="text-end">
+            10
+          </td>
+          <td class="text-end">
+            1
+          </td>
+          <td class="text-end">
+            
+            <span class="text-danger fw-bold">
+              376
+            </span>
+            
+          </td>
+          <td class="text-end">
+            54
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">common</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              44
+            </span>
+            
+          </td>
+          <td class="text-end">
+            31
+          </td>
+          <td class="text-end">
+            23
+          </td>
+          <td class="text-end">
+            2
+          </td>
+          <td class="text-end">
+            
+            <span class="text-danger">
+              94
+            </span>
+            
+          </td>
+          <td class="text-end">
+            45
+          </td>
+          <td class="text-end">
+            
+            <span class="">2</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">service</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              50
+            </span>
+            
+          </td>
+          <td class="text-end">
+            21
+          </td>
+          <td class="text-end">
+            7
+          </td>
+          <td class="text-end">
+            1
+          </td>
+          <td class="text-end">
+            
+            <span class="text-danger">
+              51
+            </span>
+            
+          </td>
+          <td class="text-end">
+            35
+          </td>
+          <td class="text-end">
+            
+            <span class="">14</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <a href="./workeffort/index.html" class="text-decoration-none">workeffort</a>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="text-primary">
+              55
+            </span>
+            
+          </td>
+          <td class="text-end">
+            4
+          </td>
+          <td class="text-end">
+            22
+          </td>
+          <td class="text-end">
+            2
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              14
+            </span>
+            
+          </td>
+          <td class="text-end">
+            5
+          </td>
+          <td class="text-end">
+            
+            <span class="">2</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">entityext</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              38
+            </span>
+            
+          </td>
+          <td class="text-end">
+            6
+          </td>
+          <td class="text-end">
+            15
+          </td>
+          <td class="text-end">
+            8
+          </td>
+          <td class="text-end">
+            
+            <span class="text-danger">
+              38
+            </span>
+            
+          </td>
+          <td class="text-end">
+            19
+          </td>
+          <td class="text-end">
+            
+            <span class="">4</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">webapp</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              28
+            </span>
+            
+          </td>
+          <td class="text-end">
+            7
+          </td>
+          <td class="text-end">
+            7
+          </td>
+          <td class="text-end">
+            1
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              4
+            </span>
+            
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            
+            <span class="">6</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">widget</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              21
+            </span>
+            
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            9
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            
+            <span class="">1</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <a href="./marketing/index.html" class="text-decoration-none">marketing</a>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              12
+            </span>
+            
+          </td>
+          <td class="text-end">
+            5
+          </td>
+          <td class="text-end">
+            8
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              6
+            </span>
+            
+          </td>
+          <td class="text-end">
+            2
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">security</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              11
+            </span>
+            
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            4
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <a href="./humanres/index.html" class="text-decoration-none">humanres</a>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              9
+            </span>
+            
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">minilang</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              4
+            </span>
+            
+          </td>
+          <td class="text-end">
+            3
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            1
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            
+            <span class="">2</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">webtools</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              2
+            </span>
+            
+          </td>
+          <td class="text-end">
+            3
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            1
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              30
+            </span>
+            
+          </td>
+          <td class="text-end">
+            6
+          </td>
+          <td class="text-end">
+            
+            <span class="">2</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">securityext</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              4
+            </span>
+            
+          </td>
+          <td class="text-end">
+            1
+          </td>
+          <td class="text-end">
+            1
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              5
+            </span>
+            
+          </td>
+          <td class="text-end">
+            1
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">base</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              2
+            </span>
+            
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            2
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <a href="./sfa/index.html" class="text-decoration-none">sfa</a>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              1
+            </span>
+            
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              3
+            </span>
+            
+          </td>
+          <td class="text-end">
+            1
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+        </tr>
+        
+        
+        
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            
+            
+            
+            <span class="text-muted">catalina</span>
+            
+          </td>
+          <td class="text-end">
+            
+            <span class="">
+              1
+            </span>
+            
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+          <td class="text-end">
+            <span class="text-muted">–</span>
+          </td>
+        </tr>
+        
+        
+        
+        
+        
+        
+      </tbody>
+      <tfoot class="table-light fw-semibold" style="font-size:.82rem">
+        <tr>
+          <td>Gesamt</td>
+          <td class="text-end">1900</td>
+          <td class="text-end">617</td>
+          <td class="text-end">505</td>
+          <td class="text-end">65</td>
+          <td class="text-end">2656</td>
+          <td class="text-end">598</td>
+          <td class="text-end">96</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+
+<section class="mb-5">
+  <h4 class="section-title">4. Transaktionsverhalten</h4>
+  <div class="row g-4">
+
+    <div class="col-lg-6">
+      <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Transaktionssteuerung</h6>
+      <table class="table table-sm table-bordered">
+        <tbody>
+          <tr>
+            <td class="fw-semibold small">Explizite Transaktionen</td>
+            <td class="small text-muted">
+              <code>TransactionUtil.begin()</code> / <code>.commit()</code> / <code>.rollback()</code>
+              werden in 96 Stellen explizit aufgerufen — überwiegend in
+              komplexen Multi-Entity-Operationen (z.&nbsp;B. Auftragsanlage, Zahlungsabgleich).
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Deklarative Transaktionen</td>
+            <td class="small text-muted">
+              Jeder Service in OFBiz trägt in seiner XML-Definition die Attribute
+              <code>useTransaction="true"</code> und optional <code>requireNewTransaction="true"</code>.
+              Der <code>ServiceDispatcher</code> eröffnet und schließt die Transaktion automatisch.
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Rollback-Strategie</td>
+            <td class="small text-muted">
+              Bei <code>GenericEntityException</code> wird in 112 Stellen explizit
+              <code>rollback()</code> aufgerufen. Der Dispatcher rollt bei einem
+              <code>ServiceUtil.returnError()</code> die Transaktion ebenfalls automatisch zurück.
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Nested Transactions</td>
+            <td class="small text-muted">
+              <code>TransactionUtil.suspend()</code> / <code>.resume()</code> ermöglichen
+              das temporäre Aussetzen der laufenden Transaktion für unabhängige Sub-Operationen
+              (z.&nbsp;B. Audit-Log-Einträge, die bei Rollback erhalten bleiben sollen).
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Timeout</td>
+            <td class="small text-muted">
+              <code>transactionTimeout</code> pro Service konfigurierbar (Sekunden).
+              Standard: kein globales Timeout gesetzt — Risiko bei lang laufenden Batch-Services.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-lg-6">
+      <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Typisches Transaktionsmuster</h6>
+      <div class="bg-light border rounded p-3" style="font-family:monospace;font-size:.8rem;line-height:1.8">
+        <span class="text-muted">// Explizites Muster (Entity-Schicht)</span><br>
+        boolean began = <strong>TransactionUtil.begin</strong>();<br>
+        try &#123;<br>
+        &nbsp;&nbsp;delegator.create(a);<br>
+        &nbsp;&nbsp;delegator.storeAll(list);<br>
+        &nbsp;&nbsp;<strong>TransactionUtil.commit</strong>(began);<br>
+        &#125; catch (GenericEntityException e) &#123;<br>
+        &nbsp;&nbsp;<strong>TransactionUtil.rollback</strong>(began, msg, e);<br>
+        &nbsp;&nbsp;return ServiceUtil.returnError(…);<br>
+        &#125;<br><br>
+        <span class="text-muted">// Deklaratives Muster (Service-Schicht)</span><br>
+        <span class="text-muted">// &lt;service useTransaction="true"&gt;</span><br>
+        <span class="text-muted">// → ServiceDispatcher verwaltet begin/commit</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="mb-5">
+  <h4 class="section-title">5. Fehlerbehandlung</h4>
+  <div class="row g-4">
+
+    <div class="col-lg-5">
+      <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Rückgabe-Typen</h6>
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Methode</th><th>responseMessage</th><th class="text-end">Aufrufe</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="small fw-semibold"><code>returnSuccess()</code></td>
+            <td><span class="badge bg-success" style="font-size:.72rem">success</span></td>
+            <td class="text-end">598</td>
+          </tr>
+          <tr>
+            <td class="small fw-semibold"><code>returnError(…)</code></td>
+            <td><span class="badge bg-danger" style="font-size:.72rem">error</span></td>
+            <td class="text-end text-danger fw-bold">2608</td>
+          </tr>
+          <tr>
+            <td class="small fw-semibold"><code>returnFailure(…)</code></td>
+            <td><span class="badge bg-warning text-dark" style="font-size:.72rem">fail</span></td>
+            <td class="text-end">48</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="text-muted small">
+        Das Verhältnis <strong>2608 Fehler : 598 Erfolg</strong>
+        (ca. 80&nbsp;%
+        Fehlerpfade) zeigt eine sehr defensive Programmierung —
+        nahezu jeder Aufrufpfad hat explizite Fehlerbehandlung.
+      </p>
+    </div>
+
+    <div class="col-lg-7">
+      <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Exception-Hierarchie</h6>
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Exception</th><th>Schicht</th><th>Bedeutung</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="small">GenericEntityException</code></td>
+            <td><span class="badge bg-primary" style="font-size:.7rem">Entity</span></td>
+            <td class="small text-muted">Alle Datenbankfehler (SQL, Verbindung, Constraint)</td>
+          </tr>
+          <tr>
+            <td><code class="small">GenericServiceException</code></td>
+            <td><span class="badge bg-secondary" style="font-size:.7rem">Service</span></td>
+            <td class="small text-muted">Service-Aufruffehler, falsche Parameter, Engine-Fehler</td>
+          </tr>
+          <tr>
+            <td><code class="small">GeneralException</code></td>
+            <td><span class="badge bg-light text-dark border" style="font-size:.7rem">Base</span></td>
+            <td class="small text-muted">Basisklasse beider obiger Exceptions</td>
+          </tr>
+          <tr>
+            <td><code class="small">Map returnError()</code></td>
+            <td><span class="badge bg-warning text-dark" style="font-size:.7rem">Service</span></td>
+            <td class="small text-muted">Kein throw — Fehler als Map-Return propagiert</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert alert-warning py-2 small">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        <strong>Anti-Pattern:</strong> Viele Services fangen <code>Exception e</code> statt
+        spezifischer Typen und geben <code>ServiceUtil.returnError(e.toString())</code> zurück.
+        Stack-Traces werden so verschluckt — erschwertes Debugging in Produktion.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="mb-5">
+  <h4 class="section-title">6. Caching-Strategie</h4>
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <table class="table table-sm table-bordered">
+        <tbody>
+          <tr>
+            <td class="fw-semibold small">Cache-Typ</td>
+            <td class="small text-muted">In-Process Entity-Cache (Caffeine-basiert). Kein verteilter Cache.</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Aktivierung</td>
+            <td class="small text-muted"><code>.cache()</code> auf EntityQuery-Instanz — 505 Stellen im Code.</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Invalidierung</td>
+            <td class="small text-muted">Automatisch bei <code>create()</code>, <code>store()</code>, <code>remove()</code> über den Delegator.</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Gecachte Entities</td>
+            <td class="small text-muted">Konfigurationsdaten, Status-Typen, Referenzlisten — nicht Transaktionsdaten wie Orders.</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Cluster-Risiko</td>
+            <td class="small text-muted">
+              Bei Multi-Node-Betrieb kein Cache-Sync zwischen Knoten.
+              <span class="badge bg-warning text-dark ms-1" style="font-size:.7rem">Tech Debt</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-6">
+      <div class="bg-light border rounded p-3" style="font-family:monospace;font-size:.8rem;line-height:1.8">
+        <span class="text-muted">// Gecachte Konfigurationsabfrage</span><br>
+        GenericValue store = EntityQuery.use(delegator)<br>
+        &nbsp;&nbsp;.from(<span class="text-success">"ProductStore"</span>)<br>
+        &nbsp;&nbsp;.where(<span class="text-success">"productStoreId"</span>, storeId)<br>
+        &nbsp;&nbsp;<strong>.cache()</strong><br>
+        &nbsp;&nbsp;.queryOne();<br><br>
+        <span class="text-muted">// Nicht gecacht — Transaktionsdaten</span><br>
+        GenericValue order = EntityQuery.use(delegator)<br>
+        &nbsp;&nbsp;.from(<span class="text-success">"OrderHeader"</span>)<br>
+        &nbsp;&nbsp;.where(<span class="text-success">"orderId"</span>, orderId)<br>
+        &nbsp;&nbsp;.queryOne();&nbsp;<span class="text-muted">// kein .cache()</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<style>
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e2430;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: .4rem;
+  margin-bottom: 1rem;
+}
+</style>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true, theme:'default', flowchart:{curve:'basis'}});</script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+{% extends "base.html.j2" %}
+{% block title %}Datenbank &amp; Datenzugriff{% endblock %}
+
+{% block content %}
+{% set s = db_summary %}
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="{{ root }}index.html">Übersicht</a></li>
+      <li class="breadcrumb-item active">Datenbank &amp; Datenzugriff</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-database me-2 text-primary"></i>Datenbank, Datenzugriff &amp; Transaktionsverhalten</h1>
+  <div class="d-flex gap-2 mt-2 flex-wrap">
+    <span class="stat-pill"><i class="bi bi-search me-1"></i>{{ s.entity_query_calls }} EntityQuery-Aufrufe</span>
+    <span class="stat-pill"><i class="bi bi-pencil-square me-1"></i>{{ s.delegator_crud_calls }} CRUD-Operationen</span>
+    <span class="stat-pill"><i class="bi bi-lightning me-1"></i>{{ s.cache_calls }} Cache-Nutzungen</span>
+    <span class="stat-pill"><i class="bi bi-arrow-repeat me-1"></i>{{ s.tx_begin_calls }} Transaktionen</span>
+    <span class="stat-pill"><i class="bi bi-diagram-3 me-1"></i>{{ s.distinct_entities }} Entities</span>
+  </div>
+</div>
+
+<div class="content-area">
+
+{# ── 1. Framework-Architektur ────────────────────────────────────────── #}
+<section class="mb-5">
+  <h4 class="section-title">1. Data-Access-Framework</h4>
+  <div class="row g-4">
+
+    <div class="col-lg-7">
+      <p class="text-muted small mb-3">
+        OFBiz verwendet ein eigenes ORM-ähnliches Framework statt JPA/Hibernate.
+        Der Zugriff erfolgt ausschließlich über drei zentrale Abstraktionen:
+      </p>
+      <div class="bg-light border rounded p-3 mb-3" style="font-family:monospace;font-size:.82rem;line-height:1.7">
+        <span class="text-muted">// Lesezugriff — Fluent Query Builder</span><br>
+        GenericValue order = <strong>EntityQuery</strong>.use(delegator)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;.from(<span class="text-success">"OrderHeader"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;.where(<span class="text-success">"orderId"</span>, orderId)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;.cache()&nbsp;&nbsp;&nbsp;<span class="text-muted">// aus Entity-Cache</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;.queryOne();<br><br>
+        <span class="text-muted">// Schreibzugriff — GenericDelegator</span><br>
+        delegator.<strong>create</strong>(newValue);&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// INSERT</span><br>
+        delegator.<strong>store</strong>(changedValue);&nbsp;&nbsp;<span class="text-muted">// UPDATE</span><br>
+        delegator.<strong>storeAll</strong>(valueList);&nbsp;<span class="text-muted">// Batch INSERT/UPDATE</span><br>
+        delegator.<strong>remove</strong>(value);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// DELETE</span>
+      </div>
+      <div class="bg-light border rounded p-3" style="font-family:monospace;font-size:.82rem;line-height:1.7">
+        <span class="text-muted">// Streaming großer Ergebnismengen</span><br>
+        try (EntityListIterator it = EntityQuery.use(delegator)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.from(<span class="text-success">"Product"</span>).where(cond).queryIterator()) &#123;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;GenericValue v;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;while ((v = it.next()) != null) &#123; … &#125;<br>
+        &#125;
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light"><tr><th>Komponente</th><th>Rolle</th><th class="text-end">Aufrufe</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="fw-semibold small"><code>EntityQuery</code></td>
+            <td class="small text-muted">Fluent Query Builder (Lesen)</td>
+            <td class="text-end fw-semibold">{{ s.entity_query_calls }}</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small"><code>GenericDelegator</code></td>
+            <td class="small text-muted">CRUD, Sequenzen, Batch-Ops</td>
+            <td class="text-end fw-semibold">{{ s.delegator_crud_calls }}</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small"><code>.cache()</code></td>
+            <td class="small text-muted">Entity-Cache (In-Process)</td>
+            <td class="text-end fw-semibold">{{ s.cache_calls }}</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small"><code>queryIterator()</code></td>
+            <td class="small text-muted">Streaming / cursor-basiert</td>
+            <td class="text-end fw-semibold">{{ s.streaming_calls }}</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small"><code>EntityListIterator</code></td>
+            <td class="small text-muted">try-with-resources Stream</td>
+            <td class="text-end fw-semibold">{{ s.streaming_calls }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-info py-2 small">
+        <i class="bi bi-info-circle me-1"></i>
+        <strong>Kein JPA/Hibernate:</strong> Das OFBiz-eigene Entity-Engine liest Entity-Definitionen
+        aus XML-Dateien (<code>entitymodel*.xml</code>). SQL wird zur Laufzeit generiert.
+        JPA-Annotationen existieren nicht.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{# ── 2. Meistgenutzte Entities ─────────────────────────────────────── #}
+<section class="mb-5">
+  <h4 class="section-title">2. Meistgenutzte Daten-Entities</h4>
+  <p class="text-muted small mb-3">
+    Extrahiert aus <code>.from("…")</code>- und <code>delegator.findList("…")</code>-Aufrufen
+    in allen Java- und Groovy-Quelldateien. Gibt Hinweise auf die zentralen Datenstrukturen.
+  </p>
+  {% set max_count = top_entities[0].count if top_entities else 1 %}
+  <div class="row g-3">
+    {% for e in top_entities %}
+    <div class="col-lg-4 col-md-6">
+      <div class="d-flex align-items-center gap-2">
+        <code class="text-nowrap" style="font-size:.78rem;min-width:11rem">{{ e.entity }}</code>
+        <div class="flex-grow-1 bg-light rounded" style="height:10px;min-width:40px">
+          <div class="rounded" style="height:10px;width:{{ (e.count / max_count * 100) | int }}%;background:#0d6efd88"></div>
+        </div>
+        <span class="text-muted" style="font-size:.75rem;min-width:2rem;text-align:right">{{ e.count }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{# ── 3. Datenzugriff pro Modul ─────────────────────────────────────── #}
+<section class="mb-5">
+  <h4 class="section-title">3. Datenzugriff pro Modul</h4>
+  <div class="table-responsive">
+    <table class="table table-sm table-bordered table-hover" style="font-size:.82rem">
+      <thead class="table-light">
+        <tr>
+          <th>Modul</th>
+          <th class="text-end" title="EntityQuery.use(...) Aufrufe">EntityQuery</th>
+          <th class="text-end" title="delegator.create/store/remove Aufrufe">CRUD</th>
+          <th class="text-end" title=".cache() Aufrufe">.cache()</th>
+          <th class="text-end" title="queryIterator() Aufrufe">Streaming</th>
+          <th class="text-end" title="ServiceUtil.returnError/returnFailure">Fehler</th>
+          <th class="text-end" title="ServiceUtil.returnSuccess">Erfolg</th>
+          <th class="text-end" title="TransactionUtil.begin()">Transakt.</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in module_stats %}
+        {% if m.entity_query + m.delegator_crud > 0 %}
+        <tr>
+          <td class="fw-semibold text-nowrap">
+            {% set mod_id = m.module | lower %}
+            {% set is_documented = mod_id in (modules | map(attribute='id') | list) %}
+            {% if is_documented %}
+            <a href="{{ root }}{{ mod_id }}/index.html" class="text-decoration-none">{{ m.module }}</a>
+            {% else %}
+            <span class="text-muted">{{ m.module }}</span>
+            {% endif %}
+          </td>
+          <td class="text-end">
+            {% if m.entity_query > 0 %}
+            <span class="{% if m.entity_query > 200 %}fw-bold text-primary{% elif m.entity_query > 50 %}text-primary{% endif %}">
+              {{ m.entity_query }}
+            </span>
+            {% else %}<span class="text-muted">–</span>{% endif %}
+          </td>
+          <td class="text-end">
+            {% if m.delegator_crud > 0 %}{{ m.delegator_crud }}{% else %}<span class="text-muted">–</span>{% endif %}
+          </td>
+          <td class="text-end">
+            {% if m.cache > 0 %}{{ m.cache }}{% else %}<span class="text-muted">–</span>{% endif %}
+          </td>
+          <td class="text-end">
+            {% if m.streaming > 0 %}{{ m.streaming }}{% else %}<span class="text-muted">–</span>{% endif %}
+          </td>
+          <td class="text-end">
+            {% if m.svc_error + m.svc_fail > 0 %}
+            <span class="{% if m.svc_error > 100 %}text-danger fw-bold{% elif m.svc_error > 30 %}text-danger{% endif %}">
+              {{ m.svc_error + m.svc_fail }}
+            </span>
+            {% else %}<span class="text-muted">–</span>{% endif %}
+          </td>
+          <td class="text-end">
+            {% if m.svc_success > 0 %}{{ m.svc_success }}{% else %}<span class="text-muted">–</span>{% endif %}
+          </td>
+          <td class="text-end">
+            {% if m.tx_begin > 0 %}
+            <span class="{% if m.tx_begin > 20 %}text-warning fw-bold{% endif %}">{{ m.tx_begin }}</span>
+            {% else %}<span class="text-muted">–</span>{% endif %}
+          </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+      <tfoot class="table-light fw-semibold" style="font-size:.82rem">
+        <tr>
+          <td>Gesamt</td>
+          <td class="text-end">{{ s.entity_query_calls }}</td>
+          <td class="text-end">{{ s.delegator_crud_calls }}</td>
+          <td class="text-end">{{ s.cache_calls }}</td>
+          <td class="text-end">{{ s.streaming_calls }}</td>
+          <td class="text-end">{{ s.svc_error_returns + s.svc_fail_returns }}</td>
+          <td class="text-end">{{ s.svc_success_returns }}</td>
+          <td class="text-end">{{ s.tx_begin_calls }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+{# ── 4. Transaktionsverhalten ──────────────────────────────────────── #}
+<section class="mb-5">
+  <h4 class="section-title">4. Transaktionsverhalten</h4>
+  <div class="row g-4">
+
+    <div class="col-lg-6">
+      <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Transaktionssteuerung</h6>
+      <table class="table table-sm table-bordered">
+        <tbody>
+          <tr>
+            <td class="fw-semibold small">Explizite Transaktionen</td>
+            <td class="small text-muted">
+              <code>TransactionUtil.begin()</code> / <code>.commit()</code> / <code>.rollback()</code>
+              werden in {{ s.tx_begin_calls }} Stellen explizit aufgerufen — überwiegend in
+              komplexen Multi-Entity-Operationen (z.&nbsp;B. Auftragsanlage, Zahlungsabgleich).
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Deklarative Transaktionen</td>
+            <td class="small text-muted">
+              Jeder Service in OFBiz trägt in seiner XML-Definition die Attribute
+              <code>useTransaction="true"</code> und optional <code>requireNewTransaction="true"</code>.
+              Der <code>ServiceDispatcher</code> eröffnet und schließt die Transaktion automatisch.
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Rollback-Strategie</td>
+            <td class="small text-muted">
+              Bei <code>GenericEntityException</code> wird in {{ s.tx_rollback_calls }} Stellen explizit
+              <code>rollback()</code> aufgerufen. Der Dispatcher rollt bei einem
+              <code>ServiceUtil.returnError()</code> die Transaktion ebenfalls automatisch zurück.
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Nested Transactions</td>
+            <td class="small text-muted">
+              <code>TransactionUtil.suspend()</code> / <code>.resume()</code> ermöglichen
+              das temporäre Aussetzen der laufenden Transaktion für unabhängige Sub-Operationen
+              (z.&nbsp;B. Audit-Log-Einträge, die bei Rollback erhalten bleiben sollen).
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Timeout</td>
+            <td class="small text-muted">
+              <code>transactionTimeout</code> pro Service konfigurierbar (Sekunden).
+              Standard: kein globales Timeout gesetzt — Risiko bei lang laufenden Batch-Services.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-lg-6">
+      <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Typisches Transaktionsmuster</h6>
+      <div class="bg-light border rounded p-3" style="font-family:monospace;font-size:.8rem;line-height:1.8">
+        <span class="text-muted">// Explizites Muster (Entity-Schicht)</span><br>
+        boolean began = <strong>TransactionUtil.begin</strong>();<br>
+        try &#123;<br>
+        &nbsp;&nbsp;delegator.create(a);<br>
+        &nbsp;&nbsp;delegator.storeAll(list);<br>
+        &nbsp;&nbsp;<strong>TransactionUtil.commit</strong>(began);<br>
+        &#125; catch (GenericEntityException e) &#123;<br>
+        &nbsp;&nbsp;<strong>TransactionUtil.rollback</strong>(began, msg, e);<br>
+        &nbsp;&nbsp;return ServiceUtil.returnError(…);<br>
+        &#125;<br><br>
+        <span class="text-muted">// Deklaratives Muster (Service-Schicht)</span><br>
+        <span class="text-muted">// &lt;service useTransaction="true"&gt;</span><br>
+        <span class="text-muted">// → ServiceDispatcher verwaltet begin/commit</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{# ── 5. Fehlerbehandlung ───────────────────────────────────────────── #}
+<section class="mb-5">
+  <h4 class="section-title">5. Fehlerbehandlung</h4>
+  <div class="row g-4">
+
+    <div class="col-lg-5">
+      <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Rückgabe-Typen</h6>
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Methode</th><th>responseMessage</th><th class="text-end">Aufrufe</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="small fw-semibold"><code>returnSuccess()</code></td>
+            <td><span class="badge bg-success" style="font-size:.72rem">success</span></td>
+            <td class="text-end">{{ s.svc_success_returns }}</td>
+          </tr>
+          <tr>
+            <td class="small fw-semibold"><code>returnError(…)</code></td>
+            <td><span class="badge bg-danger" style="font-size:.72rem">error</span></td>
+            <td class="text-end text-danger fw-bold">{{ s.svc_error_returns }}</td>
+          </tr>
+          <tr>
+            <td class="small fw-semibold"><code>returnFailure(…)</code></td>
+            <td><span class="badge bg-warning text-dark" style="font-size:.72rem">fail</span></td>
+            <td class="text-end">{{ s.svc_fail_returns }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="text-muted small">
+        Das Verhältnis <strong>{{ s.svc_error_returns }} Fehler : {{ s.svc_success_returns }} Erfolg</strong>
+        (ca. {{ ((s.svc_error_returns / (s.svc_success_returns + s.svc_error_returns + s.svc_fail_returns + 1)) * 100) | int }}&nbsp;%
+        Fehlerpfade) zeigt eine sehr defensive Programmierung —
+        nahezu jeder Aufrufpfad hat explizite Fehlerbehandlung.
+      </p>
+    </div>
+
+    <div class="col-lg-7">
+      <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Exception-Hierarchie</h6>
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Exception</th><th>Schicht</th><th>Bedeutung</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="small">GenericEntityException</code></td>
+            <td><span class="badge bg-primary" style="font-size:.7rem">Entity</span></td>
+            <td class="small text-muted">Alle Datenbankfehler (SQL, Verbindung, Constraint)</td>
+          </tr>
+          <tr>
+            <td><code class="small">GenericServiceException</code></td>
+            <td><span class="badge bg-secondary" style="font-size:.7rem">Service</span></td>
+            <td class="small text-muted">Service-Aufruffehler, falsche Parameter, Engine-Fehler</td>
+          </tr>
+          <tr>
+            <td><code class="small">GeneralException</code></td>
+            <td><span class="badge bg-light text-dark border" style="font-size:.7rem">Base</span></td>
+            <td class="small text-muted">Basisklasse beider obiger Exceptions</td>
+          </tr>
+          <tr>
+            <td><code class="small">Map returnError()</code></td>
+            <td><span class="badge bg-warning text-dark" style="font-size:.7rem">Service</span></td>
+            <td class="small text-muted">Kein throw — Fehler als Map-Return propagiert</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert alert-warning py-2 small">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        <strong>Anti-Pattern:</strong> Viele Services fangen <code>Exception e</code> statt
+        spezifischer Typen und geben <code>ServiceUtil.returnError(e.toString())</code> zurück.
+        Stack-Traces werden so verschluckt — erschwertes Debugging in Produktion.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{# ── 6. Caching-Strategie ──────────────────────────────────────────── #}
+<section class="mb-5">
+  <h4 class="section-title">6. Caching-Strategie</h4>
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <table class="table table-sm table-bordered">
+        <tbody>
+          <tr>
+            <td class="fw-semibold small">Cache-Typ</td>
+            <td class="small text-muted">In-Process Entity-Cache (Caffeine-basiert). Kein verteilter Cache.</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Aktivierung</td>
+            <td class="small text-muted"><code>.cache()</code> auf EntityQuery-Instanz — {{ s.cache_calls }} Stellen im Code.</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Invalidierung</td>
+            <td class="small text-muted">Automatisch bei <code>create()</code>, <code>store()</code>, <code>remove()</code> über den Delegator.</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Gecachte Entities</td>
+            <td class="small text-muted">Konfigurationsdaten, Status-Typen, Referenzlisten — nicht Transaktionsdaten wie Orders.</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold small">Cluster-Risiko</td>
+            <td class="small text-muted">
+              Bei Multi-Node-Betrieb kein Cache-Sync zwischen Knoten.
+              <span class="badge bg-warning text-dark ms-1" style="font-size:.7rem">Tech Debt</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-6">
+      <div class="bg-light border rounded p-3" style="font-family:monospace;font-size:.8rem;line-height:1.8">
+        <span class="text-muted">// Gecachte Konfigurationsabfrage</span><br>
+        GenericValue store = EntityQuery.use(delegator)<br>
+        &nbsp;&nbsp;.from(<span class="text-success">"ProductStore"</span>)<br>
+        &nbsp;&nbsp;.where(<span class="text-success">"productStoreId"</span>, storeId)<br>
+        &nbsp;&nbsp;<strong>.cache()</strong><br>
+        &nbsp;&nbsp;.queryOne();<br><br>
+        <span class="text-muted">// Nicht gecacht — Transaktionsdaten</span><br>
+        GenericValue order = EntityQuery.use(delegator)<br>
+        &nbsp;&nbsp;.from(<span class="text-success">"OrderHeader"</span>)<br>
+        &nbsp;&nbsp;.where(<span class="text-success">"orderId"</span>, orderId)<br>
+        &nbsp;&nbsp;.queryOne();&nbsp;<span class="text-muted">// kein .cache()</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<style>
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e2430;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: .4rem;
+  margin-bottom: 1rem;
+}
+</style>
+{% endblock %}

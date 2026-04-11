@@ -72,6 +72,31 @@ def main():
                    root=relative_root(0), active_module="__tech_debt__")
         print(f"  tech-debt.html  ({len(tech_debt)} items)")
 
+    # --- schema.html ---
+    schema_entities = architektur.get("schema_entities", [])
+    schema_by_module = architektur.get("schema_by_module", [])
+    if schema_entities:
+        write_html(env, "schema.html.j2", OUTPUT_DIR / "schema.html",
+                   modules=modules_meta,
+                   schema_entities=schema_entities,
+                   schema_by_module=schema_by_module,
+                   root=relative_root(0), active_module="__schema__")
+        total_fields = sum(e["field_count"] for e in schema_entities)
+        print(f"  schema.html  ({len(schema_entities)} entities, {total_fields} fields)")
+
+    # --- database.html ---
+    db_summary = architektur.get("db_framework_summary", {})
+    module_stats = architektur.get("db_module_stats", [])
+    top_entities = architektur.get("db_top_entities", [])
+    if db_summary:
+        write_html(env, "database.html.j2", OUTPUT_DIR / "database.html",
+                   modules=modules_meta,
+                   db_summary=db_summary,
+                   module_stats=module_stats,
+                   top_entities=top_entities,
+                   root=relative_root(0), active_module="__database__")
+        print(f"  database.html  ({db_summary.get('distinct_entities', 0)} entities)")
+
     for module_id in targets:
         json_path = DATA_DIR / f"{module_id}.json"
         if not json_path.exists():

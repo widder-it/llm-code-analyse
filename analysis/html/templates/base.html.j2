@@ -110,6 +110,18 @@
         <i class="bi bi-exclamation-triangle me-1"></i>Tech Debt
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link {% if active_module == '__database__' %}active{% endif %}"
+         href="{{ root }}database.html">
+        <i class="bi bi-database me-1"></i>Datenbank
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if active_module == '__schema__' %}active{% endif %}"
+         href="{{ root }}schema.html">
+        <i class="bi bi-table me-1"></i>DB-Schema
+      </a>
+    </li>
   </ul>
   <div class="nav-section">Module</div>
   <ul class="nav flex-column">
