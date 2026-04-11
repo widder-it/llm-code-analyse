@@ -80,8 +80,8 @@
         <tfoot class="table-light fw-semibold">
           <tr>
             <td>Gesamt</td>
-            <td class="text-end">1.568</td>
-            <td class="text-end">13.398</td>
+            <td class="text-end">{{ index_stats.total_klassen }}</td>
+            <td class="text-end">{{ index_stats.total_methoden }}</td>
             <td></td>
             <td></td>
           </tr>
@@ -142,7 +142,7 @@
   {# ── 5. SBOM ──────────────────────────────────────────── #}
   {% if architektur.sbom %}
   <section class="mb-5">
-    <h4 class="section-title">5. Externe Abhängigkeiten (SBOM) — 191 Pakete</h4>
+    <h4 class="section-title">5. Externe Abhängigkeiten (SBOM) — {{ index_stats.total_sbom_pakete }} Pakete</h4>
     <div class="table-responsive">
       <table class="table table-sm table-bordered">
         <thead class="table-light"><tr><th>Kategorie</th><th class="text-end">Pakete</th><th>Wichtigste Bibliotheken</th></tr></thead>

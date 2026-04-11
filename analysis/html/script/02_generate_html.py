@@ -50,6 +50,18 @@ def main():
 
     targets = sys.argv[1:] if sys.argv[1:] else [m["id"] for m in modules_meta]
 
+    # --- index_stats: aggregates for index.html (avoids hardcoded numbers in template) ---
+    def de_int(s):
+        """Parse German-formatted number string like '1.568' → 1568."""
+        return int(str(s).replace(".", "").replace(",", "").strip())
+
+    module_structure = architektur.get("module_structure", [])
+    index_stats = {
+        "total_klassen": sum(de_int(r["Klassen"]) for r in module_structure),
+        "total_methoden": sum(de_int(r["Public Methoden"]) for r in module_structure),
+        "total_sbom_pakete": sum(de_int(r["Pakete"]) for r in architektur.get("sbom", [])),
+    }
+
     # --- nav_stats: counts shown in sidebar for all pages ---
     nav_stats = {
         "sbom":       len(architektur.get("sbom_libraries", [])),
@@ -61,6 +73,7 @@ def main():
     # --- index.html ---
     write_html(env, "index.html.j2", OUTPUT_DIR / "index.html",
                modules=modules_meta, architektur=architektur,
+               index_stats=index_stats,
                nav_stats=nav_stats, root=relative_root(0), active_module=None)
     print("  index.html")
 
