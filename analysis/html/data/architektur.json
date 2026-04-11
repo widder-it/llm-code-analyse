@@ -969,6 +969,7 @@
       "version": "1.8.0",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Parser für Kommandozeilenargumente.",
       "vulns": []
     },
     {
@@ -977,6 +978,7 @@
       "version": "1.17.0",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Kodierungs-/Dekodierungsroutinen (Base64, Hex, URL, Digest).",
       "vulns": []
     },
     {
@@ -985,6 +987,7 @@
       "version": "4.4",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Erweiterte Collection-Typen und -Utilities (Multimap, Bag, BidiMap u.a.).",
       "vulns": []
     },
     {
@@ -993,6 +996,7 @@
       "version": "1.11.0",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Lesen und Schreiben von CSV-Dateien nach RFC 4180.",
       "vulns": []
     },
     {
@@ -1001,6 +1005,7 @@
       "version": "2.12.0",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "JDBC-Connection-Pool auf Basis von Commons Pool 2.",
       "vulns": []
     },
     {
@@ -1009,6 +1014,7 @@
       "version": "1.5",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Multipart-HTTP-Upload-Verarbeitung für Servlets.",
       "vulns": [
         {
           "id": "GHSA-vv7r-c36w-3prj",
@@ -1030,6 +1036,7 @@
       "version": "1.0-alpha3",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Lesen und Schreiben diverser Bildformate (PNG, TIFF, BMP, ICNS u.a.).",
       "vulns": []
     },
     {
@@ -1038,6 +1045,7 @@
       "version": "2.16.1",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Hilfsmethoden für Datei- und Stream-Operationen (FileUtils, IOUtils).",
       "vulns": []
     },
     {
@@ -1046,6 +1054,7 @@
       "version": "3.14.0",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Utility-Klassen für String-, Array-, Reflection- und Datumsoperationen.",
       "vulns": [
         {
           "id": "GHSA-j288-q9x7-2f5v",
@@ -1067,6 +1076,7 @@
       "version": "3.11.0",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Client-Implementierungen für FTP, SMTP, POP3, Telnet und weitere Protokolle.",
       "vulns": []
     },
     {
@@ -1075,6 +1085,7 @@
       "version": "2.12.0",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Generisches Object-Pool-Framework (Basis für DBCP2).",
       "vulns": []
     },
     {
@@ -1083,6 +1094,7 @@
       "version": "1.12.0",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Textverarbeitungs-Utilities (StringSubstitutor, Levenshtein, Escape-Funktionen).",
       "vulns": []
     },
     {
@@ -1091,6 +1103,7 @@
       "version": "1.9.0",
       "category": "Apache Commons",
       "scope": "main",
+      "description": "Validierungsframework für E-Mail, URL, Kreditkartennummern u.a.",
       "vulns": []
     },
     {
@@ -1099,6 +1112,7 @@
       "version": "4.4.0",
       "category": "Authentifizierung",
       "scope": "main",
+      "description": "Erstellen, Signieren und Verifizieren von JSON Web Tokens (JWT/JWS).",
       "vulns": []
     },
     {
@@ -1107,6 +1121,7 @@
       "version": "2.19.0",
       "category": "Bild-Metadaten",
       "scope": "main",
+      "description": "Extrahiert EXIF-, IPTC- und XMP-Metadaten aus JPEG, PNG, RAW und weiteren Bildformaten.",
       "vulns": []
     },
     {
@@ -1115,6 +1130,7 @@
       "version": "3.1.8",
       "category": "Caching",
       "scope": "main",
+      "description": "Hochperformanter In-Process-Cache (Ersatz für Guava Cache) mit W-TinyLFU-Eviction.",
       "vulns": []
     },
     {
@@ -1123,6 +1139,7 @@
       "version": "2.9.2",
       "category": "Dokumenten-Analyse",
       "scope": "main",
+      "description": "Apache Tika Kern-API: erkennt MIME-Typen und extrahiert Metadaten aus Dateien.",
       "vulns": [
         {
           "id": "GHSA-f58c-gq56-vjjf",
@@ -1144,6 +1161,7 @@
       "version": "2.9.2",
       "category": "Dokumenten-Analyse",
       "scope": "main",
+      "description": "Tika-Parser-Bundle für Office, PDF, Bilder, Audio, Video und weitere Formate.",
       "vulns": []
     },
     {
@@ -1152,6 +1170,7 @@
       "version": "2.0.1",
       "category": "E-Mail",
       "scope": "main",
+      "description": "Jakarta Mail 2.x: Senden und Empfangen von E-Mails über SMTP, IMAP, POP3.",
       "vulns": []
     },
     {
@@ -1160,6 +1179,7 @@
       "version": "1.6.2",
       "category": "E-Mail",
       "scope": "main",
+      "description": "Jakarta Mail 1.x (javax.*-Namespace, Legacy): wird für ältere OFBiz-Komponenten benötigt.",
       "vulns": []
     },
     {
@@ -1168,6 +1188,7 @@
       "version": "5.3.0",
       "category": "Excel / Office",
       "scope": "main",
+      "description": "Apache POI: Lesen und Schreiben von Microsoft-Office-Formaten (XLS, DOC, PPT).",
       "vulns": []
     },
     {
@@ -1176,6 +1197,7 @@
       "version": "5.3.0",
       "category": "Excel / Office",
       "scope": "main",
+      "description": "Apache POI OOXML-Erweiterung für XLSX, DOCX und PPTX (Open XML).",
       "vulns": [
         {
           "id": "GHSA-gmg8-593g-7mv3",
@@ -1197,6 +1219,7 @@
       "version": "2.2.7",
       "category": "Expression Language",
       "scope": "main",
+      "description": "JUEL API: Java Unified Expression Language (EL 2.2) nach JSR-245.",
       "vulns": []
     },
     {
@@ -1205,6 +1228,7 @@
       "version": "2.2.7",
       "category": "Expression Language",
       "scope": "main",
+      "description": "JUEL Implementierung der Expression Language mit Caching und Method-Invocation.",
       "vulns": []
     },
     {
@@ -1213,6 +1237,7 @@
       "version": "1.4.2",
       "category": "Google Libraries",
       "scope": "main",
+      "description": "Thread-sicherer LRU-Cache auf Basis einer verketteten HashMap.",
       "vulns": []
     },
     {
@@ -1221,6 +1246,7 @@
       "version": "3.5.3",
       "category": "Google Libraries",
       "scope": "main",
+      "description": "ZXing Kern-Bibliothek zum Lesen und Erzeugen von Barcodes (QR, EAN, Code128 u.a.).",
       "vulns": []
     },
     {
@@ -1229,6 +1255,7 @@
       "version": "33.2.1-jre",
       "category": "Google Libraries",
       "scope": "main",
+      "description": "Google-Basisbibliotek: Collections, Caching, Preconditions, Hashing, I/O-Helpers.",
       "vulns": []
     },
     {
@@ -1237,6 +1264,7 @@
       "version": "3.5.3",
       "category": "Google Libraries",
       "scope": "main",
+      "description": "ZXing Java-SE-Erweiterung (BufferedImage-Support, CLI-Tool).",
       "vulns": []
     },
     {
@@ -1245,6 +1273,7 @@
       "version": "8.13.43",
       "category": "Google Libraries",
       "scope": "main",
+      "description": "Internationales Parsing, Formatierung und Validierung von Telefonnummern.",
       "vulns": []
     },
     {
@@ -1253,6 +1282,7 @@
       "version": "1.7",
       "category": "Google Libraries",
       "scope": "main",
+      "description": "Lineare Regex-Engine (Port von Google RE2) ohne Backtracking-Risiko.",
       "vulns": []
     },
     {
@@ -1261,6 +1291,7 @@
       "version": "1.18.1",
       "category": "HTML-Parsing",
       "scope": "main",
+      "description": "HTML-Parser mit CSS-Selektor-API und eingebautem HTML-Sanitizer.",
       "vulns": []
     },
     {
@@ -1269,6 +1300,7 @@
       "version": "4.5.14",
       "category": "HTTP-Client",
       "scope": "main",
+      "description": "Apache HttpComponents Client 4.x für HTTP/HTTPS-Anfragen mit Verbindungspool.",
       "vulns": []
     },
     {
@@ -1277,6 +1309,7 @@
       "version": "2.17.2",
       "category": "JSON",
       "scope": "main",
+      "description": "De-/Serialisierung zwischen Java-Objekten und JSON (ObjectMapper).",
       "vulns": []
     },
     {
@@ -1285,6 +1318,7 @@
       "version": "1.1.1",
       "category": "Java EE (legacy javax.*)",
       "scope": "main",
+      "description": "JavaBeans Activation Framework (javax.activation, Legacy): MIME-Typ-Handling.",
       "vulns": []
     },
     {
@@ -1293,6 +1327,7 @@
       "version": "2.0.1",
       "category": "Java EE (legacy javax.*)",
       "scope": "main",
+      "description": "JMS 2.0 API (javax.*-Namespace): Java Message Service für Messaging-Systeme.",
       "vulns": []
     },
     {
@@ -1301,6 +1336,7 @@
       "version": "2.3.3",
       "category": "Java EE (legacy javax.*)",
       "scope": "main",
+      "description": "JSP 2.3 API (javax.*-Namespace): JavaServer Pages Tag- und Expression-Klassen.",
       "vulns": []
     },
     {
@@ -1309,6 +1345,7 @@
       "version": "2.3.1",
       "category": "Java EE (legacy javax.*)",
       "scope": "main",
+      "description": "JAXB 2.x API (javax.*-Namespace): XML-Binding-Annotationen für Java-Objekte.",
       "vulns": []
     },
     {
@@ -1317,6 +1354,7 @@
       "version": "3.2.19",
       "category": "Kalender (iCal)",
       "scope": "main",
+      "description": "Parsing und Erzeugung von iCalendar-Daten (RFC 5545); Basis für OFBiz-Kalender.",
       "vulns": []
     },
     {
@@ -1325,6 +1363,7 @@
       "version": "2.23.1",
       "category": "Logging",
       "scope": "main",
+      "description": "API-Schicht von Apache Log4j 2 — entkoppelt Logging-Aufrufe von der Implementierung.",
       "vulns": []
     },
     {
@@ -1333,6 +1372,7 @@
       "version": "2.23.1",
       "category": "Logging",
       "scope": "main",
+      "description": "Kern-Implementierung von Apache Log4j 2 mit Appender, Layout und Filtern.",
       "vulns": [
         {
           "id": "GHSA-3pxv-7cmr-fjr4",
@@ -1366,6 +1406,7 @@
       "version": "2.1.7",
       "category": "PDF",
       "scope": "main",
+      "description": "iText 2.x (Legacy): PDF-Erstellung und -Manipulation (ältere API).",
       "vulns": [
         {
           "id": "GHSA-86p9-x5pw-94qx",
@@ -1387,6 +1428,7 @@
       "version": "2.13.0",
       "category": "PDF",
       "scope": "main",
+      "description": "Mustang: Erzeugt und liest ZUGFeRD/Factur-X-konforme elektronische Rechnungen.",
       "vulns": [
         {
           "id": "GHSA-x832-fpvj-r5ph",
@@ -1408,6 +1450,7 @@
       "version": "3.0.2",
       "category": "PDF",
       "scope": "main",
+      "description": "Apache PDFBox: Erstellen, Bearbeiten und Extrahieren von PDF-Dokumenten.",
       "vulns": []
     },
     {
@@ -1416,6 +1459,7 @@
       "version": "2.1.0",
       "category": "RSS / Atom",
       "scope": "main",
+      "description": "Parsing und Erzeugen von RSS- und Atom-Feeds.",
       "vulns": []
     },
     {
@@ -1424,6 +1468,7 @@
       "version": "2.0.8",
       "category": "Regex (ORO)",
       "scope": "main",
+      "description": "Apache ORO: Perl5-kompatible Regular Expressions (Legacy-Bibliothek).",
       "vulns": []
     },
     {
@@ -1432,6 +1477,7 @@
       "version": "2.13.1",
       "category": "SFTP / SSH",
       "scope": "main",
+      "description": "Apache MINA SSHD: SSH-2-Server- und -Client-Implementierung.",
       "vulns": []
     },
     {
@@ -1440,6 +1486,7 @@
       "version": "2.13.1",
       "category": "SFTP / SSH",
       "scope": "main",
+      "description": "Apache MINA SSHD SFTP-Erweiterung für Dateiübertragungen über SSH.",
       "vulns": []
     },
     {
@@ -1448,6 +1495,7 @@
       "version": "1.12.0",
       "category": "Scripting",
       "scope": "main",
+      "description": "Funktionale Lisp-Dialekt-Sprache auf der JVM; wird für einzelne OFBiz-Komponenten genutzt.",
       "vulns": []
     },
     {
@@ -1456,6 +1504,7 @@
       "version": "4.0.21",
       "category": "Scripting",
       "scope": "main",
+      "description": "Dynamische JVM-Skriptsprache; wird für OFBiz-Groovy-Scripts (Service-Layer, Views) benötigt.",
       "vulns": []
     },
     {
@@ -1464,6 +1513,7 @@
       "version": "4.0.21",
       "category": "Scripting",
       "scope": "main",
+      "description": "Groovy-Erweiterung für JSON-Parsing und -Erzeugung.",
       "vulns": []
     },
     {
@@ -1472,6 +1522,7 @@
       "version": "2.5.4.0",
       "category": "Security",
       "scope": "main",
+      "description": "OWASP Enterprise Security API — Bibliothek für sichere Kodierung und Input-Validierung.",
       "vulns": [
         {
           "id": "GHSA-r68h-jhhj-9jvm",
@@ -1489,6 +1540,7 @@
       "version": "20240325.1",
       "category": "Security",
       "scope": "main",
+      "description": "Bereinigt HTML-Input nach OWASP-Richtlinien und entfernt XSS-Vektoren.",
       "vulns": [
         {
           "id": "GHSA-g9gq-3pfx-2gw2",
@@ -1510,6 +1562,7 @@
       "version": "2.0.1",
       "category": "Security",
       "scope": "main",
+      "description": "Apache Shiro: Authentifizierung, Autorisierung, Session-Management und Kryptografie.",
       "vulns": [
         {
           "id": "GHSA-c4qc-4q9p-m9q9",
@@ -1531,6 +1584,7 @@
       "version": "2.3.33",
       "category": "Template-Engine",
       "scope": "main",
+      "description": "Template-Engine für HTML, XML und Textgenerierung; zentral für OFBiz-Views.",
       "vulns": []
     },
     {
@@ -1539,6 +1593,7 @@
       "version": "1.10.14",
       "category": "Test",
       "scope": "main",
+      "description": "Apache Ant: Build-Tool; wird für Test-Support-Klassen in OFBiz verwendet.",
       "vulns": []
     },
     {
@@ -1547,6 +1602,7 @@
       "version": "1.10.14",
       "category": "Test",
       "scope": "main",
+      "description": "Apache Ant JUnit-Task: Führt JUnit-Tests innerhalb von Ant-Builds aus.",
       "vulns": []
     },
     {
@@ -1555,6 +1611,7 @@
       "version": "4.13.2",
       "category": "Test",
       "scope": "main",
+      "description": "JUnit 4: Standard-Framework für Unit-Tests in Java.",
       "vulns": []
     },
     {
@@ -1563,6 +1620,7 @@
       "version": "6.1.11",
       "category": "Test",
       "scope": "main",
+      "description": "Spring Test: MockHttpServletRequest und weitere Test-Utilities.",
       "vulns": []
     },
     {
@@ -1571,6 +1629,7 @@
       "version": "3.1.4",
       "category": "Transaktionen",
       "scope": "main",
+      "description": "JTA-Transaktionsmanager aus dem Apache-Geronimo-Projekt.",
       "vulns": []
     },
     {
@@ -1579,6 +1638,7 @@
       "version": "75.1",
       "category": "Unicode / ICU4J",
       "scope": "main",
+      "description": "IBM ICU4J: Unicode- und Internationalisierungs-Unterstützung (Collation, Datum, Zahl).",
       "vulns": []
     },
     {
@@ -1587,6 +1647,7 @@
       "version": "1.4.0",
       "category": "Web Services / SOAP",
       "scope": "main",
+      "description": "Apache Axiom: Streaming-XML-Objektmodell, Basis für Axis2.",
       "vulns": []
     },
     {
@@ -1595,6 +1656,7 @@
       "version": "1.8.2",
       "category": "Web Services / SOAP",
       "scope": "main",
+      "description": "Apache Axis2: SOAP-Web-Service-Framework (Client und Server).",
       "vulns": []
     },
     {
@@ -1603,6 +1665,7 @@
       "version": "4.0.4",
       "category": "Web Services / SOAP",
       "scope": "main",
+      "description": "Apache CXF Kern: Framework für JAX-WS- und JAX-RS-Web-Services.",
       "vulns": [
         {
           "id": "GHSA-36wv-v2qp-v4g4",
@@ -1636,6 +1699,7 @@
       "version": "4.0.4",
       "category": "Web Services / SOAP",
       "scope": "main",
+      "description": "Apache CXF JAX-RS-Frontend: REST-API-Implementierung nach JAX-RS-Standard.",
       "vulns": []
     },
     {
@@ -1644,6 +1708,7 @@
       "version": "2.1.1",
       "category": "Web Services / SOAP",
       "scope": "main",
+      "description": "JAX-RS 2.1 API (javax.*-Namespace): Annotationen für REST-Endpunkte.",
       "vulns": []
     },
     {
@@ -1652,6 +1717,7 @@
       "version": "1.6.3",
       "category": "Web Services / SOAP",
       "scope": "main",
+      "description": "WSDL4J: Lesen und Schreiben von WSDL-Dokumenten (Web Service Definition Language).",
       "vulns": []
     },
     {
@@ -1660,6 +1726,7 @@
       "version": "10.1.28",
       "category": "Web-Container",
       "scope": "main",
+      "description": "Hochverfügbarkeits-Clustering-Modul für Tomcat (Session-Replikation).",
       "vulns": []
     },
     {
@@ -1668,6 +1735,7 @@
       "version": "10.1.28",
       "category": "Web-Container",
       "scope": "main",
+      "description": "Eingebetteter Apache Tomcat-Server (Servlet-Container, HTTP-Verarbeitung).",
       "vulns": [
         {
           "id": "GHSA-24j9-x2wg-9qv6",
@@ -1981,6 +2049,7 @@
       "version": "10.1.28",
       "category": "Web-Container",
       "scope": "main",
+      "description": "JSP-Compiler und -Runtime für den eingebetteten Tomcat.",
       "vulns": []
     },
     {
@@ -1989,6 +2058,7 @@
       "version": "10.1.28",
       "category": "Web-Container",
       "scope": "main",
+      "description": "Hochperformante JDBC-Connection-Pool-Implementierung von Tomcat.",
       "vulns": []
     },
     {
@@ -1997,6 +2067,7 @@
       "version": "10.1.28",
       "category": "Web-Container",
       "scope": "main",
+      "description": "Gruppen-Kommunikationsframework, das Tomcat-HA zugrunde liegt.",
       "vulns": []
     },
     {
@@ -2005,6 +2076,7 @@
       "version": "1.1.3",
       "category": "XML (JDOM)",
       "scope": "main",
+      "description": "JDOM 1 (Legacy): ältere Java-XML-API, noch von einzelnen OFBiz-Komponenten verwendet.",
       "vulns": [
         {
           "id": "GHSA-2363-cqg2-863c",
@@ -2026,6 +2098,7 @@
       "version": "2.0.6.1",
       "category": "XML (JDOM)",
       "scope": "main",
+      "description": "JDOM 2: Einfache Java-API für DOM-ähnliche XML-Verarbeitung.",
       "vulns": []
     },
     {
@@ -2034,6 +2107,7 @@
       "version": "2.12.2",
       "category": "XML-Parser",
       "scope": "main",
+      "description": "Apache Xerces2: validierender XML-Parser mit DOM- und SAX-Unterstützung.",
       "vulns": []
     },
     {
@@ -2042,6 +2116,7 @@
       "version": "1.4.20",
       "category": "XML-Serialisierung",
       "scope": "main",
+      "description": "XStream: Serialisierung von Java-Objekten nach XML und JSON ohne Annotationen.",
       "vulns": [
         {
           "id": "GHSA-hfq9-hggm-c56q",
@@ -2064,6 +2139,7 @@
       "version": "1.17",
       "category": "XSL-FO / SVG",
       "scope": "main",
+      "description": "Apache Batik: SVG-Rendering, -Transcodierung und -DOM-Unterstützung.",
       "vulns": []
     },
     {
@@ -2072,6 +2148,7 @@
       "version": "2.10",
       "category": "XSL-FO / SVG",
       "scope": "main",
+      "description": "Apache FOP: Rendert XSL-FO-Dokumente zu PDF, PS und anderen Ausgabeformaten.",
       "vulns": []
     },
     {
@@ -2080,6 +2157,7 @@
       "version": "2.11.5",
       "category": "ZIP",
       "scope": "main",
+      "description": "Zip4j: Lesen und Schreiben von ZIP-Archiven mit AES-Verschlüsselung.",
       "vulns": []
     },
     {
@@ -2088,6 +2166,7 @@
       "version": "0.12.1",
       "category": "vCard",
       "scope": "main",
+      "description": "Parsing und Erzeugen von vCard-Dateien (RFC 6350) für Kontaktdaten-Import/Export.",
       "vulns": []
     }
   ]
