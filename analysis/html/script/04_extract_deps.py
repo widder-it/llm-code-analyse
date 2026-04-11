@@ -51,14 +51,19 @@ def main():
         for dep in deps:
             edges.append({"from": mod, "to": dep})
 
+    # Detect cyclic edges: A→B is cyclic if B→A also exists
+    edge_set = {(e["from"], e["to"]) for e in edges}
+    cyclic_indices = [i for i, e in enumerate(edges) if (e["to"], e["from"]) in edge_set]
+
     data["business_dependencies"] = edges
     data["business_modules_order"] = BUSINESS_MODULES
+    data["cyclic_edge_indices"] = cyclic_indices
 
     architektur_path.write_text(
         json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
-    print(f"business_dependencies: {len(edges)} edges")
+    print(f"business_dependencies: {len(edges)} edges, {len(cyclic_indices)} cyclic")
     for mod, deps in all_deps.items():
         if deps:
             print(f"  {mod:15s} → {', '.join(deps)}")

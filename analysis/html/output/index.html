@@ -1425,6 +1425,16 @@ graph LR
   marketing --> product
   humanres --> party
   sfa --> party
+  linkStyle 0 stroke:#dc3545,stroke-width:2.5px
+  linkStyle 2 stroke:#dc3545,stroke-width:2.5px
+  linkStyle 3 stroke:#dc3545,stroke-width:2.5px
+  linkStyle 7 stroke:#dc3545,stroke-width:2.5px
+  linkStyle 9 stroke:#dc3545,stroke-width:2.5px
+  linkStyle 10 stroke:#dc3545,stroke-width:2.5px
+  linkStyle 11 stroke:#dc3545,stroke-width:2.5px
+  linkStyle 12 stroke:#dc3545,stroke-width:2.5px
+  linkStyle 13 stroke:#dc3545,stroke-width:2.5px
+  linkStyle 21 stroke:#dc3545,stroke-width:2.5px
 
           </pre>
         </div>
@@ -1507,13 +1517,13 @@ graph LR
                 
                 <td class="text-center px-0">
                   
-                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                    <i class="bi bi-arrow-left-right text-danger" style="font-size:.8rem" title="Zyklische Abhängigkeit"></i>
                   
                 </td>
                 
                 <td class="text-center px-0">
                   
-                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                    <i class="bi bi-arrow-left-right text-danger" style="font-size:.8rem" title="Zyklische Abhängigkeit"></i>
                   
                 </td>
                 
@@ -1578,13 +1588,13 @@ graph LR
                 
                 <td class="text-center px-0">
                   
-                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                    <i class="bi bi-arrow-left-right text-danger" style="font-size:.8rem" title="Zyklische Abhängigkeit"></i>
                   
                 </td>
                 
                 <td class="text-center px-0">
                   
-                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                    <i class="bi bi-arrow-left-right text-danger" style="font-size:.8rem" title="Zyklische Abhängigkeit"></i>
                   
                 </td>
                 
@@ -1637,13 +1647,13 @@ graph LR
                 
                 <td class="text-center px-0">
                   
-                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                    <i class="bi bi-arrow-left-right text-danger" style="font-size:.8rem" title="Zyklische Abhängigkeit"></i>
                   
                 </td>
                 
                 <td class="text-center px-0">
                   
-                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                    <i class="bi bi-arrow-left-right text-danger" style="font-size:.8rem" title="Zyklische Abhängigkeit"></i>
                   
                 </td>
                 
@@ -1673,7 +1683,7 @@ graph LR
                 
                 <td class="text-center px-0">
                   
-                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                    <i class="bi bi-arrow-left-right text-danger" style="font-size:.8rem" title="Zyklische Abhängigkeit"></i>
                   
                 </td>
                 
@@ -1708,13 +1718,13 @@ graph LR
                 
                 <td class="text-center px-0">
                   
-                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                    <i class="bi bi-arrow-left-right text-danger" style="font-size:.8rem" title="Zyklische Abhängigkeit"></i>
                   
                 </td>
                 
                 <td class="text-center px-0">
                   
-                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                    <i class="bi bi-arrow-left-right text-danger" style="font-size:.8rem" title="Zyklische Abhängigkeit"></i>
                   
                 </td>
                 
@@ -1933,7 +1943,7 @@ graph LR
                 
                 <td class="text-center px-0">
                   
-                    <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
+                    <i class="bi bi-arrow-left-right text-danger" style="font-size:.8rem" title="Zyklische Abhängigkeit"></i>
                   
                 </td>
                 
@@ -2274,7 +2284,10 @@ graph LR
             </tbody>
           </table>
         </div>
-        <p class="text-muted small">→ = direkte Import-Abhängigkeit</p>
+        <p class="text-muted small">
+          <i class="bi bi-arrow-right text-primary"></i> einseitige Abhängigkeit &nbsp;
+          <i class="bi bi-arrow-left-right text-danger"></i> Zyklus
+        </p>
       </div>
 
     </div>

@@ -949,5 +949,17 @@
     "marketing",
     "humanres",
     "sfa"
+  ],
+  "cyclic_edge_indices": [
+    0,
+    2,
+    3,
+    7,
+    9,
+    10,
+    11,
+    12,
+    13,
+    21
   ]
 }

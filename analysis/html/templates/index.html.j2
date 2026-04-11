@@ -332,6 +332,7 @@
           <pre class="mermaid" style="text-align:center">
 graph LR
 {% for e in edges %}  {{ e.from }} --> {{ e.to }}
+{% endfor %}{% for i in architektur.cyclic_edge_indices %}  linkStyle {{ i }} stroke:#dc3545,stroke-width:2.5px
 {% endfor %}
           </pre>
         </div>
@@ -363,6 +364,8 @@ graph LR
                 <td class="text-center px-0">
                   {% if src == tgt %}
                     <span class="text-muted">·</span>
+                  {% elif (src + '|' + tgt) in dep_set and (tgt + '|' + src) in dep_set %}
+                    <i class="bi bi-arrow-left-right text-danger" style="font-size:.8rem" title="Zyklische Abhängigkeit"></i>
                   {% elif (src + '|' + tgt) in dep_set %}
                     <i class="bi bi-arrow-right text-primary" style="font-size:.8rem"></i>
                   {% else %}
@@ -375,7 +378,10 @@ graph LR
             </tbody>
           </table>
         </div>
-        <p class="text-muted small">→ = direkte Import-Abhängigkeit</p>
+        <p class="text-muted small">
+          <i class="bi bi-arrow-right text-primary"></i> einseitige Abhängigkeit &nbsp;
+          <i class="bi bi-arrow-left-right text-danger"></i> Zyklus
+        </p>
       </div>
 
     </div>
