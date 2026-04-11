@@ -2169,5 +2169,193 @@
       "description": "Parsing und Erzeugen von vCard-Dateien (RFC 6350) für Kontaktdaten-Import/Export.",
       "vulns": []
     }
+  ],
+  "tech_debt": [
+    {
+      "kategorie": "Komplexität",
+      "titel": "God Object: ShoppingCart (388 Methoden)",
+      "schwere": "Kritisch",
+      "beschreibung": "Extremes God-Object — enthält Warenkorb, Pricing, Tax, Shipping, Payment-State"
+    },
+    {
+      "kategorie": "Architektur",
+      "titel": "Zyklische Abhängigkeit: order ↔ accounting",
+      "schwere": "Hoch",
+      "beschreibung": "Gegenseitige Import-Abhängigkeit erschwert modulare Ablösung und erhöht Kompilier-Kopplung."
+    },
+    {
+      "kategorie": "Architektur",
+      "titel": "Zyklische Abhängigkeit: order ↔ product",
+      "schwere": "Hoch",
+      "beschreibung": "Gegenseitige Import-Abhängigkeit erschwert modulare Ablösung und erhöht Kompilier-Kopplung."
+    },
+    {
+      "kategorie": "Architektur",
+      "titel": "Zyklische Abhängigkeit: party ↔ accounting",
+      "schwere": "Hoch",
+      "beschreibung": "Gegenseitige Import-Abhängigkeit erschwert modulare Ablösung und erhöht Kompilier-Kopplung."
+    },
+    {
+      "kategorie": "Architektur",
+      "titel": "Zyklische Abhängigkeit: party ↔ product",
+      "schwere": "Hoch",
+      "beschreibung": "Gegenseitige Import-Abhängigkeit erschwert modulare Ablösung und erhöht Kompilier-Kopplung."
+    },
+    {
+      "kategorie": "Komplexität",
+      "titel": "God Object: OrderReadHelper (192 Methoden)",
+      "schwere": "Hoch",
+      "beschreibung": "Lese-Fassade für Bestellungen"
+    },
+    {
+      "kategorie": "Komplexität",
+      "titel": "God Object: ShoppingCartItem (180 Methoden)",
+      "schwere": "Hoch",
+      "beschreibung": "Item-Level God-Object"
+    },
+    {
+      "kategorie": "Komplexität",
+      "titel": "God Object: ModelEntity (145 Methoden)",
+      "schwere": "Hoch",
+      "beschreibung": "Kern-Entity-Metadaten"
+    },
+    {
+      "kategorie": "Komplexität",
+      "titel": "God Object: ModelService (114 Methoden)",
+      "schwere": "Hoch",
+      "beschreibung": "Service-Definition/Metadaten"
+    },
+    {
+      "kategorie": "Komplexität",
+      "titel": "God Object: Delegator (Interface) (108 Methoden)",
+      "schwere": "Hoch",
+      "beschreibung": "Datenzugriffs-Kontrakt"
+    },
+    {
+      "kategorie": "Komplexität",
+      "titel": "God Object: UtilDateTime (105 Methoden)",
+      "schwere": "Hoch",
+      "beschreibung": "Date/Time-Utility (God-Util)"
+    },
+    {
+      "kategorie": "Komplexität",
+      "titel": "God Object: ModelForm (99 Methoden)",
+      "schwere": "Hoch",
+      "beschreibung": "Formular-Metadaten"
+    },
+    {
+      "kategorie": "Komplexität",
+      "titel": "God Object: GenericDelegator (114 Methoden)",
+      "schwere": "Hoch",
+      "beschreibung": "Zentrale Datenzugriffs-Fassade"
+    },
+    {
+      "kategorie": "Komplexität",
+      "titel": "God Object: UtilHttp (84 Methoden)",
+      "schwere": "Hoch",
+      "beschreibung": "HTTP-Utility"
+    },
+    {
+      "kategorie": "Komplexität",
+      "titel": "God Object: OrderServices (84 Methoden)",
+      "schwere": "Hoch",
+      "beschreibung": "Monolithischer Bestell-Service"
+    },
+    {
+      "kategorie": "Risiko",
+      "titel": "Monolithische Services (OrderServices 84 Methoden)",
+      "schwere": "Hoch",
+      "beschreibung": "Schwer testbar, schwer isoliert ablösbar"
+    },
+    {
+      "kategorie": "Security",
+      "titel": "Bekannte CVEs in 14 Libraries (40 gesamt)",
+      "schwere": "Hoch",
+      "beschreibung": "8 Libraries mit CRITICAL/HIGH-Schwachstellen: commons-fileupload, tika-core, itext. Siehe SBOM-Seite für Details."
+    },
+    {
+      "kategorie": "Architektur",
+      "titel": "Fehlendes Muster: Dependency Injection",
+      "schwere": "Mittel",
+      "beschreibung": "Kein Spring, kein CDI — manuelle Objekt-Verdrahtung"
+    },
+    {
+      "kategorie": "Architektur",
+      "titel": "Fehlendes Muster: REST-Controller-Schicht",
+      "schwere": "Mittel",
+      "beschreibung": "Nur Servlet-basierte Controller in webapp"
+    },
+    {
+      "kategorie": "Architektur",
+      "titel": "Fehlendes Muster: Reaktive Programmierung",
+      "schwere": "Mittel",
+      "beschreibung": "Klassisches blocking I/O"
+    },
+    {
+      "kategorie": "Architektur",
+      "titel": "Fehlendes Muster: Event Sourcing / CQRS",
+      "schwere": "Mittel",
+      "beschreibung": "Klassisches CRUD-Muster"
+    },
+    {
+      "kategorie": "Architektur",
+      "titel": "Fehlendes Muster: API-Versionierung",
+      "schwere": "Mittel",
+      "beschreibung": "Kein versioning in Events-Klassen sichtbar"
+    },
+    {
+      "kategorie": "Risiko",
+      "titel": "Veraltete Java-EE-APIs (javax.*)",
+      "schwere": "Mittel",
+      "beschreibung": "5 javax.*-Pakete — Migration zu Jakarta EE erforderlich"
+    },
+    {
+      "kategorie": "Risiko",
+      "titel": "Groovy-Code nicht rekonstruierbar",
+      "schwere": "Mittel",
+      "beschreibung": "~30 % der Logik nur als .class vorhanden, Quelltext verloren"
+    },
+    {
+      "kategorie": "Risiko",
+      "titel": "Hohe externe Dependency-Zahl (191 Pakete)",
+      "schwere": "Mittel",
+      "beschreibung": "Supply-Chain-Risiko, viele Updates nötig"
+    },
+    {
+      "kategorie": "Risiko",
+      "titel": "Keine erkennbare Schichtentrennung",
+      "schwere": "Mittel",
+      "beschreibung": "Business-Module greifen direkt auf DB-Engine zu"
+    },
+    {
+      "kategorie": "Risiko",
+      "titel": "8 Payment-Provider eingebaut",
+      "schwere": "Mittel",
+      "beschreibung": "Jeder Provider: eigene API, Update-Pflicht, PCI-DSS-Scope"
+    },
+    {
+      "kategorie": "Risiko",
+      "titel": "Legacy-Kryptographie in EntityCrypto",
+      "schwere": "Mittel",
+      "beschreibung": "DES-basierte LegacyStorageHandler noch aktiv als Fallback"
+    },
+    {
+      "kategorie": "Technologie",
+      "titel": "Legacy Java-EE-APIs (javax.*)",
+      "schwere": "Mittel",
+      "beschreibung": "Migration zu Jakarta EE (jakarta.*) erforderlich: javax.*, javax.servlet.*, javax.mail.*, javax.jms.*…."
+    },
+    {
+      "kategorie": "Technologie",
+      "titel": "Nicht rekonstruierbarer Quellcode (5 Klassen)",
+      "schwere": "Mittel",
+      "beschreibung": "CFR-Dekompilierung ist bei 5 Java-Klassen fehlgeschlagen. Logik dieser Klassen ist nicht analysierbar."
+    },
+    {
+      "kategorie": "Technologie",
+      "titel": "Groovy-Quellcode nicht rekonstruierbar (~30 % der Klassen)",
+      "schwere": "Mittel",
+      "beschreibung": "Groovy-kompilierte Klassen liegen nur als Bytecode vor. Fachliche Logik dieser Scripts ist nur eingeschränkt analysierbar."
+    }
   ]
 }

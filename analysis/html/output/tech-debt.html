@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Technische Schulden</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --sidebar-width: 220px;
+      --accent: #0d6efd;
+    }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      background: #1e2430;
+      color: #c9d1d9;
+      position: fixed;
+      top: 0; left: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      padding: 1.25rem 1rem .75rem;
+      display: block;
+      text-decoration: none;
+      border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0;
+      padding: .35rem 1rem;
+      font-size: .85rem;
+      border-radius: 0;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff;
+      background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #4a5568;
+      padding: .75rem 1rem .25rem;
+    }
+    #main {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+    }
+    .page-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .badge-type {
+      font-size: .7rem;
+      font-weight: 500;
+    }
+    .method-table th { white-space: nowrap; }
+    .method-sig {
+      font-family: SFMono-Regular, Menlo, monospace;
+      font-size: .82rem;
+      color: #0550ae;
+    }
+    .class-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: box-shadow .15s;
+    }
+    .class-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .class-card .card-title { font-size: .95rem; }
+    .breadcrumb { font-size: .82rem; }
+    .stat-pill {
+      background: #eef2ff;
+      color: #3730a3;
+      border-radius: 20px;
+      padding: .15rem .65rem;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <a class="sidebar-brand" href="./index.html">
+    <i class="bi bi-diagram-3 me-2"></i>OFBiz Docs
+  </a>
+  <div class="nav-section">Analyse</div>
+  <ul class="nav flex-column mb-2">
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./sbom.html">
+        <i class="bi bi-box-seam me-1"></i>SBOM
+        <span class="stat-pill ms-1">79</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active"
+         href="./tech-debt.html">
+        <i class="bi bi-exclamation-triangle me-1"></i>Tech Debt
+      </a>
+    </li>
+  </ul>
+  <div class="nav-section">Module</div>
+  <ul class="nav flex-column">
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./party/index.html">
+        <i class="bi bi-box me-1"></i>party
+        <span class="stat-pill ms-1">22</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./order/index.html">
+        <i class="bi bi-box me-1"></i>order
+        <span class="stat-pill ms-1">37</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./product/index.html">
+        <i class="bi bi-box me-1"></i>product
+        <span class="stat-pill ms-1">58</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./accounting/index.html">
+        <i class="bi bi-box me-1"></i>accounting
+        <span class="stat-pill ms-1">33</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./content/index.html">
+        <i class="bi bi-box me-1"></i>content
+        <span class="stat-pill ms-1">28</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./manufacturing/index.html">
+        <i class="bi bi-box me-1"></i>manufacturing
+        <span class="stat-pill ms-1">17</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./shipment/index.html">
+        <i class="bi bi-box me-1"></i>shipment
+        <span class="stat-pill ms-1">23</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./workeffort/index.html">
+        <i class="bi bi-box me-1"></i>workeffort
+        <span class="stat-pill ms-1">18</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./marketing/index.html">
+        <i class="bi bi-box me-1"></i>marketing
+        <span class="stat-pill ms-1">8</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./humanres/index.html">
+        <i class="bi bi-box me-1"></i>humanres
+        <span class="stat-pill ms-1">2</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./sfa/index.html">
+        <i class="bi bi-box me-1"></i>sfa
+        <span class="stat-pill ms-1">1</span>
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+<!-- Main -->
+<div id="main">
+  
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="./index.html">Übersicht</a></li>
+      <li class="breadcrumb-item active">Technische Schulden</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-exclamation-triangle me-2 text-warning"></i>Technische Schulden</h1>
+  
+  
+  
+  <div class="d-flex gap-2 mt-2 flex-wrap">
+    <span class="stat-pill" style="background:#fee2e2;color:#991b1b"><i class="bi bi-circle-fill me-1" style="font-size:.6rem"></i>Kritisch: 1</span>
+    <span class="stat-pill" style="background:#fef3c7;color:#92400e"><i class="bi bi-circle-fill me-1" style="font-size:.6rem"></i>Hoch: 16</span>
+    <span class="stat-pill" style="background:#f1f5f9;color:#475569"><i class="bi bi-circle-fill me-1" style="font-size:.6rem"></i>Mittel: 14</span>
+    <span class="stat-pill"><i class="bi bi-list-ul me-1"></i>31 Einträge gesamt</span>
+  </div>
+</div>
+
+<div class="content-area">
+
+<div class="table-responsive">
+  <table class="table table-sm table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th style="width:12%">Kategorie</th>
+        <th style="width:10%">Schwere</th>
+        <th style="width:35%">Titel</th>
+        <th>Beschreibung</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-primary
+            "
+            style="font-size:.7rem">Komplexität</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-danger
+            "
+            style="font-size:.7rem">Kritisch</span>
+        </td>
+        <td class="fw-semibold small">God Object: ShoppingCart (388 Methoden)</td>
+        <td class="small text-muted">Extremes God-Object — enthält Warenkorb, Pricing, Tax, Shipping, Payment-State</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-danger
+            "
+            style="font-size:.7rem">Architektur</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">Zyklische Abhängigkeit: order ↔ accounting</td>
+        <td class="small text-muted">Gegenseitige Import-Abhängigkeit erschwert modulare Ablösung und erhöht Kompilier-Kopplung.</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-danger
+            "
+            style="font-size:.7rem">Architektur</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">Zyklische Abhängigkeit: order ↔ product</td>
+        <td class="small text-muted">Gegenseitige Import-Abhängigkeit erschwert modulare Ablösung und erhöht Kompilier-Kopplung.</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-danger
+            "
+            style="font-size:.7rem">Architektur</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">Zyklische Abhängigkeit: party ↔ accounting</td>
+        <td class="small text-muted">Gegenseitige Import-Abhängigkeit erschwert modulare Ablösung und erhöht Kompilier-Kopplung.</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-danger
+            "
+            style="font-size:.7rem">Architektur</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">Zyklische Abhängigkeit: party ↔ product</td>
+        <td class="small text-muted">Gegenseitige Import-Abhängigkeit erschwert modulare Ablösung und erhöht Kompilier-Kopplung.</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-primary
+            "
+            style="font-size:.7rem">Komplexität</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">God Object: OrderReadHelper (192 Methoden)</td>
+        <td class="small text-muted">Lese-Fassade für Bestellungen</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-primary
+            "
+            style="font-size:.7rem">Komplexität</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">God Object: ShoppingCartItem (180 Methoden)</td>
+        <td class="small text-muted">Item-Level God-Object</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-primary
+            "
+            style="font-size:.7rem">Komplexität</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">God Object: ModelEntity (145 Methoden)</td>
+        <td class="small text-muted">Kern-Entity-Metadaten</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-primary
+            "
+            style="font-size:.7rem">Komplexität</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">God Object: ModelService (114 Methoden)</td>
+        <td class="small text-muted">Service-Definition/Metadaten</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-primary
+            "
+            style="font-size:.7rem">Komplexität</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">God Object: Delegator (Interface) (108 Methoden)</td>
+        <td class="small text-muted">Datenzugriffs-Kontrakt</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-primary
+            "
+            style="font-size:.7rem">Komplexität</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">God Object: UtilDateTime (105 Methoden)</td>
+        <td class="small text-muted">Date/Time-Utility (God-Util)</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-primary
+            "
+            style="font-size:.7rem">Komplexität</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">God Object: ModelForm (99 Methoden)</td>
+        <td class="small text-muted">Formular-Metadaten</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-primary
+            "
+            style="font-size:.7rem">Komplexität</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">God Object: GenericDelegator (114 Methoden)</td>
+        <td class="small text-muted">Zentrale Datenzugriffs-Fassade</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-primary
+            "
+            style="font-size:.7rem">Komplexität</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">God Object: UtilHttp (84 Methoden)</td>
+        <td class="small text-muted">HTTP-Utility</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-primary
+            "
+            style="font-size:.7rem">Komplexität</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">God Object: OrderServices (84 Methoden)</td>
+        <td class="small text-muted">Monolithischer Bestell-Service</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-secondary"
+            style="font-size:.7rem">Risiko</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">Monolithische Services (OrderServices 84 Methoden)</td>
+        <td class="small text-muted">Schwer testbar, schwer isoliert ablösbar</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-dark
+            "
+            style="font-size:.7rem">Security</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Hoch</span>
+        </td>
+        <td class="fw-semibold small">Bekannte CVEs in 14 Libraries (40 gesamt)</td>
+        <td class="small text-muted">8 Libraries mit CRITICAL/HIGH-Schwachstellen: commons-fileupload, tika-core, itext. Siehe SBOM-Seite für Details.</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-danger
+            "
+            style="font-size:.7rem">Architektur</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Fehlendes Muster: Dependency Injection</td>
+        <td class="small text-muted">Kein Spring, kein CDI — manuelle Objekt-Verdrahtung</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-danger
+            "
+            style="font-size:.7rem">Architektur</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Fehlendes Muster: REST-Controller-Schicht</td>
+        <td class="small text-muted">Nur Servlet-basierte Controller in webapp</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-danger
+            "
+            style="font-size:.7rem">Architektur</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Fehlendes Muster: Reaktive Programmierung</td>
+        <td class="small text-muted">Klassisches blocking I/O</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-danger
+            "
+            style="font-size:.7rem">Architektur</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Fehlendes Muster: Event Sourcing / CQRS</td>
+        <td class="small text-muted">Klassisches CRUD-Muster</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-danger
+            "
+            style="font-size:.7rem">Architektur</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Fehlendes Muster: API-Versionierung</td>
+        <td class="small text-muted">Kein versioning in Events-Klassen sichtbar</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-secondary"
+            style="font-size:.7rem">Risiko</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Veraltete Java-EE-APIs (javax.*)</td>
+        <td class="small text-muted">5 javax.*-Pakete — Migration zu Jakarta EE erforderlich</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-secondary"
+            style="font-size:.7rem">Risiko</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Groovy-Code nicht rekonstruierbar</td>
+        <td class="small text-muted">~30 % der Logik nur als .class vorhanden, Quelltext verloren</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-secondary"
+            style="font-size:.7rem">Risiko</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Hohe externe Dependency-Zahl (191 Pakete)</td>
+        <td class="small text-muted">Supply-Chain-Risiko, viele Updates nötig</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-secondary"
+            style="font-size:.7rem">Risiko</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Keine erkennbare Schichtentrennung</td>
+        <td class="small text-muted">Business-Module greifen direkt auf DB-Engine zu</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-secondary"
+            style="font-size:.7rem">Risiko</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">8 Payment-Provider eingebaut</td>
+        <td class="small text-muted">Jeder Provider: eigene API, Update-Pflicht, PCI-DSS-Scope</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-secondary"
+            style="font-size:.7rem">Risiko</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Legacy-Kryptographie in EntityCrypto</td>
+        <td class="small text-muted">DES-basierte LegacyStorageHandler noch aktiv als Fallback</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Technologie</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Legacy Java-EE-APIs (javax.*)</td>
+        <td class="small text-muted">Migration zu Jakarta EE (jakarta.*) erforderlich: javax.*, javax.servlet.*, javax.mail.*, javax.jms.*….</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Technologie</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Nicht rekonstruierbarer Quellcode (5 Klassen)</td>
+        <td class="small text-muted">CFR-Dekompilierung ist bei 5 Java-Klassen fehlgeschlagen. Logik dieser Klassen ist nicht analysierbar.</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <span class="badge
+            bg-warning text-dark
+            "
+            style="font-size:.7rem">Technologie</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            bg-secondary
+            "
+            style="font-size:.7rem">Mittel</span>
+        </td>
+        <td class="fw-semibold small">Groovy-Quellcode nicht rekonstruierbar (~30 % der Klassen)</td>
+        <td class="small text-muted">Groovy-kompilierte Klassen liegen nur als Bytecode vor. Fachliche Logik dieser Scripts ist nur eingeschränkt analysierbar.</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true, theme:'default', flowchart:{curve:'basis'}});</script>
+</body>
+</html>

@@ -64,6 +64,14 @@ def main():
                    root=relative_root(0), active_module=None)
         print(f"  sbom.html  ({len(libraries)} libraries)")
 
+    # --- tech-debt.html ---
+    tech_debt = architektur.get("tech_debt", [])
+    if tech_debt:
+        write_html(env, "tech-debt.html.j2", OUTPUT_DIR / "tech-debt.html",
+                   modules=modules_meta, debts=tech_debt,
+                   root=relative_root(0), active_module="__tech_debt__")
+        print(f"  tech-debt.html  ({len(tech_debt)} items)")
+
     for module_id in targets:
         json_path = DATA_DIR / f"{module_id}.json"
         if not json_path.exists():

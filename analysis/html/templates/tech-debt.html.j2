@@ -1,0 +1,65 @@
+{% extends "base.html.j2" %}
+{% block title %}Technische Schulden{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="{{ root }}index.html">Übersicht</a></li>
+      <li class="breadcrumb-item active">Technische Schulden</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-exclamation-triangle me-2 text-warning"></i>Technische Schulden</h1>
+  {% set kritisch = debts | selectattr('schwere', 'equalto', 'Kritisch') | list %}
+  {% set hoch     = debts | selectattr('schwere', 'equalto', 'Hoch')     | list %}
+  {% set mittel   = debts | selectattr('schwere', 'equalto', 'Mittel')   | list %}
+  <div class="d-flex gap-2 mt-2 flex-wrap">
+    {% if kritisch %}<span class="stat-pill" style="background:#fee2e2;color:#991b1b"><i class="bi bi-circle-fill me-1" style="font-size:.6rem"></i>Kritisch: {{ kritisch | length }}</span>{% endif %}
+    {% if hoch     %}<span class="stat-pill" style="background:#fef3c7;color:#92400e"><i class="bi bi-circle-fill me-1" style="font-size:.6rem"></i>Hoch: {{ hoch | length }}</span>{% endif %}
+    {% if mittel   %}<span class="stat-pill" style="background:#f1f5f9;color:#475569"><i class="bi bi-circle-fill me-1" style="font-size:.6rem"></i>Mittel: {{ mittel | length }}</span>{% endif %}
+    <span class="stat-pill"><i class="bi bi-list-ul me-1"></i>{{ debts | length }} Einträge gesamt</span>
+  </div>
+</div>
+
+<div class="content-area">
+
+<div class="table-responsive">
+  <table class="table table-sm table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th style="width:12%">Kategorie</th>
+        <th style="width:10%">Schwere</th>
+        <th style="width:35%">Titel</th>
+        <th>Beschreibung</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in debts %}
+      <tr>
+        <td>
+          <span class="badge
+            {% if d.kategorie == 'Komplexität' %}bg-primary
+            {% elif d.kategorie == 'Architektur' %}bg-danger
+            {% elif d.kategorie == 'Security' %}bg-dark
+            {% elif d.kategorie == 'Technologie' %}bg-warning text-dark
+            {% else %}bg-secondary{% endif %}"
+            style="font-size:.7rem">{{ d.kategorie }}</span>
+        </td>
+        <td class="text-nowrap">
+          <span class="badge
+            {% if d.schwere == 'Kritisch' %}bg-danger
+            {% elif d.schwere == 'Hoch' %}bg-warning text-dark
+            {% elif d.schwere == 'Mittel' %}bg-secondary
+            {% else %}bg-light text-dark border{% endif %}"
+            style="font-size:.7rem">{{ d.schwere }}</span>
+        </td>
+        <td class="fw-semibold small">{{ d.titel }}</td>
+        <td class="small text-muted">{{ d.beschreibung }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+</div>
+{% endblock %}
