@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modul: accounting — OFBiz Docs</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --sidebar-width: 220px;
+      --accent: #0d6efd;
+    }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      background: #1e2430;
+      color: #c9d1d9;
+      position: fixed;
+      top: 0; left: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      padding: 1.25rem 1rem .75rem;
+      display: block;
+      text-decoration: none;
+      border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0;
+      padding: .35rem 1rem;
+      font-size: .85rem;
+      border-radius: 0;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff;
+      background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #4a5568;
+      padding: .75rem 1rem .25rem;
+    }
+    #main {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+    }
+    .page-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .badge-type {
+      font-size: .7rem;
+      font-weight: 500;
+    }
+    .method-table th { white-space: nowrap; }
+    .method-sig {
+      font-family: SFMono-Regular, Menlo, monospace;
+      font-size: .82rem;
+      color: #0550ae;
+    }
+    .class-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: box-shadow .15s;
+    }
+    .class-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .class-card .card-title { font-size: .95rem; }
+    .breadcrumb { font-size: .82rem; }
+    .stat-pill {
+      background: #eef2ff;
+      color: #3730a3;
+      border-radius: 20px;
+      padding: .15rem .65rem;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>OFBiz Docs
+  </a>
+  <div class="nav-section">Module</div>
+  <ul class="nav flex-column">
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../party/index.html">
+        <i class="bi bi-box me-1"></i>party
+        <span class="stat-pill ms-1">22</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../order/index.html">
+        <i class="bi bi-box me-1"></i>order
+        <span class="stat-pill ms-1">37</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../product/index.html">
+        <i class="bi bi-box me-1"></i>product
+        <span class="stat-pill ms-1">58</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active"
+         href="../accounting/index.html">
+        <i class="bi bi-box me-1"></i>accounting
+        <span class="stat-pill ms-1">33</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../content/index.html">
+        <i class="bi bi-box me-1"></i>content
+        <span class="stat-pill ms-1">28</span>
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+<!-- Main -->
+<div id="main">
+  
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="../index.html">Module</a></li>
+      <li class="breadcrumb-item active">accounting</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-box me-2 text-primary"></i>accounting</h1>
+  <div class="d-flex gap-2 mt-2">
+    <span class="stat-pill"><i class="bi bi-layers me-1"></i>33 Klassen</span>
+    <span class="stat-pill"><i class="bi bi-lightning me-1"></i>152 public Methoden</span>
+  </div>
+</div>
+
+<div class="content-area">
+
+  <!-- Overview -->
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Überblick</h5>
+    <p>Das `accounting`-Modul ist das zentrale Finanzbuchhaltungsmodul von Apache OFBiz. Es umfasst die gesamte Geschäftslogik für Rechnungsstellung, Zahlungsabwicklung, Hauptbuchhaltung, Steuern, Finanzkonten und Reporting. Besonders hervorzuheben ist die Unterstützung von acht externen Payment-Provider-Integrationen (authorizedotnet, clearcommerce, eway, gosoftware, paypal, sagepay, valuelink, worldpay), die über ein einheitliches Gateway-Framework angebunden sind.</p>
+  </section>
+
+  <!-- Submodules -->
+  
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Submodule</h5>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Paket</th><th>Beschreibung</th></tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting</code></td>
+            <td class="text-muted small">Basisklassen: generische Exception, GL-Event-Handler</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.admin</code></td>
+            <td class="text-muted small">Administrative Buchhaltungsfunktionen (GL-Konten, Belegfilterung)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.agreement</code></td>
+            <td class="text-muted small">Vertragsmanagement und Provisionsberechnungen</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.ap.invoices</code></td>
+            <td class="text-muted small">Accounts Payable: Kommissionsbericht und -abrechnung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.ar</code></td>
+            <td class="text-muted small">Accounts Receivable: Stapelzahlungsverarbeitung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.budget</code></td>
+            <td class="text-muted small">Budgetverwaltung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.chartofaccounts</code></td>
+            <td class="text-muted small">Kontenplan und Steuer-GL-Konten</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.finaccount</code></td>
+            <td class="text-muted small">Finanzkonten: Guthaben, Einzahlungen, Abhebungen, Payment-Gateway-Anbindung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.fixedasset</code></td>
+            <td class="text-muted small">Anlagevermögen und Geolokalisierung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.invoice</code></td>
+            <td class="text-muted small">Rechnungsstellung für Aufträge, Lieferungen, Retouren; Zahlungsabgleich</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.ledger</code></td>
+            <td class="text-muted small">Hauptbuch: Kostenstellen, GL-Buchungen</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.order</code></td>
+            <td class="text-muted small">Abrechnungskonten-Auftragsübersicht</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.payment</code></td>
+            <td class="text-muted small">Zahlungen: Gateway-Orchestrierung, Zahlungsmethoden, Gutscheine, Abrechnungskonten</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.period</code></td>
+            <td class="text-muted small">Buchungsperioden und Periodenabschluss</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.rate</code></td>
+            <td class="text-muted small">Stunden- und Kostensätze</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.reports</code></td>
+            <td class="text-muted small">Finanzberichte: Bilanz, GuV, Cashflow, Probebilanzen</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.tax</code></td>
+            <td class="text-muted small">Steuerbehörden und Steuerberechnung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.transaction</code></td>
+            <td class="text-muted small">Transaktionsverwaltung (Autorisierung, Capture, Gateway-Response-Ansicht)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.thirdparty.authorizedotnet</code></td>
+            <td class="text-muted small">Integration Authorize.Net (AIM-Protokoll)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.thirdparty.clearcommerce</code></td>
+            <td class="text-muted small">Integration ClearCommerce (XML-basiert)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.thirdparty.eway</code></td>
+            <td class="text-muted small">Integration eWay (australischer Zahlungsdienstleister)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.thirdparty.gosoftware</code></td>
+            <td class="text-muted small">Integration GoSoftware PcCharge und RITA</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.thirdparty.paypal</code></td>
+            <td class="text-muted small">Integration PayPal (IPN-basiert)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.thirdparty.sagepay</code></td>
+            <td class="text-muted small">Integration SagePay (VSP-Protokoll)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.thirdparty.valuelink</code></td>
+            <td class="text-muted small">Integration ValueLink (Geschenkkarten, DES/3DES-Verschlüsselung)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.thirdparty.worldpay</code></td>
+            <td class="text-muted small">Integration WorldPay (Redirect-basiert)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.util</code></td>
+            <td class="text-muted small">Hilfsfunktionen für GL-Konten und Zahlungsklassifizierung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.accounting</code></td>
+            <td class="text-muted small">Groovy-basierte Integrationstests</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.accounting.test</code></td>
+            <td class="text-muted small">Java-basierte Unit-Tests</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+
+  <!-- Tab navigation -->
+  
+  
+  
+
+  <ul class="nav nav-tabs mb-4" id="classTabs" role="tablist">
+    
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="tab-java" data-bs-toggle="tab"
+              data-bs-target="#pane-java" type="button">
+        <i class="bi bi-filetype-java me-1"></i>Java
+        <span class="badge bg-primary ms-1">21</span>
+      </button>
+    </li>
+    
+    
+    <li class="nav-item" role="presentation">
+      <button class="nav-link "
+              id="tab-groovy" data-bs-toggle="tab"
+              data-bs-target="#pane-groovy" type="button">
+        <i class="bi bi-braces me-1"></i>Groovy
+        <span class="badge bg-success ms-1">12</span>
+      </button>
+    </li>
+    
+    
+  </ul>
+
+  <div class="tab-content">
+
+    
+    <div class="tab-pane fade show active" id="pane-java" role="tabpanel">
+      <div class="row g-2">
+        
+        <div class="col-md-6 col-xl-4">
+<a href="AccountingException.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">AccountingException</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Spezialisierte Ausnahme für Buchhaltungsfehler, die von `GenericServiceException` erbt. Wird in der gesamten Buchhaltung…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="GlEvents.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">GlEvents</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      HTTP-Event-Handler für GL-bezogene Benutzerinteraktionen. Verarbeitet Multi-Row-Formulare zur Kontenabstimmung direkt au…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PaymentGatewayServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PaymentGatewayServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.payment</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Zentrales Orchestrierungsmodul für alle Zahlungsgateway-Operationen. Implementiert den vollständigen Zahlungslebenszyklu…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>35 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PaymentWorker.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PaymentWorker</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.payment</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Statische Hilfsmethoden zur Berechnung von Zahlungsbeträgen (angewendet, nicht angewendet) und zum Abruf von Zahlungsmet…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PaymentMethodServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PaymentMethodServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.payment</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      CRUD-Dienste für die verschiedenen Zahlungsmethodentypen (Kreditkarten, Geschenkgutscheine, EFT-Konten, Scheckkonten). E…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>11 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="GiftCertificateServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">GiftCertificateServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.payment</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Vollständiger Lebenszyklus für Geschenkgutscheine (Gift Certificates): Erstellung, Aufladung, Einlösung, Saldoabfrage so…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>12 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="BillingAccountWorker.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">BillingAccountWorker</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.payment</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Berechnung von Abrechnungskonto-Salden, Verfügbarkeitsprüfung und Auflistung offener Aufträge für Kreditlinienverwaltung…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="InvoiceServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">InvoiceServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.invoice</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Umfangreiche Service-Klasse für die Rechnungserzeugung aus verschiedenen Auftragsprozessen (Auftragsabschluss, Lieferung…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>17 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="InvoiceWorker.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">InvoiceWorker</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.invoice</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Statische Berechnungsmethoden für Rechnungsbeträge, Steuern, angewendete und ausstehende Beträge sowie Währungsumrechnun…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>14 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="GeneralLedgerServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">GeneralLedgerServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.ledger</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Hauptbuchdienste zur Verwaltung von Kostenstellen. Orchestriert die Zuweisung von GL-Konten zu Kostenstellenkategorien m…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="TaxAuthorityServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">TaxAuthorityServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.tax</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Steuerberechnung für Produkte auf Basis von Steuerbehördendaten, geografischen Regeln und Produktkategorien. Unterstützt…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="AgreementServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">AgreementServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.agreement</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Berechnet Provisionen für Produkte auf Basis aktiver Vertragsvereinbarungen. Unterstützt Produktvarianten durch Rückfall…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PeriodServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PeriodServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.period</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Verwaltung von Buchungsperioden und Periodenabschlussdaten für organisationsbezogene Buchhaltungsauswertungen.
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="FinAccountServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">FinAccountServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.finaccount</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Verwaltung von Finanzkonten (Financial Accounts) für Kundenguthaben, Service-Credits und Bankkonten. Deckt Kontoerstellu…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>5 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="FinAccountPaymentServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">FinAccountPaymentServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.finaccount</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Payment-Gateway-Adapter für Finanzkonten. Ermöglicht Finanzkonten als vollwertige Zahlungsmethode im OFBiz-Gateway-Frame…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>7 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="FinAccountProductServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">FinAccountProductServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.finaccount</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Verknüpft Produktkäufe mit der Erstellung von Finanzkonten (z.B. Guthabenkarten-Produkt erzeugt automatisch ein Finanzko…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="UtilAccounting.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">UtilAccounting</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.util</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Zentrale Hilfsmethoden zur GL-Kontenauflösung und zur Klassifizierung von Konten und Zahlungen. Dient als gemeinsame Bas…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>11 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="AIMPaymentServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">AIMPaymentServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.thirdparty.authorizedotnet</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Anbindung an Authorize.Net über das AIM-Protokoll (Advanced Integration Method) per HTTP-POST. Unterstützt alle Standard…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="CCPaymentServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">CCPaymentServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.thirdparty.clearcommerce</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      XML-basierte Integration mit dem ClearCommerce-Zahlungsgateway. Aufbau und Übermittlung von XML-Anfragen; Auswertung der…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>8 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PayPalEvents.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PayPalEvents</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.thirdparty.paypal</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      PayPal-Integration über das klassische Redirect-Verfahren (Website Payments Standard) mit IPN (Instant Payment Notificat…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="WorldPayEvents.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">WorldPayEvents</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.thirdparty.worldpay</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      WorldPay-Integration über das Redirect-/Hosted-Payment-Page-Verfahren. Leitet Kunden zur WorldPay-Zahlungsseite weiter u…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+      </div>
+    </div>
+    
+
+    
+    <div class="tab-pane fade "
+         id="pane-groovy" role="tabpanel">
+      <div class="row g-2">
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Klassen-EwayServices-GatewayRequest-GatewayResponse-GatewayConnector-eWay.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Klassen: `EwayServices`, `GatewayRequest`, `GatewayResponse`, `GatewayConnector` (eWay)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.thirdparty.eway</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>4 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Klassen-PcChargeServices-PcChargeApi-RitaServices-RitaApi-GoSoftware.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Klassen: `PcChargeServices`, `PcChargeApi`, `RitaServices`, `RitaApi` (GoSoftware)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.thirdparty.gosoftware</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>12 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Klassen-SagePayPaymentServices-SagePayServices-SagePayUtil-SagePay.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Klassen: `SagePayPaymentServices`, `SagePayServices`, `SagePayUtil` (SagePay)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.thirdparty.sagepay</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>10 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Klassen-ValueLinkServices-ValueLinkApi-ValueLink.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Klassen: `ValueLinkServices`, `ValueLinkApi` (ValueLink)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.accounting.thirdparty.valuelink</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>18 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Rechnungsverarbeitung-invoice.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Rechnungsverarbeitung (invoice)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>10 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Zahlungsverarbeitung-payment.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Zahlungsverarbeitung (payment)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>8 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Hauptbuch-und-Berichte-ledger-reports.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Hauptbuch und Berichte (ledger/reports)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>15 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Administration-admin.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Administration (admin)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>3 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Transaktionen-und-Period-Management.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Transaktionen und Period-Management</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>5 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Weitere-thematische-Gruppen.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Weitere thematische Gruppen</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>12 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Java-Tests-org-apache-ofbiz-accounting-test.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Java-Tests (`org.apache.ofbiz.accounting.test`)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>1 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Groovy-Tests-org-apache-ofbiz-accounting-accounting.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Tests (`org.apache.ofbiz.accounting.accounting`)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>18 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+      </div>
+    </div>
+    
+
+    
+
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</div>
+
+</body>
+</html>

@@ -26,6 +26,24 @@
         "classes": 58,
         "methods": 257
       }
+    },
+    {
+      "id": "accounting",
+      "name": "accounting",
+      "overview": "Das `accounting`-Modul ist das zentrale Finanzbuchhaltungsmodul von Apache OFBiz. Es umfasst die gesamte Geschäftslogik für Rechnungsstellung, Zahlungsabwicklung, Hauptbuchhaltung, Steuern, Finanzkont…",
+      "stats": {
+        "classes": 33,
+        "methods": 152
+      }
+    },
+    {
+      "id": "content",
+      "name": "content",
+      "overview": "Das `content`-Modul ist das zentrale Content-Management-Framework von Apache OFBiz. Es verwaltet strukturierte Inhaltsobjekte (`Content`, `DataResource`) mit Assoziationen, Zugriffskontrolle, Lokalisi…",
+      "stats": {
+        "classes": 28,
+        "methods": 134
+      }
     }
   ]
 }

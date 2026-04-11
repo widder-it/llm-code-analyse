@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modul: content — OFBiz Docs</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --sidebar-width: 220px;
+      --accent: #0d6efd;
+    }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      background: #1e2430;
+      color: #c9d1d9;
+      position: fixed;
+      top: 0; left: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      padding: 1.25rem 1rem .75rem;
+      display: block;
+      text-decoration: none;
+      border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0;
+      padding: .35rem 1rem;
+      font-size: .85rem;
+      border-radius: 0;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff;
+      background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #4a5568;
+      padding: .75rem 1rem .25rem;
+    }
+    #main {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+    }
+    .page-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .badge-type {
+      font-size: .7rem;
+      font-weight: 500;
+    }
+    .method-table th { white-space: nowrap; }
+    .method-sig {
+      font-family: SFMono-Regular, Menlo, monospace;
+      font-size: .82rem;
+      color: #0550ae;
+    }
+    .class-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: box-shadow .15s;
+    }
+    .class-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .class-card .card-title { font-size: .95rem; }
+    .breadcrumb { font-size: .82rem; }
+    .stat-pill {
+      background: #eef2ff;
+      color: #3730a3;
+      border-radius: 20px;
+      padding: .15rem .65rem;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>OFBiz Docs
+  </a>
+  <div class="nav-section">Module</div>
+  <ul class="nav flex-column">
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../party/index.html">
+        <i class="bi bi-box me-1"></i>party
+        <span class="stat-pill ms-1">22</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../order/index.html">
+        <i class="bi bi-box me-1"></i>order
+        <span class="stat-pill ms-1">37</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../product/index.html">
+        <i class="bi bi-box me-1"></i>product
+        <span class="stat-pill ms-1">58</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../accounting/index.html">
+        <i class="bi bi-box me-1"></i>accounting
+        <span class="stat-pill ms-1">33</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active"
+         href="../content/index.html">
+        <i class="bi bi-box me-1"></i>content
+        <span class="stat-pill ms-1">28</span>
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+<!-- Main -->
+<div id="main">
+  
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="../index.html">Module</a></li>
+      <li class="breadcrumb-item active">content</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-box me-2 text-primary"></i>content</h1>
+  <div class="d-flex gap-2 mt-2">
+    <span class="stat-pill"><i class="bi bi-layers me-1"></i>28 Klassen</span>
+    <span class="stat-pill"><i class="bi bi-lightning me-1"></i>134 public Methoden</span>
+  </div>
+</div>
+
+<div class="content-area">
+
+  <!-- Overview -->
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Überblick</h5>
+    <p>Das `content`-Modul ist das zentrale Content-Management-Framework von Apache OFBiz. Es verwaltet strukturierte Inhaltsobjekte (`Content`, `DataResource`) mit Assoziationen, Zugriffskontrolle, Lokalisierung und Rendering. Neben der Kernfunktionalität enthält das Modul spezialisierte Submodule für FTP/SFTP-Dateitransfer, Umfragen (Survey) mit PDF-Integration, Blog-RSS-Feeds, CMS-Verwaltung und FreeMarker-Template-Transformationen.</p>
+  </section>
+
+  <!-- Submodules -->
+  
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Submodule</h5>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Paket</th><th>Beschreibung</th></tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content</code></td>
+            <td class="text-muted small">Wurzelpaket: übergeordnete Management-Services, Events und Worker</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.content</code></td>
+            <td class="text-muted small">Kernpaket: Content-Entitäten, Rendering, Suche, Berechtigungen, URL-Filter</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.data</code></td>
+            <td class="text-muted small">DataResource-Verwaltung: Dateien, Bilder, elektronische Texte</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.ftp</code></td>
+            <td class="text-muted small">FTP/SFTP-Integration: Clients, Interface, Dienst</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.survey</code></td>
+            <td class="text-muted small">Umfragen: Rendering, PDF-Import/Export, Antwort-Auswertung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.blog</code></td>
+            <td class="text-muted small">Blog-Dienste: RSS-Feed-Generierung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.cms</code></td>
+            <td class="text-muted small">CMS-Ereignisse und View-Preparer (Groovy)</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.layout</code></td>
+            <td class="text-muted small">Layout-Verwaltung: Datei-Upload, Events</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.output</code></td>
+            <td class="text-muted small">Ausgabe-Dienste: FOP/PDF-Druck, Drucker-Routing</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.webapp.ftl</code></td>
+            <td class="text-muted small">FreeMarker-Transformationen für Content-Rendering in Templates</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.view</code></td>
+            <td class="text-muted small">View-Handler für Content-Auslieferung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.permission</code></td>
+            <td class="text-muted small">Groovy-basierte Berechtigungsprüfung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.website</code></td>
+            <td class="text-muted small">Groovy-Scripts für Website-Verwaltung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.print</code></td>
+            <td class="text-muted small">Groovy-Script für Drucker-Suche</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.contentsetup</code></td>
+            <td class="text-muted small">Setup-Groovy-Script für Content-Initialisierung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.content.datasetup</code></td>
+            <td class="text-muted small">Setup-Groovy-Script für Datenkategorie-Initialisierung</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+
+  <!-- Tab navigation -->
+  
+  
+  
+
+  <ul class="nav nav-tabs mb-4" id="classTabs" role="tablist">
+    
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="tab-java" data-bs-toggle="tab"
+              data-bs-target="#pane-java" type="button">
+        <i class="bi bi-filetype-java me-1"></i>Java
+        <span class="badge bg-primary ms-1">27</span>
+      </button>
+    </li>
+    
+    
+    <li class="nav-item" role="presentation">
+      <button class="nav-link "
+              id="tab-groovy" data-bs-toggle="tab"
+              data-bs-target="#pane-groovy" type="button">
+        <i class="bi bi-braces me-1"></i>Groovy
+        <span class="badge bg-success ms-1">1</span>
+      </button>
+    </li>
+    
+    
+  </ul>
+
+  <div class="tab-content">
+
+    
+    <div class="tab-pane fade show active" id="pane-java" role="tabpanel">
+      <div class="row g-2">
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContentWorker.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContentWorker</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Zentrale Rendering- und Traversierungs-Engine für Content-Objekte. Stellt alle statischen Hilfsmethoden bereit, um Inhal…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>26 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContentServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContentServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Stellt OFBiz-Service-Endpunkte für Content-Operationen bereit — von der Beziehungsverwaltung und Traversierung über Publ…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>13 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContentManagementServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContentManagementServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Orchestriert komplexe Content-Management-Operationen wie das atomare Anlegen und Verknüpfen von Content+DataResource, di…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>21 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContentManagementWorker.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContentManagementWorker</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Stellt Session-basierte MRU-Caches (Most Recently Used), Baum-Statistik-Updates und statische Hilfsmethoden für die Cont…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>5 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="DataResourceWorker.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">DataResourceWorker</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.data</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Kernklasse für die Verwaltung und das Rendering von DataResource-Objekten in verschiedenen Formaten (elektronischer Text…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>9 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="DataServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">DataServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.data</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Stellt CRUD-Dienste für DataResource-Objekte und ihre assoziierten Datentypen (elektronische Texte, Dateien, Bilder, Bin…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>15 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="FtpClientInterface.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">FtpClientInterface</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.ftp</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Gemeinsame Abstraktion aller FTP-Client-Implementierungen; definiert Verbinden, Kopieren, Auflisten und Verbindungsmanag…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>6 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="SimpleFtpClient.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">SimpleFtpClient</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.ftp</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      FTP-Client auf Basis von `org.apache.commons.net.ftp.FTPClient`. Verbindet sich mit Standard-FTP-Servern, überträgt Date…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="SshFtpClient.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">SshFtpClient</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.ftp</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      SFTP-Client auf Basis von Apache MINA SSHD (`org.apache.sshd`). Verbindet sich per SSH/Password-Auth, erstellt eine SFTP…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="SshClientHelper.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">SshClientHelper</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.ftp</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Verwaltet eine gemeinsam genutzte, gestartete `SshClient`-Instanz mit konfigurierten Key-Exchange-Algorithmen und Signat…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="SecureFtpClient.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">SecureFtpClient</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.ftp</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Platzhalter für FTPS-Unterstützung (FTP über TLS/SSL). Alle Methoden sind leer implementiert; FTPS wird laut `FtpService…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="FtpServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">FtpServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.ftp</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      OFBiz-Service zum Versenden von Content-Daten via FTP oder SFTP an eine über `FtpAddress`-ContactMech konfigurierte Gege…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="SurveyWrapper.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">SurveyWrapper</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.survey</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Kapselt die Darstellung und Auswertung von OFBiz-Umfragen (`Survey`). Rendert Fragebögen via FreeMarker-Templates, lädt …
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>11 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PdfSurveyServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PdfSurveyServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.survey</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Ermöglicht den Import von PDF-AcroForms als OFBiz-Umfragen und den Export von Umfrage-Antworten zurück in PDF-Formulare.…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="SurveyEvents.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">SurveyEvents</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.survey</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Verarbeitet Web-Events für Survey-Antworten im HTTP-Request-Kontext.
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="BlogRssServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">BlogRssServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.blog</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Generiert RSS-Feeds für OFBiz-Blogs. Sammelt veröffentlichte Blog-Artikel (PUBLISH_LINK-Assoziationen mit Status CTNT_PU…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContentSearch.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContentSearch</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Implementiert eine strukturierte Volltextsuche über Content-Objekte mit konfigurierbaren Suchconstraints und Sortieropti…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContentSearchSession.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContentSearchSession</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Speichert und verwaltet Content-Suchanfragen im HTTP-Session-Kontext; hält Constraint-Listen, Sortieroptionen und Such-H…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContentMapFacade.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContentMapFacade</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Stellt Content-Daten als Map für FreeMarker-Templates bereit. Ermöglicht lazy-geladenen Zugriff auf Content-Felder, Sub-…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContentPermissionServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContentPermissionServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Implementiert rollenbasierte Berechtigungsprüfungen für Content-Operationen. Prüft Ziel-Operationen gegen Content-Rollen…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="PermissionRecorder.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">PermissionRecorder</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Protokolliert den Verlauf von Berechtigungsprüfungen detailliert für Debug-Zwecke; kann das Prüfprotokoll als HTML ausge…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContentWrapper.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContentWrapper</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Definiert das Contract für Content-Wrapper-Implementierungen in anderen Modulen (Order, Party, Product, WorkEffort). Ste…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>4 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContentUrlFilter.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContentUrlFilter</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Servlet-Filter der alternative Content-URLs (mit Suffix `-content`) auf die echte Content-ID auflöst und die Anfrage int…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ContentKeywordIndex.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ContentKeywordIndex</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Indexiert Schlüsselwörter eines Content-Objekts für die Volltext-Suche. Extrahiert Keywords aus Content-ID, Name, Beschr…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="OutputServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">OutputServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.output</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Rendert OFBiz-Screens via Apache FOP zu PDF oder XSL-FO und sendet das Ergebnis an einen Drucker oder speichert es als D…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="LayoutWorker.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">LayoutWorker</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.layout</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Hilfsmethoden für den Upload und die Verarbeitung von Bild- und Formulardaten im Layout-Kontext.
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="SimpleContentViewHandler.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">SimpleContentViewHandler</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.content.view</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      View-Handler für die direkte Auslieferung von Content-Objekten als HTTP-Response. Rendert Content via `ContentWorker.ren…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>0 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+      </div>
+    </div>
+    
+
+    
+    <div class="tab-pane fade "
+         id="pane-groovy" role="tabpanel">
+      <div class="row g-2">
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Groovy-Scripts-Gruppiert-nach-Funktion.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Gruppiert nach Funktion</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      #### CMS-Preparer (`org.apache.ofbiz.content.cms`)  Diese Scripts bereiten Daten für CMS-Verwaltungsseiten vor:
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>5 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+      </div>
+    </div>
+    
+
+    
+
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</div>
+
+</body>
+</html>

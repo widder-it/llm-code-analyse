@@ -1,0 +1,933 @@
+{
+  "module": "content",
+  "overview": "Das `content`-Modul ist das zentrale Content-Management-Framework von Apache OFBiz. Es verwaltet strukturierte Inhaltsobjekte (`Content`, `DataResource`) mit Assoziationen, Zugriffskontrolle, Lokalisierung und Rendering. Neben der Kernfunktionalität enthält das Modul spezialisierte Submodule für FTP/SFTP-Dateitransfer, Umfragen (Survey) mit PDF-Integration, Blog-RSS-Feeds, CMS-Verwaltung und FreeMarker-Template-Transformationen.",
+  "submodules": [
+    {
+      "name": "org.apache.ofbiz.content",
+      "description": "Wurzelpaket: übergeordnete Management-Services, Events und Worker"
+    },
+    {
+      "name": "org.apache.ofbiz.content.content",
+      "description": "Kernpaket: Content-Entitäten, Rendering, Suche, Berechtigungen, URL-Filter"
+    },
+    {
+      "name": "org.apache.ofbiz.content.data",
+      "description": "DataResource-Verwaltung: Dateien, Bilder, elektronische Texte"
+    },
+    {
+      "name": "org.apache.ofbiz.content.ftp",
+      "description": "FTP/SFTP-Integration: Clients, Interface, Dienst"
+    },
+    {
+      "name": "org.apache.ofbiz.content.survey",
+      "description": "Umfragen: Rendering, PDF-Import/Export, Antwort-Auswertung"
+    },
+    {
+      "name": "org.apache.ofbiz.content.blog",
+      "description": "Blog-Dienste: RSS-Feed-Generierung"
+    },
+    {
+      "name": "org.apache.ofbiz.content.cms",
+      "description": "CMS-Ereignisse und View-Preparer (Groovy)"
+    },
+    {
+      "name": "org.apache.ofbiz.content.layout",
+      "description": "Layout-Verwaltung: Datei-Upload, Events"
+    },
+    {
+      "name": "org.apache.ofbiz.content.output",
+      "description": "Ausgabe-Dienste: FOP/PDF-Druck, Drucker-Routing"
+    },
+    {
+      "name": "org.apache.ofbiz.content.webapp.ftl",
+      "description": "FreeMarker-Transformationen für Content-Rendering in Templates"
+    },
+    {
+      "name": "org.apache.ofbiz.content.view",
+      "description": "View-Handler für Content-Auslieferung"
+    },
+    {
+      "name": "org.apache.ofbiz.content.permission",
+      "description": "Groovy-basierte Berechtigungsprüfung"
+    },
+    {
+      "name": "org.apache.ofbiz.content.website",
+      "description": "Groovy-Scripts für Website-Verwaltung"
+    },
+    {
+      "name": "org.apache.ofbiz.content.print",
+      "description": "Groovy-Script für Drucker-Suche"
+    },
+    {
+      "name": "org.apache.ofbiz.content.contentsetup",
+      "description": "Setup-Groovy-Script für Content-Initialisierung"
+    },
+    {
+      "name": "org.apache.ofbiz.content.datasetup",
+      "description": "Setup-Groovy-Script für Datenkategorie-Initialisierung"
+    }
+  ],
+  "classes": [
+    {
+      "id": "ContentWorker",
+      "name": "ContentWorker",
+      "package": "org.apache.ofbiz.content.content",
+      "type": "Java-Klasse (implementiert ContentWorkerInterface)",
+      "description": "Zentrale Rendering- und Traversierungs-Engine für Content-Objekte. Stellt alle statischen Hilfsmethoden bereit, um Inhalte zu suchen, zu rendern, zu lokalisieren, in Baumstrukturen zu traversieren und Berechtigungen zu prüfen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "findContentForRendering(delegator, contentId, locale, partyId, roleTypeId, cache)",
+          "description": "Ermittelt den zu rendernden Content-Datensatz unter Berücksichtigung von Locale-Alternativen, Publish-Points und rollenbasierten Alternativ-Inhalten"
+        },
+        {
+          "signature": "renderContentAsText(dispatcher, contentId, out, templateContext, locale, mimeTypeId, partyId, roleTypeId, cache)",
+          "description": "Rendert einen Content-Eintrag als Text in den übergebenen Writer; unterstützt Decorator-Ketten und Custom-Methods"
+        },
+        {
+          "signature": "renderContentAsText(dispatcher, contentId, templateContext, locale, mimeTypeId, cache)",
+          "description": "Variante die den gerenderten Text als String zurückgibt; bereinigt HTML-Sonderzeichen via HTML-Encoder"
+        },
+        {
+          "signature": "renderSubContentAsText(dispatcher, contentId, out, mapKey, templateContext, locale, mimeTypeId, cache)",
+          "description": "Rendert den per mapKey assoziierten Unter-Content eines Eltern-Inhalts"
+        },
+        {
+          "signature": "findAlternateLocaleContent(delegator, view, locale)",
+          "description": "Sucht die passende Locale-Alternative eines Content-Eintrags (bevorzugt exakten Match, dann 2-Buchstaben-Fallback)"
+        },
+        {
+          "signature": "findAlternateLocaleContents(delegator, view)",
+          "description": "Gibt alle Locale-Alternativen eines Content-Eintrags zurück"
+        },
+        {
+          "signature": "traverse(delegator, content, fromDate, thruDate, whenMap, depthIdx, masterNode, contentAssocTypeId, pickList, direction)",
+          "description": "Rekursive Tiefensuche im Content-Baum mit konfigurierbaren Pick/Follow/Return-Bedingungen"
+        },
+        {
+          "signature": "traverseSubContent(ctx)",
+          "description": "Iterativer Traversal-Schritt im Node-Trail-Kontext; verwaltet Traversal-Zustand über eine Knotenliste"
+        },
+        {
+          "signature": "selectKids(currentNode, ctx)",
+          "description": "Lädt Kindknoten eines Traversal-Knotens und bewertet deren Pick/Follow-Bedingungen"
+        },
+        {
+          "signature": "checkConditions(delegator, trailNode, contentAssoc, whenMap)",
+          "description": "Wertet Pick/Follow/Return-Bedingungen für einen Knoten aus; nutzt Groovy-Ausdrücke via FlexibleStringExpander"
+        },
+        {
+          "signature": "checkWhen(context, whenStr, defaultReturn)",
+          "description": "Wertet einen Groovy-Ausdruck als Boolean aus (wird für When-Conditions verwendet)"
+        },
+        {
+          "signature": "getSubContent(delegator, contentId, mapKey, subContentId, userLogin, assocTypes, fromDate)",
+          "description": "Ermittelt einen assoziierten Unter-Content anhand mapKey oder direkter Sub-Content-ID"
+        },
+        {
+          "signature": "getSubContentCache(delegator, contentId, mapKey, ...)",
+          "description": "Cache-Variante von getSubContent; verwendet ContentServicesComplex"
+        },
+        {
+          "signature": "getCurrentContent(delegator, trail, userLogin, ctx, nullThruDatesOnly, contentAssocPredicateId)",
+          "description": "Bestimmt den aktuell aktiven Content im Traversal-Kontext"
+        },
+        {
+          "signature": "getContentAncestry(delegator, contentId, contentAssocTypeId, direction, list)",
+          "description": "Lädt rekursiv die Ahnen-Kette eines Content-Eintrags"
+        },
+        {
+          "signature": "getContentAncestryAll(delegator, contentId, passedContentTypeId, direction, list)",
+          "description": "Lädt alle Vorgänger aller Assoziations-Richtungen eines Content-Eintrags"
+        },
+        {
+          "signature": "getContentAncestryNodeTrailCsv(delegator, contentId, contentAssocTypeId, direction)",
+          "description": "Gibt den Vorfahren-Pfad als kommaseparierte Content-ID-Liste zurück"
+        },
+        {
+          "signature": "getContentAssocViewList(delegator, contentIdTo, contentId, contentAssocTypeId, statusId, privilegeEnumId)",
+          "description": "Sucht Content-Assoziationen mit optionalen Filtern für Status und Privilege"
+        },
+        {
+          "signature": "getAssociatedContent(currentContent, linkDir, assocTypes, contentTypes, fromDate, thruDate)",
+          "description": "Gibt direkt verknüpfte Content-Einträge gefiltert nach Assoziationstyp zurück"
+        },
+        {
+          "signature": "callContentPermissionCheck(delegator, dispatcher, context)",
+          "description": "Führt die Service-basierte Berechtigungsprüfung durch und gibt den Permission-Status zurück"
+        },
+        {
+          "signature": "prepTargetOperationList(context, md)",
+          "description": "Stellt die Ziel-Operationsliste für Berechtigungsprüfungen zusammen"
+        },
+        {
+          "signature": "getMimeTypeId(delegator, view, ctx)",
+          "description": "Ermittelt den MIME-Typ eines Content-Views aus dem Kontext oder Eltern-Content"
+        },
+        {
+          "signature": "nodeTrailToCsv(nodeTrail)",
+          "description": "Konvertiert einen Traversal-Node-Trail in eine kommaseparierte Content-ID-Liste"
+        },
+        {
+          "signature": "csvToTrail(csv, delegator)",
+          "description": "Konvertiert eine kommaseparierte Content-ID-Liste zurück in einen Node-Trail"
+        },
+        {
+          "signature": "makeNode(thisContent)",
+          "description": "Erstellt einen Traversal-Knoten aus einem Content-GenericValue"
+        },
+        {
+          "signature": "pullEntityValues(delegator, entityName, context)",
+          "description": "Befüllt ein Entity-Value-Objekt aus einem Kontext-Map"
+        }
+      ]
+    },
+    {
+      "id": "ContentServices",
+      "name": "ContentServices",
+      "package": "org.apache.ofbiz.content.content",
+      "type": "Java-Klasse (Service-Engine-Dispatcher)",
+      "description": "Stellt OFBiz-Service-Endpunkte für Content-Operationen bereit — von der Beziehungsverwaltung und Traversierung über Publishing bis zu Utility-Diensten für String-Manipulation.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "findRelatedContent(dctx, context)",
+          "description": "Sucht mit einem Content verknüpfte Inhalte und filtert das Ergebnis optional nach Ziel-Operationen (Berechtigungsprüfung)"
+        },
+        {
+          "signature": "findContentParents(dctx, context)",
+          "description": "Traversiert den Content-Baum nach oben und liefert alle Eltern-IDs einer Content-Instanz"
+        },
+        {
+          "signature": "traverseContent(dctx, context)",
+          "description": "Service-Wrapper für ContentWorker.traverse; gibt NodeMap und PickList zurück"
+        },
+        {
+          "signature": "deactivateContentAssoc(dctx, context)",
+          "description": "Setzt das thruDate einer Content-Assoziation auf den aktuellen Zeitpunkt (deaktiviert sie)"
+        },
+        {
+          "signature": "deactivateAssocs(dctx, context)",
+          "description": "Deaktiviert alle Assoziationen mit passendem mapKey/sequenceNum außer dem aktiven Content"
+        },
+        {
+          "signature": "renderSubContentAsText(dctx, context)",
+          "description": "Service-Endpunkt: rendert Sub-Content als Text in den outWriter"
+        },
+        {
+          "signature": "renderContentAsText(dctx, context)",
+          "description": "Service-Endpunkt: rendert Content als Text in den outWriter"
+        },
+        {
+          "signature": "linkContentToPubPt(dctx, context)",
+          "description": "Verknüpft oder trennt einen Content-Eintrag mit einem Publish-Point (Assoziations-Toggle)"
+        },
+        {
+          "signature": "publishContent(dctx, context)",
+          "description": "Setzt den Content-Status auf CTNT_PUBLISHED"
+        },
+        {
+          "signature": "getPrefixedMembers(dctx, context)",
+          "description": "Extrahiert alle Map-Einträge mit einem bestimmten Präfix aus einer Input-Map"
+        },
+        {
+          "signature": "splitString(dctx, context)",
+          "description": "Splittet einen String anhand eines konfigurierbaren Trennzeichens in eine Liste"
+        },
+        {
+          "signature": "joinString(dctx, context)",
+          "description": "Fügt eine Liste von Strings mit einem konfigurierbaren Trennzeichen zusammen"
+        },
+        {
+          "signature": "urlEncodeArgs(dctx, context)",
+          "description": "URL-kodiert eine Map von Parametern zu einem Query-String"
+        }
+      ]
+    },
+    {
+      "id": "ContentManagementServices",
+      "name": "ContentManagementServices",
+      "package": "org.apache.ofbiz.content",
+      "type": "Java-Klasse (Service-Engine-Dispatcher)",
+      "description": "Orchestriert komplexe Content-Management-Operationen wie das atomare Anlegen und Verknüpfen von Content+DataResource, die Verwaltung von Site-Rollen, Abonnements, Content-Baum-Umstrukturierung und Cache-Verwaltung.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "persistContentAndAssoc(dctx, context)",
+          "description": "Zentraler Speicherdienst: legt Content, DataResource und ContentAssoc in einem Zug an oder aktualisiert sie; validiert hochgeladene Texte auf Sicherheit"
+        },
+        {
+          "signature": "persistDataResourceAndData(dctx, context)",
+          "description": "Prüft Berechtigung und delegiert an persistDataResourceAndDataMethod; unterstützt Bilder, Textdateien, Survey-Typen und elektronische Texte"
+        },
+        {
+          "signature": "persistDataResourceAndDataMethod(dctx, context)",
+          "description": "Implementierung: legt DataResource und zugehörige Binär-/Text-Daten an oder aktualisiert sie, inkl. Datei-Validierung"
+        },
+        {
+          "signature": "getSubContent(dctx, context)",
+          "description": "Lädt einen assoziierten Sub-Content und seinen DataResource-View"
+        },
+        {
+          "signature": "getContent(dctx, context)",
+          "description": "Lädt einen Content-Datensatz über den Cache"
+        },
+        {
+          "signature": "updateSiteRoles(dctx, context)",
+          "description": "Aktualisiert Blog-Rollen einer Party zu einem Website-Content-Eintrag (anlegen/deaktivieren)"
+        },
+        {
+          "signature": "updateSiteRolesDyn(dctx, context)",
+          "description": "Dynamische Variante von updateSiteRoles; schreibt Rollen auch für zugehörige UserLogin-Einträge"
+        },
+        {
+          "signature": "resequence(dctx, context)",
+          "description": "Nummeriert die Sequenz-Nummern von Content-Assoziationen neu und ermöglicht optionales Verschieben einzelner Elemente"
+        },
+        {
+          "signature": "changeLeafToNode(dctx, context)",
+          "description": "Konvertiert einen Content-Blattknoten zu einem Strukturknoten, indem der DataResource-Link als Sub-Content neu verknüpft wird"
+        },
+        {
+          "signature": "updateLeafCount(dctx, context)",
+          "description": "Aktualisiert die childLeafCount-Statistik eines Content-Baums top-down"
+        },
+        {
+          "signature": "updatePageType(dctx, context)",
+          "description": "Setzt Content-Typ (PAGE_NODE/OUTLINE_NODE) rekursiv für einen Teilbaum"
+        },
+        {
+          "signature": "resetToOutlineMode(dctx, context)",
+          "description": "Setzt alle Knoten eines Teilbaums auf OUTLINE_NODE zurück"
+        },
+        {
+          "signature": "findSubNodes(dctx, context)",
+          "description": "Gibt alle direkten Kindknoten eines Content-Eintrags via ContentAssocDataResourceViewFrom zurück"
+        },
+        {
+          "signature": "updateContentSubscription(dctx, context)",
+          "description": "Legt oder verlängert eine zeitbasierte ContentRole-Mitgliedschaft (Abonnement)"
+        },
+        {
+          "signature": "updateContentSubscriptionByProduct(dctx, context)",
+          "description": "Berechnet Abonnement-Dauer aus Produkt-Content-Daten und delegiert an updateContentSubscription"
+        },
+        {
+          "signature": "updateContentSubscriptionByOrder(dctx, context)",
+          "description": "Verarbeitet alle Bestellpositionen und aktiviert Inhalts-Abonnements für Online-Access-Produkte"
+        },
+        {
+          "signature": "followNodeChildren(dctx, context)",
+          "description": "Führt einen Service rekursiv für alle Kindknoten eines Content-Baums aus (benötigt CONTENTMGR_ADMIN)"
+        },
+        {
+          "signature": "incrementContentChildStats(dctx, context)",
+          "description": "Erhöht childLeafCount und childBranchCount bottom-up"
+        },
+        {
+          "signature": "decrementContentChildStats(dctx, context)",
+          "description": "Verringert Kind-Statistik-Zähler bottom-up"
+        },
+        {
+          "signature": "clearContentAssocViewCache(dctx, context)",
+          "description": "Leert den Entity-Cache für ContentAssocViewFrom/ContentAssocViewTo"
+        },
+        {
+          "signature": "clearContentAssocDataResourceViewCache(dctx, context)",
+          "description": "Leert den Entity-Cache für ContentAssocViewDataResource-Views"
+        }
+      ]
+    },
+    {
+      "id": "ContentManagementWorker",
+      "name": "ContentManagementWorker",
+      "package": "org.apache.ofbiz.content",
+      "type": "Java-Klasse (Utility, final, nicht-instantiierbar)",
+      "description": "Stellt Session-basierte MRU-Caches (Most Recently Used), Baum-Statistik-Updates und statische Hilfsmethoden für die Content-Management-UI bereit.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "mruAdd(request/session, pk)",
+          "description": "Fügt einen Entity-Primärschlüssel in den sitzungslokalen MRU-Cache ein (nach Entitätsname gruppiert)"
+        },
+        {
+          "signature": "mostRecentlyViewedIterator(entityName, lookupCaches)",
+          "description": "Gibt einen Iterator über zuletzt betrachtete Einträge eines Entitätstyps zurück"
+        },
+        {
+          "signature": "getWebSitePublishPoint(delegator, contentId, ignoreCache)",
+          "description": "Lädt den Website-Publish-Point zu einer Content-ID (mit Caching)"
+        },
+        {
+          "signature": "updateStatsTopDown(delegator, contentId, typeList)",
+          "description": "Aktualisiert childLeafCount/childBranchCount rekursiv top-down im Baum"
+        },
+        {
+          "signature": "updateStatsBottomUp(delegator, contentId, typeList, changeBranchCount, changeLeafCount)",
+          "description": "Propagiert Statistik-Änderungen nach oben in der Vorfahrenkette"
+        }
+      ]
+    },
+    {
+      "id": "DataResourceWorker",
+      "name": "DataResourceWorker",
+      "package": "org.apache.ofbiz.content.data",
+      "type": "Java-Klasse (implementiert DataResourceWorkerInterface)",
+      "description": "Kernklasse für die Verwaltung und das Rendering von DataResource-Objekten in verschiedenen Formaten (elektronischer Text, Dateien, Bilder, FreeMarker-Templates, XML/XSLT, Screen-Widgets). Fungiert als Schnittstelle zwischen Content-System und Widget-Framework.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "renderDataResourceAsText(dispatcher, dataResourceId, out, templateContext, locale, mimeTypeId, cache)",
+          "description": "Rendert eine DataResource als Text — je nach Typ als FreeMarker-Template, XML+XSLT, Screen-Widget, URL-Inhalt oder direkt aus dem Datenbanktext"
+        },
+        {
+          "signature": "renderDataResourceAsText(dispatcher, delegator, dataResourceId, out, templateContext, locale, mimeTypeId, cache, webAnalytics)",
+          "description": "Variante mit Web-Analytics-Unterstützung"
+        },
+        {
+          "signature": "getDataResourceStream(dataResource, prefix, context, locale, rootDir, useCache)",
+          "description": "Gibt einen InputStream für den Rohdaten-Inhalt einer DataResource zurück"
+        },
+        {
+          "signature": "getContentFile(dataResourceTypeId, objectInfo, contextRoot)",
+          "description": "Löst den Dateipfad einer DataResource auf (LOCAL_FILE, OFBIZ_FILE, CONTEXT_FILE)"
+        },
+        {
+          "signature": "getDataResourceMimeType(delegator, dataResourceId, view)",
+          "description": "Ermittelt den MIME-Typ einer DataResource"
+        },
+        {
+          "signature": "getDataCategoryMap(delegator, depth, categoryNode, categoryTypeIds, getAll)",
+          "description": "Baut eine hierarchische Datenkategorie-Baumstruktur auf"
+        },
+        {
+          "signature": "getDataCategoryAncestry(delegator, dataCategoryId, categoryTypeIds)",
+          "description": "Traversiert Datenkategorie-Vorfahren rekursiv"
+        },
+        {
+          "signature": "clearAssociatedRenderCache(delegator, dataResourceId)",
+          "description": "Invalidiert alle Render-Caches, die mit einer DataResource verknüpft sind"
+        },
+        {
+          "signature": "buildList(nd, lst, depth)",
+          "description": "Flacht einen Kategorie-Baum mit Einrückung in eine lineare Liste um"
+        }
+      ]
+    },
+    {
+      "id": "DataServices",
+      "name": "DataServices",
+      "package": "org.apache.ofbiz.content.data",
+      "type": "Java-Klasse (Service-Engine-Dispatcher)",
+      "description": "Stellt CRUD-Dienste für DataResource-Objekte und ihre assoziierten Datentypen (elektronische Texte, Dateien, Bilder, Binärdaten) bereit. Validiert Datei-Uploads sicherheitstechnisch via `SecuredUpload`.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createDataResource(dctx, context)",
+          "description": "Legt eine neue DataResource an, setzt fehlenden Status automatisch auf den ersten verfügbaren Content-Status"
+        },
+        {
+          "signature": "createDataResourceAndText(dctx, context)",
+          "description": "Legt DataResource und zugehörigen elektronischen Text in einem Schritt an"
+        },
+        {
+          "signature": "createElectronicText(dctx, context)",
+          "description": "Legt einen ElectronicText-Datensatz mit Textinhalt an"
+        },
+        {
+          "signature": "createFile(dctx, context)",
+          "description": "Schreibt Text- oder Binärdaten in eine Datei; validiert den Dateipfad und -typ"
+        },
+        {
+          "signature": "createFileNoPerm(dctx, context)",
+          "description": "Datei-Erstellung ohne Berechtigungsprüfung, aber mit Sicherheitsvalidierung via SecuredUpload"
+        },
+        {
+          "signature": "createImage(dctx, context)",
+          "description": "Speichert Bilddaten als ImageDataResource-Datenbankdatensatz"
+        },
+        {
+          "signature": "createBinaryFile(dctx, context)",
+          "description": "Schreibt Binärdaten in eine Datei auf dem Dateisystem, validiert das Format"
+        },
+        {
+          "signature": "updateDataResource(dctx, context)",
+          "description": "Aktualisiert Metadaten einer bestehenden DataResource"
+        },
+        {
+          "signature": "updateDataResourceAndText(dctx, context)",
+          "description": "Aktualisiert DataResource und zugehörigen elektronischen Text"
+        },
+        {
+          "signature": "updateElectronicText(dctx, context)",
+          "description": "Aktualisiert oder legt neu an: den Textinhalt eines ElectronicText-Datensatzes"
+        },
+        {
+          "signature": "updateFile(dctx, context)",
+          "description": "Überschreibt den Inhalt einer vorhandenen Datei (Text oder Binär)"
+        },
+        {
+          "signature": "updateImage(dctx, context)",
+          "description": "Aktualisiert Bilddaten in ImageDataResource; legt neu an falls nicht vorhanden"
+        },
+        {
+          "signature": "updateBinaryFile(dctx, context)",
+          "description": "Überschreibt eine Binärdatei auf dem Dateisystem"
+        },
+        {
+          "signature": "renderDataResourceAsText(dctx, context)",
+          "description": "Service-Endpunkt: rendert eine DataResource als Text in den outWriter"
+        },
+        {
+          "signature": "clearAssociatedRenderCache(dctx, context)",
+          "description": "Service-Endpunkt: invalidiert den Render-Cache einer DataResource"
+        }
+      ]
+    },
+    {
+      "id": "FtpClientInterface",
+      "name": "FtpClientInterface",
+      "package": "org.apache.ofbiz.content.ftp",
+      "type": "Java-Interface",
+      "description": "Gemeinsame Abstraktion aller FTP-Client-Implementierungen; definiert Verbinden, Kopieren, Auflisten und Verbindungsmanagement.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "connect(hostname, username, password, port, timeout)",
+          "description": "Baut die Verbindung zum FTP/SFTP-Server auf"
+        },
+        {
+          "signature": "copy(path, fileName, inputStream)",
+          "description": "Überträgt eine Datei aus einem InputStream in das Remote-Verzeichnis"
+        },
+        {
+          "signature": "list(path)",
+          "description": "Gibt die Dateinamen im angegebenen Remote-Verzeichnis zurück"
+        },
+        {
+          "signature": "setBinaryTransfer(isBinary)",
+          "description": "Schaltet den Übertragungsmodus zwischen binär und ASCII um"
+        },
+        {
+          "signature": "setPassiveMode(isPassive)",
+          "description": "Aktiviert oder deaktiviert den passiven FTP-Modus"
+        },
+        {
+          "signature": "closeConnection()",
+          "description": "Schließt die Verbindung und meldet sich ab"
+        }
+      ]
+    },
+    {
+      "id": "SimpleFtpClient",
+      "name": "SimpleFtpClient",
+      "package": "org.apache.ofbiz.content.ftp",
+      "type": "Java-Klasse (implementiert FtpClientInterface)",
+      "description": "FTP-Client auf Basis von `org.apache.commons.net.ftp.FTPClient`. Verbindet sich mit Standard-FTP-Servern, überträgt Dateien und unterstützt aktiven/passiven Modus sowie binäre und ASCII-Übertragung.",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "SshFtpClient",
+      "name": "SshFtpClient",
+      "package": "org.apache.ofbiz.content.ftp",
+      "type": "Java-Klasse (implementiert FtpClientInterface)",
+      "description": "SFTP-Client auf Basis von Apache MINA SSHD (`org.apache.sshd`). Verbindet sich per SSH/Password-Auth, erstellt eine SFTP-Session und überträgt Dateien via SFTP-Protokoll. Nutzt eine Singleton-SSH-Client-Instanz über `SshClientHelper`.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "connect(hostname, username, password, port, timeout)",
+          "description": "Baut SSH-Session auf, authentifiziert per Passwort und öffnet SFTP-Client"
+        },
+        {
+          "signature": "copy(path, fileName, inputStream)",
+          "description": "Schreibt Dateiinhalt per SFTP in das Remote-Verzeichnis"
+        },
+        {
+          "signature": "list(path)",
+          "description": "Listet Dateien eines Remote-Verzeichnisses via SFTP readDir"
+        },
+        {
+          "signature": "closeConnection()",
+          "description": "Schließt SFTP-Session und SSH-Session"
+        }
+      ]
+    },
+    {
+      "id": "SshClientHelper",
+      "name": "SshClientHelper",
+      "package": "org.apache.ofbiz.content.ftp",
+      "type": "Java-Klasse (abstrakt, Singleton-Factory)",
+      "description": "Verwaltet eine gemeinsam genutzte, gestartete `SshClient`-Instanz mit konfigurierten Key-Exchange-Algorithmen und Signatur-Factories. Verhindert mehrfache Client-Initialisierungen.",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "SecureFtpClient",
+      "name": "SecureFtpClient",
+      "package": "org.apache.ofbiz.content.ftp",
+      "type": "Java-Klasse (implementiert FtpClientInterface)",
+      "description": "Platzhalter für FTPS-Unterstützung (FTP über TLS/SSL). Alle Methoden sind leer implementiert; FTPS wird laut `FtpServices` noch nicht unterstützt.",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "FtpServices",
+      "name": "FtpServices",
+      "package": "org.apache.ofbiz.content.ftp",
+      "type": "Java-Klasse (Service-Engine-Dispatcher)",
+      "description": "OFBiz-Service zum Versenden von Content-Daten via FTP oder SFTP an eine über `FtpAddress`-ContactMech konfigurierte Gegenstelle. Unterstützt optionale ZIP-Komprimierung, konfigurierbares Umleitungs-Ziel und optionale Transfer-Verifikation.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "sendContentToFtp(dctx, context)",
+          "description": "Lädt einen Content-Datenstrom (aus DataResource) auf einen FTP/SFTP-Server; unterstützt ZIP-Komprimierung, Redirect-Konfiguration und optionale Transfer-Verifikation durch Re-Login und Verzeichnis-Listing"
+        }
+      ]
+    },
+    {
+      "id": "SurveyWrapper",
+      "name": "SurveyWrapper",
+      "package": "org.apache.ofbiz.content.survey",
+      "type": "Java-Klasse",
+      "description": "Kapselt die Darstellung und Auswertung von OFBiz-Umfragen (`Survey`). Rendert Fragebögen via FreeMarker-Templates, lädt Antworten und berechnet Ergebnis-Statistiken (Boolean, Zahlen, Text, Optionslisten).",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "render(templateUrl)",
+          "description": "Rendert die Umfrage mit dem angegebenen FreeMarker-Template in einen Writer"
+        },
+        {
+          "signature": "render(url, writer)",
+          "description": "Rendert die Umfrage direkt in einen übergebenen Writer"
+        },
+        {
+          "signature": "getSurvey()",
+          "description": "Lädt den Survey-GenericValue aus der Datenbank"
+        },
+        {
+          "signature": "getSurveyQuestionAndAppls()",
+          "description": "Gibt alle Fragen der Umfrage mit ihren Anwendungs-Einstellungen zurück"
+        },
+        {
+          "signature": "getResponseAnswers(responseId)",
+          "description": "Lädt alle Antworten einer bestimmten Survey-Response"
+        },
+        {
+          "signature": "getSurveyResponses(surveyQuestion)",
+          "description": "Gibt alle Antworten zu einer bestimmten Frage zurück"
+        },
+        {
+          "signature": "getQuestionResponses(question, startIndex, number)",
+          "description": "Gibt paginierte Antworten zu einer Frage zurück"
+        },
+        {
+          "signature": "getNumberResponses()",
+          "description": "Gibt die Gesamtanzahl von Antworten auf die Umfrage zurück"
+        },
+        {
+          "signature": "getResults(questions)",
+          "description": "Berechnet Ergebnis-Statistiken für alle Fragen der Umfrage"
+        },
+        {
+          "signature": "getResultInfo(question)",
+          "description": "Berechnet Statistik für eine einzelne Frage (Typ-abhängig: Boolean, Zahl, Text, Option)"
+        },
+        {
+          "signature": "setEdit(edit)",
+          "description": "Schaltet den Bearbeitungsmodus ein (ermöglicht Antwort-Bearbeitung)"
+        }
+      ]
+    },
+    {
+      "id": "PdfSurveyServices",
+      "name": "PdfSurveyServices",
+      "package": "org.apache.ofbiz.content.survey",
+      "type": "Java-Klasse (Service-Engine-Dispatcher)",
+      "description": "Ermöglicht den Import von PDF-AcroForms als OFBiz-Umfragen und den Export von Umfrage-Antworten zurück in PDF-Formulare. Nutzt die iText/LoWaGie PDF-Bibliothek.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "buildSurveyFromPdf(dctx, context)",
+          "description": "Analysiert ein PDF-AcroForm-Dokument, legt eine neue Survey an und erstellt SurveyQuestion-Datensätze für jedes Formularfeld"
+        },
+        {
+          "signature": "getFilledInSurveyAsPdf(dctx, context)",
+          "description": "Füllt ein PDF-Formular mit gespeicherten Umfrage-Antworten aus und gibt das gefüllte PDF zurück"
+        }
+      ]
+    },
+    {
+      "id": "SurveyEvents",
+      "name": "SurveyEvents",
+      "package": "org.apache.ofbiz.content.survey",
+      "type": "Java-Klasse (Web-Event-Handler)",
+      "description": "Verarbeitet Web-Events für Survey-Antworten im HTTP-Request-Kontext.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createSurveyResponseAndRestoreParameters(request, response)",
+          "description": "Speichert eine Umfrage-Antwort via createSurveyResponse-Service und stellt ggf. zuvor gespeicherte Request-Parameter wieder her"
+        }
+      ]
+    },
+    {
+      "id": "BlogRssServices",
+      "name": "BlogRssServices",
+      "package": "org.apache.ofbiz.content.blog",
+      "type": "Java-Klasse (Service-Engine-Dispatcher)",
+      "description": "Generiert RSS-Feeds für OFBiz-Blogs. Sammelt veröffentlichte Blog-Artikel (PUBLISH_LINK-Assoziationen mit Status CTNT_PUBLISHED), rendert deren Summary-Sub-Content und baut einen ROME-SyndFeed auf.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "generateBlogRssFeed(dctx, context)",
+          "description": "Erstellt einen RSS-/Atom-Feed für einen Blog-Content-Eintrag; Feedtyp, Links und Titel werden aus dem Blog-Content übernommen"
+        },
+        {
+          "signature": "generateEntryList(dispatcher, delegator, contentId, entryLink, locale, userLogin)",
+          "description": "Lädt alle veröffentlichten Artikel eines Blogs, rendert deren SUMMARY-Sub-Content als Text und erstellt SyndEntry-Objekte"
+        }
+      ]
+    },
+    {
+      "id": "ContentSearch",
+      "name": "ContentSearch",
+      "package": "org.apache.ofbiz.content.content",
+      "type": "Java-Klasse (Suchmaschine)",
+      "description": "Implementiert eine strukturierte Volltextsuche über Content-Objekte mit konfigurierbaren Suchconstraints und Sortieroptionen. Nutzt dynamische Datenbankabfragen via `DynamicViewEntity`.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "searchContents(contentSearchConstraintList, resultSortOrder, delegator, visitId)",
+          "description": "Führt eine strukturierte Content-Suche mit beliebigen Constraint-Kombinationen durch und gibt eine Liste von Content-IDs zurück"
+        },
+        {
+          "signature": "getAllSubContentIds(contentId, contentIdSet, delegator, nowTimestamp)",
+          "description": "Sammelt rekursiv alle Sub-Content-IDs eines Eltern-Contents (für Hierarchie-Suche)"
+        }
+      ]
+    },
+    {
+      "id": "ContentSearchSession",
+      "name": "ContentSearchSession",
+      "package": "org.apache.ofbiz.content.content",
+      "type": "Java-Klasse (Session-Manager)",
+      "description": "Speichert und verwaltet Content-Suchanfragen im HTTP-Session-Kontext; hält Constraint-Listen, Sortieroptionen und Such-Historien.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getContentSearchOptions(session)",
+          "description": "Lädt oder erstellt die aktuellen Suchoptionen aus der Session"
+        },
+        {
+          "signature": "searchAddConstraint(constraint, session)",
+          "description": "Fügt einen neuen Suchfilter zur aktuellen Suche hinzu"
+        },
+        {
+          "signature": "searchSetSortOrder(sortOrder, session)",
+          "description": "Setzt die Sortierreihenfolge für die aktuelle Suche"
+        },
+        {
+          "signature": "getSearchOptionsHistoryList(session)",
+          "description": "Gibt die Liste vergangener Suchanfragen in der Session zurück"
+        }
+      ]
+    },
+    {
+      "id": "ContentMapFacade",
+      "name": "ContentMapFacade",
+      "package": "org.apache.ofbiz.content.content",
+      "type": "Java-Klasse (implementiert Map<Object, Object>)",
+      "description": "Stellt Content-Daten als Map für FreeMarker-Templates bereit. Ermöglicht lazy-geladenen Zugriff auf Content-Felder, Sub-Content, DataResource-Daten und Metadaten direkt aus Templates heraus (`thisContent.fields`, `thisContent.subContent`, `thisContent.dataResource`).",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ContentPermissionServices",
+      "name": "ContentPermissionServices",
+      "package": "org.apache.ofbiz.content.content",
+      "type": "Java-Klasse (Service-Engine-Dispatcher)",
+      "description": "Implementiert rollenbasierte Berechtigungsprüfungen für Content-Operationen. Prüft Ziel-Operationen gegen Content-Rollen und -Zwecke mit Unterstützung für detaillierte Fehlerprotokollierung via `PermissionRecorder`.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "checkContentPermission(dctx, context)",
+          "description": "Prüft Berechtigungen für eine Content-Operation; veraltet, wird von genericContentPermission abgelöst"
+        },
+        {
+          "signature": "checkAssocPermission(dctx, context)",
+          "description": "Prüft Berechtigungen für Content-Assoziations-Operationen"
+        }
+      ]
+    },
+    {
+      "id": "PermissionRecorder",
+      "name": "PermissionRecorder",
+      "package": "org.apache.ofbiz.content.content",
+      "type": "Java-Klasse",
+      "description": "Protokolliert den Verlauf von Berechtigungsprüfungen detailliert für Debug-Zwecke; kann das Prüfprotokoll als HTML ausgeben.",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ContentWrapper",
+      "name": "ContentWrapper",
+      "package": "org.apache.ofbiz.content.content",
+      "type": "Java-Interface",
+      "description": "Definiert das Contract für Content-Wrapper-Implementierungen in anderen Modulen (Order, Party, Product, WorkEffort). Stellt statische Hilfsmethoden für MIME-Typ-Ermittlung, Feld-Wert-Suche und HTML-Encoding bereit.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "get(contentTypeId, encoderType)",
+          "description": "Liefert den lokalisierten Content-Wert für einen Content-Typ als HTML-sicherer StringWrapper"
+        },
+        {
+          "signature": "getDefaultMimeTypeId(delegator)",
+          "description": "Gibt den konfigurierten Standard-MIME-Typ aus content.properties zurück"
+        },
+        {
+          "signature": "getCandidateFieldValue(modelObject, contentTypeId)",
+          "description": "Sucht einen Feldwert direkt im Entity-Objekt wenn das Feld vorhanden ist"
+        },
+        {
+          "signature": "encodeContentValue(value, encoderType)",
+          "description": "Bereinigt einen Content-Wert mit dem angegebenen Encoder-Typ"
+        }
+      ]
+    },
+    {
+      "id": "ContentUrlFilter",
+      "name": "ContentUrlFilter",
+      "package": "org.apache.ofbiz.content.content",
+      "type": "Java-Klasse (implementiert javax.servlet.Filter)",
+      "description": "Servlet-Filter der alternative Content-URLs (mit Suffix `-content`) auf die echte Content-ID auflöst und die Anfrage intern weiterleitet. Ermöglicht SEO-freundliche URLs für Content-Objekte.",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ContentKeywordIndex",
+      "name": "ContentKeywordIndex",
+      "package": "org.apache.ofbiz.content.content",
+      "type": "Java-Klasse (Suchindex-Builder)",
+      "description": "Indexiert Schlüsselwörter eines Content-Objekts für die Volltext-Suche. Extrahiert Keywords aus Content-ID, Name, Beschreibung, Attributen, Metadaten und dem gerenderten DataResource-Text.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "indexKeywords(content)",
+          "description": "Indexiert Schlüsselwörter eines Content-Eintrags; überspringt bereits indexierte"
+        },
+        {
+          "signature": "forceIndexKeywords(content)",
+          "description": "Erzwingt Neu-Indexierung unabhängig vom vorhandenen Index"
+        }
+      ]
+    },
+    {
+      "id": "OutputServices",
+      "name": "OutputServices",
+      "package": "org.apache.ofbiz.content.output",
+      "type": "Java-Klasse (Service-Engine-Dispatcher)",
+      "description": "Rendert OFBiz-Screens via Apache FOP zu PDF oder XSL-FO und sendet das Ergebnis an einen Drucker oder speichert es als Datei. Integriert sich in das Widget-Framework für Screen-Rendering.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createAsciiDoc(dctx, context)",
+          "description": "Erstellt ein AsciiDoc-Dokument aus einem Screen-Widget-Rendering"
+        },
+        {
+          "signature": "createPdf(dctx, context)",
+          "description": "Rendert einen Screen als PDF via FOP; kann die Ausgabe als Datei speichern oder in einen Output-Stream schreiben"
+        },
+        {
+          "signature": "sendPdfToPrinter(dctx, context)",
+          "description": "Sendet ein gerendertes PDF an einen konfigurierten Netzwerkdrucker via Java Print Service"
+        }
+      ]
+    },
+    {
+      "id": "LayoutWorker",
+      "name": "LayoutWorker",
+      "package": "org.apache.ofbiz.content.layout",
+      "type": "Java-Klasse (Utility, final)",
+      "description": "Hilfsmethoden für den Upload und die Verarbeitung von Bild- und Formulardaten im Layout-Kontext.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "uploadImageAndParameters(request, uploadField)",
+          "description": "Verarbeitet Multipart-Datei-Upload und Formularparameter; gibt Bild-Bytes und Formularfelder als Map zurück"
+        }
+      ]
+    },
+    {
+      "id": "SimpleContentViewHandler",
+      "name": "SimpleContentViewHandler",
+      "package": "org.apache.ofbiz.content.view",
+      "type": "Java-Klasse (extends AbstractViewHandler)",
+      "description": "View-Handler für die direkte Auslieferung von Content-Objekten als HTTP-Response. Rendert Content via `ContentWorker.renderContentAsText` und schreibt das Ergebnis in den HTTP-Response-Stream.",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "Groovy-Scripts-Gruppiert-nach-Funktion",
+      "name": "Groovy-Scripts: Gruppiert nach Funktion",
+      "package": "",
+      "type": "Groovy-Script (extends groovy.lang.Script) — kein Java-Quelltext verfügbar",
+      "description": "#### CMS-Preparer (`org.apache.ofbiz.content.cms`)  Diese Scripts bereiten Daten für CMS-Verwaltungsseiten vor:",
+      "is_group": true,
+      "members": [
+        {
+          "name": "CmsEditAddPrep",
+          "description": "Bereitet den Edit/Add-Kontext für CMS-Content-Objekte vor"
+        },
+        {
+          "name": "FeaturePrep",
+          "description": "Bereitet Featured-Content-Daten für die Darstellung auf"
+        },
+        {
+          "name": "GetMenuContext",
+          "description": "Lädt Navigationsmenü-Kontextdaten für CMS-Views"
+        },
+        {
+          "name": "MostRecentPrep",
+          "description": "Ermittelt die zuletzt bearbeiteten/erstellten Contents"
+        },
+        {
+          "name": "UserPermPrep",
+          "description": "Bereitet Benutzerberechtigungsdaten für CMS-Views auf"
+        }
+      ],
+      "section": "groovy"
+    }
+  ],
+  "stats": {
+    "classes": 28,
+    "methods": 134
+  }
+}

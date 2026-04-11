@@ -1,0 +1,1563 @@
+{
+  "module": "accounting",
+  "overview": "Das `accounting`-Modul ist das zentrale Finanzbuchhaltungsmodul von Apache OFBiz. Es umfasst die gesamte Geschäftslogik für Rechnungsstellung, Zahlungsabwicklung, Hauptbuchhaltung, Steuern, Finanzkonten und Reporting. Besonders hervorzuheben ist die Unterstützung von acht externen Payment-Provider-Integrationen (authorizedotnet, clearcommerce, eway, gosoftware, paypal, sagepay, valuelink, worldpay), die über ein einheitliches Gateway-Framework angebunden sind.",
+  "submodules": [
+    {
+      "name": "org.apache.ofbiz.accounting",
+      "description": "Basisklassen: generische Exception, GL-Event-Handler"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.admin",
+      "description": "Administrative Buchhaltungsfunktionen (GL-Konten, Belegfilterung)"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.agreement",
+      "description": "Vertragsmanagement und Provisionsberechnungen"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.ap.invoices",
+      "description": "Accounts Payable: Kommissionsbericht und -abrechnung"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.ar",
+      "description": "Accounts Receivable: Stapelzahlungsverarbeitung"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.budget",
+      "description": "Budgetverwaltung"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.chartofaccounts",
+      "description": "Kontenplan und Steuer-GL-Konten"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.finaccount",
+      "description": "Finanzkonten: Guthaben, Einzahlungen, Abhebungen, Payment-Gateway-Anbindung"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.fixedasset",
+      "description": "Anlagevermögen und Geolokalisierung"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.invoice",
+      "description": "Rechnungsstellung für Aufträge, Lieferungen, Retouren; Zahlungsabgleich"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.ledger",
+      "description": "Hauptbuch: Kostenstellen, GL-Buchungen"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.order",
+      "description": "Abrechnungskonten-Auftragsübersicht"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.payment",
+      "description": "Zahlungen: Gateway-Orchestrierung, Zahlungsmethoden, Gutscheine, Abrechnungskonten"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.period",
+      "description": "Buchungsperioden und Periodenabschluss"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.rate",
+      "description": "Stunden- und Kostensätze"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.reports",
+      "description": "Finanzberichte: Bilanz, GuV, Cashflow, Probebilanzen"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.tax",
+      "description": "Steuerbehörden und Steuerberechnung"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.transaction",
+      "description": "Transaktionsverwaltung (Autorisierung, Capture, Gateway-Response-Ansicht)"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.thirdparty.authorizedotnet",
+      "description": "Integration Authorize.Net (AIM-Protokoll)"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.thirdparty.clearcommerce",
+      "description": "Integration ClearCommerce (XML-basiert)"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.thirdparty.eway",
+      "description": "Integration eWay (australischer Zahlungsdienstleister)"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.thirdparty.gosoftware",
+      "description": "Integration GoSoftware PcCharge und RITA"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.thirdparty.paypal",
+      "description": "Integration PayPal (IPN-basiert)"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.thirdparty.sagepay",
+      "description": "Integration SagePay (VSP-Protokoll)"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.thirdparty.valuelink",
+      "description": "Integration ValueLink (Geschenkkarten, DES/3DES-Verschlüsselung)"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.thirdparty.worldpay",
+      "description": "Integration WorldPay (Redirect-basiert)"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.util",
+      "description": "Hilfsfunktionen für GL-Konten und Zahlungsklassifizierung"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.accounting",
+      "description": "Groovy-basierte Integrationstests"
+    },
+    {
+      "name": "org.apache.ofbiz.accounting.test",
+      "description": "Java-basierte Unit-Tests"
+    }
+  ],
+  "classes": [
+    {
+      "id": "AccountingException",
+      "name": "AccountingException",
+      "package": "org.apache.ofbiz.accounting",
+      "type": "Java-Klasse",
+      "description": "Spezialisierte Ausnahme für Buchhaltungsfehler, die von `GenericServiceException` erbt. Wird in der gesamten Buchhaltungslogik geworfen, wenn Konten nicht aufgelöst oder Buchungsregeln verletzt werden.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "AccountingException(String, Throwable)",
+          "description": "Erstellt eine Ausnahme mit Fehlermeldung und ursächlicher Exception (typischer Konstruktor für Fehlerweiterleitung)"
+        }
+      ]
+    },
+    {
+      "id": "GlEvents",
+      "name": "GlEvents",
+      "package": "org.apache.ofbiz.accounting",
+      "type": "Java-Klasse",
+      "description": "HTTP-Event-Handler für GL-bezogene Benutzerinteraktionen. Verarbeitet Multi-Row-Formulare zur Kontenabstimmung direkt aus dem Web-Request.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createReconcileAccount(HttpServletRequest, HttpServletResponse)",
+          "description": "Liest markierte Buchungseinträge aus einem Multi-Row-Formular, berechnet den abgestimmten Saldo (Soll minus Haben) und legt einen neuen GlReconciliation-Datensatz mit zugehörigen Einträgen an"
+        }
+      ]
+    },
+    {
+      "id": "PaymentGatewayServices",
+      "name": "PaymentGatewayServices",
+      "package": "org.apache.ofbiz.accounting.payment",
+      "type": "Java-Klasse",
+      "description": "Zentrales Orchestrierungsmodul für alle Zahlungsgateway-Operationen. Implementiert den vollständigen Zahlungslebenszyklus (Autorisierung, Capture, Release, Rückerstattung, Gutschrift) und vermittelt zwischen der OFBiz-Bestelllogik und den konkreten Provider-Adaptern. Enthält außerdem Testprozessoren zur Entwicklungszeit-Simulation.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "authOrderPayments(DispatchContext, Map)",
+          "description": "Autorisiert alle ausstehenden Zahlungspräferenzen eines Auftrags; unterstützt Re-Autorisierung bereits autorisierter Präferenzen, wenn deren Gültigkeit abgelaufen ist"
+        },
+        {
+          "signature": "authOrderPaymentPreference(DispatchContext, Map)",
+          "description": "Autorisiert eine einzelne OrderPaymentPreference durch Aufruf des konfigurierten Provider-Dienstes (Typ PRDS_PAY_AUTH)"
+        },
+        {
+          "signature": "releaseOrderPayments(DispatchContext, Map)",
+          "description": "Gibt alle autorisierten Zahlungen eines Auftrags frei (z.B. bei Stornierung)"
+        },
+        {
+          "signature": "releaseOrderPaymentPreference(DispatchContext, Map)",
+          "description": "Gibt eine einzelne Zahlungspräferenz frei und ruft den Provider-Dienst PRDS_PAY_RELEASE auf"
+        },
+        {
+          "signature": "captureOrderPayments(DispatchContext, Map)",
+          "description": "Erfasst (bucht) alle autorisierten Zahlungen eines Auftrags; verteilt den Rechnungsbetrag anteilig auf mehrere Zahlungsmethoden"
+        },
+        {
+          "signature": "capturePaymentsByInvoice(DispatchContext, Map)",
+          "description": "Steuert den Capture-Prozess rechnungsbasiert: ermittelt offene autorisierte Zahlungen zu einer Rechnung und löst deren Buchung aus"
+        },
+        {
+          "signature": "processCaptureSplitPayment(DispatchContext, Map)",
+          "description": "Behandelt aufgeteilte Captures, bei denen ein Teilbetrag einer autorisierten Zahlung erfasst wird"
+        },
+        {
+          "signature": "captureBillingAccountPayments(DispatchContext, Map)",
+          "description": "Bucht Zahlungen über Abrechnungskonten (Kreditlinie), inkl. Überprüfung des verfügbaren Guthabens"
+        },
+        {
+          "signature": "refundOrderPaymentPreference(DispatchContext, Map)",
+          "description": "Initiiert eine Rückerstattung für eine einzelne Zahlungspräferenz"
+        },
+        {
+          "signature": "refundPayment(DispatchContext, Map)",
+          "description": "Führt eine direkte Rückerstattung auf eine Zahlungsmethode aus"
+        },
+        {
+          "signature": "processAuthResult(DispatchContext, Map)",
+          "description": "Verarbeitet und persistiert das Ergebnis einer Gateway-Autorisierungsantwort; aktualisiert Status und speichert Gateway-Response"
+        },
+        {
+          "signature": "processCaptureResult(DispatchContext, Map)",
+          "description": "Verarbeitet das Ergebnis eines Capture-Vorgangs und aktualisiert die Zahlungsbelege"
+        },
+        {
+          "signature": "processRefundResult(DispatchContext, Map)",
+          "description": "Verarbeitet das Ergebnis einer Rückerstattung und legt entsprechende Zahlungsdatensätze an"
+        },
+        {
+          "signature": "processReleaseResult(DispatchContext, Map)",
+          "description": "Verarbeitet das Ergebnis eines Release-Vorgangs"
+        },
+        {
+          "signature": "processCreditResult(DispatchContext, Map)",
+          "description": "Verarbeitet das Ergebnis einer Kreditbuchung"
+        },
+        {
+          "signature": "retryFailedAuths(DispatchContext, Map)",
+          "description": "Batch-Job: wiederholt fehlgeschlagene Autorisierungsversuche für alle offenen Aufträge"
+        },
+        {
+          "signature": "retryFailedOrderAuth(DispatchContext, Map)",
+          "description": "Wiederholt fehlgeschlagene Autorisierung für einen einzelnen Auftrag"
+        },
+        {
+          "signature": "retryFailedAuthNsfs(DispatchContext, Map)",
+          "description": "Wiederholt fehlgeschlagene NSF-Autorisierungen (Non-Sufficient Funds)"
+        },
+        {
+          "signature": "processManualCcAuth(DispatchContext, Map)",
+          "description": "Verarbeitet eine manuell eingegebene Kreditkartenautorisation (z.B. per Telefon erhaltener Auth-Code)"
+        },
+        {
+          "signature": "processManualCcTx(DispatchContext, Map)",
+          "description": "Führt eine vollständige manuelle Kreditkartentransaktion durch"
+        },
+        {
+          "signature": "verifyCreditCard(DispatchContext, Map)",
+          "description": "Validiert Kreditkartendaten (Format, Ablaufdatum, Luhn-Prüfung) ohne Echttransaktion"
+        },
+        {
+          "signature": "savePaymentGatewayResponse(DispatchContext, Map)",
+          "description": "Persistiert eine rohe Gateway-Antwort in der Datenbank"
+        },
+        {
+          "signature": "savePaymentGatewayResponseAndMessages(DispatchContext, Map)",
+          "description": "Persistiert Gateway-Antwort inklusive aller Rückgabe-Nachrichten"
+        },
+        {
+          "signature": "storePaymentErrorMessage(DispatchContext, Map)",
+          "description": "Speichert Fehlermeldungen aus Gateway-Antworten für spätere Analyse"
+        },
+        {
+          "signature": "testProcessor(DispatchContext, Map)",
+          "description": "Simulierter Testprozessor, der Transaktionen immer genehmigt"
+        },
+        {
+          "signature": "testProcessorWithCapture(DispatchContext, Map)",
+          "description": "Testprozessor mit sofortigem Capture"
+        },
+        {
+          "signature": "testRandomAuthorize(DispatchContext, Map)",
+          "description": "Testprozessor mit zufälligem Autorisierungsergebnis"
+        },
+        {
+          "signature": "alwaysApproveProcessor(DispatchContext, Map)",
+          "description": "Testprozessor: genehmigt immer"
+        },
+        {
+          "signature": "alwaysDeclineProcessor(DispatchContext, Map)",
+          "description": "Testprozessor: lehnt immer ab"
+        },
+        {
+          "signature": "alwaysNsfProcessor(DispatchContext, Map)",
+          "description": "Testprozessor: simuliert immer unzureichende Deckung"
+        },
+        {
+          "signature": "alwaysBadExpireProcessor(DispatchContext, Map)",
+          "description": "Testprozessor: simuliert immer abgelaufene Karte"
+        },
+        {
+          "signature": "alwaysBadCardNumberProcessor(DispatchContext, Map)",
+          "description": "Testprozessor: simuliert immer ungültige Kartennummer"
+        },
+        {
+          "signature": "testRelease(DispatchContext, Map)",
+          "description": "Testprozessor für Release-Operationen"
+        },
+        {
+          "signature": "testCapture(DispatchContext, Map)",
+          "description": "Testprozessor für Capture-Operationen"
+        },
+        {
+          "signature": "testRefund(DispatchContext, Map)",
+          "description": "Testprozessor für Rückerstattungen"
+        }
+      ]
+    },
+    {
+      "id": "PaymentWorker",
+      "name": "PaymentWorker",
+      "package": "org.apache.ofbiz.accounting.payment",
+      "type": "Java-Klasse (Utility, nicht instanziierbar)",
+      "description": "Statische Hilfsmethoden zur Berechnung von Zahlungsbeträgen (angewendet, nicht angewendet) und zum Abruf von Zahlungsmethodeninformationen für Parties.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getPartyPaymentMethodValueMaps(Delegator, String, Boolean)",
+          "description": "Gibt alle Zahlungsmethoden einer Party zurück, optional einschließlich abgelaufener Methoden"
+        },
+        {
+          "signature": "getPaymentMethodAndRelated(ServletRequest, String)",
+          "description": "Lädt eine Zahlungsmethode mit allen verknüpften Daten (Kreditkarte, EFT-Konto, Rechnungsadresse) aus dem Request-Kontext"
+        },
+        {
+          "signature": "getPaymentsTotal(List)",
+          "description": "Summiert die Beträge einer Liste von Zahlungsdatensätzen"
+        },
+        {
+          "signature": "getPaymentApplied(Delegator, String, Timestamp, Boolean)",
+          "description": "Berechnet den auf eine Zahlung angewendeten Betrag, optional zu einem bestimmten Stichtag und in Originalwährung"
+        },
+        {
+          "signature": "getPaymentNotApplied(GenericValue, Boolean)",
+          "description": "Berechnet den noch nicht auf Rechnungen angewendeten Restbetrag einer Zahlung"
+        },
+        {
+          "signature": "getPaymentAppliedAmount(Delegator, String)",
+          "description": "Gibt den Betrag einer einzelnen PaymentApplication zurück"
+        }
+      ]
+    },
+    {
+      "id": "PaymentMethodServices",
+      "name": "PaymentMethodServices",
+      "package": "org.apache.ofbiz.accounting.payment",
+      "type": "Java-Klasse",
+      "description": "CRUD-Dienste für die verschiedenen Zahlungsmethodentypen (Kreditkarten, Geschenkgutscheine, EFT-Konten, Scheckkonten). Enthält Gültigkeitsprüfungen und Sicherheitsvalidierung.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "deletePaymentMethod(DispatchContext, Map)",
+          "description": "Deaktiviert eine Zahlungsmethode durch Setzen des thruDate (kein physisches Löschen)"
+        },
+        {
+          "signature": "makeExpireDate(DispatchContext, Map)",
+          "description": "Generiert ein standardisiertes Ablaufdatum-Timestamp aus Monat/Jahr-Eingabe"
+        },
+        {
+          "signature": "createCreditCard(DispatchContext, Map)",
+          "description": "Legt eine neue Kreditkarte als Zahlungsmethode an, inklusive Adressverknüpfung"
+        },
+        {
+          "signature": "updateCreditCard(DispatchContext, Map)",
+          "description": "Aktualisiert Kreditkartendaten und zugehörige Rechnungsadresse"
+        },
+        {
+          "signature": "clearCreditCardData(DispatchContext, Map)",
+          "description": "Löscht sensible Kreditkartendaten (PAN, CVV) aus der Datenbank (PCI-Compliance)"
+        },
+        {
+          "signature": "createGiftCard(DispatchContext, Map)",
+          "description": "Legt eine Geschenkkarte als Zahlungsmethode an"
+        },
+        {
+          "signature": "updateGiftCard(DispatchContext, Map)",
+          "description": "Aktualisiert Geschenkkartendaten"
+        },
+        {
+          "signature": "createEftAccount(DispatchContext, Map)",
+          "description": "Legt ein EFT-Bankkonto (Electronic Funds Transfer) an"
+        },
+        {
+          "signature": "updateEftAccount(DispatchContext, Map)",
+          "description": "Aktualisiert EFT-Kontodaten"
+        },
+        {
+          "signature": "createCheckAccount(DispatchContext, Map)",
+          "description": "Legt ein Scheckkonto als Zahlungsmethode an"
+        },
+        {
+          "signature": "updateCheckAccount(DispatchContext, Map)",
+          "description": "Aktualisiert Scheckkontodaten"
+        }
+      ]
+    },
+    {
+      "id": "GiftCertificateServices",
+      "name": "GiftCertificateServices",
+      "package": "org.apache.ofbiz.accounting.payment",
+      "type": "Java-Klasse",
+      "description": "Vollständiger Lebenszyklus für Geschenkgutscheine (Gift Certificates): Erstellung, Aufladung, Einlösung, Saldoabfrage sowie Payment-Gateway-Integration. Karten- und PIN-Nummern werden per SecureRandom generiert (14- bzw. 6-stellig).",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createGiftCertificate(DispatchContext, Map)",
+          "description": "Erstellt einen neuen Geschenkgutschein mit Anfangsguthaben und legt das zugehörige FinAccount an"
+        },
+        {
+          "signature": "addFundsToGiftCertificate(DispatchContext, Map)",
+          "description": "Lädt einen bestehenden Geschenkgutschein mit einem weiteren Betrag auf"
+        },
+        {
+          "signature": "redeemGiftCertificate(DispatchContext, Map)",
+          "description": "Löst einen Betrag vom Geschenkgutschein ein und bucht die Transaktion"
+        },
+        {
+          "signature": "checkGiftCertificateBalance(DispatchContext, Map)",
+          "description": "Gibt das aktuelle Guthaben eines Geschenkgutscheins zurück"
+        },
+        {
+          "signature": "giftCertificateProcessor(DispatchContext, Map)",
+          "description": "Payment-Gateway-Adapter: autorisiert und erfasst Zahlungen per Geschenkgutschein"
+        },
+        {
+          "signature": "giftCertificateAuthorize(DispatchContext, Map)",
+          "description": "Reserviert einen Betrag auf dem Geschenkgutschein (Pre-Authorization)"
+        },
+        {
+          "signature": "giftCertificateRefund(DispatchContext, Map)",
+          "description": "Erstattet einen Betrag auf einen Geschenkgutschein"
+        },
+        {
+          "signature": "giftCertificateRelease(DispatchContext, Map)",
+          "description": "Gibt eine reservierte Autorisierung frei"
+        },
+        {
+          "signature": "giftCertificatePurchase(DispatchContext, Map)",
+          "description": "Verarbeitet den Kauf eines Geschenkgutscheins inklusive Erfüllungslogik"
+        },
+        {
+          "signature": "giftCertificateReload(DispatchContext, Map)",
+          "description": "Verarbeitet das Aufladen eines Geschenkgutscheins als Produktkauf"
+        },
+        {
+          "signature": "createFulfillmentRecord(DispatchContext, Map)",
+          "description": "Legt einen Erfüllungsdatensatz für einen Geschenkgutschein an"
+        },
+        {
+          "signature": "refundGcPurchase(DispatchContext, Map)",
+          "description": "Rückerstattet einen Gutscheinkauf und storniert das Guthaben"
+        }
+      ]
+    },
+    {
+      "id": "BillingAccountWorker",
+      "name": "BillingAccountWorker",
+      "package": "org.apache.ofbiz.accounting.payment",
+      "type": "Java-Klasse (Utility, final)",
+      "description": "Berechnung von Abrechnungskonto-Salden, Verfügbarkeitsprüfung und Auflistung offener Aufträge für Kreditlinienverwaltung.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "makePartyBillingAccountList(GenericValue, String, String, Delegator, LocalDispatcher)",
+          "description": "Erstellt eine aufbereitete Liste aller Abrechnungskonten einer Party inkl. verfügbarer Guthaben, auch für Agenten-Kunden-Beziehungen"
+        },
+        {
+          "signature": "getBillingAccountOpenOrders(Delegator, String)",
+          "description": "Liefert alle offenen Aufträge, die einem Abrechnungskonto belastet werden"
+        },
+        {
+          "signature": "getBillingAccountAvailableBalance(GenericValue)",
+          "description": "Berechnet das verfügbare Guthaben eines Abrechnungskontos (Limit minus offene Salden)"
+        },
+        {
+          "signature": "getBillingAccountNetBalance(Delegator, String)",
+          "description": "Berechnet den Nettosaldo eines Abrechnungskontos aus allen Zahlungsanwendungen"
+        },
+        {
+          "signature": "availableToCapture(GenericValue)",
+          "description": "Prüft den für Capture verfügbaren Betrag auf einem Abrechnungskonto"
+        },
+        {
+          "signature": "calcBillingAccountBalance(DispatchContext, Map)",
+          "description": "Service-Methode zur Saldoberechnung, aufrufbar über das Service-Framework"
+        }
+      ]
+    },
+    {
+      "id": "InvoiceServices",
+      "name": "InvoiceServices",
+      "package": "org.apache.ofbiz.accounting.invoice",
+      "type": "Java-Klasse",
+      "description": "Umfangreiche Service-Klasse für die Rechnungserzeugung aus verschiedenen Auftragsprozessen (Auftragsabschluss, Lieferungen, Dropshipping, Retouren). Deckt außerdem Zahlungsabgleich, Provisionsrechnungen und CSV-Import ab.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createInvoiceForOrder(DispatchContext, Map)",
+          "description": "Erzeugt eine vollständige Rechnung aus einem Auftrag: Positionen, Anpassungen, Versandkosten und Steuern werden proportional auf die fakturierten Artikel verteilt"
+        },
+        {
+          "signature": "createInvoiceForOrderAllItems(DispatchContext, Map)",
+          "description": "Wrapper um createInvoiceForOrder, der automatisch alle Auftragspositionen in die Rechnung einschließt"
+        },
+        {
+          "signature": "createCommissionInvoices(DispatchContext, Map)",
+          "description": "Erzeugt Provisionsrechnungen für Vertriebsmitarbeiter auf Basis von Vereinbarungen und fakturierten Verkäufen"
+        },
+        {
+          "signature": "readyInvoices(DispatchContext, Map)",
+          "description": "Versetzt mehrere Rechnungen gleichzeitig in den Status \"Bereit\""
+        },
+        {
+          "signature": "createInvoicesFromShipment(DispatchContext, Map)",
+          "description": "Erzeugt Rechnungen auf Basis eines Lieferscheins; berücksichtigt lieferungsbasierte Fakturierungsregeln"
+        },
+        {
+          "signature": "setInvoicesToReadyFromShipment(DispatchContext, Map)",
+          "description": "Setzt Rechnungen, die zu einer Lieferung gehören, auf \"Bereit\""
+        },
+        {
+          "signature": "createSalesInvoicesFromDropShipment(DispatchContext, Map)",
+          "description": "Erzeugt Verkaufsrechnungen für Dropshipping-Bestellungen aus eingehenden Einkaufsrechnungen"
+        },
+        {
+          "signature": "createInvoicesFromShipments(DispatchContext, Map)",
+          "description": "Verarbeitet mehrere Lieferungen gleichzeitig und erzeugt die entsprechenden Rechnungen"
+        },
+        {
+          "signature": "createInvoicesFromReturnShipment(DispatchContext, Map)",
+          "description": "Erzeugt Gutschriften aus Retourenlieferungen"
+        },
+        {
+          "signature": "createInvoiceFromReturn(DispatchContext, Map)",
+          "description": "Erzeugt eine Gutschriftsrechnung aus einem Retourenauftrag"
+        },
+        {
+          "signature": "checkInvoicePaymentApplications(DispatchContext, Map)",
+          "description": "Prüft alle Zahlungsanwendungen einer Rechnung und setzt ggf. den Rechnungsstatus auf \"Bezahlt\""
+        },
+        {
+          "signature": "updatePaymentApplication(DispatchContext, Map)",
+          "description": "Aktualisiert eine Zahlungsanwendung"
+        },
+        {
+          "signature": "updatePaymentApplicationDef(DispatchContext, Map)",
+          "description": "Aktualisiert eine Zahlungsanwendung mit Defaultwerten"
+        },
+        {
+          "signature": "updatePaymentApplicationDefBd(DispatchContext, Map)",
+          "description": "Aktualisiert eine Zahlungsanwendung mit BigDecimal-Präzision"
+        },
+        {
+          "signature": "calculateInvoicedAdjustmentTotal(DispatchContext, Map)",
+          "description": "Berechnet die Gesamtsumme aller fakturierten Auftragskorrekturen"
+        },
+        {
+          "signature": "checkPaymentInvoices(DispatchContext, Map)",
+          "description": "Prüft, ob Zahlungen vollständig auf Rechnungen angewendet wurden"
+        },
+        {
+          "signature": "importInvoice(DispatchContext, Map)",
+          "description": "Importiert Rechnungsdaten aus einem CSV-Format"
+        }
+      ]
+    },
+    {
+      "id": "InvoiceWorker",
+      "name": "InvoiceWorker",
+      "package": "org.apache.ofbiz.accounting.invoice",
+      "type": "Java-Klasse (Utility, final, nicht instanziierbar)",
+      "description": "Statische Berechnungsmethoden für Rechnungsbeträge, Steuern, angewendete und ausstehende Beträge sowie Währungsumrechnung. Wird von nahezu allen anderen Buchhaltungsklassen genutzt.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getInvoiceTotal(Delegator, String, Boolean)",
+          "description": "Berechnet den Gesamtbetrag einer Rechnung, optional in Originalwährung"
+        },
+        {
+          "signature": "getInvoiceItemTotal(GenericValue)",
+          "description": "Berechnet den Betrag einer einzelnen Rechnungsposition (Menge × Einzelpreis)"
+        },
+        {
+          "signature": "getInvoiceItemDescription(LocalDispatcher, GenericValue, Locale)",
+          "description": "Ermittelt die lesbare Beschreibung einer Rechnungsposition (Produktname, Dienstart etc.)"
+        },
+        {
+          "signature": "getTaxableInvoiceItemTypeIds(Delegator)",
+          "description": "Gibt alle Rechnungspositionstypen zurück, die der Steuer unterliegen"
+        },
+        {
+          "signature": "getInvoiceTaxTotal(GenericValue)",
+          "description": "Berechnet den gesamten Steuerbetrag einer Rechnung"
+        },
+        {
+          "signature": "getInvoiceNoTaxTotal(GenericValue)",
+          "description": "Berechnet den Nettobetrag einer Rechnung ohne Steuern"
+        },
+        {
+          "signature": "getInvoiceApplied(Delegator, String, Timestamp, Boolean)",
+          "description": "Berechnet den bereits auf die Rechnung angewendeten Zahlungsbetrag, optional zu einem Stichtag"
+        },
+        {
+          "signature": "getInvoiceNotApplied(GenericValue, Timestamp)",
+          "description": "Berechnet den noch offenen Betrag einer Rechnung zu einem Stichtag"
+        },
+        {
+          "signature": "getInvoiceItemApplied(GenericValue)",
+          "description": "Berechnet den auf eine einzelne Rechnungsposition angewendeten Zahlungsbetrag"
+        },
+        {
+          "signature": "getInvoiceCurrencyConversionRate(GenericValue)",
+          "description": "Ermittelt den Währungsumrechnungskurs aus der Rechnung oder dem verknüpften Auftrag"
+        },
+        {
+          "signature": "getInvoiceTaxByTaxAuthGeoAndParty(GenericValue)",
+          "description": "Gibt Steuern aufgegliedert nach Steuerbehörde und geografischer Zuständigkeit zurück"
+        },
+        {
+          "signature": "getInvoiceTaxAuthPartyAndGeos(GenericValue)",
+          "description": "Gibt alle Steuerbehörden-Party-Geo-Kombinationen einer Rechnung zurück"
+        },
+        {
+          "signature": "getInvoiceTaxTotalForTaxAuthPartyAndGeo(GenericValue, String, String)",
+          "description": "Berechnet den Steuerbetrag für eine spezifische Steuerbehörde"
+        },
+        {
+          "signature": "getInvoiceUnattributedTaxTotal(GenericValue)",
+          "description": "Berechnet Steuern, die keiner Steuerbehörde zugeordnet sind"
+        }
+      ]
+    },
+    {
+      "id": "GeneralLedgerServices",
+      "name": "GeneralLedgerServices",
+      "package": "org.apache.ofbiz.accounting.ledger",
+      "type": "Java-Klasse",
+      "description": "Hauptbuchdienste zur Verwaltung von Kostenstellen. Orchestriert die Zuweisung von GL-Konten zu Kostenstellenkategorien mit prozentualer Aufteilung.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createUpdateCostCenter(DispatchContext, Map)",
+          "description": "Legt Kostenstellenzuordnungen für ein GL-Konto an oder aktualisiert sie; ruft für jede Kategorie createGlAcctCatMemFromCostCenters auf"
+        },
+        {
+          "signature": "calculateCostCenterTotal(Map)",
+          "description": "Summiert alle Prozentsätze der Kostenstellen-Zuweisungen zur Validierung (Summe sollte 100% ergeben)"
+        }
+      ]
+    },
+    {
+      "id": "TaxAuthorityServices",
+      "name": "TaxAuthorityServices",
+      "package": "org.apache.ofbiz.accounting.tax",
+      "type": "Java-Klasse",
+      "description": "Steuerberechnung für Produkte auf Basis von Steuerbehördendaten, geografischen Regeln und Produktkategorien. Unterstützt displaybezogene Vorabanzeige und exakte Auftragsberechnung.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "rateProductTaxCalcForDisplay(DispatchContext, Map)",
+          "description": "Berechnet Steuern für Anzeigezwecke (z.B. Warenkorb) auf Basis von Produktpreis, Menge und Lieferadresse"
+        },
+        {
+          "signature": "rateProductTaxCalc(DispatchContext, Map)",
+          "description": "Vollständige Steuerberechnung für einen Auftragsabschluss: berücksichtigt Steuerbehörden-Hierarchien, Geo-Überschneidungen, steuerfreie Kategorien und produkt-spezifische Steuersätze"
+        }
+      ]
+    },
+    {
+      "id": "AgreementServices",
+      "name": "AgreementServices",
+      "package": "org.apache.ofbiz.accounting.agreement",
+      "type": "Java-Klasse",
+      "description": "Berechnet Provisionen für Produkte auf Basis aktiver Vertragsvereinbarungen. Unterstützt Produktvarianten durch Rückfall auf die Elternprodukt-Vereinbarung.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getCommissionForProduct(DispatchContext, Map)",
+          "description": "Ermittelt alle aktiven Provisionsvereinbarungen für ein Produkt und berechnet den Provisionsbetrag unter Berücksichtigung von Mindest-/Höchstbeträgen, Prozentsätzen und Mengenstaffeln"
+        }
+      ]
+    },
+    {
+      "id": "PeriodServices",
+      "name": "PeriodServices",
+      "package": "org.apache.ofbiz.accounting.period",
+      "type": "Java-Klasse",
+      "description": "Verwaltung von Buchungsperioden und Periodenabschlussdaten für organisationsbezogene Buchhaltungsauswertungen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "findLastClosedDate(DispatchContext, Map)",
+          "description": "Ermittelt das letzte Abschlussdatum einer Buchungsperiode für eine Organisation und einen Periodentyp"
+        }
+      ]
+    },
+    {
+      "id": "FinAccountServices",
+      "name": "FinAccountServices",
+      "package": "org.apache.ofbiz.accounting.finaccount",
+      "type": "Java-Klasse",
+      "description": "Verwaltung von Finanzkonten (Financial Accounts) für Kundenguthaben, Service-Credits und Bankkonten. Deckt Kontoerstellung, Saldenabfrage, Statusprüfung und Rückerstattungen ab.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createAccountAndCredit(DispatchContext, Map)",
+          "description": "Erstellt ein Finanzkonto (Standard: Service-Credit-Konto) und schreibt sofort einen Anfangsbetrag gut"
+        },
+        {
+          "signature": "createFinAccountForStore(DispatchContext, Map)",
+          "description": "Erstellt ein shopbezogenes Finanzkonto mit den für den jeweiligen Produktshop konfigurierten Standardwerten"
+        },
+        {
+          "signature": "checkFinAccountBalance(DispatchContext, Map)",
+          "description": "Gibt den aktuellen Saldo eines Finanzkontos zurück"
+        },
+        {
+          "signature": "checkFinAccountStatus(DispatchContext, Map)",
+          "description": "Prüft und aktualisiert den Status eines Finanzkontos (z.B. von \"Aktiv\" auf \"Mangelkonto\")"
+        },
+        {
+          "signature": "refundFinAccount(DispatchContext, Map)",
+          "description": "Erstattet das gesamte Guthaben eines Finanzkontos an den Kontoinhaber"
+        }
+      ]
+    },
+    {
+      "id": "FinAccountPaymentServices",
+      "name": "FinAccountPaymentServices",
+      "package": "org.apache.ofbiz.accounting.finaccount",
+      "type": "Java-Klasse",
+      "description": "Payment-Gateway-Adapter für Finanzkonten. Ermöglicht Finanzkonten als vollwertige Zahlungsmethode im OFBiz-Gateway-Framework (Pre-Auth, Capture, Release, Refund, Einzahlung, Abhebung, Nachfüllung).",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "finAccountPreAuth(DispatchContext, Map)",
+          "description": "Reserviert einen Betrag auf dem Finanzkonto (Pre-Authorization)"
+        },
+        {
+          "signature": "finAccountReleaseAuth(DispatchContext, Map)",
+          "description": "Gibt eine Reservierung auf dem Finanzkonto frei"
+        },
+        {
+          "signature": "finAccountCapture(DispatchContext, Map)",
+          "description": "Bucht einen zuvor reservierten Betrag vom Finanzkonto ab"
+        },
+        {
+          "signature": "finAccountRefund(DispatchContext, Map)",
+          "description": "Erstattet einen Betrag zurück auf das Finanzkonto"
+        },
+        {
+          "signature": "finAccountWithdraw(DispatchContext, Map)",
+          "description": "Führt eine direkte Abbuchung vom Finanzkonto durch"
+        },
+        {
+          "signature": "finAccountDeposit(DispatchContext, Map)",
+          "description": "Schreibt einen Betrag dem Finanzkonto gut"
+        },
+        {
+          "signature": "finAccountReplenish(DispatchContext, Map)",
+          "description": "Füllt ein Finanzkonto automatisch auf den konfigurierten Mindestsaldo auf"
+        }
+      ]
+    },
+    {
+      "id": "FinAccountProductServices",
+      "name": "FinAccountProductServices",
+      "package": "org.apache.ofbiz.accounting.finaccount",
+      "type": "Java-Klasse",
+      "description": "Verknüpft Produktkäufe mit der Erstellung von Finanzkonten (z.B. Guthabenkarten-Produkt erzeugt automatisch ein Finanzkonto).",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createPartyFinAccountFromPurchase(DispatchContext, Map)",
+          "description": "Erstellt bei Kauf eines bestimmten Produkts automatisch ein Finanzkonto für den Käufer und schreibt den Produktwert als Guthaben gut"
+        }
+      ]
+    },
+    {
+      "id": "UtilAccounting",
+      "name": "UtilAccounting",
+      "package": "org.apache.ofbiz.accounting.util",
+      "type": "Java-Klasse (Utility, final, nicht instanziierbar)",
+      "description": "Zentrale Hilfsmethoden zur GL-Kontenauflösung und zur Klassifizierung von Konten und Zahlungen. Dient als gemeinsame Basis für alle Module, die GL-Konten zuordnen müssen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getProductOrgGlAccountId(String, String, String, Delegator)",
+          "description": "Löst das GL-Konto für ein Produkt auf: prüft erst produkt-spezifische Zuordnungen, fällt dann auf den organisationsweiten Default zurück"
+        },
+        {
+          "signature": "getDefaultAccountId(String, String, Delegator)",
+          "description": "Gibt das Standard-GL-Konto für einen Kontotyp und eine Organisation zurück"
+        },
+        {
+          "signature": "getDescendantGlAccountClassIds(GenericValue)",
+          "description": "Gibt rekursiv alle untergeordneten GL-Kontenklassen-IDs zurück"
+        },
+        {
+          "signature": "isPaymentType(GenericValue, String)",
+          "description": "Prüft, ob eine Zahlung einem bestimmten Zahlungstyp angehört"
+        },
+        {
+          "signature": "isTaxPayment(GenericValue)",
+          "description": "Prüft, ob eine Zahlung eine Steuerzahlung ist"
+        },
+        {
+          "signature": "isDisbursement(GenericValue)",
+          "description": "Prüft, ob eine Zahlung eine Auszahlung ist"
+        },
+        {
+          "signature": "isReceipt(GenericValue)",
+          "description": "Prüft, ob eine Zahlung ein Eingang ist"
+        },
+        {
+          "signature": "isDebitAccount(GenericValue) / isCreditAccount(GenericValue)",
+          "description": "Klassifiziert ein GL-Konto als Soll- oder Habenkonto"
+        },
+        {
+          "signature": "isAssetAccount(GenericValue) / isLiabilityAccount(GenericValue) / isEquityAccount(GenericValue)",
+          "description": "Prüft die Kontenklasse eines GL-Kontos"
+        },
+        {
+          "signature": "isIncomeAccount(GenericValue) / isRevenueAccount(GenericValue) / isExpenseAccount(GenericValue)",
+          "description": "Klassifiziert Ertrags-, Umsatz- und Aufwandskonten"
+        },
+        {
+          "signature": "isPurchaseInvoice(GenericValue) / isSalesInvoice(GenericValue)",
+          "description": "Klassifiziert Rechnungen nach Einkauf/Verkauf"
+        }
+      ]
+    },
+    {
+      "id": "AIMPaymentServices",
+      "name": "AIMPaymentServices",
+      "package": "org.apache.ofbiz.accounting.thirdparty.authorizedotnet",
+      "type": "Java-Klasse",
+      "description": "Anbindung an Authorize.Net über das AIM-Protokoll (Advanced Integration Method) per HTTP-POST. Unterstützt alle Standard-Gateway-Operationen inkl. Void für bestimmte Antwortcodes (z.B. Code 50/54).",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "ccAuth(DispatchContext, Map)",
+          "description": "Autorisiert eine Kreditkartenzahlung via AIM (AUTH_ONLY-Transaktion)"
+        },
+        {
+          "signature": "ccCapture(DispatchContext, Map)",
+          "description": "Erfasst eine zuvor autorisierte Zahlung (PRIOR_AUTH_CAPTURE)"
+        },
+        {
+          "signature": "ccRefund(DispatchContext, Map)",
+          "description": "Erstattet eine abgeschlossene Transaktion (CREDIT)"
+        },
+        {
+          "signature": "ccRelease(DispatchContext, Map)",
+          "description": "Gibt eine Autorisierung frei (VOID)"
+        },
+        {
+          "signature": "ccCredit(DispatchContext, Map)",
+          "description": "Führt eine ungebundene Gutschrift durch"
+        },
+        {
+          "signature": "ccAuthCapture(DispatchContext, Map)",
+          "description": "Autorisiert und erfasst in einem Schritt (AUTH_CAPTURE)"
+        }
+      ]
+    },
+    {
+      "id": "CCPaymentServices",
+      "name": "CCPaymentServices",
+      "package": "org.apache.ofbiz.accounting.thirdparty.clearcommerce",
+      "type": "Java-Klasse",
+      "description": "XML-basierte Integration mit dem ClearCommerce-Zahlungsgateway. Aufbau und Übermittlung von XML-Anfragen; Auswertung der XML-Antworten inklusive Schweregrad-Prüfung.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "ccAuth(DispatchContext, Map)",
+          "description": "Sendet eine Pre-Authorization-Anfrage als XML-Dokument"
+        },
+        {
+          "signature": "ccCredit(DispatchContext, Map)",
+          "description": "Führt eine Kreditbuchung (Rückgabe ohne Referenz) durch"
+        },
+        {
+          "signature": "ccCapture(DispatchContext, Map)",
+          "description": "Erfasst eine autorisierte Zahlung"
+        },
+        {
+          "signature": "ccRelease(DispatchContext, Map)",
+          "description": "Gibt eine Autorisierung frei"
+        },
+        {
+          "signature": "ccReleaseNoop(DispatchContext, Map)",
+          "description": "Leere Release-Implementierung (kein Netzwerkaufruf, direkte Erfolgsrückgabe)"
+        },
+        {
+          "signature": "ccRefund(DispatchContext, Map)",
+          "description": "Erstattet eine erfasste Zahlung"
+        },
+        {
+          "signature": "ccReAuth(DispatchContext, Map)",
+          "description": "Re-autorisiert eine abgelaufene Autorisierung"
+        },
+        {
+          "signature": "ccReport(DispatchContext, Map)",
+          "description": "Ruft Transaktionsberichte vom Gateway ab"
+        }
+      ]
+    },
+    {
+      "id": "Klassen-EwayServices-GatewayRequest-GatewayResponse-GatewayConnector-eWay",
+      "name": "Klassen: `EwayServices`, `GatewayRequest`, `GatewayResponse`, `GatewayConnector` (eWay)",
+      "package": "org.apache.ofbiz.accounting.thirdparty.eway",
+      "type": "Java-Klassen",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "EwayServices.ewayCharge(DispatchContext, Map)",
+          "description": "Verarbeitet eine Kreditkartenzahlung (kombiniert Auth und Capture); befüllt GatewayRequest mit Kundendaten, Adresse und CVN"
+        },
+        {
+          "name": "EwayServices.ewayRefund(DispatchContext, Map)",
+          "description": "Erstattet eine Zahlung über die eWay-Refund-URL"
+        },
+        {
+          "name": "EwayServices.ewayRelease(DispatchContext, Map)",
+          "description": "Gibt eine Autorisierung frei (leere Implementierung, da eWay kein separates Release kennt)"
+        },
+        {
+          "name": "GatewayConnector.sendRequest(GatewayRequest)",
+          "description": "Sendet die XML-Anfrage an die eWay-API-URL und gibt die geparste Antwort zurück"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Klassen-PcChargeServices-PcChargeApi-RitaServices-RitaApi-GoSoftware",
+      "name": "Klassen: `PcChargeServices`, `PcChargeApi`, `RitaServices`, `RitaApi` (GoSoftware)",
+      "package": "org.apache.ofbiz.accounting.thirdparty.gosoftware",
+      "type": "Java-Klassen",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "PcChargeServices.ccAuth(DispatchContext, Map)",
+          "description": "Autorisiert über PcCharge-API"
+        },
+        {
+          "name": "PcChargeServices.ccCapture(DispatchContext, Map)",
+          "description": "Erfasst über PcCharge-API"
+        },
+        {
+          "name": "PcChargeServices.ccRelease(DispatchContext, Map)",
+          "description": "Gibt Autorisierung über PcCharge frei"
+        },
+        {
+          "name": "PcChargeServices.ccRefund(DispatchContext, Map)",
+          "description": "Erstattet über PcCharge-API"
+        },
+        {
+          "name": "RitaServices.ccAuth(DispatchContext, Map)",
+          "description": "Autorisiert über RITA-HTTP-API"
+        },
+        {
+          "name": "RitaServices.ccCapture(DispatchContext, Map)",
+          "description": "Erfasst über RITA-HTTP-API"
+        },
+        {
+          "name": "RitaServices.ccVoidRelease(DispatchContext, Map)",
+          "description": "Storniert eine Autorisierung"
+        },
+        {
+          "name": "RitaServices.ccVoidRefund(DispatchContext, Map)",
+          "description": "Storniert eine Rückerstattung"
+        },
+        {
+          "name": "RitaServices.ccCreditRefund(DispatchContext, Map)",
+          "description": "Führt eine Kredit-Rückerstattung durch"
+        },
+        {
+          "name": "RitaServices.ccRefund(DispatchContext, Map)",
+          "description": "Erstattet über RITA-API"
+        },
+        {
+          "name": "PcChargeApi",
+          "description": "Kapselt XML-Aufbau und Socket-Kommunikation mit dem PcCharge-Terminal; definiert alle Anfrage-/Antwortfelder als Konstanten"
+        },
+        {
+          "name": "RitaApi",
+          "description": "Kapselt XML-Aufbau und HTTP-Kommunikation mit dem RITA-Server; definiert alle Protokollfelder als Konstanten"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "PayPalEvents",
+      "name": "PayPalEvents",
+      "package": "org.apache.ofbiz.accounting.thirdparty.paypal",
+      "type": "Java-Klasse",
+      "description": "PayPal-Integration über das klassische Redirect-Verfahren (Website Payments Standard) mit IPN (Instant Payment Notification). Leitet Kunden zu PayPal weiter und verarbeitet asynchrone Zahlungsbestätigungen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "callPayPal(HttpServletRequest, HttpServletResponse)",
+          "description": "Baut den PayPal-Weiterleitungs-Request auf (Betrag, Auftrag, Return-URLs) und leitet den Browser zu PayPal um"
+        },
+        {
+          "signature": "payPalIPN(HttpServletRequest, HttpServletResponse)",
+          "description": "Empfängt und validiert PayPal-IPN-Nachrichten; bestätigt den Eingang zurück an PayPal und aktualisiert Auftragsstatus und Zahlungsbelege"
+        },
+        {
+          "signature": "cancelPayPalOrder(HttpServletRequest, HttpServletResponse)",
+          "description": "Verarbeitet den Rücksprung nach Abbruch des Bezahlvorgangs bei PayPal und setzt den Auftrag zurück"
+        }
+      ]
+    },
+    {
+      "id": "Klassen-SagePayPaymentServices-SagePayServices-SagePayUtil-SagePay",
+      "name": "Klassen: `SagePayPaymentServices`, `SagePayServices`, `SagePayUtil` (SagePay)",
+      "package": "org.apache.ofbiz.accounting.thirdparty.sagepay",
+      "type": "Java-Klassen",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "SagePayPaymentServices.ccAuth(DispatchContext, Map)",
+          "description": "Führt eine VSP-Direktautorisierung durch; liest Kreditkartendaten und Rechnungsadresse aus dem Kontext"
+        },
+        {
+          "name": "SagePayPaymentServices.ccCapture(DispatchContext, Map)",
+          "description": "Erfasst eine autorisierte SagePay-Transaktion"
+        },
+        {
+          "name": "SagePayPaymentServices.ccRefund(DispatchContext, Map)",
+          "description": "Erstattet über SagePay"
+        },
+        {
+          "name": "SagePayPaymentServices.ccRelease(DispatchContext, Map)",
+          "description": "Gibt eine Autorisierung frei"
+        },
+        {
+          "name": "SagePayServices.paymentAuthentication(DispatchContext, Map)",
+          "description": "Sendet eine Authentifizierungsanfrage (3D-Secure-Vorstufe)"
+        },
+        {
+          "name": "SagePayServices.paymentAuthorisation(DispatchContext, Map)",
+          "description": "Autorisiert eine Zahlung nach erfolgreicher Authentifizierung"
+        },
+        {
+          "name": "SagePayServices.paymentRelease(DispatchContext, Map)",
+          "description": "Gibt eine Autorisierung frei"
+        },
+        {
+          "name": "SagePayServices.paymentVoid(DispatchContext, Map)",
+          "description": "Storniert eine Transaktion"
+        },
+        {
+          "name": "SagePayServices.paymentRefund(DispatchContext, Map)",
+          "description": "Erstattet eine erfasste Zahlung"
+        },
+        {
+          "name": "SagePayUtil.buildCardAuthorisationPaymentResponse(...)",
+          "description": "Erstellt die standardisierte OFBiz-Gateway-Antwort-Map aus den SagePay-Rohdaten"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Klassen-ValueLinkServices-ValueLinkApi-ValueLink",
+      "name": "Klassen: `ValueLinkServices`, `ValueLinkApi` (ValueLink)",
+      "package": "org.apache.ofbiz.accounting.thirdparty.valuelink",
+      "type": "Java-Klassen",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "ValueLinkServices.createKeys(DispatchContext, Map)",
+          "description": "Generiert KEK (Key Encryption Key) und Working Keys für die sichere Kommunikation"
+        },
+        {
+          "name": "ValueLinkServices.assignWorkingKey(DispatchContext, Map)",
+          "description": "Hinterlegt einen Working Key nach Schlüsselaustausch"
+        },
+        {
+          "name": "ValueLinkServices.activate(DispatchContext, Map)",
+          "description": "Aktiviert eine neue Geschenkkarte"
+        },
+        {
+          "name": "ValueLinkServices.linkPhysicalCard(DispatchContext, Map)",
+          "description": "Verknüpft eine physische Karte mit einem digitalen Konto"
+        },
+        {
+          "name": "ValueLinkServices.redeem(DispatchContext, Map)",
+          "description": "Löst einen Betrag von einer Geschenkkarte ein"
+        },
+        {
+          "name": "ValueLinkServices.reload(DispatchContext, Map)",
+          "description": "Lädt eine Geschenkkarte mit Guthaben auf"
+        },
+        {
+          "name": "ValueLinkServices.balanceInquire(DispatchContext, Map)",
+          "description": "Fragt den Saldo einer Geschenkkarte ab"
+        },
+        {
+          "name": "ValueLinkServices.transactionHistory(DispatchContext, Map)",
+          "description": "Ruft die Transaktionshistorie einer Karte ab"
+        },
+        {
+          "name": "ValueLinkServices.refund(DispatchContext, Map)",
+          "description": "Erstattet einen Betrag auf eine Karte"
+        },
+        {
+          "name": "ValueLinkServices.voidRedeem(DispatchContext, Map)",
+          "description": "Storniert eine Einlösung"
+        },
+        {
+          "name": "ValueLinkServices.giftCardProcessor(DispatchContext, Map)",
+          "description": "Payment-Gateway-Adapter: autorisiert Geschenkkartenzahlungen im OFBiz-Framework"
+        },
+        {
+          "name": "ValueLinkServices.giftCardRefund(DispatchContext, Map)",
+          "description": "Erstattet eine Geschenkkartenzahlung"
+        },
+        {
+          "name": "ValueLinkServices.giftCardPurchase(DispatchContext, Map)",
+          "description": "Verarbeitet den Kauf einer Geschenkkarte als Produkt"
+        },
+        {
+          "name": "ValueLinkApi.encryptPin(String)",
+          "description": "Verschlüsselt eine PIN mit dem aktuellen Working Key"
+        },
+        {
+          "name": "ValueLinkApi.decryptPin(String)",
+          "description": "Entschlüsselt eine PIN"
+        },
+        {
+          "name": "ValueLinkApi.send(String, Map)",
+          "description": "Sendet eine signierte und verschlüsselte Anfrage an den ValueLink-Server"
+        },
+        {
+          "name": "ValueLinkApi.outputKeyCreation(boolean, String)",
+          "description": "Generiert und gibt den Schlüssel-Setup-Output für die Ersteinrichtung aus"
+        },
+        {
+          "name": "ValueLinkApi.getInitialRequestMap(Map)",
+          "description": "Erstellt die Basis-Map für eine ValueLink-Anfrage (Merchant-ID, Datum, Terminal-ID)"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "WorldPayEvents",
+      "name": "WorldPayEvents",
+      "package": "org.apache.ofbiz.accounting.thirdparty.worldpay",
+      "type": "Java-Klasse",
+      "description": "WorldPay-Integration über das Redirect-/Hosted-Payment-Page-Verfahren. Leitet Kunden zur WorldPay-Zahlungsseite weiter und verarbeitet asynchrone Zahlungsbenachrichtigungen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "worldPayRequest(HttpServletRequest, HttpServletResponse)",
+          "description": "Baut den WorldPay-Redirect-Request auf: liest Auftragsdaten, berechnet den Zahlungsbetrag, formatiert die WorldPay-URL und leitet den Browser um"
+        },
+        {
+          "signature": "worldPayNotify(HttpServletRequest, HttpServletResponse)",
+          "description": "Empfängt asynchrone Zahlungsbenachrichtigungen von WorldPay (äquivalent zu PayPal IPN), validiert die Anfrage und aktualisiert Auftragsstatus sowie Zahlungsbelege"
+        }
+      ]
+    },
+    {
+      "id": "Rechnungsverarbeitung-invoice",
+      "name": "Rechnungsverarbeitung (invoice)",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "invoice.InvoiceServicesScript",
+          "description": "Groovy-Pendant zu InvoiceServices; delegiert Rechnungs-Services ans Service-Framework"
+        },
+        {
+          "name": "invoice.InvoiceEvents",
+          "description": "Event-Handler für rechnungsbezogene Benutzeraktionen"
+        },
+        {
+          "name": "invoice.EditInvoice",
+          "description": "Aufbereitung der Daten für die Rechnungsbearbeitungsmaske"
+        },
+        {
+          "name": "invoice.DisplayInvoiceAmounts",
+          "description": "Berechnet und stellt Rechnungsbeträge für die Anzeige bereit"
+        },
+        {
+          "name": "invoice.CreateApplicationList",
+          "description": "Erstellt die Liste offener Zahlungsanwendungen für eine Rechnung"
+        },
+        {
+          "name": "invoice.ListNotAppliedPayments",
+          "description": "Listet nicht zugeordnete Zahlungen zu einer Rechnung"
+        },
+        {
+          "name": "invoice.InvoiceReport",
+          "description": "Aufbereitung von Daten für Rechnungsberichte"
+        },
+        {
+          "name": "invoice.PrintInvoices",
+          "description": "Druckvorbereitung für Rechnungen"
+        },
+        {
+          "name": "invoice.GetAccountOrganizationAndClass",
+          "description": "Ermittelt Organisationskonto und -klasse für einen Rechnungskontext"
+        },
+        {
+          "name": "invoice.SampleServices",
+          "description": "Beispiel-Service-Implementierung (Referenz/Demo)"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Zahlungsverarbeitung-payment",
+      "name": "Zahlungsverarbeitung (payment)",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "payment.PaymentServices",
+          "description": "Groovy-Service-Delegate für Zahlungsdienste"
+        },
+        {
+          "name": "payment.DepositWithdrawPayments",
+          "description": "Verarbeitet Ein- und Auszahlungen über die UI"
+        },
+        {
+          "name": "payment.FindInvoicesByDueDate",
+          "description": "Listet Rechnungen nach Fälligkeitsdatum für Zahlungsläufe"
+        },
+        {
+          "name": "payment.ListNotAppliedInvoices",
+          "description": "Listet nicht bezahlte Rechnungen für die Zahlungszuordnungs-UI"
+        },
+        {
+          "name": "payment.ListNotAppliedPayments",
+          "description": "Listet nicht zugeordnete Zahlungen für die Zahlungszuordnungs-UI"
+        },
+        {
+          "name": "payment.BillingAccounts",
+          "description": "Aufbereitung der Abrechnungskonto-Übersicht"
+        },
+        {
+          "name": "payment.ManualTx",
+          "description": "Manuelle Transaktionserfassung über die UI"
+        },
+        {
+          "name": "payment.PrintChecks",
+          "description": "Druckvorbereitung für Schecks"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Hauptbuch-und-Berichte-ledger-reports",
+      "name": "Hauptbuch und Berichte (ledger/reports)",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "ledger.GeneralLedgerServicesScript",
+          "description": "Groovy-Delegate für GL-Dienste"
+        },
+        {
+          "name": "ledger.PartyPreferenceTooltipLabels",
+          "description": "Aufbereitung von Tooltip-Labels für Partei-Buchhaltungspräferenzen"
+        },
+        {
+          "name": "reports.BalanceSheet",
+          "description": "Berechnet Bilanz-Daten (Aktiva/Passiva) für einen Stichtag"
+        },
+        {
+          "name": "reports.ComparativeBalanceSheet",
+          "description": "Vergleichsbilanz für zwei Perioden"
+        },
+        {
+          "name": "reports.IncomeStatement",
+          "description": "Gewinn-und-Verlust-Rechnung"
+        },
+        {
+          "name": "reports.ComparativeIncomeStatement",
+          "description": "Vergleichs-GuV für zwei Perioden"
+        },
+        {
+          "name": "reports.CashFlowStatement",
+          "description": "Kapitalflussrechnung"
+        },
+        {
+          "name": "reports.ComparativeCashFlowStatement",
+          "description": "Vergleichende Kapitalflussrechnung"
+        },
+        {
+          "name": "reports.GlAccountTrialBalance",
+          "description": "Probebilanz für ein einzelnes GL-Konto"
+        },
+        {
+          "name": "reports.TrialBalance",
+          "description": "Gesamte Probebilanz"
+        },
+        {
+          "name": "reports.CostCenters",
+          "description": "Kostenstellenauswertung"
+        },
+        {
+          "name": "reports.TransactionTotals",
+          "description": "Buchungsgesamtbeträge"
+        },
+        {
+          "name": "reports.MonthSelection",
+          "description": "UI-Helper zur Monatsauswahl in Berichtsmasken"
+        },
+        {
+          "name": "reports.SalesInvoiceByProductCategorySummary",
+          "description": "Umsatzauswertung nach Produktkategorie"
+        },
+        {
+          "name": "reports.InvoiceAcctgTransEntryParameters",
+          "description": "Aufbereitung der Parameter für Rechnungs-Buchungseintrags-Berichte"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Administration-admin",
+      "name": "Administration (admin)",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "admin.AcctgAdminServices",
+          "description": "Administrative Buchhaltungsdienste (GL-Konto-Setup, Organisationskonfiguration)"
+        },
+        {
+          "name": "admin.FilterOutReceipts",
+          "description": "Filtert Zahlungseingänge aus Belegen für administrative Auswertungen heraus"
+        },
+        {
+          "name": "admin.ListInvoiceItemTypesGlAccount",
+          "description": "Listet GL-Konto-Zuordnungen für Rechnungspositionstypen"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Transaktionen-und-Period-Management",
+      "name": "Transaktionen und Period-Management",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "transaction.AuthorizeTransaction",
+          "description": "UI-Script zur Autorisierung einer Transaktion"
+        },
+        {
+          "name": "transaction.CaptureTransaction",
+          "description": "UI-Script zur Erfassung einer Transaktion"
+        },
+        {
+          "name": "transaction.ViewGatewayResponse",
+          "description": "Aufbereitung der Gateway-Response-Details für die Anzeige"
+        },
+        {
+          "name": "period.GPeriodServices",
+          "description": "Groovy-Delegate für Periodenabschluss-Dienste"
+        },
+        {
+          "name": "period.EditCustomTimePeriod",
+          "description": "UI-Helper für die Pflege benutzerdefinierter Buchungsperioden"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Weitere-thematische-Gruppen",
+      "name": "Weitere thematische Gruppen",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "agreement.AgreementServicesScript",
+          "description": "Groovy-Delegate für Vertragsdienste"
+        },
+        {
+          "name": "agreement.GetPartyNameForDate",
+          "description": "Ermittelt den Parteinamen zu einem Stichtag für Vertragsanzeigen"
+        },
+        {
+          "name": "ap.invoices.CommissionReport",
+          "description": "Aufbereitung von Kommissionsberichten (Accounts Payable)"
+        },
+        {
+          "name": "ap.invoices.CommissionRun",
+          "description": "Ausführung eines Provisionsabrechnungslaufs"
+        },
+        {
+          "name": "ar.BatchPayments",
+          "description": "Stapelverarbeitung von eingehenden Zahlungen (Accounts Receivable)"
+        },
+        {
+          "name": "budget.BudgetServices",
+          "description": "Groovy-Delegate für Budgetverwaltungsdienste"
+        },
+        {
+          "name": "chartofaccounts.TaxAuthorityGlAccounts",
+          "description": "Aufbereitung der GL-Konto-Zuordnungen für Steuerbehörden im Kontenplan"
+        },
+        {
+          "name": "fixedasset.FixedAssetServices",
+          "description": "Groovy-Delegate für Anlagevermögensdienste (Abschreibungen, Umbuchungen)"
+        },
+        {
+          "name": "fixedasset.FixedAssetGeoLocation",
+          "description": "Verwaltet Geolokalisierungsdaten für Anlagegüter"
+        },
+        {
+          "name": "order.BillingAccountOrders",
+          "description": "Listet Aufträge zu einem Abrechnungskonto"
+        },
+        {
+          "name": "rate.RateServices",
+          "description": "Dienste für Stunden- und Kostensätze"
+        },
+        {
+          "name": "tax.TaxAuthorityServicesScript",
+          "description": "Groovy-Delegate für Steuerbehörden-Dienste"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Java-Tests-org-apache-ofbiz-accounting-test",
+      "name": "Java-Tests (`org.apache.ofbiz.accounting.test`)",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "FinAccountTests",
+          "description": "Integrationstests für Finanzkonto-Operationen: Erstellung, Einzahlung (100 EUR), Abhebung (50 EUR) mit Saldo-Validierung"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Groovy-Tests-org-apache-ofbiz-accounting-accounting",
+      "name": "Groovy-Tests (`org.apache.ofbiz.accounting.accounting`)",
+      "package": "",
+      "type": "Groovy-Scripts",
+      "description": "",
+      "is_group": true,
+      "members": [
+        {
+          "name": "AutoAcctgAdminTests",
+          "description": "Administrative Buchhaltungsdienste"
+        },
+        {
+          "name": "AutoAcctgAgreementTests",
+          "description": "Vertragsmanagement und Provisionen"
+        },
+        {
+          "name": "AutoAcctgBudgetTests",
+          "description": "Budgetverwaltung"
+        },
+        {
+          "name": "AutoAcctgCostTests",
+          "description": "Kostenrechnung"
+        },
+        {
+          "name": "AutoAcctgFinAccountTests",
+          "description": "Finanzkonten"
+        },
+        {
+          "name": "AutoAcctgFixedAssetTests",
+          "description": "Anlagevermögen"
+        },
+        {
+          "name": "AutoAcctgInvoiceTests",
+          "description": "Rechnungsstellung"
+        },
+        {
+          "name": "AutoAcctgLedgerTests",
+          "description": "Hauptbuch"
+        },
+        {
+          "name": "AutoAcctgPaymentGatewayTests",
+          "description": "Payment-Gateway-Operationen"
+        },
+        {
+          "name": "AutoAcctgPaymentTests",
+          "description": "Zahlungsverarbeitung"
+        },
+        {
+          "name": "AutoAcctgTransPurchaseTests",
+          "description": "Einkaufsbuchungen"
+        },
+        {
+          "name": "AutoAcctgTransSalesTests",
+          "description": "Verkaufsbuchungen"
+        },
+        {
+          "name": "AutoInvoiceTests",
+          "description": "Rechnungsautomatisierung"
+        },
+        {
+          "name": "AutoPaymentTests",
+          "description": "Zahlungsautomatisierung"
+        },
+        {
+          "name": "FixedAssetTests",
+          "description": "Anlagevermögen (manuell)"
+        },
+        {
+          "name": "InvoicePerShipmentTests",
+          "description": "Lieferungsbasierte Fakturierung"
+        },
+        {
+          "name": "PaymentApplicationTests",
+          "description": "Zahlungsabgleich"
+        },
+        {
+          "name": "RateTests",
+          "description": "Kostensatzverwaltung"
+        }
+      ],
+      "section": "groovy"
+    }
+  ],
+  "stats": {
+    "classes": 33,
+    "methods": 152
+  }
+}
