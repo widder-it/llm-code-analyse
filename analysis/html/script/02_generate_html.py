@@ -50,10 +50,18 @@ def main():
 
     targets = sys.argv[1:] if sys.argv[1:] else [m["id"] for m in modules_meta]
 
+    # --- nav_stats: counts shown in sidebar for all pages ---
+    nav_stats = {
+        "sbom":       len(architektur.get("sbom_libraries", [])),
+        "tech_debt":  len(architektur.get("tech_debt", [])),
+        "schema":     len(architektur.get("schema_entities", [])),
+        "database":   architektur.get("db_framework_summary", {}).get("entity_query_calls", 0),
+    }
+
     # --- index.html ---
     write_html(env, "index.html.j2", OUTPUT_DIR / "index.html",
                modules=modules_meta, architektur=architektur,
-               root=relative_root(0), active_module=None)
+               nav_stats=nav_stats, root=relative_root(0), active_module=None)
     print("  index.html")
 
     # --- sbom.html ---
@@ -61,7 +69,7 @@ def main():
     if libraries:
         write_html(env, "sbom.html.j2", OUTPUT_DIR / "sbom.html",
                    modules=modules_meta, libraries=libraries,
-                   root=relative_root(0), active_module=None)
+                   nav_stats=nav_stats, root=relative_root(0), active_module="__sbom__")
         print(f"  sbom.html  ({len(libraries)} libraries)")
 
     # --- tech-debt.html ---
@@ -69,7 +77,7 @@ def main():
     if tech_debt:
         write_html(env, "tech-debt.html.j2", OUTPUT_DIR / "tech-debt.html",
                    modules=modules_meta, debts=tech_debt,
-                   root=relative_root(0), active_module="__tech_debt__")
+                   nav_stats=nav_stats, root=relative_root(0), active_module="__tech_debt__")
         print(f"  tech-debt.html  ({len(tech_debt)} items)")
 
     # --- schema.html ---
@@ -80,7 +88,7 @@ def main():
                    modules=modules_meta,
                    schema_entities=schema_entities,
                    schema_by_module=schema_by_module,
-                   root=relative_root(0), active_module="__schema__")
+                   nav_stats=nav_stats, root=relative_root(0), active_module="__schema__")
         total_fields = sum(e["field_count"] for e in schema_entities)
         print(f"  schema.html  ({len(schema_entities)} entities, {total_fields} fields)")
 
@@ -94,7 +102,7 @@ def main():
                    db_summary=db_summary,
                    module_stats=module_stats,
                    top_entities=top_entities,
-                   root=relative_root(0), active_module="__database__")
+                   nav_stats=nav_stats, root=relative_root(0), active_module="__database__")
         print(f"  database.html  ({db_summary.get('distinct_entities', 0)} entities)")
 
     for module_id in targets:
@@ -109,14 +117,14 @@ def main():
         # --- {module}/index.html ---
         write_html(env, "module.html.j2", module_dir / "index.html",
                    module=data, modules=modules_meta,
-                   root=relative_root(1), active_module=module_id)
+                   nav_stats=nav_stats, root=relative_root(1), active_module=module_id)
         print(f"  {module_id}/index.html  ({len(data['classes'])} classes)")
 
         # --- {module}/{class}.html ---
         for cls in data["classes"]:
             write_html(env, "class.html.j2", module_dir / f"{cls['id']}.html",
                        cls=cls, module=data, modules=modules_meta,
-                       root=relative_root(1), active_module=module_id)
+                       nav_stats=nav_stats, root=relative_root(1), active_module=module_id)
 
         print(f"  {module_id}/  {len(data['classes'])} class pages written")
 
