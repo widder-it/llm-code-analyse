@@ -37,7 +37,6 @@
           <th style="width:22%">Artifact</th>
           <th style="width:26%">Group</th>
           <th style="width:10%">Version</th>
-          <th style="width:10%">CVEs</th>
           <th>Schwachstellen</th>
         </tr>
       </thead>
@@ -48,19 +47,18 @@
           <td class="fw-semibold">{{ lib.artifact }}</td>
           <td class="text-muted small font-monospace">{{ lib.group }}</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">{{ lib.version }}</span></td>
-          <td class="text-center">
-            {% if has_vulns %}
-            <span class="badge bg-danger">{{ lib.vulns | length }}</span>
-            {% else %}
-            <span class="text-muted small">–</span>
-            {% endif %}
-          </td>
           <td class="small">
             {% if has_vulns %}
             {% for v in lib.vulns %}
             <div class="mb-2">
               <div class="d-flex align-items-center gap-2 mb-1">
-                <code style="font-size:.75rem">{% if v.cves %}{{ v.cves[0] }}{% else %}{{ v.id }}{% endif %}</code>
+                {% if v.cves %}
+                <a href="https://nvd.nist.gov/vuln/detail/{{ v.cves[0] }}" target="_blank" rel="noopener"
+                   style="font-size:.75rem;font-family:monospace">{{ v.cves[0] }}</a>
+                {% else %}
+                <a href="https://github.com/advisories/{{ v.id }}" target="_blank" rel="noopener"
+                   style="font-size:.75rem;font-family:monospace">{{ v.id }}</a>
+                {% endif %}
                 {% if v.severity %}
                 <span class="badge
                   {% if v.severity == 'CRITICAL' %}bg-danger
