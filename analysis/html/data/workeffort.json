@@ -1,0 +1,570 @@
+{
+  "module": "workeffort",
+  "overview": "Das `workeffort`-Modul implementiert die zentrale Arbeitsaufgaben-Verwaltung in Apache OFBiz: von Terminen, Aufgaben und Aktivitäten über iCalendar-basierte Kalenderintegration bis zur Volltextsuche. Es bildet die gemeinsame Grundlage für Projektarbeit, Produktionsaufträge und Workflow-Aktivitäten und verknüpft Personen, Betriebsmittel, Inhalte und Zeitausdrücke in einem einheitlichen Domänenmodell.",
+  "submodules": [
+    {
+      "name": "org.apache.ofbiz.workeffort.workeffort",
+      "description": "Kernlogik: Services, Worker, Suche, iCalendar-Integration, Party-Zuweisung, Keyword-Indexierung"
+    },
+    {
+      "name": "org.apache.ofbiz.workeffort.content",
+      "description": "Content-Wrapper: sprachabhängige, gecachte Aufbereitung von Inhalten zu Arbeitsaufgaben"
+    },
+    {
+      "name": "org.apache.ofbiz.workeffort.ical",
+      "description": "iCalendar-Berechtigungsprüfung (Groovy-Script)"
+    }
+  ],
+  "classes": [
+    {
+      "id": "WorkEffortContentWrapper",
+      "name": "WorkEffortContentWrapper",
+      "package": "org.apache.ofbiz.workeffort.content",
+      "type": "Java-Klasse (Content-Wrapper)",
+      "description": "Stellt lokalisierte und MIME-typ-konforme Inhalte zu einer `WorkEffort`-Entität bereit. Nutzt einen dedizierten Cache (`workeffort.content.rendered`) und delegiert das eigentliche Rendering an `ContentWorker`. Unterstützt Direktfeldzugriff als Fallback, wenn kein verknüpftes `WorkEffortContent`-Objekt vorliegt.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "get(workEffortContentId, useCache, encoderType)",
+          "description": "Gibt den gerenderten Inhalt eines bestimmten Content-Typs als String zurück; nutzt optional den internen Cache"
+        },
+        {
+          "signature": "get(contentTypeId, encoderType)",
+          "description": "Wrapper-Variante, die den Rückgabewert als StringUtil.StringWrapper liefert (kompatibel mit FreeMarker-Templates)"
+        },
+        {
+          "signature": "getContentId(contentTypeId)",
+          "description": "Gibt die contentId des ersten aktiven WorkEffortContent-Eintrags für den angegebenen Typ zurück"
+        },
+        {
+          "signature": "getContentName(contentTypeId)",
+          "description": "Gibt den contentName des zugeordneten Content-Datensatzes zurück"
+        },
+        {
+          "signature": "getFromDate(contentTypeId)",
+          "description": "Gibt das fromDate der WorkEffortContent-Verknüpfung zurück"
+        },
+        {
+          "signature": "getDataResourceId(contentTypeId)",
+          "description": "Gibt die dataResourceId der dem Inhalt zugeordneten DataResource zurück"
+        },
+        {
+          "signature": "getList(contentTypeId)",
+          "description": "Liefert eine Liste aller gerenderten Inhalte eines Typs (mehrere Sprachversionen)"
+        },
+        {
+          "signature": "getTypeDescription(contentTypeId)",
+          "description": "Gibt die Beschreibung des WorkEffortContentType-Eintrags zurück"
+        },
+        {
+          "signature": "getContent(contentId, useCache, encoderType)",
+          "description": "Rendert einen Inhalt direkt über seine contentId statt über den Content-Typ"
+        },
+        {
+          "signature": "getWorkEffortContentAsText(...)",
+          "description": "Statische Methode: rendert WorkEffortContent als Text unter Berücksichtigung von Locale, MIME-Typ und Cache"
+        },
+        {
+          "signature": "getWorkEffortContentTextList(...)",
+          "description": "Statische Methode: gibt alle gerenderten Textversionen eines Content-Typs als Liste zurück"
+        },
+        {
+          "signature": "getFirstWorkEffortContentByType(...)",
+          "description": "Statische Methode: liefert den aktuell gültigen WorkEffortContent-Datensatz für einen bestimmten Typ"
+        },
+        {
+          "signature": "makeWorkEffortContentWrapper(workEffort, request)",
+          "description": "Fabrikmethode zur Instanziierung aus einem HTTP-Request-Kontext"
+        }
+      ]
+    },
+    {
+      "id": "ICalConverter",
+      "name": "ICalConverter",
+      "package": "org.apache.ofbiz.workeffort.workeffort",
+      "type": "Java-Klasse (Konverter)",
+      "description": "Kernkomponente der iCalendar-Integration. Wandelt `WorkEffort`-Entitäten (Typ `EVENT` und `TASK`) in iCalendar-Komponenten (`VEVENT` / `VTODO`) um und liest importierte iCalendar-Daten zurück in die Datenbank. Bildet OFBiz-Statuswerte, Sichtbarkeitsklassen, Teilnehmerstatus und wiederkehrende Ausdrücke (`TemporalExpression`) auf die entsprechenden iCal4j-Eigenschaften ab.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getICalendar(workEffortId, context)",
+          "description": "Liest den aktuellen Kalender eines WorkEffort aus der Datenbank, ergänzt alle verknüpften Arbeitsaufgaben als VEVENT/VTODO und gibt das serialisierte iCalendar-Dokument zurück; prüft Sichtbarkeit und Zugriffsrechte"
+        },
+        {
+          "signature": "storeCalendar(is, context)",
+          "description": "Liest ein iCalendar-Dokument aus einem InputStream, validiert die Zugriffsrechte, aktualisiert bestehende und legt neue WorkEffort-Einträge an; persistiert das Roh-iCalendar in WorkEffortIcalData"
+        },
+        {
+          "signature": "toCalendarComponent(components, workEffort, context)",
+          "description": "Wandelt eine einzelne WorkEffort-Entität in ein VEVENT- oder VTODO-Objekt um und befüllt alle iCal-Eigenschaften; fügt Alarme und Teilnehmer hinzu"
+        },
+        {
+          "signature": "makeCalendar(workEffort, context)",
+          "description": "Erstellt oder deserialisiert ein net.fortuna.ical4j.model.Calendar-Objekt, ergänzt Produkt-ID, Zeitzone und Kalender-Skalierung"
+        },
+        {
+          "signature": "loadWorkEffort(componentProps, workEffort)",
+          "description": "Überträgt alle Standardfelder einer WorkEffort-Entität (Name, Status, Ort, Priorität, Datum) in die Property-Liste einer iCal-Komponente"
+        },
+        {
+          "signature": "loadRelatedParties(relatedParties, componentProps, context)",
+          "description": "Befüllt ATTENDEE- und ORGANIZER-Eigenschaften aus den WorkEffortPartyAssignView-Einträgen"
+        },
+        {
+          "signature": "storePartyAssignments(workEffortId, component, context)",
+          "description": "Liest ATTENDEE/ORGANIZER/CONTACT-Eigenschaften aus einer iCal-Komponente und legt fehlende WorkEffortPartyAssignment-Einträge an"
+        },
+        {
+          "signature": "isCalendarPublished(publishProperties)",
+          "description": "Prüft, ob ein WorkEffort vom Typ PUBLISH_PROPS mit gültigem Zeitraum zur Veröffentlichung freigegeben ist"
+        },
+        {
+          "signature": "hasPermission(workEffortId, action, context)",
+          "description": "Prüft über den Service workEffortICalendarPermission, ob der angemeldete Benutzer die angegebene Aktion (VIEW, UPDATE, CREATE) ausführen darf"
+        }
+      ]
+    },
+    {
+      "id": "ICalHandlerFactory",
+      "name": "ICalHandlerFactory",
+      "package": "org.apache.ofbiz.workeffort.workeffort",
+      "type": "Java-Klasse (WebDAV-Handler-Factory)",
+      "description": "Implementiert `RequestHandlerFactory` für den iCalendar-WebDAV-Endpunkt. Registriert HTTP-Methodenhandler und delegiert GET-, PUT- und PROPFIND-Anfragen an `ICalWorker`. Alle anderen WebDAV-Methoden (COPY, DELETE, LOCK, MOVE usw.) werden mit HTTP 200 quittiert, ohne eine Aktion auszuführen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getHandler(method)",
+          "description": "Gibt den registrierten RequestHandler für die angegebene HTTP-Methode zurück; liefert bei unbekannten Methoden einen Handler, der HTTP 405 zurückgibt"
+        }
+      ]
+    },
+    {
+      "id": "ICalRecurConverter",
+      "name": "ICalRecurConverter",
+      "package": "org.apache.ofbiz.workeffort.workeffort",
+      "type": "Java-Klasse (Visitor)",
+      "description": "Implementiert `TemporalExpressionVisitor` und konvertiert OFBiz-`TemporalExpression`-Objekte (Frequenz, Wochentag-Bereiche, Monat-Bereiche usw.) in iCalendar-`RRULE`-, `EXRULE`-, `RDATE`- und `EXDATE`-Eigenschaften. Verwaltet einen Zustandsstapel zur korrekten Behandlung von Verschachtelungen (`Intersection`, `Difference`, `Union`).",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "convert(expr, eventProps)",
+          "description": "Statische Einstiegsmethode: akzeptiert einen TemporalExpression-Baum und schreibt die konvertierten Wiederholungsregeln direkt in eine iCal-PropertyList"
+        },
+        {
+          "signature": "consolidateRecurs(recurList)",
+          "description": "Fasst mehrere Recur-Objekte aus einem Intersection-Knoten zu einem einzigen zusammengesetzten Recur zusammen, indem Monat-, Tag- und Stundenlisten vereint werden"
+        },
+        {
+          "signature": "visit(TemporalExpressions.Frequency)",
+          "description": "Konvertiert ein Frequenz-Intervall (SECONDLY bis YEARLY) in eine RRULE"
+        },
+        {
+          "signature": "visit(TemporalExpressions.DayOfWeekRange)",
+          "description": "Konvertiert einen Wochentag-Bereich in eine tägliche RRULE mit BYDAY-Liste"
+        },
+        {
+          "signature": "visit(TemporalExpressions.DayOfMonthRange)",
+          "description": "Konvertiert einen Monats-Tag-Bereich in eine tägliche RRULE mit BYMONTHDAY-Liste"
+        },
+        {
+          "signature": "visit(TemporalExpressions.DayInMonth)",
+          "description": "Konvertiert einen „n-ten Wochentag im Monat\"-Ausdruck in eine monatliche RRULE"
+        },
+        {
+          "signature": "visit(TemporalExpressions.MonthRange)",
+          "description": "Konvertiert einen Monatsbereich in eine monatliche RRULE mit BYMONTH-Liste"
+        },
+        {
+          "signature": "visit(TemporalExpressions.HourRange)",
+          "description": "Konvertiert einen Stundenbereich in eine stündliche RRULE mit BYHOUR-Liste"
+        },
+        {
+          "signature": "visit(TemporalExpressions.MinuteRange)",
+          "description": "Konvertiert einen Minutenbereich in eine minütliche RRULE mit BYMINUTE-Liste"
+        },
+        {
+          "signature": "visit(TemporalExpressions.DateRange)",
+          "description": "Konvertiert einen konkreten Datumszeitraum in eine RDATE-Periode"
+        },
+        {
+          "signature": "visit(TemporalExpressions.Difference)",
+          "description": "Verarbeitet Differenzausdrücke: der eingeschlossene Teil wird als RRULE, der ausgeschlossene als EXRULE ausgegeben"
+        },
+        {
+          "signature": "visit(TemporalExpressions.Intersection)",
+          "description": "Verarbeitet Schnittmengen-Ausdrücke durch Zustandsstapelung und abschließende Zusammenfassung via consolidateRecurs"
+        },
+        {
+          "signature": "visit(TemporalExpressions.Union)",
+          "description": "Verarbeitet Vereinigungsmengen-Ausdrücke durch sequenzielle Delegation an alle Kindausdrücke"
+        }
+      ]
+    },
+    {
+      "id": "ICalWorker",
+      "name": "ICalWorker",
+      "package": "org.apache.ofbiz.workeffort.workeffort",
+      "type": "Java-Klasse (HTTP-Handler, final)",
+      "description": "HTTP-Einstiegspunkt für den iCalendar-WebDAV-Endpunkt. Verarbeitet GET- (Kalender abrufen), PUT- (Kalender speichern) und PROPFIND-Anfragen (WebDAV-Metadaten). Extrahiert die `workEffortId` aus dem URL-Pfad, authentifiziert den Benutzer per HTTP Basic Auth und delegiert die eigentliche Verarbeitung an `ICalConverter`. Definiert die innere Klasse `ResponseProperties` zur strukturierten HTTP-Antwort.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "handleGetRequest(request, response, context)",
+          "description": "Verarbeitet eine HTTP-GET-Anfrage: prüft die Anfrage, ruft ICalConverter.getICalendar auf und schreibt das Ergebnis mit Content-Type text/calendar in die Antwort"
+        },
+        {
+          "signature": "handlePutRequest(request, response, context)",
+          "description": "Verarbeitet eine HTTP-PUT-Anfrage: prüft Content-Type (text/calendar), ruft ICalConverter.storeCalendar auf und schreibt den HTTP-Status in die Antwort"
+        },
+        {
+          "signature": "handlePropFindRequest(request, response, context)",
+          "description": "Verarbeitet eine WebDAV-PROPFIND-Anfrage: parst den XML-Body, beantwortet getetag- und getlastmodified-Eigenschaften und liefert eine 207 Multi-Status-Antwort"
+        },
+        {
+          "signature": "createOkResponse(statusMessage)",
+          "description": "Erstellt eine ResponseProperties-Instanz mit HTTP 200"
+        },
+        {
+          "signature": "createNotAuthorizedResponse(statusMessage)",
+          "description": "Erstellt eine ResponseProperties-Instanz mit HTTP 401"
+        },
+        {
+          "signature": "createForbiddenResponse(statusMessage)",
+          "description": "Erstellt eine ResponseProperties-Instanz mit HTTP 403"
+        },
+        {
+          "signature": "createNotFoundResponse(statusMessage)",
+          "description": "Erstellt eine ResponseProperties-Instanz mit HTTP 404"
+        },
+        {
+          "signature": "createPartialContentResponse(statusMessage)",
+          "description": "Erstellt eine ResponseProperties-Instanz mit HTTP 206 (bei partiellen Fehlern beim Speichern)"
+        }
+      ]
+    },
+    {
+      "id": "WorkEffortKeywordIndex",
+      "name": "WorkEffortKeywordIndex",
+      "package": "org.apache.ofbiz.workeffort.workeffort",
+      "type": "Java-Klasse (Indexierung)",
+      "description": "Erstellt und aktualisiert den Keyword-Index für `WorkEffort`-Entitäten in der Tabelle `WorkEffortKeyword`. Extrahiert Schlüsselwörter aus Name, Typ, Status, Notizen, Attributen und verknüpften Inhalten; gewichtet jedes Feld separat über Properties (`index.weight.*`) und speichert alle Begriffe mit ihrem Relevanzgewicht.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "indexKeywords(workEffort)",
+          "description": "Baut den vollständigen Keyword-Index für eine WorkEffort-Entität auf: löscht alte Einträge implizit durch storeAll, verarbeitet alle konfigurierten Quellfelder und Content-Typen und speichert die gewichteten Schlüsselwörter"
+        },
+        {
+          "signature": "addWeightedDataResourceString(dataResource, weight, strings, delegator, workEffort)",
+          "description": "Rendert den Text einer DataResource und fügt ihn entsprechend dem Gewichtungsfaktor mehrfach in die Quellliste ein"
+        },
+        {
+          "signature": "addWeightedKeywordSourceString(value, fieldName, strings)",
+          "description": "Liest einen Feldwert aus einer GenericValue-Instanz und fügt ihn gewichtet in die Quellliste ein"
+        }
+      ]
+    },
+    {
+      "id": "WorkEffortPartyAssignmentServices",
+      "name": "WorkEffortPartyAssignmentServices",
+      "package": "org.apache.ofbiz.workeffort.workeffort",
+      "type": "Java-Klasse (Service)",
+      "description": "Verknüpft Statusänderungen an `WorkEffortPartyAssignment`-Einträgen mit dem Workflow-Engine. Wenn eine Zuweisung zu einer Aktivität (`ACTIVITY`) akzeptiert, abgeschlossen oder abgelehnt wird, werden die entsprechenden Workflow-Services (`wfAcceptAssignment`, `wfCompleteAssignment`, `wfDeclineAssignment`) aufgerufen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "updateWorkflowEngine(wepa, userLogin, dispatcher)",
+          "description": "Prüft, ob die zugehörige WorkEffort-Entität eine Aktivität ist, und löst anhand des neuen Zuweisungsstatus den passenden Workflow-Service aus"
+        }
+      ]
+    },
+    {
+      "id": "WorkEffortSearch",
+      "name": "WorkEffortSearch",
+      "package": "org.apache.ofbiz.workeffort.workeffort",
+      "type": "Java-Klasse (Suche)",
+      "description": "Implementiert die vollständige Suchmaschinerie für `WorkEffort`-Entitäten auf Basis dynamischer View-Entities und Keyword-Indizes. Stellt eine Constraint-basierte Architektur bereit: Suchbedingungen werden als typisierte Objekte modelliert und durch `WorkEffortSearchContext` zu einer einzigen Datenbankabfrage kombiniert. Suchergebnisse werden in `WorkEffortSearchResult` protokolliert.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "searchWorkEfforts(constraintList, resultSortOrder, delegator, visitId)",
+          "description": "Führt eine vollständige Suche durch: kombiniert die angegebenen Constraints, führt die Abfrage aus und gibt eine Liste von workEffortId-Werten zurück"
+        },
+        {
+          "signature": "getAllSubWorkEffortIds(workEffortId, workEffortIdSet, delegator, nowTimestamp)",
+          "description": "Sammelt rekursiv alle untergeordneten WorkEffort-IDs über WORK_EFF_BREAKDOWN-Assoziationen und workEffortParentId-Verknüpfungen"
+        }
+      ]
+    },
+    {
+      "id": "WorkEffortSearchEvents",
+      "name": "WorkEffortSearchEvents",
+      "package": "org.apache.ofbiz.workeffort.workeffort",
+      "type": "Java-Klasse (HTTP-Event-Handler)",
+      "description": "Bindeglied zwischen der Web-Oberfläche und der Suchlogik. Liest die aktuellen Suchoptionen aus der HTTP-Session, führt die Suche mit Paginierung durch und bereitet alle für die Ergebnisseite benötigten Daten als Map auf.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getWorkEffortSearchResult(request, delegator)",
+          "description": "Ermittelt die Suchoptionen aus der Session, führt die paginierte Suche aus und gibt eine Map mit workEffortIds, Paginierungsindizes sowie lesbaren Constraint- und Sortierbeschreibungen zurück"
+        }
+      ]
+    },
+    {
+      "id": "WorkEffortSearchSession",
+      "name": "WorkEffortSearchSession",
+      "package": "org.apache.ofbiz.workeffort.workeffort",
+      "type": "Java-Klasse (Session-Management)",
+      "description": "Verwaltet den Suchzustand (Constraints, Sortierung, Paginierung) in der HTTP-Session unter dem Attribut `_WORK_EFFORT_SEARCH_OPTIONS_CURRENT_`. Führt eine History-Liste vergangener Suchzustände und stellt Hilfsmethoden zur Verarbeitung von Request-Parametern bereit.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getWorkEffortSearchOptions(session)",
+          "description": "Gibt die aktuellen WorkEffortSearchOptions aus der Session zurück; legt eine neue Instanz an, wenn noch keine vorhanden ist"
+        },
+        {
+          "signature": "processSearchParameters(parameters, request)",
+          "description": "Verarbeitet Formularparameter (Suchbegriff, Assoziations-ID, Party-ID, Produkt-ID, Datumsbereich) und fügt entsprechende Constraints zur Session hinzu; idempotent bei Mehrfachaufruf pro Request"
+        },
+        {
+          "signature": "searchAddConstraint(constraint, session)",
+          "description": "Fügt einen Constraint zur aktuellen Suchoption hinzu, wenn er noch nicht enthalten ist"
+        },
+        {
+          "signature": "searchSetSortOrder(resultSortOrder, session)",
+          "description": "Setzt die Sortierordnung in der aktuellen Suchoption"
+        },
+        {
+          "signature": "searchGetConstraintStrings(detailed, session, delegator)",
+          "description": "Gibt eine lesbare Darstellung aller aktiven Constraints für die Oberfläche zurück"
+        },
+        {
+          "signature": "searchGetSortOrderString(detailed, request)",
+          "description": "Gibt eine lesbare Darstellung der aktuellen Sortierordnung zurück"
+        },
+        {
+          "signature": "checkSaveSearchOptionsHistory(session)",
+          "description": "Speichert die aktuellen Suchoptionen in der History-Liste, wenn sie seit der letzten Suche geändert wurden"
+        },
+        {
+          "signature": "searchRemoveConstraint(index, session)",
+          "description": "Entfernt einen Constraint anhand seines Index aus der aktuellen Suchoption"
+        },
+        {
+          "signature": "searchClear(session)",
+          "description": "Setzt alle Suchoptionen (Constraints und Sortierung) zurück"
+        },
+        {
+          "signature": "getSearchOptionsHistoryList(session)",
+          "description": "Gibt die Liste der zuletzt verwendeten Suchoptionen zurück"
+        }
+      ]
+    },
+    {
+      "id": "WorkEffortServices",
+      "name": "WorkEffortServices",
+      "package": "org.apache.ofbiz.workeffort.workeffort",
+      "type": "Java-Klasse (Service)",
+      "description": "Sammlung von OFBiz-Services für Abfragen und Datenaggregation rund um `WorkEffort`-Entitäten. Deckt Kalenderabfragen (Ereignisse nach Zeitraum mit Wiederholungsregel-Auflösung), Aufgaben- und Aktivitätslisten je Benutzer, Fertigungsauftrags-Zusammenfassungen je Lager sowie die Verarbeitung von Erinnerungs-Benachrichtigungen ab.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getWorkEffortAssignedEventsForRole(ctx, context)",
+          "description": "Gibt alle aktiven Kalendereinträge (Typ EVENT) zurück, die dem angemeldeten Benutzer in einer bestimmten Rolle zugewiesen sind, ausgenommen abgelehnte, delegierte, abgeschlossene und stornierte"
+        },
+        {
+          "signature": "getWorkEffortAssignedEventsForRoleOfAllParties(ctx, context)",
+          "description": "Gibt alle aktiven Kalendereinträge (Typ EVENT) für alle Parteien in einer bestimmten Rolle zurück"
+        },
+        {
+          "signature": "getWorkEffortAssignedTasks(ctx, context)",
+          "description": "Gibt alle aktiven Aufgaben (Typ TASK und PROD_ORDER_TASK) zurück, die dem angemeldeten Benutzer zugewiesen sind"
+        },
+        {
+          "signature": "getWorkEffortAssignedActivities(ctx, context)",
+          "description": "Gibt alle aktiven Workflow-Aktivitäten (Typ ACTIVITY) zurück, die dem angemeldeten Benutzer direkt zugewiesen sind"
+        },
+        {
+          "signature": "getWorkEffortAssignedActivitiesByRole(ctx, context)",
+          "description": "Gibt alle aktiven Workflow-Aktivitäten zurück, die dem Benutzer über eine Rollengruppe zugewiesen sind"
+        },
+        {
+          "signature": "getWorkEffortAssignedActivitiesByGroup(ctx, context)",
+          "description": "Gibt alle aktiven Workflow-Aktivitäten zurück, die dem Benutzer über eine Parteigruppe zugewiesen sind"
+        },
+        {
+          "signature": "getWorkEffort(ctx, context)",
+          "description": "Lädt eine WorkEffort-Entität und prüft die Zugriffsberechtigung des angemeldeten Benutzers anhand seiner Party-Zuweisungen oder des WORKEFFORTMGR_VIEW-Berechtigungsbits"
+        },
+        {
+          "signature": "getWorkEffortEventsByPeriod(ctx, context)",
+          "description": "Gibt alle Kalendereinträge innerhalb eines definierten Zeitraums zurück, aufgeteilt nach Perioden; löst TemporalExpression-Wiederholungen auf und berechnet periodSpan für die Darstellung in Kalender-Views; unterstützt Filterung nach Party, Betriebsmittel, Lager und Kalendertyp"
+        },
+        {
+          "signature": "getProductManufacturingSummaryByFacility(ctx, context)",
+          "description": "Aggregiert offene eingehende und ausgehende Fertigungsaufträge für ein Produkt nach Lager und gibt Mengen-Summaries zurück"
+        },
+        {
+          "signature": "processWorkEffortEventReminders(ctx, context)",
+          "description": "Verarbeitet fällige WorkEffortEventReminder-Einträge: löst Wiederholungsausdrücke auf, versendet E-Mail-Erinnerungen und aktualisiert den nächsten Erinnerungszeitpunkt"
+        },
+        {
+          "signature": "processWorkEffortEventReminder(dctx, context)",
+          "description": "Versendet eine einzelne Erinnerung per E-Mail über das Template WEFF_EVENT_REMINDER, sofern ein gültiger E-Mail-Kontaktweg hinterlegt ist"
+        },
+        {
+          "signature": "removeDuplicateWorkEfforts(ctx, context)",
+          "description": "Service-Wrapper: entfernt doppelte WorkEffort-Einträge aus einem Iterator oder einer Liste und gibt eine deduplizierte Liste zurück"
+        }
+      ]
+    },
+    {
+      "id": "WorkEffortWorker",
+      "name": "WorkEffortWorker",
+      "package": "org.apache.ofbiz.workeffort.workeffort",
+      "type": "Java-Klasse (Worker, final, nicht instanziierbar)",
+      "description": "Hilfsklasse mit allgemeinen Traversierungs- und Bereinigungsoperationen auf `WorkEffort`-Assoziationsgraphen. Wird von mehreren anderen Klassen und Services verwendet.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getLowestLevelWorkEfforts(delegator, workEffortId, workEffortAssocTypeId)",
+          "description": "Traversiert den WorkEffortAssoc-Graphen in Tiefensuche und gibt alle Blattknoten (niedrigste Ebene) des Baums zurück, sortiert nach Traversierungsreihenfolge"
+        },
+        {
+          "signature": "getLowestLevelWorkEfforts(delegator, workEffortId, workEffortAssocTypeId, left, right)",
+          "description": "Erweiterte Variante mit konfigurierbaren Schlüsselfeldern (workEffortIdFrom/workEffortIdTo) für bidirektionale Graphen"
+        },
+        {
+          "signature": "removeDuplicateWorkEfforts(workEfforts)",
+          "description": "Entfernt doppelte WorkEffort-Einträge aus einer Liste in-place, behält die erste Occurrence und gibt die bereinigte Liste zurück"
+        }
+      ]
+    },
+    {
+      "id": "Groovy-Scripts-iCalendar-Berechtigungspr-fung-ical",
+      "name": "Groovy-Scripts: iCalendar-Berechtigungsprüfung (`ical`)",
+      "package": "org.apache.ofbiz.workeffort.ical",
+      "type": "Groovy-Script",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "IsCalOwner",
+          "description": "Prüft, ob der angemeldete Benutzer Eigentümer eines iCalendar-Kalenders (CAL_OWNER) ist, und setzt das Ergebnis als Request-Attribut für die Zugriffskontrolle"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Groovy-Scripts-Kalender-Ansichten-calendar",
+      "name": "Groovy-Scripts: Kalender-Ansichten (`calendar`)",
+      "package": "org.apache.ofbiz.workeffort.workeffort.calendar",
+      "type": "Groovy-Scripts (View-Layer)",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "CreateUrlParam",
+          "description": "Erzeugt URL-Parameter für Kalender-Navigationslinks (z. B. Monats-/Wochennavigation)"
+        },
+        {
+          "name": "Days",
+          "description": "Bereitet Daten für die Tagesansicht des Kalenders auf; ermittelt alle Arbeitsaufgaben des gewählten Tages"
+        },
+        {
+          "name": "Month",
+          "description": "Bereitet Daten für die Monatsansicht auf; aggregiert Arbeitsaufgaben je Kalendertag"
+        },
+        {
+          "name": "Upcoming",
+          "description": "Listet bevorstehende Termine und Aufgaben des angemeldeten Benutzers auf, sortiert nach Startdatum"
+        },
+        {
+          "name": "Week",
+          "description": "Bereitet Daten für die Wochenansicht auf; ermittelt alle Arbeitsaufgaben der gewählten Woche"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Groovy-Scripts-Content-Wrapper-content",
+      "name": "Groovy-Scripts: Content-Wrapper (`content`)",
+      "package": "org.apache.ofbiz.workeffort.workeffort.content",
+      "type": "Groovy-Script (View-Layer)",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "WorkEffortContentWrapperScript",
+          "description": "Instanziiert einen WorkEffortContentWrapper für die aktuelle Arbeitsaufgabe und stellt ihn im View-Kontext bereit"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Groovy-Scripts-Suche-find",
+      "name": "Groovy-Scripts: Suche (`find`)",
+      "package": "org.apache.ofbiz.workeffort.workeffort.find",
+      "type": "Groovy-Scripts (View-Layer)",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "WorkEffortSearchOptions",
+          "description": "Verarbeitet Suchformular-Parameter, aktualisiert die Session-Suchoptionen und leitet zur Ergebnisseite weiter"
+        },
+        {
+          "name": "WorkEffortSearchResults",
+          "description": "Ruft WorkEffortSearchEvents.getWorkEffortSearchResult auf und stellt Ergebnisliste sowie Paginierungsdaten für die Darstellung bereit"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Groovy-Scripts-Anforderungsliste-request",
+      "name": "Groovy-Scripts: Anforderungsliste (`request`)",
+      "package": "org.apache.ofbiz.workeffort.workeffort.request",
+      "type": "Groovy-Script (View-Layer)",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "RequestList",
+          "description": "Lädt und filtert eine Liste von Anforderungen (WorkEffort mit Typ ROU_TASK oder ähnlich), die als offene Anfragen verwaltet werden, für die Listendarstellung"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Groovy-Scripts-Service-Erg-nzungen-workeffort",
+      "name": "Groovy-Scripts: Service-Ergänzungen (`workeffort`)",
+      "package": "org.apache.ofbiz.workeffort.workeffort.workeffort",
+      "type": "Groovy-Script (View-Layer)",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "WorkEffortServicesScript",
+          "description": "Ruft ergänzende Services im View-Kontext auf (z. B. Parteizuweisungen, Inhalte, verknüpfte Entitäten) und stellt die Ergebnisse für die Detailansicht einer Arbeitsaufgabe bereit"
+        }
+      ],
+      "section": "groovy"
+    }
+  ],
+  "stats": {
+    "classes": 18,
+    "methods": 76
+  }
+}

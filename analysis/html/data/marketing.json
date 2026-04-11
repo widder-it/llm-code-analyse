@@ -1,0 +1,224 @@
+{
+  "module": "marketing",
+  "overview": "Das `marketing`-Modul implementiert Kampagnen- und Kontaktlistenverwaltung, Kampagnenauswertung sowie Vertriebsunterstützung (Sales Force Automation) in Apache OFBiz. Es umfasst die Newsletter-Anmeldung und -Abmeldung, das Tracking von Website-Besuchern und Bestellungen über Tracking-Codes sowie SFA-Funktionen zur Lead-Verwaltung, Konvertierung von Leads zu Kontakten und zum Zusammenführen von Kontaktdatensätzen. Ergänzende Groovy-Scripts liefern Berichtsdaten zu E-Mail-Kommunikation, Kampagnenleistung und Tracking-Code-Konversionen.",
+  "submodules": [
+    {
+      "name": "org.apache.ofbiz.marketing.marketing",
+      "description": "Kernservices für Kontaktlisten: Newsletter-Anmeldung, Mitgliedschaftsverwaltung, Kontaktlistenpflege"
+    },
+    {
+      "name": "org.apache.ofbiz.marketing.marketing.contact",
+      "description": "Groovy-Script zur Ermittlung der Marketing-E-Mail-Adresse des Kontaktlisten-Eigentümers"
+    },
+    {
+      "name": "org.apache.ofbiz.marketing.marketing.reports",
+      "description": "Groovy-Scripts für Kampagnen-, E-Mail-Status- und Tracking-Code-Berichte"
+    },
+    {
+      "name": "org.apache.ofbiz.marketing.marketing.test",
+      "description": "Groovy-basierte Integrationstests für Kontaktlisten-Services"
+    },
+    {
+      "name": "org.apache.ofbiz.marketing.report",
+      "description": "Java-Hilfsklasse zur Berechnung von Konversionsraten für Berichts-Scripts"
+    },
+    {
+      "name": "org.apache.ofbiz.marketing.tracking",
+      "description": "HTTP-Event-Handler für die Erfassung, Verarbeitung und Cookie-Verwaltung von Tracking-Codes"
+    },
+    {
+      "name": "org.apache.ofbiz.marketing.sfa",
+      "description": "SFA-Scripts: Lead-Anlage, Lead-Konvertierung, Kontakt-Zusammenführung und Account-Erstellung"
+    },
+    {
+      "name": "org.apache.ofbiz.marketing.sfa.account",
+      "description": "Groovy-Script zur Anlage von Unternehmenskonten mit Rollen- und Beziehungsverknüpfung"
+    },
+    {
+      "name": "org.apache.ofbiz.marketing.sfa.lead",
+      "description": "Groovy-Script mit vollständiger Lead-Lebenszyklusverwaltung"
+    }
+  ],
+  "classes": [
+    {
+      "id": "MarketingServices",
+      "name": "MarketingServices",
+      "package": "org.apache.ofbiz.marketing.marketing",
+      "type": "Java-Klasse (Service)",
+      "description": "Stellt OFBiz-Services für die Verwaltung von Kontaktlisten-Mitgliedschaften bereit. Implementiert die Newsletter-Anmeldung mit E-Mail-Validierung, Duplikatsprüfung und Status-Steuerung sowie das gezielte Löschen ausstehender Anmeldeanforderungen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "signUpForContactList(dctx, context)",
+          "description": "Meldet eine E-Mail-Adresse für eine Kontaktliste an: validiert die E-Mail-Adresse, prüft auf bereits vorhandene Mitgliedschaften im Status CLPT_ACCEPTED (Fehler) oder CLPT_PENDING (löscht alte Anfrage und legt neue an), legt bei unbekannter Partei einen Platzhalter-Eintrag (_NA_) an und erstellt einen ContactListParty-Eintrag mit Status CLPT_PENDING"
+        },
+        {
+          "signature": "deleteContactListParty(dctx, context)",
+          "description": "Löscht einen ausstehenden Kontaktlisten-Eintrag: entfernt zunächst alle verknüpften ContactListPartyStatus-Einträge und löscht dann den ContactListParty-Datensatz; gibt eine Bestätigungsmeldung mit den Schlüsselfeldern zurück"
+        }
+      ]
+    },
+    {
+      "id": "ReportHelper",
+      "name": "ReportHelper",
+      "package": "org.apache.ofbiz.marketing.report",
+      "type": "Java-Klasse (final, nicht instanziierbar)",
+      "description": "Statische Hilfsklasse zur Berechnung von Konversionsraten. Verbindet Besuchs- und Bestelldaten über einen gemeinsamen Schlüssel und berechnet für jeden Eintrag die Konversionsrate als Quotient aus Bestellanzahl und Besuchsanzahl. Wird von den Berichts-Scripts `MarketingCampaignReport` und `TrackingCodeReport` aufgerufen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "calcConversionRates(visits, orders, keyFieldName)",
+          "description": "Iteriert über eine Liste von Besuchsdatensätzen (aggregiert nach keyFieldName), sucht für jeden Eintrag die zugehörigen Bestelldaten, berechnet Besuchsanzahl, Bestellanzahl, Bestellbetrag (grandTotal) und Konversionsrate (Bestellungen / Besuche); gibt 0.0 zurück, wenn keine Bestellungen vorhanden oder die Besuchsanzahl null ist"
+        }
+      ]
+    },
+    {
+      "id": "TrackingCodeEvents",
+      "name": "TrackingCodeEvents",
+      "package": "org.apache.ofbiz.marketing.tracking",
+      "type": "Java-Klasse (Event-Handler)",
+      "description": "HTTP-Event-Handler für die gesamte Tracking-Code-Verarbeitung in OFBiz. Erfasst Tracking-Codes aus URL-Parametern und Cookies, schreibt Besuchszuordnungen (`TrackingCodeVisit`), setzt nachverfolgbare und abrechenbare Cookies mit konfigurierbarer Lebensdauer, verwaltet Partner-Tracking-Codes durch automatische Anlage fehlender Einträge anhand von Standardwerten und steuert den Zugriff über zugriffsbeschränkte Tracking-Codes.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "checkTrackingCodeUrlParam(request, response)",
+          "description": "Liest den Tracking-Code aus den URL-Parametern autoTrackingCode oder atc, sucht den Datensatz in TrackingCode und delegiert an processTrackingCode() mit Quelle TKCDSRC_URL_PARAM"
+        },
+        {
+          "signature": "checkPartnerTrackingCodeUrlParam(request, response)",
+          "description": "Verarbeitet Partner-Tracking-Codes aus dem URL-Parameter ptc; legt bei unbekannten Codes einen neuen TrackingCode-Eintrag vom Typ PARTNER_MGD an – wahlweise basierend auf einem konfigurierbaren Standard-Tracking-Code (dtc) oder mit fest hinterlegten Standardwerten"
+        },
+        {
+          "signature": "processTrackingCode(trackingCode, request, response, sourceEnumId)",
+          "description": "Kernlogik der Tracking-Code-Verarbeitung: prüft Gültigkeitszeitraum, schreibt TrackingCodeVisit, setzt nachverfolgbares Cookie (TKCDT_*) und abrechenbares Cookie (TKCDB_*) mit der konfigurierten Lebensdauer, speichert optional Site-ID und Zeitstempel-Cookie, setzt Session-Attribute für Logo- und CSS-Überschreibung sowie Produktkatalog, führt ggf. Redirect auf redirectUrl aus"
+        },
+        {
+          "signature": "checkTrackingCodeCookies(request, response)",
+          "description": "Liest alle Cookies des Typs TKCDT_* aus dem Request, prüft Gültigkeit des jeweiligen Tracking-Codes und schreibt für jeden aktiven Code einen TrackingCodeVisit-Eintrag mit Quelle TKCDSRC_COOKIE"
+        },
+        {
+          "signature": "checkAccessTrackingCode(request, response)",
+          "description": "Prüft, ob ein gültiger Zugriffs-Tracking-Code (ACCESS-Typ) vorhanden ist – aus URL-Parameter oder Cookie; gibt bei fehlendem oder abgelaufenem Code \":_protect_:\" zurück, um den Zugriff zu verweigern"
+        },
+        {
+          "signature": "removeAccesTrackingCodeCookie(request, response)",
+          "description": "Löscht alle Cookies, deren Name auf _ACCESS endet, durch Setzen von maxAge=0"
+        },
+        {
+          "signature": "makeTrackingCodeOrders(request)",
+          "description": "Liest abrechenbare (TKCDB_*) und nachverfolgbare (TKCDT_*) Cookies sowie Site-ID und Referenzzeitstempel aus dem Request und erzeugt eine Liste von TrackingCodeOrder-Werten für die Auftragszuordnung"
+        }
+      ]
+    },
+    {
+      "id": "Groovy-Scripts-Kontaktlisten-Abfrage-contact",
+      "name": "Groovy-Scripts: Kontaktlisten-Abfrage (`contact`)",
+      "package": "org.apache.ofbiz.marketing.marketing.contact",
+      "type": "Groovy-Script",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "GetContactListMarketingEmail",
+          "description": "Lädt die Kontaktliste anhand der contactListId, ermittelt den zugeordneten Eigentümer-Datensatz (OwnerParty) und sucht dessen bevorzugte Marketing-E-Mail-Adresse (MARKETING_EMAIL); fällt auf PRIMARY_EMAIL zurück, falls keine Marketing-E-Mail hinterlegt ist; gibt das erste gefundene PartyContactMechPurpose-Objekt zurück"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Groovy-Scripts-Berichte-reports",
+      "name": "Groovy-Scripts: Berichte (`reports`)",
+      "package": "org.apache.ofbiz.marketing.marketing.reports",
+      "type": "Groovy-Scripts (Berichts-Datenbeschaffung)",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "EmailStatusReport",
+          "description": "Stellt gefilterte CommunicationEventAndRole-Datensätze für den E-Mail-Statusbericht bereit; unterstützt Filter auf entryDate (Von/Bis), partyIdTo, partyIdFrom, statusId und roleStatusId; schränkt das Ergebnis auf Einträge mit roleTypeId = ADDRESSEE ein"
+        },
+        {
+          "name": "MarketingCampaignReport",
+          "description": "Berechnet die Konversionsraten einer Kampagne: fragt MarketingCampaignAndVisit und MarketingCampaignAndOrderHeader gefiltert nach Kampagnen-ID und Zeitraum ab, aggregiert Besuche und Bestellungen je Kampagne und ruft ReportHelper.calcConversionRates() auf"
+        },
+        {
+          "name": "PartyStatusReport",
+          "description": "Stellt gefilterte ContactListPartyStatus-Datensätze bereit; unterstützt Filter auf Eintrittsdatum (fromDate), Statusdatum (statusDate), Ablaufdatum (thruDate), contactListId und statusId"
+        },
+        {
+          "name": "TrackingCodeReport",
+          "description": "Berechnet die Konversionsraten je Tracking-Code: fragt TrackingCodeAndVisit und TrackingCodeAndOrderHeader gefiltert nach Tracking-Code-ID und Zeitraum ab und ruft ReportHelper.calcConversionRates() auf"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Groovy-Scripts-Tests-test",
+      "name": "Groovy-Scripts: Tests (`test`)",
+      "package": "org.apache.ofbiz.marketing.marketing.test",
+      "type": "Groovy-Script (Integrationstest, erweitert OFBizTestCase)",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "MarketingTests",
+          "description": "Integrationstest testCreateAndUpdateContactList: legt eine Kontaktliste vom Typ ANNOUNCEMENT mit contactMechTypeId = EMAIL_ADDRESS an, prüft die Persistenz über ServiceUtil.isSuccess() und eine direkte Entity-Abfrage, aktualisiert die Liste auf contactMechTypeId = POSTAL_ADDRESS und prüft die Aktualisierung nach contactList.refresh()"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Groovy-Scripts-SFA-Account-Verwaltung-sfa-account",
+      "name": "Groovy-Scripts: SFA – Account-Verwaltung (`sfa.account`)",
+      "package": "org.apache.ofbiz.marketing.sfa.account",
+      "type": "Groovy-Script (Service)",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "AccountServices",
+          "description": "Stellt die Funktion createAccount() bereit: ruft createPartyGroupRoleAndContactMechs mit der Rolle ACCOUNT auf, stellt anschließend über ensurePartyRole die OWNER-Rolle des eingeloggten Benutzers sicher und legt eine ACCOUNT-Parteienbeziehung zwischen Eigentümer und dem neuen Konto an"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "Groovy-Scripts-SFA-Lead-Verwaltung-sfa-und-sfa-lead",
+      "name": "Groovy-Scripts: SFA – Lead-Verwaltung (`sfa` und `sfa.lead`)",
+      "package": "org.apache.ofbiz.marketing.sfa",
+      "type": "Groovy-Scripts (Services und Datenbeschaffung)",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "LeadServices (createLead())",
+          "description": "Legt einen neuen Lead an: validiert, dass mindestens Vor- und Nachname oder ein Firmenname angegeben sind; erstellt Person und Rolle (LEAD) über createPersonRoleAndContactMechs, verknüpft den Lead mit dem Eigentümer via LEAD_OWNER-Beziehung, setzt den Status LEAD_ASSIGNED; legt bei Vorhandensein eines Firmennamens optional eine Unternehmensgruppe (ACCOUNT_LEAD) an und verknüpft beide Datensätze über eine EMPLOYMENT-Beziehung; speichert bei Bedarf eine Datenquelle (PartyDataSource)"
+        },
+        {
+          "name": "LeadServices (convertLeadToContact())",
+          "description": "Konvertiert einen Lead zu einem Kontakt: setzt auslaufende LEAD_OWNER- und EMPLOYMENT-Beziehungen durch thruDate = now, stellt die ACCOUNT-Rolle des Unternehmens sicher, legt neue ACCOUNT-Eigentümerbeziehung und EMPLOYMENT-Beziehung zwischen Konto und Kontakt an und setzt den Status aller beteiligten Parteien auf LEAD_CONVERTED"
+        },
+        {
+          "name": "LeadServices (resolvePartyProcessMap())",
+          "description": "Hilfsmethode: wandelt Formulardaten über SimpleMapProcessor mit dem partyGroup-Prozessor aus PartyMapProcs.xml in eine für createPartyGroup geeignete Map um"
+        },
+        {
+          "name": "CloneLead",
+          "description": "Liest alle relevanten Stammdaten eines bestehenden Leads (Person, Stellenbezeichnung, Unternehmensgruppe, Postanschrift, E-Mail, Telefon, Datenquelle) und stellt sie als contactDetailMap im Kontext bereit, um das Formular für einen geklonten Lead vorzubefüllen"
+        },
+        {
+          "name": "MergeContacts",
+          "description": "Bereitet die Zusammenführungsansicht zweier Kontakte vor: iteriert über eine Liste mit partyIdFrom und partyIdTo, lädt für jeden Kontakt Person, Postanschrift (inkl. Geo-Daten für Bundesland und Land), primäre E-Mail und Telefon und sammelt die Detaildaten als contactInfoList im Kontext"
+        }
+      ],
+      "section": "groovy"
+    }
+  ],
+  "stats": {
+    "classes": 8,
+    "methods": 10
+  }
+}

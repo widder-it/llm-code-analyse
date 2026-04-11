@@ -62,6 +62,24 @@
         "classes": 23,
         "methods": 117
       }
+    },
+    {
+      "id": "workeffort",
+      "name": "workeffort",
+      "overview": "Das `workeffort`-Modul implementiert die zentrale Arbeitsaufgaben-Verwaltung in Apache OFBiz: von Terminen, Aufgaben und Aktivitäten über iCalendar-basierte Kalenderintegration bis zur Volltextsuche. …",
+      "stats": {
+        "classes": 18,
+        "methods": 76
+      }
+    },
+    {
+      "id": "marketing",
+      "name": "marketing",
+      "overview": "Das `marketing`-Modul implementiert Kampagnen- und Kontaktlistenverwaltung, Kampagnenauswertung sowie Vertriebsunterstützung (Sales Force Automation) in Apache OFBiz. Es umfasst die Newsletter-Anmeldu…",
+      "stats": {
+        "classes": 8,
+        "methods": 10
+      }
     }
   ]
 }

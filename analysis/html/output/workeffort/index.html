@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modul: workeffort — OFBiz Docs</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --sidebar-width: 220px;
+      --accent: #0d6efd;
+    }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      background: #1e2430;
+      color: #c9d1d9;
+      position: fixed;
+      top: 0; left: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      padding: 1.25rem 1rem .75rem;
+      display: block;
+      text-decoration: none;
+      border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0;
+      padding: .35rem 1rem;
+      font-size: .85rem;
+      border-radius: 0;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff;
+      background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #4a5568;
+      padding: .75rem 1rem .25rem;
+    }
+    #main {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+    }
+    .page-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .badge-type {
+      font-size: .7rem;
+      font-weight: 500;
+    }
+    .method-table th { white-space: nowrap; }
+    .method-sig {
+      font-family: SFMono-Regular, Menlo, monospace;
+      font-size: .82rem;
+      color: #0550ae;
+    }
+    .class-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: box-shadow .15s;
+    }
+    .class-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .class-card .card-title { font-size: .95rem; }
+    .breadcrumb { font-size: .82rem; }
+    .stat-pill {
+      background: #eef2ff;
+      color: #3730a3;
+      border-radius: 20px;
+      padding: .15rem .65rem;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>OFBiz Docs
+  </a>
+  <div class="nav-section">Module</div>
+  <ul class="nav flex-column">
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../party/index.html">
+        <i class="bi bi-box me-1"></i>party
+        <span class="stat-pill ms-1">22</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../order/index.html">
+        <i class="bi bi-box me-1"></i>order
+        <span class="stat-pill ms-1">37</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../product/index.html">
+        <i class="bi bi-box me-1"></i>product
+        <span class="stat-pill ms-1">58</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../accounting/index.html">
+        <i class="bi bi-box me-1"></i>accounting
+        <span class="stat-pill ms-1">33</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../content/index.html">
+        <i class="bi bi-box me-1"></i>content
+        <span class="stat-pill ms-1">28</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../manufacturing/index.html">
+        <i class="bi bi-box me-1"></i>manufacturing
+        <span class="stat-pill ms-1">17</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../shipment/index.html">
+        <i class="bi bi-box me-1"></i>shipment
+        <span class="stat-pill ms-1">23</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link active"
+         href="../workeffort/index.html">
+        <i class="bi bi-box me-1"></i>workeffort
+        <span class="stat-pill ms-1">18</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="../marketing/index.html">
+        <i class="bi bi-box me-1"></i>marketing
+        <span class="stat-pill ms-1">8</span>
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+<!-- Main -->
+<div id="main">
+  
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="../index.html">Module</a></li>
+      <li class="breadcrumb-item active">workeffort</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-box me-2 text-primary"></i>workeffort</h1>
+  <div class="d-flex gap-2 mt-2">
+    <span class="stat-pill"><i class="bi bi-layers me-1"></i>18 Klassen</span>
+    <span class="stat-pill"><i class="bi bi-lightning me-1"></i>76 public Methoden</span>
+  </div>
+</div>
+
+<div class="content-area">
+
+  <!-- Overview -->
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Überblick</h5>
+    <p>Das `workeffort`-Modul implementiert die zentrale Arbeitsaufgaben-Verwaltung in Apache OFBiz: von Terminen, Aufgaben und Aktivitäten über iCalendar-basierte Kalenderintegration bis zur Volltextsuche. Es bildet die gemeinsame Grundlage für Projektarbeit, Produktionsaufträge und Workflow-Aktivitäten und verknüpft Personen, Betriebsmittel, Inhalte und Zeitausdrücke in einem einheitlichen Domänenmodell.</p>
+  </section>
+
+  <!-- Submodules -->
+  
+  <section class="mb-4">
+    <h5 class="text-muted text-uppercase" style="font-size:.75rem;letter-spacing:.08em">Submodule</h5>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr><th>Paket</th><th>Beschreibung</th></tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.workeffort.workeffort</code></td>
+            <td class="text-muted small">Kernlogik: Services, Worker, Suche, iCalendar-Integration, Party-Zuweisung, Keyword-Indexierung</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.workeffort.content</code></td>
+            <td class="text-muted small">Content-Wrapper: sprachabhängige, gecachte Aufbereitung von Inhalten zu Arbeitsaufgaben</td>
+          </tr>
+          
+          <tr>
+            <td><code>org.apache.ofbiz.workeffort.ical</code></td>
+            <td class="text-muted small">iCalendar-Berechtigungsprüfung (Groovy-Script)</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+
+  <!-- Tab navigation -->
+  
+  
+  
+
+  <ul class="nav nav-tabs mb-4" id="classTabs" role="tablist">
+    
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="tab-java" data-bs-toggle="tab"
+              data-bs-target="#pane-java" type="button">
+        <i class="bi bi-filetype-java me-1"></i>Java
+        <span class="badge bg-primary ms-1">12</span>
+      </button>
+    </li>
+    
+    
+    <li class="nav-item" role="presentation">
+      <button class="nav-link "
+              id="tab-groovy" data-bs-toggle="tab"
+              data-bs-target="#pane-groovy" type="button">
+        <i class="bi bi-braces me-1"></i>Groovy
+        <span class="badge bg-success ms-1">6</span>
+      </button>
+    </li>
+    
+    
+  </ul>
+
+  <div class="tab-content">
+
+    
+    <div class="tab-pane fade show active" id="pane-java" role="tabpanel">
+      <div class="row g-2">
+        
+        <div class="col-md-6 col-xl-4">
+<a href="WorkEffortContentWrapper.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">WorkEffortContentWrapper</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Stellt lokalisierte und MIME-typ-konforme Inhalte zu einer `WorkEffort`-Entität bereit. Nutzt einen dedizierten Cache (`…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>13 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ICalConverter.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ICalConverter</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Kernkomponente der iCalendar-Integration. Wandelt `WorkEffort`-Entitäten (Typ `EVENT` und `TASK`) in iCalendar-Komponent…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>9 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ICalHandlerFactory.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ICalHandlerFactory</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Implementiert `RequestHandlerFactory` für den iCalendar-WebDAV-Endpunkt. Registriert HTTP-Methodenhandler und delegiert …
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ICalRecurConverter.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ICalRecurConverter</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Implementiert `TemporalExpressionVisitor` und konvertiert OFBiz-`TemporalExpression`-Objekte (Frequenz, Wochentag-Bereic…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>13 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="ICalWorker.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">ICalWorker</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      HTTP-Einstiegspunkt für den iCalendar-WebDAV-Endpunkt. Verarbeitet GET- (Kalender abrufen), PUT- (Kalender speichern) un…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>8 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="WorkEffortKeywordIndex.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">WorkEffortKeywordIndex</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Erstellt und aktualisiert den Keyword-Index für `WorkEffort`-Entitäten in der Tabelle `WorkEffortKeyword`. Extrahiert Sc…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="WorkEffortPartyAssignmentServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">WorkEffortPartyAssignmentServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Verknüpft Statusänderungen an `WorkEffortPartyAssignment`-Einträgen mit dem Workflow-Engine. Wenn eine Zuweisung zu eine…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="WorkEffortSearch.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">WorkEffortSearch</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Implementiert die vollständige Suchmaschinerie für `WorkEffort`-Entitäten auf Basis dynamischer View-Entities und Keywor…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="WorkEffortSearchEvents.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">WorkEffortSearchEvents</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Bindeglied zwischen der Web-Oberfläche und der Suchlogik. Liest die aktuellen Suchoptionen aus der HTTP-Session, führt d…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>1 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="WorkEffortSearchSession.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">WorkEffortSearchSession</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Verwaltet den Suchzustand (Constraints, Sortierung, Paginierung) in der HTTP-Session unter dem Attribut `_WORK_EFFORT_SE…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>10 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="WorkEffortServices.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">WorkEffortServices</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Sammlung von OFBiz-Services für Abfragen und Datenaggregation rund um `WorkEffort`-Entitäten. Deckt Kalenderabfragen (Er…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>12 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="WorkEffortWorker.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">WorkEffortWorker</span>
+      
+      <span class="badge badge-type ms-1 bg-primary">
+        Java
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      Hilfsklasse mit allgemeinen Traversierungs- und Bereinigungsoperationen auf `WorkEffort`-Assoziationsgraphen. Wird von m…
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-lightning me-1"></i>3 Methoden</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+      </div>
+    </div>
+    
+
+    
+    <div class="tab-pane fade "
+         id="pane-groovy" role="tabpanel">
+      <div class="row g-2">
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Groovy-Scripts-iCalendar-Berechtigungspr-fung-ical.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: iCalendar-Berechtigungsprüfung (`ical`)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.ical</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      | Script | Fachliche Funktion |
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>1 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Groovy-Scripts-Kalender-Ansichten-calendar.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Kalender-Ansichten (`calendar`)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort.calendar</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      | Script | Fachliche Funktion |
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>5 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Groovy-Scripts-Content-Wrapper-content.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Content-Wrapper (`content`)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort.content</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      | Script | Fachliche Funktion |
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>1 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Groovy-Scripts-Suche-find.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Suche (`find`)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort.find</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      | Script | Fachliche Funktion |
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>2 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Groovy-Scripts-Anforderungsliste-request.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Anforderungsliste (`request`)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort.request</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      | Script | Fachliche Funktion |
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>1 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+        <div class="col-md-6 col-xl-4">
+<a href="Groovy-Scripts-Service-Erg-nzungen-workeffort.html" class="text-decoration-none">
+  <div class="class-card card p-3 h-100">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <span class="fw-semibold text-dark" style="font-size:.9rem">Groovy-Scripts: Service-Ergänzungen (`workeffort`)</span>
+      
+      <span class="badge badge-type ms-1 bg-success">
+        Groovy
+      </span>
+    </div>
+    
+    <div class="text-muted" style="font-size:.72rem;font-family:monospace">org.apache.ofbiz.workeffort.workeffort.workeffort</div>
+    
+    <p class="text-muted small mt-2 mb-0" style="font-size:.8rem">
+      | Script | Fachliche Funktion |
+    </p>
+    <div class="mt-2">
+      
+        <span class="stat-pill"><i class="bi bi-collection me-1"></i>1 Klassen</span>
+      
+    </div>
+  </div>
+</a>
+</div>
+        
+      </div>
+    </div>
+    
+
+    
+
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</div>
+
+</body>
+</html>
