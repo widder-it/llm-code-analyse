@@ -32,31 +32,64 @@
   </section>
   {% endif %}
 
-  {# ── 2. Module cards ──────────────────────────────────── #}
+  {# ── 2. Module structure table ────────────────────────── #}
+  {% if architektur.module_structure %}
+  {% set documented_ids = modules | map(attribute='id') | list %}
   <section class="mb-5">
-    <h4 class="section-title">2. Dokumentierte Module</h4>
-    <div class="row g-3">
-      {% for mod in modules %}
-      <div class="col-md-6 col-xl-4">
-        <a href="{{ mod.id }}/index.html" class="text-decoration-none">
-          <div class="class-card card h-100 p-3">
-            <div class="d-flex align-items-center mb-2">
-              <i class="bi bi-box text-primary me-2 fs-5"></i>
-              <span class="fw-semibold fs-5">{{ mod.name }}</span>
-            </div>
-            <p class="text-muted small mb-3" style="min-height:3em">
-              {{ mod.overview[:150] }}{% if mod.overview|length > 150 %}…{% endif %}
-            </p>
-            <div class="d-flex gap-2 mt-auto">
-              <span class="stat-pill"><i class="bi bi-layers me-1"></i>{{ mod.stats.classes }} Klassen</span>
-              <span class="stat-pill"><i class="bi bi-lightning me-1"></i>{{ mod.stats.methods }} Methoden</span>
-            </div>
-          </div>
-        </a>
-      </div>
-      {% endfor %}
+    <h4 class="section-title">2. Modulstruktur</h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Modul</th>
+            <th class="text-end">Klassen</th>
+            <th class="text-end">Public Methoden</th>
+            <th>Typ</th>
+            <th>Beschreibung</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in architektur.module_structure %}
+          {% set mod_id = row.Modul | lower %}
+          {% set is_documented = mod_id in documented_ids %}
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              {% if is_documented %}
+              <a href="{{ mod_id }}/index.html" class="text-decoration-none">
+                <i class="bi bi-box me-1 text-primary"></i>{{ row.Modul }}
+              </a>
+              {% else %}
+              <span class="text-muted"><i class="bi bi-box me-1"></i>{{ row.Modul }}</span>
+              {% endif %}
+            </td>
+            <td class="text-end">{{ row.Klassen }}</td>
+            <td class="text-end">{{ row['Public Methoden'] }}</td>
+            <td>
+              <span class="badge
+                {% if 'Business' in row.Typ %}bg-primary
+                {% elif 'Kern' in row.Typ %}bg-danger
+                {% elif 'UI' in row.Typ or 'Web' in row.Typ or 'Tomcat' in row.Typ %}bg-warning text-dark
+                {% elif 'Script' in row.Typ %}bg-warning text-dark
+                {% else %}bg-secondary{% endif %}"
+                style="font-size:.7rem;font-weight:500">{{ row.Typ }}</span>
+            </td>
+            <td class="small text-muted">{{ row.Beschreibung }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot class="table-light fw-semibold">
+          <tr>
+            <td>Gesamt</td>
+            <td class="text-end">1.568</td>
+            <td class="text-end">13.398</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   </section>
+  {% endif %}
 
   {# ── 3. Risks ─────────────────────────────────────────── #}
   {% if architektur.risks %}

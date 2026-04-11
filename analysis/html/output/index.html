@@ -171,66 +171,530 @@
   
 
   
+  
+  
   <section class="mb-5">
-    <h4 class="section-title">2. Dokumentierte Module</h4>
-    <div class="row g-3">
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="party/index.html" class="text-decoration-none">
-          <div class="class-card card h-100 p-3">
-            <div class="d-flex align-items-center mb-2">
-              <i class="bi bi-box text-primary me-2 fs-5"></i>
-              <span class="fw-semibold fs-5">party</span>
-            </div>
-            <p class="text-muted small mb-3" style="min-height:3em">
-              Das Modul `party` ist die zentrale Stammdatenverwaltung für alle Akteure im OFBiz-System. Es modelliert Personen, Organisationen (PartyGroups) und der…
-            </p>
-            <div class="d-flex gap-2 mt-auto">
-              <span class="stat-pill"><i class="bi bi-layers me-1"></i>22 Klassen</span>
-              <span class="stat-pill"><i class="bi bi-lightning me-1"></i>173 Methoden</span>
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="order/index.html" class="text-decoration-none">
-          <div class="class-card card h-100 p-3">
-            <div class="d-flex align-items-center mb-2">
-              <i class="bi bi-box text-primary me-2 fs-5"></i>
-              <span class="fw-semibold fs-5">order</span>
-            </div>
-            <p class="text-muted small mb-3" style="min-height:3em">
-              Das Modul `order` ist der Kern des Bestellwesens in Apache OFBiz und deckt den vollständigen Order-to-Cash-Prozess ab. Es umfasst die Verwaltung des W…
-            </p>
-            <div class="d-flex gap-2 mt-auto">
-              <span class="stat-pill"><i class="bi bi-layers me-1"></i>37 Klassen</span>
-              <span class="stat-pill"><i class="bi bi-lightning me-1"></i>170 Methoden</span>
-            </div>
-          </div>
-        </a>
-      </div>
-      
-      <div class="col-md-6 col-xl-4">
-        <a href="product/index.html" class="text-decoration-none">
-          <div class="class-card card h-100 p-3">
-            <div class="d-flex align-items-center mb-2">
-              <i class="bi bi-box text-primary me-2 fs-5"></i>
-              <span class="fw-semibold fs-5">product</span>
-            </div>
-            <p class="text-muted small mb-3" style="min-height:3em">
-              Das Modul `product` ist das zentrale Produktmanagement-Modul von Apache OFBiz. Es deckt die vollständige Lebenszyklus-Verwaltung von Produkten ab: von…
-            </p>
-            <div class="d-flex gap-2 mt-auto">
-              <span class="stat-pill"><i class="bi bi-layers me-1"></i>58 Klassen</span>
-              <span class="stat-pill"><i class="bi bi-lightning me-1"></i>257 Methoden</span>
-            </div>
-          </div>
-        </a>
-      </div>
-      
+    <h4 class="section-title">2. Modulstruktur</h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Modul</th>
+            <th class="text-end">Klassen</th>
+            <th class="text-end">Public Methoden</th>
+            <th>Typ</th>
+            <th>Beschreibung</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <a href="product/index.html" class="text-decoration-none">
+                <i class="bi bi-box me-1 text-primary"></i>product
+              </a>
+              
+            </td>
+            <td class="text-end">181</td>
+            <td class="text-end">1.218</td>
+            <td>
+              <span class="badge
+                bg-primary
+                "
+                style="font-size:.7rem;font-weight:500">Business</span>
+            </td>
+            <td class="small text-muted">Produktkatalog, Kategorien, Preise, Varianten, Lager, Promotions, Lieferanten</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <a href="order/index.html" class="text-decoration-none">
+                <i class="bi bi-box me-1 text-primary"></i>order
+              </a>
+              
+            </td>
+            <td class="text-end">147</td>
+            <td class="text-end">1.974</td>
+            <td>
+              <span class="badge
+                bg-primary
+                "
+                style="font-size:.7rem;font-weight:500">Business</span>
+            </td>
+            <td class="small text-muted">Bestellverwaltung, Warenkorb, Checkout, Rückgaben, Angebote, Shopping-Listen</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>entity</span>
+              
+            </td>
+            <td class="text-end">146</td>
+            <td class="text-end">1.882</td>
+            <td>
+              <span class="badge
+                bg-danger
+                "
+                style="font-size:.7rem;font-weight:500">Kern-Framework</span>
+            </td>
+            <td class="small text-muted">Proprietäres ORM: Delegator, GenericEntity, EntityQuery, Transaktionen, Kryptographie</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>base</span>
+              
+            </td>
+            <td class="text-end">155</td>
+            <td class="text-end">1.611</td>
+            <td>
+              <span class="badge
+                bg-danger
+                "
+                style="font-size:.7rem;font-weight:500">Kern-Framework</span>
+            </td>
+            <td class="small text-muted">Utilities (DateTime, HTTP, XML, Cache), Konfiguration, Container-Lifecycle, Konvertierungen</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>service</span>
+              
+            </td>
+            <td class="text-end">126</td>
+            <td class="text-end">1.078</td>
+            <td>
+              <span class="badge
+                bg-danger
+                "
+                style="font-size:.7rem;font-weight:500">Kern-Framework</span>
+            </td>
+            <td class="small text-muted">Service-Engine: Dispatching, Job-Scheduler, JMS-Integration, RMI, Service-Metadaten</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>minilang</span>
+              
+            </td>
+            <td class="text-end">125</td>
+            <td class="text-end">520</td>
+            <td>
+              <span class="badge
+                bg-warning text-dark
+                "
+                style="font-size:.7rem;font-weight:500">Script-Engine</span>
+            </td>
+            <td class="small text-muted">Interpreter für proprietäre XML-DSL (MiniLang); seit OFBiz 18.12 deprecated</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>accounting</span>
+              
+            </td>
+            <td class="text-end">113</td>
+            <td class="text-end">955</td>
+            <td>
+              <span class="badge
+                bg-primary
+                "
+                style="font-size:.7rem;font-weight:500">Business</span>
+            </td>
+            <td class="small text-muted">Buchhaltung, Rechnungen, Zahlungen, Hauptbuch, Budgets, Anlagevermögen, 8 Payment-Provider</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>widget</span>
+              
+            </td>
+            <td class="text-end">95</td>
+            <td class="text-end">939</td>
+            <td>
+              <span class="badge
+                bg-warning text-dark
+                "
+                style="font-size:.7rem;font-weight:500">UI-Framework</span>
+            </td>
+            <td class="small text-muted">Deklarative UI-Engine: Screen-, Form-, Menu- und Tree-Renderer (FreeMarker/FO/Macro)</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>content</span>
+              
+            </td>
+            <td class="text-end">77</td>
+            <td class="text-end">602</td>
+            <td>
+              <span class="badge
+                bg-primary
+                "
+                style="font-size:.7rem;font-weight:500">Business</span>
+            </td>
+            <td class="small text-muted">Content-Management, Datei-Verwaltung, Surveys, Blog, SFTP-Client, FTP-Integration</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>webapp</span>
+              
+            </td>
+            <td class="text-end">75</td>
+            <td class="text-end">370</td>
+            <td>
+              <span class="badge
+                bg-warning text-dark
+                "
+                style="font-size:.7rem;font-weight:500">Web-Infrastruktur</span>
+            </td>
+            <td class="small text-muted">Servlet-Controller, Request-Routing, Login, Session, WebDAV, CSRF-Schutz, JWT</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>webtools</span>
+              
+            </td>
+            <td class="text-end">54</td>
+            <td class="text-end">370</td>
+            <td>
+              <span class="badge
+                bg-warning text-dark
+                "
+                style="font-size:.7rem;font-weight:500">Web-Infrastruktur</span>
+            </td>
+            <td class="small text-muted">Admin-Werkzeuge: Cache-Verwaltung, DB-Tools, Service-Browser, Testausführung, FO-Druck</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <a href="party/index.html" class="text-decoration-none">
+                <i class="bi bi-box me-1 text-primary"></i>party
+              </a>
+              
+            </td>
+            <td class="text-end">52</td>
+            <td class="text-end">362</td>
+            <td>
+              <span class="badge
+                bg-primary
+                "
+                style="font-size:.7rem;font-weight:500">Business</span>
+            </td>
+            <td class="small text-muted">Stammdaten für Personen/Organisationen, Kontaktdaten, Kommunikation, Einladungen</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>common</span>
+              
+            </td>
+            <td class="text-end">54</td>
+            <td class="text-end">332</td>
+            <td>
+              <span class="badge
+                bg-secondary"
+                style="font-size:.7rem;font-weight:500">Querschnitt</span>
+            </td>
+            <td class="small text-muted">E-Mail, Geo-Daten, Login-Services, Portal-Seiten, Einstellungen, QR-Code, Status</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>manufacturing</span>
+              
+            </td>
+            <td class="text-end">44</td>
+            <td class="text-end">302</td>
+            <td>
+              <span class="badge
+                bg-primary
+                "
+                style="font-size:.7rem;font-weight:500">Business</span>
+            </td>
+            <td class="small text-muted">Fertigung: Stücklisten (BOM), Produktionsaufträge, Routing, MRP, Kostenkalkulation</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>shipment</span>
+              
+            </td>
+            <td class="text-end">25</td>
+            <td class="text-end">301</td>
+            <td>
+              <span class="badge
+                bg-primary
+                "
+                style="font-size:.7rem;font-weight:500">Business</span>
+            </td>
+            <td class="small text-muted">Versand, Kommissionierung, Verpackung, Carrier-Integration (UPS, FedEx, DHL, USPS)</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>workeffort</span>
+              
+            </td>
+            <td class="text-end">23</td>
+            <td class="text-end">120</td>
+            <td>
+              <span class="badge
+                bg-primary
+                "
+                style="font-size:.7rem;font-weight:500">Business</span>
+            </td>
+            <td class="small text-muted">Aufgaben, Projekte, Kalender-Events, Ressourcenzuweisung, Arbeitszeiterfassung</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>entityext</span>
+              
+            </td>
+            <td class="text-end">18</td>
+            <td class="text-end">119</td>
+            <td>
+              <span class="badge
+                bg-secondary"
+                style="font-size:.7rem;font-weight:500">Framework-Erweiterung</span>
+            </td>
+            <td class="small text-muted">Entity-Synchronisation zwischen Instanzen, Cache-Services, Daten-Import/Export, Upgrades</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>datafile</span>
+              
+            </td>
+            <td class="text-end">9</td>
+            <td class="text-end">124</td>
+            <td>
+              <span class="badge
+                bg-secondary"
+                style="font-size:.7rem;font-weight:500">Dateiverarbeitung</span>
+            </td>
+            <td class="small text-muted">Strukturierte Dateiimporte (CSV, Fixlänge) über konfigurierbare Metadaten-Definitionen</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>marketing</span>
+              
+            </td>
+            <td class="text-end">13</td>
+            <td class="text-end">55</td>
+            <td>
+              <span class="badge
+                bg-primary
+                "
+                style="font-size:.7rem;font-weight:500">Business</span>
+            </td>
+            <td class="small text-muted">Marketing-Kampagnen, Tracking-Codes, SFA-Leads und Account-Management</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>security</span>
+              
+            </td>
+            <td class="text-end">10</td>
+            <td class="text-end">61</td>
+            <td>
+              <span class="badge
+                bg-secondary"
+                style="font-size:.7rem;font-weight:500">Querschnitt</span>
+            </td>
+            <td class="small text-muted">Berechtigungsprüfung, CSRF-Strategien; enthält auch ZUGFeRD/E-Rechnung (Mustang)</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>testtools</span>
+              
+            </td>
+            <td class="text-end">7</td>
+            <td class="text-end">31</td>
+            <td>
+              <span class="badge
+                bg-secondary"
+                style="font-size:.7rem;font-weight:500">Test-Infrastruktur</span>
+            </td>
+            <td class="small text-muted">Basis-Testklassen für OFBiz-Services und Groovy-basierte Integrationstests</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>catalina</span>
+              
+            </td>
+            <td class="text-end">7</td>
+            <td class="text-end">17</td>
+            <td>
+              <span class="badge
+                bg-warning text-dark
+                "
+                style="font-size:.7rem;font-weight:500">Tomcat-Integration</span>
+            </td>
+            <td class="small text-muted">Tomcat-spezifische Klassen: SSO-Valve, HTTPS-Redirect, Servlet-Container-Hooks</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>commonext</span>
+              
+            </td>
+            <td class="text-end">7</td>
+            <td class="text-end">36</td>
+            <td>
+              <span class="badge
+                bg-secondary"
+                style="font-size:.7rem;font-weight:500">Querschnitt</span>
+            </td>
+            <td class="small text-muted">System-Info-Services, Setup-Assistent für neue OFBiz-Instanzen</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>securityext</span>
+              
+            </td>
+            <td class="text-end">2</td>
+            <td class="text-end">10</td>
+            <td>
+              <span class="badge
+                bg-secondary"
+                style="font-size:.7rem;font-weight:500">Querschnitt</span>
+            </td>
+            <td class="small text-muted">Erweiterte Login-Events, Zertifikat-Services (SSL-Client-Zertifikate)</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>humanres</span>
+              
+            </td>
+            <td class="text-end">2</td>
+            <td class="text-end">6</td>
+            <td>
+              <span class="badge
+                bg-primary
+                "
+                style="font-size:.7rem;font-weight:500">Business</span>
+            </td>
+            <td class="small text-muted">Personalwesen: Mitarbeiterdaten und HR-Events (minimale Implementierung)</td>
+          </tr>
+          
+          
+          
+          <tr>
+            <td class="fw-semibold text-nowrap">
+              
+              <span class="text-muted"><i class="bi bi-box me-1"></i>sfa</span>
+              
+            </td>
+            <td class="text-end">1</td>
+            <td class="text-end">3</td>
+            <td>
+              <span class="badge
+                bg-primary
+                "
+                style="font-size:.7rem;font-weight:500">Business</span>
+            </td>
+            <td class="small text-muted">Sales Force Automation: Kontakt-Export via vCard (ezvcard)</td>
+          </tr>
+          
+        </tbody>
+        <tfoot class="table-light fw-semibold">
+          <tr>
+            <td>Gesamt</td>
+            <td class="text-end">1.568</td>
+            <td class="text-end">13.398</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   </section>
+  
 
   
   

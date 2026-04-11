@@ -103,6 +103,12 @@ def main():
     rows = parse_table(sec1)
     result["tech_foundation"] = rows
 
+    # --- Section 2.1: Module structure table ---
+    sec2_1 = find_section(content, r"Klassen und API-Umfang")
+    module_rows = parse_table(sec2_1)
+    # Remove the "Gesamt" summary row
+    result["module_structure"] = [r for r in module_rows if r.get("Modul", "").lower() != "gesamt"]
+
     # --- Section 2: Language split ---
     sec2 = find_section(content, r"Sprachverteilung")
     result["language_split"] = sec2

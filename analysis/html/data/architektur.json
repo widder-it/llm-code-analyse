@@ -35,6 +35,190 @@
       "Wert": "25"
     }
   ],
+  "module_structure": [
+    {
+      "Modul": "product",
+      "Klassen": "181",
+      "Public Methoden": "1.218",
+      "Typ": "Business",
+      "Beschreibung": "Produktkatalog, Kategorien, Preise, Varianten, Lager, Promotions, Lieferanten"
+    },
+    {
+      "Modul": "order",
+      "Klassen": "147",
+      "Public Methoden": "1.974",
+      "Typ": "Business",
+      "Beschreibung": "Bestellverwaltung, Warenkorb, Checkout, Rückgaben, Angebote, Shopping-Listen"
+    },
+    {
+      "Modul": "entity",
+      "Klassen": "146",
+      "Public Methoden": "1.882",
+      "Typ": "Kern-Framework",
+      "Beschreibung": "Proprietäres ORM: Delegator, GenericEntity, EntityQuery, Transaktionen, Kryptographie"
+    },
+    {
+      "Modul": "base",
+      "Klassen": "155",
+      "Public Methoden": "1.611",
+      "Typ": "Kern-Framework",
+      "Beschreibung": "Utilities (DateTime, HTTP, XML, Cache), Konfiguration, Container-Lifecycle, Konvertierungen"
+    },
+    {
+      "Modul": "service",
+      "Klassen": "126",
+      "Public Methoden": "1.078",
+      "Typ": "Kern-Framework",
+      "Beschreibung": "Service-Engine: Dispatching, Job-Scheduler, JMS-Integration, RMI, Service-Metadaten"
+    },
+    {
+      "Modul": "minilang",
+      "Klassen": "125",
+      "Public Methoden": "520",
+      "Typ": "Script-Engine",
+      "Beschreibung": "Interpreter für proprietäre XML-DSL (MiniLang); seit OFBiz 18.12 deprecated"
+    },
+    {
+      "Modul": "accounting",
+      "Klassen": "113",
+      "Public Methoden": "955",
+      "Typ": "Business",
+      "Beschreibung": "Buchhaltung, Rechnungen, Zahlungen, Hauptbuch, Budgets, Anlagevermögen, 8 Payment-Provider"
+    },
+    {
+      "Modul": "widget",
+      "Klassen": "95",
+      "Public Methoden": "939",
+      "Typ": "UI-Framework",
+      "Beschreibung": "Deklarative UI-Engine: Screen-, Form-, Menu- und Tree-Renderer (FreeMarker/FO/Macro)"
+    },
+    {
+      "Modul": "content",
+      "Klassen": "77",
+      "Public Methoden": "602",
+      "Typ": "Business",
+      "Beschreibung": "Content-Management, Datei-Verwaltung, Surveys, Blog, SFTP-Client, FTP-Integration"
+    },
+    {
+      "Modul": "webapp",
+      "Klassen": "75",
+      "Public Methoden": "370",
+      "Typ": "Web-Infrastruktur",
+      "Beschreibung": "Servlet-Controller, Request-Routing, Login, Session, WebDAV, CSRF-Schutz, JWT"
+    },
+    {
+      "Modul": "webtools",
+      "Klassen": "54",
+      "Public Methoden": "370",
+      "Typ": "Web-Infrastruktur",
+      "Beschreibung": "Admin-Werkzeuge: Cache-Verwaltung, DB-Tools, Service-Browser, Testausführung, FO-Druck"
+    },
+    {
+      "Modul": "party",
+      "Klassen": "52",
+      "Public Methoden": "362",
+      "Typ": "Business",
+      "Beschreibung": "Stammdaten für Personen/Organisationen, Kontaktdaten, Kommunikation, Einladungen"
+    },
+    {
+      "Modul": "common",
+      "Klassen": "54",
+      "Public Methoden": "332",
+      "Typ": "Querschnitt",
+      "Beschreibung": "E-Mail, Geo-Daten, Login-Services, Portal-Seiten, Einstellungen, QR-Code, Status"
+    },
+    {
+      "Modul": "manufacturing",
+      "Klassen": "44",
+      "Public Methoden": "302",
+      "Typ": "Business",
+      "Beschreibung": "Fertigung: Stücklisten (BOM), Produktionsaufträge, Routing, MRP, Kostenkalkulation"
+    },
+    {
+      "Modul": "shipment",
+      "Klassen": "25",
+      "Public Methoden": "301",
+      "Typ": "Business",
+      "Beschreibung": "Versand, Kommissionierung, Verpackung, Carrier-Integration (UPS, FedEx, DHL, USPS)"
+    },
+    {
+      "Modul": "workeffort",
+      "Klassen": "23",
+      "Public Methoden": "120",
+      "Typ": "Business",
+      "Beschreibung": "Aufgaben, Projekte, Kalender-Events, Ressourcenzuweisung, Arbeitszeiterfassung"
+    },
+    {
+      "Modul": "entityext",
+      "Klassen": "18",
+      "Public Methoden": "119",
+      "Typ": "Framework-Erweiterung",
+      "Beschreibung": "Entity-Synchronisation zwischen Instanzen, Cache-Services, Daten-Import/Export, Upgrades"
+    },
+    {
+      "Modul": "datafile",
+      "Klassen": "9",
+      "Public Methoden": "124",
+      "Typ": "Dateiverarbeitung",
+      "Beschreibung": "Strukturierte Dateiimporte (CSV, Fixlänge) über konfigurierbare Metadaten-Definitionen"
+    },
+    {
+      "Modul": "marketing",
+      "Klassen": "13",
+      "Public Methoden": "55",
+      "Typ": "Business",
+      "Beschreibung": "Marketing-Kampagnen, Tracking-Codes, SFA-Leads und Account-Management"
+    },
+    {
+      "Modul": "security",
+      "Klassen": "10",
+      "Public Methoden": "61",
+      "Typ": "Querschnitt",
+      "Beschreibung": "Berechtigungsprüfung, CSRF-Strategien; enthält auch ZUGFeRD/E-Rechnung (Mustang)"
+    },
+    {
+      "Modul": "testtools",
+      "Klassen": "7",
+      "Public Methoden": "31",
+      "Typ": "Test-Infrastruktur",
+      "Beschreibung": "Basis-Testklassen für OFBiz-Services und Groovy-basierte Integrationstests"
+    },
+    {
+      "Modul": "catalina",
+      "Klassen": "7",
+      "Public Methoden": "17",
+      "Typ": "Tomcat-Integration",
+      "Beschreibung": "Tomcat-spezifische Klassen: SSO-Valve, HTTPS-Redirect, Servlet-Container-Hooks"
+    },
+    {
+      "Modul": "commonext",
+      "Klassen": "7",
+      "Public Methoden": "36",
+      "Typ": "Querschnitt",
+      "Beschreibung": "System-Info-Services, Setup-Assistent für neue OFBiz-Instanzen"
+    },
+    {
+      "Modul": "securityext",
+      "Klassen": "2",
+      "Public Methoden": "10",
+      "Typ": "Querschnitt",
+      "Beschreibung": "Erweiterte Login-Events, Zertifikat-Services (SSL-Client-Zertifikate)"
+    },
+    {
+      "Modul": "humanres",
+      "Klassen": "2",
+      "Public Methoden": "6",
+      "Typ": "Business",
+      "Beschreibung": "Personalwesen: Mitarbeiterdaten und HR-Events (minimale Implementierung)"
+    },
+    {
+      "Modul": "sfa",
+      "Klassen": "1",
+      "Public Methoden": "3",
+      "Typ": "Business",
+      "Beschreibung": "Sales Force Automation: Kontakt-Export via vCard (ezvcard)"
+    }
+  ],
   "language_split": "Von den 2.932 Class-Files stammen:\n- **~70 % (≈2.050)** aus Java-Quellcode — sauber dekompilierbar\n- **~30 % (≈880)** aus Groovy-Skripten — als `.class` vorhanden, Quellcode nicht rekonstruierbar\n\nDie Groovy-Klassen sind Groovy-Skripte des OFBiz-Service-Frameworks (Business-Logik als Groovy-Scripts konfiguriert), erkennbar an `extends groovy.lang.Script` und Closure-Klassen (`$_run_closure`).\n\n---",
   "dependency_cycles": [
     {
