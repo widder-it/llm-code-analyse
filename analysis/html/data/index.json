@@ -80,6 +80,24 @@
         "classes": 8,
         "methods": 10
       }
+    },
+    {
+      "id": "humanres",
+      "name": "humanres",
+      "overview": "Das Modul **humanres** (Human Resources) verwaltet Organisationsstrukturen, Stellen und Mitarbeiterzuordnungen im OFBiz-HR-Bereich. Es stellt Event-Handler für die UI-seitige Darstellung von Organigra…",
+      "stats": {
+        "classes": 2,
+        "methods": 1
+      }
+    },
+    {
+      "id": "sfa",
+      "name": "sfa",
+      "overview": "Das Modul **sfa** (Sales Force Automation) ergänzt das Marketing-Modul um Funktionen für den Vertriebsinnendienst. Es stellt einen Service zum Import und Export von Kontaktdaten im vCard-Format (RFC 6…",
+      "stats": {
+        "classes": 1,
+        "methods": 2
+      }
     }
   ]
 }

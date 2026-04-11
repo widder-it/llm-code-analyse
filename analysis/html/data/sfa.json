@@ -1,0 +1,35 @@
+{
+  "module": "sfa",
+  "overview": "Das Modul **sfa** (Sales Force Automation) ergänzt das Marketing-Modul um Funktionen für den Vertriebsinnendienst. Es stellt einen Service zum Import und Export von Kontaktdaten im vCard-Format (RFC 6350) bereit und nutzt dafür die externe Bibliothek ez-vCard.",
+  "submodules": [
+    {
+      "name": "org.apache.ofbiz.sfa.vcard",
+      "description": "Import/Export von Kontakten im vCard-Format (.vcf)"
+    }
+  ],
+  "classes": [
+    {
+      "id": "VCard",
+      "name": "VCard",
+      "package": "org.apache.ofbiz.sfa.vcard",
+      "type": "Java-Klasse (Service)",
+      "description": "Konvertiert OFBiz-Kontaktdaten (Person, Postadresse, Telefon, E-Mail) in das vCard-Format (.vcf) und umgekehrt. Nutzt die ez-vCard-Bibliothek für Serialisierung und Deserialisierung.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "importVCard(dctx, context)",
+          "description": "Liest eine .vcf-Datei und importiert die enthaltenen Kontaktdaten als OFBiz-Party-Datensätze. (Dekompilierung fehlgeschlagen — Methodenstruktur aus Signatur und Fehlerkontext abgeleitet.)"
+        },
+        {
+          "signature": "exportVCard(dctx, context)",
+          "description": "Exportiert eine Party (Person) als .vcf-Datei: liest Name, Postadresse, Telefonnummer und E-Mail-Adresse aus OFBiz-Entitäten und schreibt sie mit ez-vCard in das konfigurierte Ausgabeverzeichnis (sfa.save.outgoing.directory)."
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "classes": 1,
+    "methods": 2
+  }
+}

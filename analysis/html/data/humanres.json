@@ -1,0 +1,50 @@
+{
+  "module": "humanres",
+  "overview": "Das Modul **humanres** (Human Resources) verwaltet Organisationsstrukturen, Stellen und Mitarbeiterzuordnungen im OFBiz-HR-Bereich. Es stellt Event-Handler für die UI-seitige Darstellung von Organigrammen bereit und nutzt dabei die OFBiz-Entitäten `EmplPosition`, `EmplPositionFulfillment` und `PartyRelationship`.",
+  "submodules": [
+    {
+      "name": "org.apache.ofbiz.humanres",
+      "description": "Event-Handler für HR-Organigramm-Aufrufe"
+    },
+    {
+      "name": "org.apache.ofbiz.humanres.category",
+      "description": "Groovy-Scripts zur Aufbereitung von Kategoriebäumen"
+    }
+  ],
+  "classes": [
+    {
+      "id": "HumanResEvents",
+      "name": "HumanResEvents",
+      "package": "org.apache.ofbiz.humanres",
+      "type": "Java-Klasse (Event-Handler)",
+      "description": "Baut einen JSON-kompatiblen Baum der Organisationshierarchie auf, bestehend aus aktuellen Stelleninhabern, untergeordneten Organisationseinheiten und Positionen. Das Ergebnis wird als Request-Attribut `hrTree` für die View-Schicht bereitgestellt.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getChildHRCategoryTree(request, response)",
+          "description": "Ermittelt für eine gegebene partyId rekursiv: aktuelle Stelleninhaber (EmplPositionFulfillment), untergeordnete Abteilungen (PartyRelationship mit Typ GROUP_ROLLUP) und offene Stellen (EmplPosition). Schreibt das Ergebnis als Liste von Map-Objekten in das Request-Attribut hrTree."
+        }
+      ]
+    },
+    {
+      "id": "Groovy-Scripts-category",
+      "name": "Groovy-Scripts: category",
+      "package": "org.apache.ofbiz.humanres.category",
+      "type": "Groovy-Scripts",
+      "description": "| Script | Fachliche Funktion |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "CategoryTree",
+          "description": "Baut einen vollständigen Organisationsbaum ausgehend von einer Party auf. Folgt GROUP_ROLLUP-Beziehungen, liest den PartyGroup-Namen und gibt eine hierarchische Liste mit completedTree (Gesamtbaum) und subtopLists (direkte Unterknoten) zurück."
+        }
+      ],
+      "section": "groovy"
+    }
+  ],
+  "stats": {
+    "classes": 2,
+    "methods": 1
+  }
+}
