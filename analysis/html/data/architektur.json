@@ -961,5 +961,560 @@
     12,
     13,
     21
+  ],
+  "sbom_libraries": [
+    {
+      "group": "commons-cli",
+      "artifact": "commons-cli",
+      "version": "1.8.0",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "commons-codec",
+      "artifact": "commons-codec",
+      "version": "1.17.0",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.commons",
+      "artifact": "commons-collections4",
+      "version": "4.4",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.commons",
+      "artifact": "commons-csv",
+      "version": "1.11.0",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.commons",
+      "artifact": "commons-dbcp2",
+      "version": "2.12.0",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "commons-fileupload",
+      "artifact": "commons-fileupload",
+      "version": "1.5",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.commons",
+      "artifact": "commons-imaging",
+      "version": "1.0-alpha3",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "commons-io",
+      "artifact": "commons-io",
+      "version": "2.16.1",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.commons",
+      "artifact": "commons-lang3",
+      "version": "3.14.0",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "commons-net",
+      "artifact": "commons-net",
+      "version": "3.11.0",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.commons",
+      "artifact": "commons-pool2",
+      "version": "2.12.0",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.commons",
+      "artifact": "commons-text",
+      "version": "1.12.0",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "commons-validator",
+      "artifact": "commons-validator",
+      "version": "1.9.0",
+      "category": "Apache Commons",
+      "scope": "main"
+    },
+    {
+      "group": "com.auth0",
+      "artifact": "java-jwt",
+      "version": "4.4.0",
+      "category": "Authentifizierung",
+      "scope": "main"
+    },
+    {
+      "group": "com.drewnoakes",
+      "artifact": "metadata-extractor",
+      "version": "2.19.0",
+      "category": "Bild-Metadaten",
+      "scope": "main"
+    },
+    {
+      "group": "com.github.ben-manes.caffeine",
+      "artifact": "caffeine",
+      "version": "3.1.8",
+      "category": "Caching",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.tika",
+      "artifact": "tika-core",
+      "version": "2.9.2",
+      "category": "Dokumenten-Analyse",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.tika",
+      "artifact": "tika-parsers-standard-package",
+      "version": "2.9.2",
+      "category": "Dokumenten-Analyse",
+      "scope": "main"
+    },
+    {
+      "group": "com.sun.mail",
+      "artifact": "jakarta.mail",
+      "version": "2.0.1",
+      "category": "E-Mail",
+      "scope": "main"
+    },
+    {
+      "group": "com.sun.mail",
+      "artifact": "javax.mail",
+      "version": "1.6.2",
+      "category": "E-Mail",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.poi",
+      "artifact": "poi",
+      "version": "5.3.0",
+      "category": "Excel / Office",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.poi",
+      "artifact": "poi-ooxml",
+      "version": "5.3.0",
+      "category": "Excel / Office",
+      "scope": "main"
+    },
+    {
+      "group": "de.odysseus.juel",
+      "artifact": "juel-api",
+      "version": "2.2.7",
+      "category": "Expression Language",
+      "scope": "main"
+    },
+    {
+      "group": "de.odysseus.juel",
+      "artifact": "juel-impl",
+      "version": "2.2.7",
+      "category": "Expression Language",
+      "scope": "main"
+    },
+    {
+      "group": "com.googlecode.concurrentlinkedhashmap",
+      "artifact": "concurrentlinkedhashmap-lru",
+      "version": "1.4.2",
+      "category": "Google Libraries",
+      "scope": "main"
+    },
+    {
+      "group": "com.google.zxing",
+      "artifact": "core",
+      "version": "3.5.3",
+      "category": "Google Libraries",
+      "scope": "main"
+    },
+    {
+      "group": "com.google.guava",
+      "artifact": "guava",
+      "version": "33.2.1-jre",
+      "category": "Google Libraries",
+      "scope": "main"
+    },
+    {
+      "group": "com.google.zxing",
+      "artifact": "javase",
+      "version": "3.5.3",
+      "category": "Google Libraries",
+      "scope": "main"
+    },
+    {
+      "group": "com.googlecode.libphonenumber",
+      "artifact": "libphonenumber",
+      "version": "8.13.43",
+      "category": "Google Libraries",
+      "scope": "main"
+    },
+    {
+      "group": "com.google.re2j",
+      "artifact": "re2j",
+      "version": "1.7",
+      "category": "Google Libraries",
+      "scope": "main"
+    },
+    {
+      "group": "org.jsoup",
+      "artifact": "jsoup",
+      "version": "1.18.1",
+      "category": "HTML-Parsing",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.httpcomponents",
+      "artifact": "httpclient",
+      "version": "4.5.14",
+      "category": "HTTP-Client",
+      "scope": "main"
+    },
+    {
+      "group": "com.fasterxml.jackson.core",
+      "artifact": "jackson-databind",
+      "version": "2.17.2",
+      "category": "JSON",
+      "scope": "main"
+    },
+    {
+      "group": "javax.activation",
+      "artifact": "activation",
+      "version": "1.1.1",
+      "category": "Java EE (legacy javax.*)",
+      "scope": "main"
+    },
+    {
+      "group": "javax.jms",
+      "artifact": "javax.jms-api",
+      "version": "2.0.1",
+      "category": "Java EE (legacy javax.*)",
+      "scope": "main"
+    },
+    {
+      "group": "javax.servlet.jsp",
+      "artifact": "javax.servlet.jsp-api",
+      "version": "2.3.3",
+      "category": "Java EE (legacy javax.*)",
+      "scope": "main"
+    },
+    {
+      "group": "javax.xml.bind",
+      "artifact": "jaxb-api",
+      "version": "2.3.1",
+      "category": "Java EE (legacy javax.*)",
+      "scope": "main"
+    },
+    {
+      "group": "org.mnode.ical4j",
+      "artifact": "ical4j",
+      "version": "3.2.19",
+      "category": "Kalender (iCal)",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.logging.log4j",
+      "artifact": "log4j-api",
+      "version": "2.23.1",
+      "category": "Logging",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.logging.log4j",
+      "artifact": "log4j-core",
+      "version": "2.23.1",
+      "category": "Logging",
+      "scope": "main"
+    },
+    {
+      "group": "com.lowagie",
+      "artifact": "itext",
+      "version": "2.1.7",
+      "category": "PDF",
+      "scope": "main"
+    },
+    {
+      "group": "org.mustangproject",
+      "artifact": "library",
+      "version": "2.13.0",
+      "category": "PDF",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.pdfbox",
+      "artifact": "pdfbox",
+      "version": "3.0.2",
+      "category": "PDF",
+      "scope": "main"
+    },
+    {
+      "group": "com.rometools",
+      "artifact": "rome",
+      "version": "2.1.0",
+      "category": "RSS / Atom",
+      "scope": "main"
+    },
+    {
+      "group": "oro",
+      "artifact": "oro",
+      "version": "2.0.8",
+      "category": "Regex (ORO)",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.sshd",
+      "artifact": "sshd-core",
+      "version": "2.13.1",
+      "category": "SFTP / SSH",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.sshd",
+      "artifact": "sshd-sftp",
+      "version": "2.13.1",
+      "category": "SFTP / SSH",
+      "scope": "main"
+    },
+    {
+      "group": "org.clojure",
+      "artifact": "clojure",
+      "version": "1.12.0",
+      "category": "Scripting",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.groovy",
+      "artifact": "groovy",
+      "version": "4.0.21",
+      "category": "Scripting",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.groovy",
+      "artifact": "groovy-json",
+      "version": "4.0.21",
+      "category": "Scripting",
+      "scope": "main"
+    },
+    {
+      "group": "org.owasp.esapi",
+      "artifact": "esapi",
+      "version": "2.5.4.0",
+      "category": "Security",
+      "scope": "main"
+    },
+    {
+      "group": "com.googlecode.owasp-java-html-sanitizer",
+      "artifact": "owasp-java-html-sanitizer",
+      "version": "20240325.1",
+      "category": "Security",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.shiro",
+      "artifact": "shiro-core",
+      "version": "2.0.1",
+      "category": "Security",
+      "scope": "main"
+    },
+    {
+      "group": "org.freemarker",
+      "artifact": "freemarker",
+      "version": "2.3.33",
+      "category": "Template-Engine",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.ant",
+      "artifact": "ant",
+      "version": "1.10.14",
+      "category": "Test",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.ant",
+      "artifact": "ant-junit",
+      "version": "1.10.14",
+      "category": "Test",
+      "scope": "main"
+    },
+    {
+      "group": "junit",
+      "artifact": "junit",
+      "version": "4.13.2",
+      "category": "Test",
+      "scope": "main"
+    },
+    {
+      "group": "org.springframework",
+      "artifact": "spring-test",
+      "version": "6.1.11",
+      "category": "Test",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.geronimo.components",
+      "artifact": "geronimo-transaction",
+      "version": "3.1.4",
+      "category": "Transaktionen",
+      "scope": "main"
+    },
+    {
+      "group": "com.ibm.icu",
+      "artifact": "icu4j",
+      "version": "75.1",
+      "category": "Unicode / ICU4J",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.ws.commons.axiom",
+      "artifact": "axiom-api",
+      "version": "1.4.0",
+      "category": "Web Services / SOAP",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.axis2",
+      "artifact": "axis2-kernel",
+      "version": "1.8.2",
+      "category": "Web Services / SOAP",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.cxf",
+      "artifact": "cxf-core",
+      "version": "4.0.4",
+      "category": "Web Services / SOAP",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.cxf",
+      "artifact": "cxf-rt-frontend-jaxrs",
+      "version": "4.0.4",
+      "category": "Web Services / SOAP",
+      "scope": "main"
+    },
+    {
+      "group": "javax.ws.rs",
+      "artifact": "javax.ws.rs-api",
+      "version": "2.1.1",
+      "category": "Web Services / SOAP",
+      "scope": "main"
+    },
+    {
+      "group": "wsdl4j",
+      "artifact": "wsdl4j",
+      "version": "1.6.3",
+      "category": "Web Services / SOAP",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.tomcat",
+      "artifact": "tomcat-catalina-ha",
+      "version": "10.1.28",
+      "category": "Web-Container",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.tomcat.embed",
+      "artifact": "tomcat-embed-core",
+      "version": "10.1.28",
+      "category": "Web-Container",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.tomcat.embed",
+      "artifact": "tomcat-embed-jasper",
+      "version": "10.1.28",
+      "category": "Web-Container",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.tomcat",
+      "artifact": "tomcat-jdbc",
+      "version": "10.1.28",
+      "category": "Web-Container",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.tomcat",
+      "artifact": "tomcat-tribes",
+      "version": "10.1.28",
+      "category": "Web-Container",
+      "scope": "main"
+    },
+    {
+      "group": "org.jdom",
+      "artifact": "jdom",
+      "version": "1.1.3",
+      "category": "XML (JDOM)",
+      "scope": "main"
+    },
+    {
+      "group": "org.jdom",
+      "artifact": "jdom2",
+      "version": "2.0.6.1",
+      "category": "XML (JDOM)",
+      "scope": "main"
+    },
+    {
+      "group": "xerces",
+      "artifact": "xercesImpl",
+      "version": "2.12.2",
+      "category": "XML-Parser",
+      "scope": "main"
+    },
+    {
+      "group": "com.thoughtworks.xstream",
+      "artifact": "xstream",
+      "version": "1.4.20",
+      "category": "XML-Serialisierung",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.xmlgraphics",
+      "artifact": "batik-all",
+      "version": "1.17",
+      "category": "XSL-FO / SVG",
+      "scope": "main"
+    },
+    {
+      "group": "org.apache.xmlgraphics",
+      "artifact": "fop",
+      "version": "2.10",
+      "category": "XSL-FO / SVG",
+      "scope": "main"
+    },
+    {
+      "group": "net.lingala.zip4j",
+      "artifact": "zip4j",
+      "version": "2.11.5",
+      "category": "ZIP",
+      "scope": "main"
+    },
+    {
+      "group": "com.googlecode.ez-vcard",
+      "artifact": "ez-vcard",
+      "version": "0.12.1",
+      "category": "vCard",
+      "scope": "main"
+    }
   ]
 }

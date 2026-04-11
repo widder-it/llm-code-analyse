@@ -1,0 +1,54 @@
+{% extends "base.html.j2" %}
+{% block title %}SBOM — Externe Abhängigkeiten{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="{{ root }}index.html">Übersicht</a></li>
+      <li class="breadcrumb-item active">SBOM</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-box-seam me-2 text-primary"></i>Software Bill of Materials</h1>
+  <p class="text-muted mb-0 mt-1 small">
+    {{ libraries | length }} externe Abhängigkeiten &middot;
+    Quelle: <code>decompiled/build.gradle</code>
+  </p>
+</div>
+
+<div class="content-area">
+
+{% set categories = libraries | map(attribute='category') | unique | sort | list %}
+{% for cat in categories %}
+{% set cat_libs = libraries | selectattr('category', 'equalto', cat) | list %}
+<section class="mb-5">
+  <h4 class="section-title">{{ cat }}
+    <span class="badge bg-secondary ms-2" style="font-size:.7rem;font-weight:500;vertical-align:middle">{{ cat_libs | length }}</span>
+  </h4>
+  <div class="table-responsive">
+    <table class="table table-sm table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th style="width:30%">Artifact</th>
+          <th style="width:30%">Group</th>
+          <th style="width:12%">Version</th>
+          <th>Maven-Koordinaten</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for lib in cat_libs %}
+        <tr {% if lib.scope == 'test' %}class="table-secondary"{% endif %}>
+          <td class="fw-semibold">{{ lib.artifact }}</td>
+          <td class="text-muted small font-monospace">{{ lib.group }}</td>
+          <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">{{ lib.version }}</span></td>
+          <td class="small text-muted font-monospace">{{ lib.group }}:{{ lib.artifact }}:{{ lib.version }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endfor %}
+
+</div>
+{% endblock %}

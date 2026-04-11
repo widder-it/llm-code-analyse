@@ -56,6 +56,14 @@ def main():
                root=relative_root(0), active_module=None)
     print("  index.html")
 
+    # --- sbom.html ---
+    libraries = architektur.get("sbom_libraries", [])
+    if libraries:
+        write_html(env, "sbom.html.j2", OUTPUT_DIR / "sbom.html",
+                   modules=modules_meta, libraries=libraries,
+                   root=relative_root(0), active_module=None)
+        print(f"  sbom.html  ({len(libraries)} libraries)")
+
     for module_id in targets:
         json_path = DATA_DIR / f"{module_id}.json"
         if not json_path.exists():
