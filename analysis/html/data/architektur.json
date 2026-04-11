@@ -830,7 +830,19 @@
   "business_dependencies": [
     {
       "from": "party",
+      "to": "accounting"
+    },
+    {
+      "from": "party",
       "to": "content"
+    },
+    {
+      "from": "party",
+      "to": "product"
+    },
+    {
+      "from": "order",
+      "to": "accounting"
     },
     {
       "from": "order",
@@ -854,7 +866,15 @@
     },
     {
       "from": "product",
+      "to": "order"
+    },
+    {
+      "from": "product",
       "to": "party"
+    },
+    {
+      "from": "product",
+      "to": "shipment"
     },
     {
       "from": "accounting",
@@ -867,6 +887,14 @@
     {
       "from": "accounting",
       "to": "product"
+    },
+    {
+      "from": "accounting",
+      "to": "shipment"
+    },
+    {
+      "from": "manufacturing",
+      "to": "content"
     },
     {
       "from": "manufacturing",
@@ -891,6 +919,10 @@
     {
       "from": "workeffort",
       "to": "content"
+    },
+    {
+      "from": "marketing",
+      "to": "party"
     },
     {
       "from": "marketing",

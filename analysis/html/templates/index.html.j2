@@ -346,9 +346,13 @@ graph LR
         <div class="table-responsive">
           <table class="table table-sm table-bordered" style="font-size:.72rem">
             <thead class="table-light">
-              <tr>
-                <th style="min-width:90px">Von ↓ Nach →</th>
-                {% for m in biz_mods %}<th class="text-center px-1" title="{{ m }}">{{ m[:4] }}</th>{% endfor %}
+              <tr style="height:7rem;vertical-align:bottom">
+                <th style="min-width:90px;vertical-align:bottom">Von ↓ Nach →</th>
+                {% for m in biz_mods %}
+                <th class="text-center px-0" style="width:2rem">
+                  <div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;font-weight:600;padding-bottom:.3rem">{{ m }}</div>
+                </th>
+                {% endfor %}
               </tr>
             </thead>
             <tbody>

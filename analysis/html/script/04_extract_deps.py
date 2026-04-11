@@ -9,7 +9,9 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-JAVA_SRC = ROOT / "decompiled" / "src" / "main" / "java" / "org" / "apache" / "ofbiz"
+DECOMPILED = ROOT / "decompiled" / "src"
+JAVA_SRC   = DECOMPILED / "main" / "java" / "org" / "apache" / "ofbiz"
+GROOVY_SRC = DECOMPILED / "groovy-origin" / "org" / "apache" / "ofbiz"
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 
 BUSINESS_MODULES = [
@@ -21,14 +23,17 @@ IMPORT_RE = re.compile(r"^import org\.apache\.ofbiz\.([a-z]+)\.", re.MULTILINE)
 
 
 def get_deps(module: str) -> set[str]:
-    mod_dir = JAVA_SRC / module
     deps = set()
-    for java_file in mod_dir.rglob("*.java"):
-        text = java_file.read_text(encoding="utf-8", errors="ignore")
-        for m in IMPORT_RE.finditer(text):
-            dep = m.group(1)
-            if dep != module and dep in BUSINESS_MODULES:
-                deps.add(dep)
+    for src_root in (JAVA_SRC, GROOVY_SRC):
+        mod_dir = src_root / module
+        if not mod_dir.exists():
+            continue
+        for java_file in mod_dir.rglob("*.java"):
+            text = java_file.read_text(encoding="utf-8", errors="ignore")
+            for m in IMPORT_RE.finditer(text):
+                dep = m.group(1)
+                if dep != module and dep in BUSINESS_MODULES:
+                    deps.add(dep)
     return deps
 
 
