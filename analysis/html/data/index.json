@@ -44,6 +44,24 @@
         "classes": 28,
         "methods": 134
       }
+    },
+    {
+      "id": "manufacturing",
+      "name": "manufacturing",
+      "overview": "Das `manufacturing`-Modul implementiert die gesamte Fertigungslogik in Apache OFBiz: von der Stücklisten-Verwaltung (Bill of Materials) über die Materialbedarfsplanung (MRP) bis zur Steuerung von Fert…",
+      "stats": {
+        "classes": 17,
+        "methods": 74
+      }
+    },
+    {
+      "id": "shipment",
+      "name": "shipment",
+      "overview": "Das Modul `shipment` steuert den gesamten Versandprozess in Apache OFBiz — von der Erstellung und Kostenschätzung von Sendungen über das interaktive Verpacken und Gewichtserfassen bis hin zur Kommunik…",
+      "stats": {
+        "classes": 23,
+        "methods": 117
+      }
     }
   ]
 }

@@ -1,0 +1,618 @@
+{
+  "module": "manufacturing",
+  "overview": "Das `manufacturing`-Modul implementiert die gesamte Fertigungslogik in Apache OFBiz: von der Stücklisten-Verwaltung (Bill of Materials) über die Materialbedarfsplanung (MRP) bis zur Steuerung von Fertigungsaufträgen (Production Runs). Es bildet den Kern für produzierende Unternehmen und verzahnt Lagerbestände, Verkaufsbedarfe, Einkaufsbestellungen und Produktionskapazitäten zu einem integrierten Planungssystem.",
+  "submodules": [
+    {
+      "name": "org.apache.ofbiz.manufacturing.bom",
+      "description": "Stücklisten (Bill of Materials): Baumstruktur aus Produktkomponenten, Konfigurations- und Substitutionslogik, BOM-Dienste"
+    },
+    {
+      "name": "org.apache.ofbiz.manufacturing.jobshopmgt",
+      "description": "Fertigungsaufträge (Job Shop Management): Anlage, Statusverwaltung, Aufgabensteuerung, Kostenerfassung"
+    },
+    {
+      "name": "org.apache.ofbiz.manufacturing.mrp",
+      "description": "Materialbedarfsplanung (MRP): Ereignisinitialisierung, Nettobedarfsermittlung, Planungsauftragsvorschläge"
+    },
+    {
+      "name": "org.apache.ofbiz.manufacturing.routing",
+      "description": "Arbeitspläne und Arbeitsplatzkalender: Zeitermittlung, Kalenderprüfung"
+    },
+    {
+      "name": "org.apache.ofbiz.manufacturing.techdata",
+      "description": "Technische Stammdaten: Kapazitätskalender, Vorwärts-/Rückwärtsterminierung"
+    },
+    {
+      "name": "org.apache.ofbiz.manufacturing.reports",
+      "description": "Berichte zu Fertigungsaufträgen, Versandplänen, Produktmerkmalen (Groovy-Scripts)"
+    }
+  ],
+  "classes": [
+    {
+      "id": "BOMNode",
+      "name": "BOMNode",
+      "package": "org.apache.ofbiz.manufacturing.bom",
+      "type": "Java-Klasse",
+      "description": "Repräsentiert einen einzelnen Knoten in einer Stücklistenstruktur. Jeder Knoten kapselt ein Produkt mit seiner Menge, dem Ausschussfaktor und der Verknüpfung zu Eltern- und Kindknoten. Enthält die Konfigurations- und Substitutionslogik für virtuelle Produkte und Varianten.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "loadChildren(partBomTypeId, inDate, productFeatures, type)",
+          "description": "Lädt rekursiv die Unterkomponenten aus ProductAssoc für den gegebenen Stücklistentyp und Stichtag; bei virtuellen Produkten werden Fertigungsregeln (ProductManufacturingRule) ausgewertet und ggf. Ersatzartikel eingesetzt"
+        },
+        {
+          "signature": "loadParents(partBomTypeId, inDate, productFeatures)",
+          "description": "Lädt die übergeordneten Produkte (Implosionsrichtung) für die Verwendungsnachweis-Analyse"
+        },
+        {
+          "signature": "print(arr, quantity, depth, excludeWIPs)",
+          "description": "Traversiert den Teilbaum und schreibt alle Knoten mit berechneten Mengen in eine flache Liste; optionaler Ausschluss von WIP-Produkten; ruft bei konfigurierten Kalkulationsmethoden einen Custom-Service zur Mengenberechnung auf"
+        },
+        {
+          "signature": "getProductsInPackages(arr, quantity, depth, excludeWIPs)",
+          "description": "Sammelt alle Knoten, denen ein Standard-Versandkarton (defaultShipmentBoxTypeId) zugewiesen ist, für die Verpackungsplanung"
+        },
+        {
+          "signature": "sumQuantity(nodes)",
+          "description": "Aggregiert Mengen gleichartiger Produkte in einer Map für die Gesamtbedarfsermittlung"
+        },
+        {
+          "signature": "createManufacturingOrder(facilityId, date, ...)",
+          "description": "Erzeugt rekursiv Fertigungsaufträge für den gesamten Teilbaum; verknüpft untergeordnete mit übergeordneten Aufträgen als Vorgänger-Nachfolger-Beziehung (WORK_EFF_PRECEDENCY)"
+        },
+        {
+          "signature": "getStartDate(facilityId, requiredBydate, allNodes)",
+          "description": "Berechnet das frühestmögliche Startdatum durch Rückwärtsterminierung über den gesamten Komponentenbaum"
+        },
+        {
+          "signature": "isWarehouseManaged(facilityId)",
+          "description": "Prüft, ob das Produkt lagergesteuert ist (Mindestbestand und Bestellmenge in ProductFacility vorhanden)"
+        },
+        {
+          "signature": "isManufactured(ignoreSupplierProducts)",
+          "description": "Gibt true zurück, wenn das Produkt Unterkomponenten besitzt und kein bevorzugter Lieferant (10_MAIN_SUPPL) hinterlegt ist"
+        },
+        {
+          "signature": "isVirtual()",
+          "description": "Prüft, ob das Produkt virtuell ist (Auslöser für Konfigurationslogik)"
+        },
+        {
+          "signature": "isConfigured(arr)",
+          "description": "Sammelt alle virtuellen Knoten, die noch nicht konfiguriert (d.h. noch nicht durch eine Variante ersetzt) sind"
+        }
+      ]
+    },
+    {
+      "id": "BOMTree",
+      "name": "BOMTree",
+      "package": "org.apache.ofbiz.manufacturing.bom",
+      "type": "Java-Klasse",
+      "description": "Kapselt eine vollständige Stücklistenstruktur für ein Produkt. Unterstützt vier Traversierungstypen: vollständige Explosion (EXPLOSION), einstufige Explosion (EXPLOSION_SINGLE_LEVEL), Fertigungsexplosion ohne lagergesteuerte Teile (EXPLOSION_MANUFACTURING) und Implosion (IMPLOSION, für Verwendungsnachweise). Beim Aufbau werden automatisch Produkt-Varianten und `PRODUCT_MANUFACTURED`-Assoziationen aufgelöst.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "isConfigured()",
+          "description": "Gibt true zurück, wenn der Baum keine unkonfigurierten virtuellen Knoten enthält"
+        },
+        {
+          "signature": "print(arr, initialDepth, excludeWIPs)",
+          "description": "Traversiert den Baum und befüllt eine flache Liste aller Komponenten-Knoten mit berechneten Mengen"
+        },
+        {
+          "signature": "sumQuantities(quantityPerNode)",
+          "description": "Summiert die Gesamtmengen je Produkt über den gesamten Baum"
+        },
+        {
+          "signature": "getAllProductsId()",
+          "description": "Gibt eine Liste aller Produkt-IDs im Baum zurück"
+        },
+        {
+          "signature": "createManufacturingOrders(facilityId, date, ...)",
+          "description": "Löst die rekursive Fertigungsauftrags-Erzeugung für den gesamten Baum aus; ermittelt das Lager aus dem Auftrag oder der Lieferung, falls nicht direkt angegeben"
+        },
+        {
+          "signature": "getProductsInPackages(arr)",
+          "description": "Liefert alle Knoten mit Versandkarton-Zuordnung für die Verpackungsplanung"
+        }
+      ]
+    },
+    {
+      "id": "BOMServices",
+      "name": "BOMServices",
+      "package": "org.apache.ofbiz.manufacturing.bom",
+      "type": "Java-Klasse",
+      "description": "Service-Fassade für alle stücklistenbezogenen Operationen. Stellt OFBiz-Services bereit, die über den Service-Dispatcher aufgerufen werden und intern `BOMTree` und `BOMNode` nutzen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getMaxDepth(dctx, context)",
+          "description": "Ermittelt die maximale Tiefe eines Produkts in allen oder einem bestimmten Stücklistentyp; Grundlage für die Low-Level-Code-Berechnung im MRP"
+        },
+        {
+          "signature": "updateLowLevelCode(dctx, context)",
+          "description": "Aktualisiert den billOfMaterialLevel eines Produkts sowie optional aller Komponenten und Varianten; steuert die Verarbeitungsreihenfolge im MRP"
+        },
+        {
+          "signature": "initLowLevelCode(dctx, context)",
+          "description": "Setzt den Low-Level-Code für alle Produkte im System neu; initialisiert MRP-Voraussetzungen bei Ersteinrichtung"
+        },
+        {
+          "signature": "searchDuplicatedAncestor(dctx, context)",
+          "description": "Prüft, ob das Einfügen einer Stücklistenposition zu einem Zirkelschluss führen würde; verhindert zyklische Stücklisten"
+        },
+        {
+          "signature": "getBOMTree(dctx, context)",
+          "description": "Erstellt einen BOMTree für ein Produkt und gibt ihn als Service-Ergebnis zurück; unterstützt alle Traversierungstypen"
+        },
+        {
+          "signature": "getManufacturingComponents(dctx, context)",
+          "description": "Explodiert die Stückliste einstufig und liefert eine flache Liste der Fertigungskomponenten sowie die zugehörige Routing-ID"
+        },
+        {
+          "signature": "getNotAssembledComponents(dctx, context)",
+          "description": "Liefert alle Komponenten aus der Fertigungsexplosion, die selbst nicht produziert werden (Kaufteile)"
+        },
+        {
+          "signature": "getProductsInPackages(dctx, context)",
+          "description": "Ermittelt die Verpackungseinheiten eines Produkts anhand der BOM-Struktur"
+        },
+        {
+          "signature": "createShipmentPackages(dctx, context)",
+          "description": "Erzeugt Lieferpackstücke für eine Lieferung auf Basis der Stücklistenstruktur und der Versandkarton-Abmessungen der Artikel"
+        }
+      ]
+    },
+    {
+      "id": "BOMHelper",
+      "name": "BOMHelper",
+      "package": "org.apache.ofbiz.manufacturing.bom",
+      "type": "Java-Klasse (final, nicht instanziierbar)",
+      "description": "Interne Hilfsklasse für Stücklistenoperationen. Stellt rekursive Algorithmen zur Tiefenermittlung und Zirkelerkennung bereit sowie einen HTTP-Event-Handler zur Produktionsauftrags-Anlage für eine Lieferung.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getMaxDepth(productId, bomType, inDate, delegator)",
+          "description": "Berechnet rekursiv die maximale Stücklistentiefe eines Produkts durch Traversierung der ProductAssoc-Hierarchie nach oben"
+        },
+        {
+          "signature": "searchDuplicatedAncestor(productId, productIdKey, bomType, inDate, ...)",
+          "description": "Sucht rekursiv nach Zyklen in der Stückliste, indem geprüft wird, ob ein zukünftiger Elternknoten bereits im Teilbaum des einzufügenden Knotens vorkommt"
+        },
+        {
+          "signature": "createProductionRunsForShipment(request, response)",
+          "description": "HTTP-Event-Handler: Legt für alle Positionen einer Lieferung automatisch Fertigungsaufträge an, sofern noch keine vorhanden sind"
+        }
+      ]
+    },
+    {
+      "id": "BomSimulation",
+      "name": "BomSimulation",
+      "package": "org.apache.ofbiz.manufacturing.bom",
+      "type": "Groovy-Script",
+      "description": "View-Scripts für die BOM-Verwaltungsoberfläche. `FindProductBom` stellt Suchergebnisse für Stücklistenpositionen bereit, `EditProductBom` verarbeitet Formulardaten zum Anlegen und Bearbeiten von BOM-Positionen, `BomSimulation` unterstützt die interaktive Simulation von Stücklistenexplosionen.",
+      "section": "groovy",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "ProductionRun",
+      "name": "ProductionRun",
+      "package": "org.apache.ofbiz.manufacturing.jobshopmgt",
+      "type": "Java-Klasse",
+      "description": "Domänenobjekt für einen Fertigungsauftrag (`WorkEffort` vom Typ `PROD_ORDER_HEADER`). Kapselt den gesamten Fertigungsauftrag mit seinen Aufgaben (`PROD_ORDER_TASK`) und Stücklistenkomponenten, berechnet Termin- und Mengenänderungen und persistiert Änderungen transaktionssicher in einem einzigen `store()`-Aufruf.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "exist()",
+          "description": "Prüft, ob der Fertigungsauftrag in der Datenbank existiert"
+        },
+        {
+          "signature": "store()",
+          "description": "Persistiert alle geänderten Felder des Fertigungsauftrags, der Aufgaben und der Komponenten; berechnet vor dem Speichern ggf. den Fertigstellungstermin neu"
+        },
+        {
+          "signature": "getProductProduced()",
+          "description": "Lädt das Zielprodukt des Fertigungsauftrags aus der WorkEffortGoodStandard-Relation (PRUN_PROD_DELIV)"
+        },
+        {
+          "signature": "setQuantity(newQuantity)",
+          "description": "Ändert die Sollmenge und passt proportional die Komponentenmengen an; markiert den Fertigstellungstermin zur Neuberechnung"
+        },
+        {
+          "signature": "recalculateEstimatedCompletionDate(priority, startDate)",
+          "description": "Terminiert alle Aufgaben vorwärts ab dem Startdatum unter Berücksichtigung der Arbeitszeitkalender und berechnet den neuen Fertigstellungstermin"
+        },
+        {
+          "signature": "getEstimatedTaskTime(task, quantity, productId, routingId, dispatcher)",
+          "description": "Berechnet die Gesamtdauer einer Aufgabe (Rüst- + Ausführungszeit × Menge); ruft bei konfigurierten Methoden einen Custom-Service zur Zeitermittlung auf"
+        },
+        {
+          "signature": "getProductionRunRoutingTasks()",
+          "description": "Liefert die Arbeitsvorgänge des Fertigungsauftrags sortiert nach Priorität"
+        },
+        {
+          "signature": "getProductionRunComponents()",
+          "description": "Liefert alle Materialkomponenten aller Arbeitsvorgänge des Fertigungsauftrags"
+        }
+      ]
+    },
+    {
+      "id": "ProductionRunServices",
+      "name": "ProductionRunServices",
+      "package": "org.apache.ofbiz.manufacturing.jobshopmgt",
+      "type": "Java-Klasse",
+      "description": "Zentrale Service-Klasse für die gesamte Lebenszyklusverwaltung von Fertigungsaufträgen. Implementiert alle CRUD-Operationen, Statusübergänge, Komponentenverwaltung und Kostenbuchungen als OFBiz-Services.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createProductionRun(dctx, context)",
+          "description": "Legt einen neuen Fertigungsauftrag an: lädt das Routing, explodiert die Stückliste, erstellt den Auftragskopf (PROD_ORDER_HEADER), erzeugt Aufgaben mit berechneten Start- und Endterminen und verknüpft Komponenten mit den Aufgaben"
+        },
+        {
+          "signature": "updateProductionRun(dctx, context)",
+          "description": "Ändert Menge, Starttermin, Bezeichnung oder Lager eines Fertigungsauftrags; triggert ggf. die Neuberechnung der Liefertermine für verknüpfte Aufträge"
+        },
+        {
+          "signature": "cancelProductionRun(dctx, context)",
+          "description": "Storniert einen Fertigungsauftrag (nur im Status CREATED, DOC_PRINTED, SCHEDULED); prüft Vorgängeraufträge und setzt alle Aufgaben und Warenstandards auf CANCELLED"
+        },
+        {
+          "signature": "changeProductionRunStatus(dctx, context)",
+          "description": "Steuert den Statusübergang des Fertigungsauftragskopfs entlang der definierten Reihenfolge: CREATED → SCHEDULED → DOC_PRINTED → RUNNING → COMPLETED → CLOSED; prüft Vorbedingungen (z.B. abgeschlossene Vorgängeraufträge)"
+        },
+        {
+          "signature": "changeProductionRunTaskStatus(dctx, context)",
+          "description": "Steuert den Statusübergang einer einzelnen Aufgabe; verbucht bei Abschluss automatisch Aufgabenkosten (createProductionRunTaskCosts) und löst den Gesamtabschluss aus, wenn alle Aufgaben fertig sind"
+        },
+        {
+          "signature": "getWorkEffortCosts(dctx, context)",
+          "description": "Ermittelt alle Kostenbuchungen (CostComponent) eines Arbeitsauftrags und summiert Gesamtkosten sowie Kosten ohne Materialanteil"
+        },
+        {
+          "signature": "getProductionRunCost(dctx, context)",
+          "description": "Summiert die Kosten aller Aufgaben eines Fertigungsauftrags zum Gesamtkostenbetrag"
+        },
+        {
+          "signature": "createProductionRunTaskCosts(dctx, context)",
+          "description": "Bucht die Ist-Kosten einer abgeschlossenen Aufgabe: Rüst- und Ausführungskosten aus Kalkulationsmethoden, Maschinenkosten aus FixedAssetStdCost sowie Materialkosten aus dem tatsächlichen Lagerabgang"
+        },
+        {
+          "signature": "addProductionRunComponent(dctx, context)",
+          "description": "Fügt einem Fertigungsauftrag nachträglich eine Materialkomponente hinzu (nur vor Druckfreigabe)"
+        },
+        {
+          "signature": "updateProductionRunComponent(dctx, context)",
+          "description": "Ändert die Sollmenge einer bestehenden Komponente eines Fertigungsauftrags"
+        },
+        {
+          "signature": "addProductionRunRoutingTask(dctx, context)",
+          "description": "Fügt einen zusätzlichen Arbeitsvorgang in einen bestehenden Fertigungsauftrag ein und passt Termine an"
+        },
+        {
+          "signature": "checkUpdatePrunRoutingTask(dctx, context)",
+          "description": "Prüft und aktualisiert Priorität und Zeitparameter einer Aufgabe; passt Fertigstellungstermin des Auftrags an"
+        }
+      ]
+    },
+    {
+      "id": "ProductionRunEvents",
+      "name": "ProductionRunEvents",
+      "package": "org.apache.ofbiz.manufacturing.jobshopmgt",
+      "type": "Java-Klasse",
+      "description": "HTTP-Event-Handler für die Produktionsrückmeldung über die Web-Oberfläche.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "productionRunDeclareAndProduce(request, response)",
+          "description": "Verarbeitet die Produktionsrückmeldung aus einem mehrzeiligen Formular (Menge + Lagerorte je Komponente) und ruft den Service productionRunDeclareAndProduce auf"
+        }
+      ]
+    },
+    {
+      "id": "ProductionRunHelper",
+      "name": "ProductionRunHelper",
+      "package": "org.apache.ofbiz.manufacturing.jobshopmgt",
+      "type": "Java-Klasse (final, nicht instanziierbar)",
+      "description": "Hilfsklasse für die Strukturanalyse von Fertigungsauftrags-Netzen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getProductionRun(delegator, productionRunId)",
+          "description": "Lädt einen Fertigungsauftrag mit Produkt, Komponenten und Aufgaben als Map-Struktur"
+        },
+        {
+          "signature": "hasTask(delegator, taskName, workEffortId)",
+          "description": "Prüft, ob ein Fertigungsauftrag eine Aufgabe mit dem gegebenen Namen enthält"
+        },
+        {
+          "signature": "getLinkedProductionRuns(delegator, dispatcher, productionRunId, productionRuns)",
+          "description": "Sammelt rekursiv alle Vorgänger-Fertigungsaufträge über WORK_EFF_PRECEDENCY-Verknüpfungen"
+        },
+        {
+          "signature": "getRootProductionRun(delegator, productionRunId)",
+          "description": "Traversiert die Vorgänger-Kette und gibt die ID des übergeordneten Wurzel-Fertigungsauftrags zurück"
+        }
+      ]
+    },
+    {
+      "id": "Groovy-Scripts-Fertigungsauftrags-Ansichten-jobshopmgt",
+      "name": "Groovy-Scripts: Fertigungsauftrags-Ansichten (`jobshopmgt`)",
+      "package": "org.apache.ofbiz.manufacturing.jobshopmgt",
+      "type": "Groovy-Script (View-Layer)",
+      "description": "Die folgenden Scripts bereiten Daten für die Fertigungsauftrags-Oberfläche auf:",
+      "is_group": true,
+      "members": [
+        {
+          "name": "ShowProductionRun / ViewProductionRun",
+          "description": "Detailansicht eines Fertigungsauftrags"
+        },
+        {
+          "name": "ProductionRunComponents",
+          "description": "Anzeige der Materialkomponenten eines Auftrags"
+        },
+        {
+          "name": "ProductionRunActualComponents",
+          "description": "Tatsächlich verbrauchte Komponenten (Ist-Daten)"
+        },
+        {
+          "name": "ProductionRunTasks",
+          "description": "Auflistung der Arbeitsvorgänge"
+        },
+        {
+          "name": "ProductionRunDeclaration",
+          "description": "Eingabemaske für die Mengenrückmeldung"
+        },
+        {
+          "name": "ProductionRunCosts",
+          "description": "Kostenübersicht eines Fertigungsauftrags"
+        },
+        {
+          "name": "ProductionRunContent",
+          "description": "Dokumente und Anhänge zum Fertigungsauftrag"
+        },
+        {
+          "name": "ProductionRunFixedAssets / ProductionRunAllFixedAssets",
+          "description": "Zugeordnete Betriebsmittel"
+        },
+        {
+          "name": "ProductionRunTaskParties",
+          "description": "Zugewiesene Personen je Aufgabe"
+        },
+        {
+          "name": "WorkWithShipmentPlans",
+          "description": "Versandplan-Übersicht mit Fertigungsauftrags-Verknüpfung"
+        },
+        {
+          "name": "ProductionRunServicesScript",
+          "description": "Ergänzende Service-Aufrufe im View-Kontext"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "MrpServices",
+      "name": "MrpServices",
+      "package": "org.apache.ofbiz.manufacturing.mrp",
+      "type": "Java-Klasse",
+      "description": "Implementiert den vollständigen MRP-Algorithmus (Materialbedarfsplanung) als zweiphasigen Prozess: Initialisierung der Planungsereignisse aus Verkaufsaufträgen, Einkaufsbestellungen, laufenden Fertigungsaufträgen und Absatzprognosen (Phase 1), gefolgt von der stufenweisen Nettobedarfsrechnung über alle Stücklistenstufen (Phase 2) mit automatischer Erzeugung von Planungsvorschlägen.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "initMrpEvents(ctx, context)",
+          "description": "Initialisiert alle MRP-Ereignisse in der MrpEvent-Tabelle: löscht veraltete Vorschläge, importiert Bedarfe aus Verkaufsaufträgen (SALES_ORDER_SHIP), genehmigten Anforderungen (PROD_REQ_RECP), Einkaufsbestellungen (PUR_ORDER_RECP), laufenden Fertigungsaufträgen (MANUF_ORDER_REQ / MANUF_ORDER_RECP) und Absatzprognosen (SALES_FORECAST); setzt Mindestbestandsbedarfe"
+        },
+        {
+          "signature": "executeMrp(ctx, context)",
+          "description": "Führt den vollständigen MRP-Lauf durch: Initialisiert Ereignisse, durchläuft alle Stücklistenstufen (Low-Level-Code), berechnet je Produkt den rollierenden Lagerbestand und erzeugt bei Unterschreitung des Mindestbestands Planungsaufträge (ProposedOrder) als Fertigungs- oder Beschaffungsvorschlag"
+        },
+        {
+          "signature": "findProductMrpQoh(mrpId, productId, facilityId, dispatcher, delegator)",
+          "description": "Ermittelt den verfügbaren Lagerbestand eines Produkts im Planungslager über den getInventoryAvailableByFacility-Service"
+        },
+        {
+          "signature": "processBomComponent(mrpId, product, eventQuantity, startDate, routingTaskStartDate, listComponent)",
+          "description": "Erzeugt MRP-Anforderungsereignisse (MRP_REQUIREMENT) für alle Stücklistenkomponenten eines geplanten Fertigungsauftrags; berücksichtigt aufgabenbezogene Startzeitpunkte aus dem Routing"
+        },
+        {
+          "signature": "logMrpError(mrpId, productId, eventDate, errorMessage, delegator)",
+          "description": "Schreibt Fehler als MRP-Ereignis des Typs ERROR in die Ereignistabelle"
+        }
+      ]
+    },
+    {
+      "id": "ProposedOrder",
+      "name": "ProposedOrder",
+      "package": "org.apache.ofbiz.manufacturing.mrp",
+      "type": "Java-Klasse",
+      "description": "Repräsentiert einen vom MRP erzeugten Planungsauftrag (Beschaffungs- oder Fertigungsvorschlag). Kapselt Produkt, Menge, Bedarfstermin und berechnet den Anfangstermin durch Rückwärtsterminierung über das Routing bzw. den Lieferzeitraum.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "calculateStartDate(daysToShip, routing, delegator, dispatcher, userLogin)",
+          "description": "Terminiert rückwärts vom Bedarfstermin: Bei Eigenfertigung werden die Routing-Aufgaben in umgekehrter Reihenfolge über den Arbeitszeitkalender terminiert; bei Fremdvergabe wird der Lieferzeitkalender (SUPPLIER) genutzt"
+        },
+        {
+          "signature": "calculateQuantityToSupply(reorderQuantity, minimumStock, listIterIEP)",
+          "description": "Rundet die Planungsmenge auf die Mindestbestellmenge auf"
+        },
+        {
+          "signature": "create(ctx, userLogin)",
+          "description": "Erzeugt eine formale Anforderung (Requirement) in der Datenbank mit Typ INTERNAL_REQUIREMENT (Eigenfertigung) oder PRODUCT_REQUIREMENT (Fremdbezug) und Status REQ_PROPOSED"
+        }
+      ]
+    },
+    {
+      "id": "InventoryEventPlannedServices",
+      "name": "InventoryEventPlannedServices",
+      "package": "org.apache.ofbiz.manufacturing.mrp",
+      "type": "Java-Klasse",
+      "description": "Verwaltung der MRP-Ereignis-Tabelle (`MrpEvent`). Stellt eine atomare Upsert-Operation bereit, die beim MRP-Lauf tausendfach aufgerufen wird.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createMrpEvent(ctx, context)",
+          "description": "OFBiz-Service-Wrapper für die Upsert-Operation"
+        },
+        {
+          "signature": "createOrUpdateMrpEvent(mrpEventKeyMap, newQuantity, facilityId, eventName, isLate, delegator)",
+          "description": "Legt ein neues MRP-Ereignis an oder addiert bei bestehendem Eintrag die Menge; setzt das isLate-Flag, wenn der Planungsbedarf in der Vergangenheit liegt"
+        }
+      ]
+    },
+    {
+      "id": "RoutingServices",
+      "name": "RoutingServices",
+      "package": "org.apache.ofbiz.manufacturing.routing",
+      "type": "Java-Klasse",
+      "description": "Service für die Zeitermittlung von Routing-Aufgaben. Delegiert die Berechnung an `ProductionRun.getEstimatedTaskTime()`.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getEstimatedTaskTime(ctx, context)",
+          "description": "Berechnet die Gesamtdauer einer Routing-Aufgabe (Rüst + Ausführung × Menge) und gibt Gesamtzeit, Rüstzeit und Stückzeit separat zurück"
+        }
+      ]
+    },
+    {
+      "id": "Groovy-Scripts-Routing-Verwaltung",
+      "name": "Groovy-Scripts: Routing-Verwaltung",
+      "package": "org.apache.ofbiz.manufacturing.routing",
+      "type": "Groovy-Script",
+      "description": "| Script | Zweck |",
+      "is_group": true,
+      "members": [
+        {
+          "name": "RoutingServicesScript",
+          "description": "Ergänzende Service-Aufrufe für Routing-Verwaltungsfunktionen im View-Layer"
+        },
+        {
+          "name": "EditCalendar",
+          "description": "Bearbeitungsmaske für Arbeitszeitkalender"
+        },
+        {
+          "name": "EditCalendarExceptionDay",
+          "description": "Pflege von Ausnahmetagen im Kalender"
+        },
+        {
+          "name": "EditCalendarExceptionWeek",
+          "description": "Pflege von Ausnahmewochen im Kalender"
+        }
+      ],
+      "section": "groovy"
+    },
+    {
+      "id": "TechDataServices",
+      "name": "TechDataServices",
+      "package": "org.apache.ofbiz.manufacturing.techdata",
+      "type": "Java-Klasse",
+      "description": "Kernkomponente der Kapazitätsterminierung. Implementiert die kalenderbasierte Vorwärts- und Rückwärtsterminierung unter Berücksichtigung von Arbeitszeiten, Wochenplänen und Ausnahmen. Wird von `ProductionRun`, `ProposedOrder` und `ProductionRunServices` zur Terminberechnung verwendet.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "lookupRoutingTask(ctx, context)",
+          "description": "Sucht aktive Routing-Aufgaben (ROU_TASK / ROU_ACTIVE) nach Name und Betriebsmittel"
+        },
+        {
+          "signature": "checkRoutingTaskAssoc(ctx, context)",
+          "description": "Prüft, ob eine Sequenznummer für eine Routing-Aufgabenzuordnung bereits belegt ist (Zeitraumüberschneidung)"
+        },
+        {
+          "signature": "getTechDataCalendar(routingTask)",
+          "description": "Ermittelt den zutreffenden Arbeitszeitkalender für eine Aufgabe: primär über das zugeordnete Betriebsmittel (FixedAsset), sekundär über untergeordnete Maschinen, als Fallback über den DEFAULT-Kalender"
+        },
+        {
+          "signature": "addForward(techDataCalendar, dateFrom, amount)",
+          "description": "Terminiert vorwärts: berechnet den Endzeitpunkt, wenn ab dateFrom eine Arbeitsdauer von amount Millisekunden verstreicht; springt dabei automatisch über arbeitsfreie Zeiten"
+        },
+        {
+          "signature": "addBackward(techDataCalendar, dateFrom, amount)",
+          "description": "Terminiert rückwärts: berechnet den Startzeitpunkt, wenn vor dateFrom eine Arbeitsdauer von amount Millisekunden benötigt wird"
+        },
+        {
+          "signature": "capacityRemaining(techDataCalendar, dateFrom)",
+          "description": "Gibt die verbleibende Arbeitskapazität im aktuellen Tageszeitraum ab dateFrom zurück"
+        },
+        {
+          "signature": "capacityRemainingBackward(techDataCalendar, dateFrom)",
+          "description": "Gibt die bereits vergangene Arbeitskapazität im aktuellen Tageszeitraum bis dateFrom zurück"
+        },
+        {
+          "signature": "dayStartCapacityAvailable(techDataCalendarWeek, dayStart)",
+          "description": "Sucht vorwärts den nächsten Arbeitstag ab dayStart mit positiver Kapazität"
+        },
+        {
+          "signature": "dayEndCapacityAvailable(techDataCalendarWeek, dayEnd)",
+          "description": "Sucht rückwärts den vorherigen Arbeitstag ab dayEnd mit positiver Kapazität"
+        }
+      ]
+    },
+    {
+      "id": "Groovy-Scripts-Berichte-reports",
+      "name": "Groovy-Scripts: Berichte (`reports`)",
+      "package": "org.apache.ofbiz.manufacturing.reports",
+      "type": "Groovy-Script (Berichts-Datenbeschaffung)",
+      "description": "Die folgenden Scripts bereiten Daten für Druck- und Exportberichte auf:",
+      "is_group": true,
+      "members": [
+        {
+          "name": "CuttingListReport",
+          "description": "Zuschnittliste für Fertigungsaufträge"
+        },
+        {
+          "name": "PackageContentsAndOrder",
+          "description": "Paketinhalt mit Auftragsbezug"
+        },
+        {
+          "name": "PRunsInfoAndOrder",
+          "description": "Fertigungsauftrags-Übersicht mit Auftragsdaten"
+        },
+        {
+          "name": "PRunsComponentsByFeature",
+          "description": "Komponentenliste gefiltert nach Produktmerkmalen"
+        },
+        {
+          "name": "PRunsProductsAndOrder",
+          "description": "Fertigprodukte mit Auftragszuordnung"
+        },
+        {
+          "name": "PRunsProductsByFeature",
+          "description": "Fertigprodukte gruppiert nach Merkmalen"
+        },
+        {
+          "name": "PRunsProductsStacks",
+          "description": "Stapelübersicht produzierter Artikel"
+        },
+        {
+          "name": "ShipmentLabel",
+          "description": "Versandetiketten-Daten"
+        },
+        {
+          "name": "ShipmentPlanStockReport",
+          "description": "Lagerbestandsbericht für Versandplanung"
+        },
+        {
+          "name": "ShipmentWorkEffortTasks",
+          "description": "Aufgabenliste mit Versandbezug"
+        }
+      ],
+      "section": "groovy"
+    }
+  ],
+  "stats": {
+    "classes": 17,
+    "methods": 74
+  }
+}

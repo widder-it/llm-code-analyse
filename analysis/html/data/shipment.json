@@ -1,0 +1,768 @@
+{
+  "module": "shipment",
+  "overview": "Das Modul `shipment` steuert den gesamten Versandprozess in Apache OFBiz — von der Erstellung und Kostenschätzung von Sendungen über das interaktive Verpacken und Gewichtserfassen bis hin zur Kommunikation mit Carrier-APIs (UPS, FedEx, DHL, USPS). Es bildet die Brücke zwischen Auftragsabwicklung und physischem Warenausgang und enthält sowohl sessionbasierte Zustandsmodelle für den Lagerarbeitsplatz als auch externe Webservice-Integrationen.",
+  "submodules": [
+    {
+      "name": "org.apache.ofbiz.shipment.shipment",
+      "description": "Kerndienste: Kostenschätzung, Staging-Tabellen für externe Systeme, Benachrichtigungen, Gateway-Konfiguration"
+    },
+    {
+      "name": "org.apache.ofbiz.shipment.packing",
+      "description": "Interaktive Packsitzung: Artikel in Pakete einteilen, Reservierungen prüfen, Sendung abschließen"
+    },
+    {
+      "name": "org.apache.ofbiz.shipment.weightPackage",
+      "description": "Gewichtserfassung nach dem Verpacken: Pakete nachträglich mit Maßen und Gewicht versehen, optionale UPS-Echtzeittarife"
+    },
+    {
+      "name": "org.apache.ofbiz.shipment.verify",
+      "description": "Verifizierung gepickter Ware vor dem Versand: Mengenabgleich mit Reservierungen, Sendungserstellung"
+    },
+    {
+      "name": "org.apache.ofbiz.shipment.picklist",
+      "description": "Hilfsdienste für Picklisten: Auftragsheader-Konvertierung, Vollständigkeitsprüfung von Picklist-Bins"
+    },
+    {
+      "name": "org.apache.ofbiz.shipment.thirdparty.ups",
+      "description": "UPS-Integration: Sendungsbestätigung, Ratenabfrage, Tracking, Adressvalidierung, E-Mail-Rücksendeetiketten"
+    },
+    {
+      "name": "org.apache.ofbiz.shipment.thirdparty.fedex",
+      "description": "FedEx-Integration: Abonnement/Meter-Number-Registrierung, Sendungsbestätigung mit Etikettenabruf"
+    },
+    {
+      "name": "org.apache.ofbiz.shipment.thirdparty.dhl",
+      "description": "DHL-Integration: Ratenabfrage, Registrierung, Sendungsbestätigung mit Etikettenabruf"
+    },
+    {
+      "name": "org.apache.ofbiz.shipment.thirdparty.usps",
+      "description": "USPS-Integration: Inlands- und Internationalraten, Tracking, Adressvalidierung, Lieferbestätigung, Etikettendruck"
+    },
+    {
+      "name": "org.apache.ofbiz.shipment.test",
+      "description": "Integrationstests für Bestandsausgabe und Packsitzungsablauf"
+    }
+  ],
+  "classes": [
+    {
+      "id": "ShipmentServices",
+      "name": "ShipmentServices",
+      "package": "org.apache.ofbiz.shipment.shipment",
+      "type": "Java-Klasse",
+      "description": "Stellt OFBiz-Services für Versandkostenschätzung, ODBC-Staging-Tabellen und ergänzende Versandfunktionen bereit. Kernklasse für alle nicht-carrier-spezifischen Operationen auf der Sendungsebene.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createShipmentEstimate(dctx, context)",
+          "description": "Legt einen neuen Kostenschätzer (ShipmentCostEstimate) für eine Versandmethode an, inklusive Gewichts-, Mengen- und Preisbracketing."
+        },
+        {
+          "signature": "removeShipmentEstimate(dctx, context)",
+          "description": "Löscht einen bestehenden Kostenschätzer anhand seiner ID."
+        },
+        {
+          "signature": "calcShipmentCostEstimate(dctx, context)",
+          "description": "Berechnet die Versandkosten für eine konkrete Sendung. Wählt den passendsten Schätzer durch Geo-Filterung und Bracket-Prüfung und summiert Flach-, Gewichts-, Mengen-, Preis- und Übergrößenzuschläge."
+        },
+        {
+          "signature": "fillShipmentStagingTables(dctx, context)",
+          "description": "Schreibt Sendungs- und Paketdaten einer gepackten Sendung in die ODBC-Staging-Tabellen (OdbcShipmentOut, OdbcPackageOut) für die Übergabe an externe Systeme."
+        },
+        {
+          "signature": "updateShipmentsFromStaging(dctx, context)",
+          "description": "Liest Rückmeldedaten aus OdbcPackageIn (Tracking-Nummern, Gewichte, Kosten), aktualisiert die zugehörigen Sendungen und setzt den Status auf versendet oder storniert."
+        },
+        {
+          "signature": "clearShipmentStagingInfo(dctx, context)",
+          "description": "Bereinigt alle ODBC-Staging-Einträge (OdbcPackageIn, OdbcPackageOut, OdbcShipmentOut) für eine Sendung."
+        },
+        {
+          "signature": "updatePurchaseShipmentFromReceipt(dctx, context)",
+          "description": "Verfolgt den Empfangsstatus einer Einkaufssendung: setzt den Status auf PURCH_SHIP_SHIPPED bzw. PURCH_SHIP_RECEIVED, sobald alle Artikel quittiert wurden."
+        },
+        {
+          "signature": "duplicateShipmentRouteSegment(dctx, context)",
+          "description": "Dupliziert ein bestehendes Routensegment einer Sendung mit gleichen Carrier- und Adressdaten."
+        },
+        {
+          "signature": "quickScheduleShipmentRouteSegment(dctx, context)",
+          "description": "Löst asynchron die Carrier-Bestätigung für ein Routensegment aus (aktuell nur DHL unterstützt)."
+        },
+        {
+          "signature": "getShipmentPackageValueFromOrders(dctx, context)",
+          "description": "Ermittelt den Warenwert eines Pakets anhand der fakturierten Bestellpositionen, gewichtet nach gelieferter Menge, mit Währungsumrechnung."
+        },
+        {
+          "signature": "sendShipmentCompleteNotification(dctx, context)",
+          "description": "Sendet eine Versandabschluss-E-Mail an den Empfänger der Sendung gemäß der ProductStoreEmailSetting."
+        },
+        {
+          "signature": "getShipmentGatewayConfigFromShipment(delegator, shipmentId, locale)",
+          "description": "Hilfsmethode: Liest shipmentGatewayConfigId und configProps aus der Versandmethode der primären Bestellung einer Sendung — wird von allen Carrier-Services genutzt."
+        }
+      ]
+    },
+    {
+      "id": "ShipmentWorker",
+      "name": "ShipmentWorker",
+      "package": "org.apache.ofbiz.shipment.shipment",
+      "type": "Java-Klasse (Utility, nicht instanziierbar)",
+      "description": "Stellt berechnende Hilfsmethoden bereit, die mehrere Carrier-Integrationen und die Packsitzung verwenden: Paketwertermittlung und gewichtsbasierte Paketsplittung.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "getShipmentPackageContentValue(shipmentPackageContent)",
+          "description": "Berechnet den anteiligen Warenwert eines Paketinhalts auf Basis der tatsächlichen Ausgaben (ItemIssuance) und des Einheitspreises."
+        },
+        {
+          "signature": "getPackageSplit(dctx, shippableItemInfo, maxWeight)",
+          "description": "Verteilt Bestellpositionen nach Stückzahl und Gewicht auf möglichst wenige Pakete, ohne das Maximalgewicht zu überschreiten."
+        },
+        {
+          "signature": "calcPackageWeight(dctx, packageMap, shippableItemInfo, additionalWeight)",
+          "description": "Berechnet das Gesamtgewicht eines Pakets durch Aufsummierung der Produktgewichte (mit UoM-Konvertierung auf Pfund)."
+        },
+        {
+          "signature": "getProductItemInfo(shippableItemInfo, productId)",
+          "description": "Sucht die Produktinformationen eines bestimmten Artikels in der Versandliste."
+        }
+      ]
+    },
+    {
+      "id": "ShipmentEvents",
+      "name": "ShipmentEvents",
+      "package": "org.apache.ofbiz.shipment.shipment",
+      "type": "Java-Klasse",
+      "description": "Stellt Controller-Events für HTTP-Anfragen bereit, die nicht über den Service-Layer abgewickelt werden.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "viewShipmentPackageRouteSegLabelImage(request, response)",
+          "description": "Liefert das binäre Versandetikett (GIF oder PNG) eines Paket-Routensegments direkt an den Browser."
+        },
+        {
+          "signature": "checkForceShipmentReceived(request, response)",
+          "description": "Setzt den Status einer Einkaufssendung auf PURCH_SHIP_RECEIVED, wenn der Parameter forceShipmentReceived=Y übergeben wird."
+        }
+      ]
+    },
+    {
+      "id": "PackingSession",
+      "name": "PackingSession",
+      "package": "org.apache.ofbiz.shipment.packing",
+      "type": "Java-Klasse (serialisierbar, session-scoped)",
+      "description": "Modelliert eine interaktive Packsitzung für eine oder mehrere Bestellungen. Verwaltet den Zustand aller gepackten Zeilen und Pakete im Arbeitsspeicher und orchestriert beim Abschluss die vollständige Erstellung von Sendung, Paketen, Bestandsausgaben und Statusübergängen in OFBiz. Dies ist die zentrale Zustandsklasse des gesamten Packprozesses.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "addOrIncreaseLine(orderId, orderItemSeqId, shipGroupSeqId, productId, quantity, packageSeqId, weight, update)",
+          "description": "Fügt eine Packzeile hinzu oder erhöht die Menge einer bestehenden. Prüft Inventarreservierungen und verteilt bei mehreren Reservierungen die Menge auf mehrere Zeilen."
+        },
+        {
+          "signature": "findLine(orderId, orderItemSeqId, shipGroupSeqId, productId, inventoryItemId, packageSeq)",
+          "description": "Sucht eine bestehende Packzeile exakt nach allen Schlüsselfeldern."
+        },
+        {
+          "signature": "getPackedQuantity(...)",
+          "description": "Mehrere Überladungen: Gibt die bereits gepackte Menge für eine Bestellposition, ein Produkt oder ein gesamtes Paket zurück."
+        },
+        {
+          "signature": "getCurrentReservedQuantity(orderId, orderItemSeqId, shipGroupSeqId, productId)",
+          "description": "Liest die verfügbare Reservierungsmenge aus der Summenentität für eine Position."
+        },
+        {
+          "signature": "getCurrentShippedQuantity(orderId, orderItemSeqId, shipGroupSeqId)",
+          "description": "Ermittelt die bereits versendete Menge anhand vorhandener ItemIssuance-Einträge."
+        },
+        {
+          "signature": "getPackingSessionLinesByPackage()",
+          "description": "Gibt die Packzeilen gruppiert nach Paket-Sequenznummer zurück (Karte + sortierte Schlüsselliste)."
+        },
+        {
+          "signature": "complete(force)",
+          "description": "Schließt die Packsitzung ab: prüft Reservierungen, erstellt die Sendung, Pakete, bucht Bestandsausgaben, aktualisiert Routensegmente, setzt Status auf SHIPMENT_PACKED und markiert die Pickliste als abgeschlossen."
+        },
+        {
+          "signature": "clear()",
+          "description": "Setzt die gesamte Sitzung zurück, ohne die Sendung zu erstellen (z. B. nach Abbruch)."
+        },
+        {
+          "signature": "clearLastPackage()",
+          "description": "Entfernt alle Zeilen des zuletzt hinzugefügten Pakets und dekrementiert den Paket-Zähler."
+        },
+        {
+          "signature": "clearLine(line)",
+          "description": "Entfernt eine einzelne Packzeile und korrigiert das Paketgewicht."
+        },
+        {
+          "signature": "getShipmentCostEstimate(...)",
+          "description": "Berechnet die voraussichtlichen Versandkosten für den aktuellen Sitzungsinhalt über den calcShipmentCostEstimate-Service."
+        },
+        {
+          "signature": "registerEvent(event)",
+          "description": "Registriert einen PackingEvent-Listener, der bei bestimmten Sitzungsereignissen benachrichtigt wird."
+        },
+        {
+          "signature": "addItemInfo(infos)",
+          "description": "Fügt Anzeigeinformationen (Produkt, Menge) für die UI-Darstellung hinzu oder aktualisiert bestehende."
+        },
+        {
+          "signature": "nextPackageSeq()",
+          "description": "Erhöht den Paket-Sequenz-Zähler und gibt den neuen Wert zurück."
+        }
+      ]
+    },
+    {
+      "id": "PackingSessionLine",
+      "name": "PackingSessionLine",
+      "package": "org.apache.ofbiz.shipment.packing",
+      "type": "Java-Klasse (serialisierbar)",
+      "description": "Repräsentiert eine einzelne Zeile innerhalb einer Packsitzung: ein Produkt aus einer Bestellreservierung, das einem bestimmten Paket zugeordnet ist.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "isSameItem(line)",
+          "description": "Prüft, ob zwei Packzeilen dasselbe Inventarobjekt und dieselbe Bestellposition referenzieren (unabhängig von Paket und Menge)."
+        },
+        {
+          "signature": "issueItemToShipment(shipmentId, picklistBinId, userLogin, quantity, dispatcher)",
+          "description": "Bucht die Warenausgabe (issueOrderItemShipGrpInvResToShipment) und setzt den Status des zugehörigen Picklist-Items auf abgeschlossen oder storniert."
+        },
+        {
+          "signature": "applyLineToPackage(shipmentId, userLogin, dispatcher)",
+          "description": "Ordnet die Sendungsposition dem Versandpaket zu (addShipmentContentToPackage)."
+        }
+      ]
+    },
+    {
+      "id": "PackingServices",
+      "name": "PackingServices",
+      "package": "org.apache.ofbiz.shipment.packing",
+      "type": "Java-Klasse",
+      "description": "OFBiz-Service-Fassade für die `PackingSession`. Stellt Einstiegspunkte für Controller und andere Services bereit, die auf der Sitzung operieren.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "addPackLine(dctx, context)",
+          "description": "Fügt einen einzelnen Artikel mit Menge und Gewicht in eine bestimmte Paketnummer der Sitzung ein."
+        },
+        {
+          "signature": "packBulk(dctx, context)",
+          "description": "Verarbeitet eine Massenverpackung aus Formulardaten: mehrere Artikel, Pakete und optionale Mengenaufspaltung in einem Aufruf."
+        },
+        {
+          "signature": "incrementPackageSeq(dctx, context)",
+          "description": "Erhöht den Paket-Zähler und gibt die neue Paketnummer zurück."
+        },
+        {
+          "signature": "clearLastPackage(dctx, context)",
+          "description": "Entfernt das zuletzt begonnene Paket aus der Sitzung."
+        },
+        {
+          "signature": "clearPackLine(dctx, context)",
+          "description": "Entfernt eine einzelne Packzeile aus der Sitzung anhand aller Schlüsselfelder."
+        },
+        {
+          "signature": "clearPackAll(dctx, context)",
+          "description": "Löscht alle Packzeilen der Sitzung."
+        },
+        {
+          "signature": "calcPackSessionAdditionalShippingCharge(dctx, context)",
+          "description": "Berechnet die Versandkosten auf Basis der eingegebenen Paketgewichte und speichert sie als Zusatzgebühr in der Sitzung."
+        },
+        {
+          "signature": "completePack(dctx, context)",
+          "description": "Schließt die Packsitzung ab, gibt die erstellte Sendungs-ID zurück oder meldet einen Fehler bei leerer Sitzung."
+        },
+        {
+          "signature": "setSessionPackageWeights(session, packageWeights)",
+          "description": "Überträgt eine Map von Paket-ID zu Gewicht in die Sitzung und summiert das Gesamtgewicht."
+        },
+        {
+          "signature": "setSessionShipmentBoxTypes(session, boxTypes)",
+          "description": "Setzt den Kartontyp für jedes Paket in der Sitzung."
+        }
+      ]
+    },
+    {
+      "id": "PackingEvent",
+      "name": "PackingEvent",
+      "package": "org.apache.ofbiz.shipment.packing",
+      "type": "Java-Interface (serialisierbar)",
+      "description": "Listener-Schnittstelle für Ereignisse innerhalb einer `PackingSession`. Implementierungen können auf Hinzufügen (`EVENT_CODE_ADD=1`), Registrierung (`EVENT_CODE_EREG=5`), Löschen (`EVENT_CODE_CLEAR=20`) und Abschließen (`EVENT_CODE_COMPLETE=100`) reagieren.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "runEvent(session, eventCode)",
+          "description": "Wird von der Sitzung aufgerufen, wenn ein Ereignis eintritt."
+        },
+        {
+          "signature": "receiveMessage()",
+          "description": "Gibt eine Statusmeldung des Events zurück."
+        },
+        {
+          "signature": "getEventStatus()",
+          "description": "Gibt den aktuellen Event-Status als Ganzzahl zurück."
+        },
+        {
+          "signature": "getEventCode()",
+          "description": "Gibt den Event-Code zurück, auf den dieser Listener reagiert."
+        }
+      ]
+    },
+    {
+      "id": "WeightPackageSession",
+      "name": "WeightPackageSession",
+      "package": "org.apache.ofbiz.shipment.weightPackage",
+      "type": "Java-Klasse (serialisierbar, session-scoped)",
+      "description": "Sitzungsmodell für die nachgelagerte Gewichtserfassung: Der Nutzer gibt nach dem Verpacken Gewicht und Maße je Paket ein. Unterstützt optionale UPS-Echtzeit-Tarifabfrage (`upsShipmentConfirm`) mit Warnung bei zu großer Abweichung vom geschätzten Preis.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createWeightPackageLine(orderId, weight, length, width, height, boxTypeId)",
+          "description": "Fügt ein neues Paket mit Gewicht und optionalen Dimensionen zur Sitzung hinzu."
+        },
+        {
+          "signature": "complete(orderId, locale, calculateOnlineShippingRateFromUps)",
+          "description": "Führt den vollständigen Abschluss durch: Pakete anlegen, ggf. UPS-Bestätigung einholen, Differenzwarnung prüfen, Bestellstatus setzen, Sendung auf SHIPMENT_PACKED setzen."
+        },
+        {
+          "signature": "completeShipment(orderId, calculateOnlineShippingRateFromUps)",
+          "description": "Führt den Abschluss ohne vorherige Differenzwarnung durch (zweiter Schritt nach Benutzerbestätigung)."
+        },
+        {
+          "signature": "getShipmentCostEstimate(...)",
+          "description": "Berechnet die Versandkosten für die aktuelle Sitzung über calcShipmentCostEstimate."
+        },
+        {
+          "signature": "setPackageWeight/Length/Width/Height(value, seqId)",
+          "description": "Aktualisiert einzelne Maßangaben einer bereits erfassten Paketzeile."
+        },
+        {
+          "signature": "deletePackedLine(seqId)",
+          "description": "Entfernt eine Paketzeile aus der Sitzung."
+        },
+        {
+          "signature": "getShippableWeight(orderId)",
+          "description": "Summiert die Gewichte aller Pakete einer Bestellung."
+        },
+        {
+          "signature": "getPackedLines() / getPackedLines(orderId)",
+          "description": "Gibt alle oder auftragsbezogene Paketzeilen zurück."
+        },
+        {
+          "signature": "clearPackedLines(orderId)",
+          "description": "Entfernt alle Paketzeilen einer Bestellung."
+        }
+      ]
+    },
+    {
+      "id": "WeightPackageServices",
+      "name": "WeightPackageServices",
+      "package": "org.apache.ofbiz.shipment.weightPackage",
+      "type": "Java-Klasse",
+      "description": "OFBiz-Service-Fassade für `WeightPackageSession`.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "setPackageInfo(dctx, context)",
+          "description": "Validiert und speichert Gewicht und Maße eines neuen Pakets. Verhindert mehr Pakete als bestellte Artikel."
+        },
+        {
+          "signature": "updatePackedLine(dctx, context)",
+          "description": "Aktualisiert Gewicht und Maße einer bestehenden Paketzeile."
+        },
+        {
+          "signature": "deletePackedLine(dctx, context)",
+          "description": "Entfernt eine Paketzeile aus der Sitzung."
+        },
+        {
+          "signature": "completePackage(dctx, context)",
+          "description": "Schließt die Sitzung ab und löst ggf. UPS-Tarifabfrage aus; gibt bei Preisabweichung showWarningForm zurück."
+        },
+        {
+          "signature": "completeShipment(dctx, context)",
+          "description": "Führt den finalen Abschluss nach Benutzerbestätigung durch."
+        },
+        {
+          "signature": "savePackagesInfo(dctx, context)",
+          "description": "Legt die Pakete in OFBiz an und löst ggf. UPS-Bestätigung aus, ohne den Sendungsstatus zu setzen."
+        }
+      ]
+    },
+    {
+      "id": "WeightPackageSessionLine",
+      "name": "WeightPackageSessionLine",
+      "package": "org.apache.ofbiz.shipment.weightPackage",
+      "type": "Java-Klasse (serialisierbar)",
+      "description": "Datencontainer für eine einzelne Paketzeile in der Gewichtserfassungssitzung (Gewicht, Länge, Breite, Höhe, Kartontyp).",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "applyLineToPackage(shipmentId, userLogin, dispatcher, shipPackSeqId)",
+          "description": "Ordnet den Sendungsartikel dem Versandpaket zu (addShipmentContentToPackage)."
+        }
+      ]
+    },
+    {
+      "id": "VerifyPickSession",
+      "name": "VerifyPickSession",
+      "package": "org.apache.ofbiz.shipment.verify",
+      "type": "Java-Klasse (serialisierbar, session-scoped)",
+      "description": "Sitzungsmodell für die Pickverifizierung: Ein Lagerarbeiter bestätigt, welche Mengen er gepickt hat. Die Sitzung prüft die Übereinstimmung mit den Reservierungen und erstellt am Ende eine fertige Sendung mit Status `SHIPMENT_PICKED`.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "createRow(orderId, orderItemSeqId, shipGroupSeqId, productId, originGeoId, quantity, locale)",
+          "description": "Erfasst eine verifizierte Menge für eine Bestellposition. Löst automatisch die Bestellpositions-ID auf, wenn nur die Produkt-ID übergeben wird."
+        },
+        {
+          "signature": "complete(orderId, locale)",
+          "description": "Schließt die Verifikationssitzung ab: prüft reservierte und verifizierte Mengen, erstellt die Sendung, bucht Warenausgaben, aktualisiert Produkt-Herkunft und setzt den Sendungsstatus."
+        },
+        {
+          "signature": "getReadyToVerifyQuantity(orderId, orderSeqId)",
+          "description": "Gibt die bisher verifizierte Menge für eine Bestellposition zurück."
+        },
+        {
+          "signature": "getVerifiedQuantity(orderId, orderItemSeqId, shipGroupSeqId, productId, inventoryItemId)",
+          "description": "Summiert verifizierte Mengen über alle Zeilen für eine Positions-Inventar-Kombination."
+        },
+        {
+          "signature": "getReservedQty(orderId, orderItemSeqId, shipGroupSeqId)",
+          "description": "Liest die reservierte Gesamtmenge aus der Summenentität."
+        },
+        {
+          "signature": "getPickRow(orderId, orderItemSeqId, shipGroupSeqId, productId, inventoryItemId)",
+          "description": "Sucht eine bestehende Verifikationszeile."
+        },
+        {
+          "signature": "clearAllRows()",
+          "description": "Verwirft alle Verifikationszeilen (z. B. bei Abbruch)."
+        }
+      ]
+    },
+    {
+      "id": "VerifyPickServices",
+      "name": "VerifyPickServices",
+      "package": "org.apache.ofbiz.shipment.verify",
+      "type": "Java-Klasse",
+      "description": "OFBiz-Service-Fassade für `VerifyPickSession`.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "verifySingleItem(dctx, context)",
+          "description": "Erfasst die verifizierte Menge eines einzelnen Artikels in der Sitzung."
+        },
+        {
+          "signature": "verifyBulkItem(dctx, context)",
+          "description": "Verarbeitet Massenverifikation aus Formulardaten mit mehreren Positionen."
+        },
+        {
+          "signature": "completeVerifiedPick(dctx, context)",
+          "description": "Schließt die Sitzung ab, erstellt die Sendung und leert die Sitzungszeilen."
+        },
+        {
+          "signature": "cancelAllRows(dctx, context)",
+          "description": "Verwirft alle erfassten Verifikationszeilen."
+        }
+      ]
+    },
+    {
+      "id": "VerifyPickSessionRow",
+      "name": "VerifyPickSessionRow",
+      "package": "org.apache.ofbiz.shipment.verify",
+      "type": "Java-Klasse (serialisierbar)",
+      "description": "Datencontainer für eine einzelne verifizierte Pickzeile (Bestellposition, Inventar-ID, Herkunfts-Geo, verifizierte Menge).",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "isSameItem(line)",
+          "description": "Prüft Übereinstimmung von Inventar-ID, Bestellposition und Versandgruppe."
+        },
+        {
+          "signature": "issueItemToShipment(shipmentId, picklistBinId, userLogin, quantity, dispatcher, locale)",
+          "description": "Bucht die Warenausgabe und aktualisiert den Picklist-Item-Status."
+        }
+      ]
+    },
+    {
+      "id": "PickListServices",
+      "name": "PickListServices",
+      "package": "org.apache.ofbiz.shipment.picklist",
+      "type": "Java-Klasse",
+      "description": "Hilfsdienste für die Picklisten-Verwaltung.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "convertOrderIdListToHeaders(dctx, context)",
+          "description": "Wandelt eine Liste von Auftrags-IDs in die zugehörigen OrderHeader-Entitäten um (nur genehmigte Kundenbestellungen)."
+        },
+        {
+          "signature": "isBinComplete(delegator, picklistBinId)",
+          "description": "Prüft, ob alle Picklist-Items eines Bins den Status abgeschlossen oder storniert haben."
+        }
+      ]
+    },
+    {
+      "id": "UpsServices",
+      "name": "UpsServices",
+      "package": "org.apache.ofbiz.shipment.thirdparty.ups",
+      "type": "Java-Klasse",
+      "description": "Vollständige UPS-Carrier-Integration über XML-Webservices. Unterstützt den gesamten Lebenszyklus einer UPS-Sendung: Tarifabfrage, Sendungsbestätigung (mit Etikettenabruf), Akzeptanz, Stornierung, Tracking, Adressvalidierung und E-Mail-Rücksendeetiketten. Konfiguration erfolgt über `ShipmentGatewayUps` oder `shipment.properties`.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "upsShipmentConfirm(dctx, context)",
+          "description": "Sendet eine UPS-Sendungsbestätigungsanfrage (ShipConfirm). Baut das XML aus Adress-, Gewichts- und Paketdaten zusammen; unterstützt COD, Nachnahme-Zuschläge und Zertifizierungsdateispeicherung."
+        },
+        {
+          "signature": "handleUpsShipmentConfirmResponse(responseDocument, routeSegment, locale)",
+          "description": "Verarbeitet die UPS-Bestätigungsantwort und speichert Digest und Status im Routensegment."
+        },
+        {
+          "signature": "upsShipmentAccept(dctx, context)",
+          "description": "Sendet die UPS-Akzeptanzanfrage (ShipAccept), ruft Tracking-Nummern und Etiketten (Base64-kodiert) ab und speichert sie in ShipmentPackageRouteSeg."
+        },
+        {
+          "signature": "handleUpsShipmentAcceptResponse(responseDocument, routeSegment, packageRouteSegs, ...)",
+          "description": "Verarbeitet die UPS-Akzeptanzantwort, dekodiert Etiketten und schreibt Tracking-Nummern."
+        },
+        {
+          "signature": "upsVoidShipment(dctx, context)",
+          "description": "Storniert eine bestätigte UPS-Sendung (Void)."
+        },
+        {
+          "signature": "upsTrackShipment(dctx, context)",
+          "description": "Fragt den aktuellen Tracking-Status einer UPS-Sendung ab und aktualisiert das Routensegment."
+        },
+        {
+          "signature": "upsRateInquire(dctx, context)",
+          "description": "Fragt UPS-Tarife für eine Sendung ab und gibt den geschätzten Betrag zurück."
+        },
+        {
+          "signature": "upsRateInquireByPostalCode(dctx, context)",
+          "description": "Tarifabfrage nur anhand von PLZ und Gewicht (ohne vollständige Sendungsstruktur)."
+        },
+        {
+          "signature": "upsAddressValidation(dctx, context)",
+          "description": "Validiert eine US-Adresse über den UPS-Adressvalidierungsservice."
+        },
+        {
+          "signature": "upsEmailReturnLabel(dctx, context)",
+          "description": "Generiert ein UPS-Rücksendeetikett und sendet es per E-Mail an den Empfänger."
+        },
+        {
+          "signature": "upsShipmentAlternateRatesInquiry(dctx, context)",
+          "description": "Fragt alternative UPS-Tarife für verschiedene Serviceklassen in einem Aufruf ab."
+        },
+        {
+          "signature": "sendUpsRequest(action, xmlString, ...)",
+          "description": "Interne HTTP-Übertragungsmethode: baut die UPS-XML-Anfrage mit Authentifizierungsheader zusammen und sendet sie per HTTP-POST."
+        }
+      ]
+    },
+    {
+      "id": "UpsConnectException",
+      "name": "UpsConnectException",
+      "package": "org.apache.ofbiz.shipment.thirdparty.ups",
+      "type": "Java-Klasse (Exception)",
+      "description": "Paketeigene Ausnahme für Verbindungsfehler zum UPS-Webservice; erweitert `GeneralException`.",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "FedexServices",
+      "name": "FedexServices",
+      "package": "org.apache.ofbiz.shipment.thirdparty.fedex",
+      "type": "Java-Klasse",
+      "description": "FedEx-Carrier-Integration über XML-Webservices mit FreeMarker-Templates für die Anfragegenerierung. Unterstützt die initiale Meter-Number-Registrierung und die vollständige Sendungsbestätigung mit Etikettenempfang. Konfiguration über `ShipmentGatewayFedex` oder `shipment.properties`. Aktuell nur Einzelpaketsendungen unterstützt.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "sendFedexRequest(xmlString, delegator, configId, resource, locale)",
+          "description": "Sendet eine XML-Anfrage an den FedEx-Endpunkt per HTTP-POST mit konfigurierbarem Timeout."
+        },
+        {
+          "signature": "fedexSubscriptionRequest(dctx, context)",
+          "description": "Registriert das Unternehmen bei FedEx und erhält eine Meter-Number. Baut die Anfrage aus Adress-, Telefon- und E-Mail-Daten der Company-Party zusammen."
+        },
+        {
+          "signature": "fedexShipRequest(dctx, context)",
+          "description": "Sendet eine FedEx-Sendungsanfrage (FDXShipRequest) auf Basis eines FreeMarker-Templates. Validiert Gewicht, Dimensionen, Servicetype und Adressen; verarbeitet Home-Delivery-Optionen."
+        },
+        {
+          "signature": "handleFedexShipReply(replyString, routeSegment, packageRouteSegs, locale)",
+          "description": "Parst die FedEx-Antwort, speichert Tracking-Nummer und Base64-dekodiertes Etikett im Routensegment."
+        },
+        {
+          "signature": "handleErrors(rootElement, errorList, locale)",
+          "description": "Extrahiert Fehlercodes und -meldungen aus dem FedEx-XML-Antwortelement."
+        }
+      ]
+    },
+    {
+      "id": "FedexConnectException",
+      "name": "FedexConnectException",
+      "package": "org.apache.ofbiz.shipment.thirdparty.fedex",
+      "type": "Java-Klasse (Exception)",
+      "description": "Paketeigene Ausnahme für Verbindungs- und Protokollfehler beim FedEx-Webservice; erweitert `GeneralException`.",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "DhlServices",
+      "name": "DhlServices",
+      "package": "org.apache.ofbiz.shipment.thirdparty.dhl",
+      "type": "Java-Klasse",
+      "description": "DHL-Carrier-Integration über XML-Webservices mit FreeMarker-Templates. Unterstützt Ratenabfrage, Registrierung (Account-Nummer-Aktivierung) und Sendungsbestätigung mit Etikettenempfang. Arbeitet ausschließlich mit Gewichten in Pfund (`WT_lb`). Konfiguration über `ShipmentGatewayDhl` oder `shipment.properties`.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "sendDhlRequest(xmlString, delegator, configId, resource, locale)",
+          "description": "Sendet eine XML-Anfrage an den DHL-Endpunkt per HTTP-POST mit konfigurierbarem Timeout."
+        },
+        {
+          "signature": "dhlRateEstimate(dctx, context)",
+          "description": "Fragt DHL-Tarife für eine Sendung ab und gibt den geschätzten Versandpreis zurück."
+        },
+        {
+          "signature": "handleDhlRateResponse(rateResponseDocument, locale)",
+          "description": "Verarbeitet die DHL-Tarifrückmeldung und extrahiert den Preis."
+        },
+        {
+          "signature": "dhlRegisterInquire(dctx, context)",
+          "description": "Aktiviert eine DHL-Account-Nummer (DHL-Registrierungsanfrage)."
+        },
+        {
+          "signature": "handleDhlRegisterResponse(responseDocument, locale)",
+          "description": "Verarbeitet die DHL-Registrierungsantwort."
+        },
+        {
+          "signature": "dhlShipmentConfirm(dctx, context)",
+          "description": "Sendet eine DHL-Sendungsanfrage, empfängt das Etikett (Base64) und speichert Tracking-Nummer und Etikettenbild im Routensegment."
+        },
+        {
+          "signature": "handleDhlShipmentConfirmResponse(responseString, routeSegment, packageRouteSegs, locale)",
+          "description": "Parst die DHL-Sendungsantwort und persistiert Etikett und Tracking-Daten."
+        },
+        {
+          "signature": "handleErrors(responseElement, errorList, locale)",
+          "description": "Extrahiert Fehlermeldungen aus der DHL-XML-Antwort."
+        }
+      ]
+    },
+    {
+      "id": "DhlConnectException",
+      "name": "DhlConnectException",
+      "package": "org.apache.ofbiz.shipment.thirdparty.dhl",
+      "type": "Java-Klasse (Exception)",
+      "description": "Paketeigene Ausnahme für Verbindungsfehler zum DHL-Webservice; erweitert `GeneralException`.",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "UspsServices",
+      "name": "UspsServices",
+      "package": "org.apache.ofbiz.shipment.thirdparty.usps",
+      "type": "Java-Klasse",
+      "description": "USPS-Carrier-Integration über den USPS-Web-Tools-XML-API. Bietet den breitesten Funktionsumfang aller vier Carrier-Integrationen: Inlands- und Auslandstarifabfrage, Sendungsverfolgung, Adressvalidierung, Postleitzahl-Lookup, Lieferbestätigung und Etikettendruck. Nutzt `ShipmentWorker.getPackageSplit()` für die Paketaufteilung bei Gewichtsüberschreitung. Konfiguration über `ShipmentGatewayUsps` oder `shipment.properties`.",
+      "section": "java",
+      "is_group": false,
+      "methods": [
+        {
+          "signature": "uspsRateInquire(dctx, context)",
+          "description": "Fragt Inlandstarife für eine oder mehrere Pakete ab. Teilt automatisch bei Überschreitung des Maximalgewichts auf und summiert die Teilbeträge."
+        },
+        {
+          "signature": "uspsInternationalRateInquire(dctx, context)",
+          "description": "Fragt internationale USPS-Tarife ab."
+        },
+        {
+          "signature": "uspsTrackConfirm(dctx, context)",
+          "description": "Ruft den aktuellen Tracking-Status einer USPS-Sendung ab."
+        },
+        {
+          "signature": "uspsAddressValidation(dctx, context)",
+          "description": "Validiert eine US-Adresse und normalisiert PLZ und Staat."
+        },
+        {
+          "signature": "uspsCityStateLookup(dctx, context)",
+          "description": "Gibt Stadt und Bundesstaat für eine US-PLZ zurück."
+        },
+        {
+          "signature": "uspsPriorityMailStandard(dctx, context)",
+          "description": "Berechnet Standardlieferzeiten für USPS Priority Mail."
+        },
+        {
+          "signature": "uspsPackageServicesStandard(dctx, context)",
+          "description": "Berechnet Standardlieferzeiten für USPS Package Services."
+        },
+        {
+          "signature": "uspsDomesticRate(dctx, context)",
+          "description": "Allgemeine Inlandstarifabfrage für konfigurierte USPS-Dienste."
+        },
+        {
+          "signature": "uspsUpdateShipmentRateInfo(dctx, context)",
+          "description": "Aktualisiert Versandkosteninformationen für eine bestehende Sendung nach USPS-Tarifabfrage."
+        },
+        {
+          "signature": "uspsDeliveryConfirmation(dctx, context)",
+          "description": "Generiert eine USPS-Lieferbestätigungsnummer (Delivery Confirmation) für eine Sendung."
+        },
+        {
+          "signature": "uspsDumpShipmentLabelImages(dctx, context)",
+          "description": "Exportiert gespeicherte USPS-Etikettenbilder als Datei."
+        },
+        {
+          "signature": "uspsPriorityMailInternationalLabel(dctx, context)",
+          "description": "Erstellt ein USPS Priority Mail International-Etikett und speichert es in der Datenbank."
+        }
+      ]
+    },
+    {
+      "id": "UspsRequestException",
+      "name": "UspsRequestException",
+      "package": "org.apache.ofbiz.shipment.thirdparty.usps",
+      "type": "Java-Klasse (Exception)",
+      "description": "Paketeigene Ausnahme für Fehler bei USPS-API-Anfragen; erweitert `GeneralException`.",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    },
+    {
+      "id": "UspsMockApiServlet",
+      "name": "UspsMockApiServlet",
+      "package": "org.apache.ofbiz.shipment.thirdparty.usps",
+      "type": "Java-Klasse (HttpServlet)",
+      "description": "Test-Servlet, das den USPS-XML-API simuliert. Ermöglicht Integration-Tests ohne echte USPS-Verbindung, indem es vordefinierte XML-Antworten zurückliefert.",
+      "section": "java",
+      "is_group": false,
+      "methods": []
+    }
+  ],
+  "stats": {
+    "classes": 23,
+    "methods": 117
+  }
+}
