@@ -210,9 +210,14 @@
     </ol>
   </nav>
   <h1><i class="bi bi-box-seam me-2 text-primary"></i>Software Bill of Materials</h1>
+  
+  
   <p class="text-muted mb-0 mt-1 small">
     79 externe Abhängigkeiten &middot;
-    Quelle: <code>decompiled/build.gradle</code>
+    
+    <span class="text-danger fw-semibold"><i class="bi bi-exclamation-triangle me-1"></i>40 Schwachstellen in 14 Libraries</span> &middot;
+    
+    Quelle: <code>decompiled/build.gradle</code> &middot; Daten: <a href="https://osv.dev" target="_blank">OSV</a>
   </p>
 </div>
 
@@ -229,103 +234,270 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">commons-cli</td>
           <td class="text-muted small font-monospace">commons-cli</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.8.0</span></td>
-          <td class="small text-muted font-monospace">commons-cli:commons-cli:1.8.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">commons-codec</td>
           <td class="text-muted small font-monospace">commons-codec</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.17.0</span></td>
-          <td class="small text-muted font-monospace">commons-codec:commons-codec:1.17.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">commons-collections4</td>
           <td class="text-muted small font-monospace">org.apache.commons</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">4.4</span></td>
-          <td class="small text-muted font-monospace">org.apache.commons:commons-collections4:4.4</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">commons-csv</td>
           <td class="text-muted small font-monospace">org.apache.commons</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.11.0</span></td>
-          <td class="small text-muted font-monospace">org.apache.commons:commons-csv:1.11.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">commons-dbcp2</td>
           <td class="text-muted small font-monospace">org.apache.commons</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.12.0</span></td>
-          <td class="small text-muted font-monospace">org.apache.commons:commons-dbcp2:2.12.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">commons-fileupload</td>
           <td class="text-muted small font-monospace">commons-fileupload</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.5</span></td>
-          <td class="small text-muted font-monospace">commons-fileupload:commons-fileupload:1.5</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">1</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-48976</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-770</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Commons FileUpload, Apache Commons FileUpload: FileUpload DoS via part headers</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">commons-imaging</td>
           <td class="text-muted small font-monospace">org.apache.commons</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.0-alpha3</span></td>
-          <td class="small text-muted font-monospace">org.apache.commons:commons-imaging:1.0-alpha3</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">commons-io</td>
           <td class="text-muted small font-monospace">commons-io</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.16.1</span></td>
-          <td class="small text-muted font-monospace">commons-io:commons-io:2.16.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">commons-lang3</td>
           <td class="text-muted small font-monospace">org.apache.commons</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">3.14.0</span></td>
-          <td class="small text-muted font-monospace">org.apache.commons:commons-lang3:3.14.0</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">1</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-48924</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-674</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Commons Lang is vulnerable to Uncontrolled Recursion when processing long inputs</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">commons-net</td>
           <td class="text-muted small font-monospace">commons-net</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">3.11.0</span></td>
-          <td class="small text-muted font-monospace">commons-net:commons-net:3.11.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">commons-pool2</td>
           <td class="text-muted small font-monospace">org.apache.commons</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.12.0</span></td>
-          <td class="small text-muted font-monospace">org.apache.commons:commons-pool2:2.12.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">commons-text</td>
           <td class="text-muted small font-monospace">org.apache.commons</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.12.0</span></td>
-          <td class="small text-muted font-monospace">org.apache.commons:commons-text:1.12.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">commons-validator</td>
           <td class="text-muted small font-monospace">commons-validator</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.9.0</span></td>
-          <td class="small text-muted font-monospace">commons-validator:commons-validator:1.9.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -342,19 +514,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">java-jwt</td>
           <td class="text-muted small font-monospace">com.auth0</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">4.4.0</span></td>
-          <td class="small text-muted font-monospace">com.auth0:java-jwt:4.4.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -371,19 +554,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">metadata-extractor</td>
           <td class="text-muted small font-monospace">com.drewnoakes</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.19.0</span></td>
-          <td class="small text-muted font-monospace">com.drewnoakes:metadata-extractor:2.19.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -400,19 +594,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">caffeine</td>
           <td class="text-muted small font-monospace">com.github.ben-manes.caffeine</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">3.1.8</span></td>
-          <td class="small text-muted font-monospace">com.github.ben-manes.caffeine:caffeine:3.1.8</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -429,26 +634,65 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">tika-core</td>
           <td class="text-muted small font-monospace">org.apache.tika</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.9.2</span></td>
-          <td class="small text-muted font-monospace">org.apache.tika:tika-core:2.9.2</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">1</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-66516</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">CRITICAL</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-611</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tika has XXE vulnerability</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">tika-parsers-standard-package</td>
           <td class="text-muted small font-monospace">org.apache.tika</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.9.2</span></td>
-          <td class="small text-muted font-monospace">org.apache.tika:tika-parsers-standard-package:2.9.2</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -465,26 +709,47 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">jakarta.mail</td>
           <td class="text-muted small font-monospace">com.sun.mail</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.0.1</span></td>
-          <td class="small text-muted font-monospace">com.sun.mail:jakarta.mail:2.0.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">javax.mail</td>
           <td class="text-muted small font-monospace">com.sun.mail</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.6.2</span></td>
-          <td class="small text-muted font-monospace">com.sun.mail:javax.mail:1.6.2</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -501,26 +766,65 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">poi</td>
           <td class="text-muted small font-monospace">org.apache.poi</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">5.3.0</span></td>
-          <td class="small text-muted font-monospace">org.apache.poi:poi:5.3.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">poi-ooxml</td>
           <td class="text-muted small font-monospace">org.apache.poi</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">5.3.0</span></td>
-          <td class="small text-muted font-monospace">org.apache.poi:poi-ooxml:5.3.0</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">1</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-31672</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-20</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache POI OOXML Vulnerable to Improper Input Validation in OOXML File Parsing</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
         
       </tbody>
@@ -537,26 +841,47 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">juel-api</td>
           <td class="text-muted small font-monospace">de.odysseus.juel</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.2.7</span></td>
-          <td class="small text-muted font-monospace">de.odysseus.juel:juel-api:2.2.7</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">juel-impl</td>
           <td class="text-muted small font-monospace">de.odysseus.juel</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.2.7</span></td>
-          <td class="small text-muted font-monospace">de.odysseus.juel:juel-impl:2.2.7</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -573,54 +898,115 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">concurrentlinkedhashmap-lru</td>
           <td class="text-muted small font-monospace">com.googlecode.concurrentlinkedhashmap</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.4.2</span></td>
-          <td class="small text-muted font-monospace">com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.4.2</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">core</td>
           <td class="text-muted small font-monospace">com.google.zxing</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">3.5.3</span></td>
-          <td class="small text-muted font-monospace">com.google.zxing:core:3.5.3</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">guava</td>
           <td class="text-muted small font-monospace">com.google.guava</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">33.2.1-jre</span></td>
-          <td class="small text-muted font-monospace">com.google.guava:guava:33.2.1-jre</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">javase</td>
           <td class="text-muted small font-monospace">com.google.zxing</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">3.5.3</span></td>
-          <td class="small text-muted font-monospace">com.google.zxing:javase:3.5.3</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">libphonenumber</td>
           <td class="text-muted small font-monospace">com.googlecode.libphonenumber</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">8.13.43</span></td>
-          <td class="small text-muted font-monospace">com.googlecode.libphonenumber:libphonenumber:8.13.43</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">re2j</td>
           <td class="text-muted small font-monospace">com.google.re2j</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.7</span></td>
-          <td class="small text-muted font-monospace">com.google.re2j:re2j:1.7</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -637,19 +1023,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">jsoup</td>
           <td class="text-muted small font-monospace">org.jsoup</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.18.1</span></td>
-          <td class="small text-muted font-monospace">org.jsoup:jsoup:1.18.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -666,19 +1063,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">httpclient</td>
           <td class="text-muted small font-monospace">org.apache.httpcomponents</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">4.5.14</span></td>
-          <td class="small text-muted font-monospace">org.apache.httpcomponents:httpclient:4.5.14</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -695,40 +1103,81 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">activation</td>
           <td class="text-muted small font-monospace">javax.activation</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.1.1</span></td>
-          <td class="small text-muted font-monospace">javax.activation:activation:1.1.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">javax.jms-api</td>
           <td class="text-muted small font-monospace">javax.jms</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.0.1</span></td>
-          <td class="small text-muted font-monospace">javax.jms:javax.jms-api:2.0.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">javax.servlet.jsp-api</td>
           <td class="text-muted small font-monospace">javax.servlet.jsp</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.3.3</span></td>
-          <td class="small text-muted font-monospace">javax.servlet.jsp:javax.servlet.jsp-api:2.3.3</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">jaxb-api</td>
           <td class="text-muted small font-monospace">javax.xml.bind</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.3.1</span></td>
-          <td class="small text-muted font-monospace">javax.xml.bind:jaxb-api:2.3.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -745,19 +1194,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">jackson-databind</td>
           <td class="text-muted small font-monospace">com.fasterxml.jackson.core</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.17.2</span></td>
-          <td class="small text-muted font-monospace">com.fasterxml.jackson.core:jackson-databind:2.17.2</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -774,19 +1234,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">ical4j</td>
           <td class="text-muted small font-monospace">org.mnode.ical4j</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">3.2.19</span></td>
-          <td class="small text-muted font-monospace">org.mnode.ical4j:ical4j:3.2.19</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -803,26 +1274,83 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">log4j-api</td>
           <td class="text-muted small font-monospace">org.apache.logging.log4j</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.23.1</span></td>
-          <td class="small text-muted font-monospace">org.apache.logging.log4j:log4j-api:2.23.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">log4j-core</td>
           <td class="text-muted small font-monospace">org.apache.logging.log4j</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.23.1</span></td>
-          <td class="small text-muted font-monospace">org.apache.logging.log4j:log4j-core:2.23.1</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">2</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2026-34480</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-116</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Log4j Core's XmlLayout fails to sanitize characters</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-68161</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-297</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Log4j does not verify the TLS hostname in its Socket Appender</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
         
       </tbody>
@@ -839,33 +1367,99 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">itext</td>
           <td class="text-muted small font-monospace">com.lowagie</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.1.7</span></td>
-          <td class="small text-muted font-monospace">com.lowagie:itext:2.1.7</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">1</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2017-9096</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-611</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Improper Restriction of XML External Entity Reference in  iText</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">library</td>
           <td class="text-muted small font-monospace">org.mustangproject</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.13.0</span></td>
-          <td class="small text-muted font-monospace">org.mustangproject:library:2.13.0</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">1</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-66372</code>
+                
+                <span class="badge
+                  bg-secondary"
+                  style="font-size:.72rem">LOW</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-611</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Mustangproject allows exfiltrating files via XXE attacks</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">pdfbox</td>
           <td class="text-muted small font-monospace">org.apache.pdfbox</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">3.0.2</span></td>
-          <td class="small text-muted font-monospace">org.apache.pdfbox:pdfbox:3.0.2</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -882,19 +1476,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">oro</td>
           <td class="text-muted small font-monospace">oro</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.0.8</span></td>
-          <td class="small text-muted font-monospace">oro:oro:2.0.8</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -911,19 +1516,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">rome</td>
           <td class="text-muted small font-monospace">com.rometools</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.1.0</span></td>
-          <td class="small text-muted font-monospace">com.rometools:rome:2.1.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -940,33 +1556,64 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">clojure</td>
           <td class="text-muted small font-monospace">org.clojure</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.12.0</span></td>
-          <td class="small text-muted font-monospace">org.clojure:clojure:1.12.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">groovy</td>
           <td class="text-muted small font-monospace">org.apache.groovy</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">4.0.21</span></td>
-          <td class="small text-muted font-monospace">org.apache.groovy:groovy:4.0.21</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">groovy-json</td>
           <td class="text-muted small font-monospace">org.apache.groovy</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">4.0.21</span></td>
-          <td class="small text-muted font-monospace">org.apache.groovy:groovy-json:4.0.21</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -983,33 +1630,115 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">esapi</td>
           <td class="text-muted small font-monospace">org.owasp.esapi</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.5.4.0</span></td>
-          <td class="small text-muted font-monospace">org.owasp.esapi:esapi:2.5.4.0</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">1</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">GHSA-r68h-jhhj-9jvm</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Validator.isValidSafeHTML is being deprecated and will be deleted from org.owasp.esapi:esapi in 1 year</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">owasp-java-html-sanitizer</td>
           <td class="text-muted small font-monospace">com.googlecode.owasp-java-html-sanitizer</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">20240325.1</span></td>
-          <td class="small text-muted font-monospace">com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:20240325.1</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">1</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-66021</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-79</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">OWASP Java HTML Sanitizer is vulnerable to XSS via noscript tag and improper style tag sanitization </div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">shiro-core</td>
           <td class="text-muted small font-monospace">org.apache.shiro</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.0.1</span></td>
-          <td class="small text-muted font-monospace">org.apache.shiro:shiro-core:2.0.1</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">1</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2026-23901</code>
+                
+                <span class="badge
+                  bg-secondary"
+                  style="font-size:.72rem">LOW</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-208</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Shiro Affected by an Observable Timing Discrepancy Vulnerability</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1026,26 +1755,47 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">sshd-core</td>
           <td class="text-muted small font-monospace">org.apache.sshd</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.13.1</span></td>
-          <td class="small text-muted font-monospace">org.apache.sshd:sshd-core:2.13.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">sshd-sftp</td>
           <td class="text-muted small font-monospace">org.apache.sshd</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.13.1</span></td>
-          <td class="small text-muted font-monospace">org.apache.sshd:sshd-sftp:2.13.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1062,19 +1812,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">freemarker</td>
           <td class="text-muted small font-monospace">org.freemarker</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.3.33</span></td>
-          <td class="small text-muted font-monospace">org.freemarker:freemarker:2.3.33</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1091,40 +1852,81 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">ant</td>
           <td class="text-muted small font-monospace">org.apache.ant</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.10.14</span></td>
-          <td class="small text-muted font-monospace">org.apache.ant:ant:1.10.14</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">ant-junit</td>
           <td class="text-muted small font-monospace">org.apache.ant</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.10.14</span></td>
-          <td class="small text-muted font-monospace">org.apache.ant:ant-junit:1.10.14</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">junit</td>
           <td class="text-muted small font-monospace">junit</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">4.13.2</span></td>
-          <td class="small text-muted font-monospace">junit:junit:4.13.2</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">spring-test</td>
           <td class="text-muted small font-monospace">org.springframework</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">6.1.11</span></td>
-          <td class="small text-muted font-monospace">org.springframework:spring-test:6.1.11</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1141,19 +1943,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">geronimo-transaction</td>
           <td class="text-muted small font-monospace">org.apache.geronimo.components</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">3.1.4</span></td>
-          <td class="small text-muted font-monospace">org.apache.geronimo.components:geronimo-transaction:3.1.4</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1170,19 +1983,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">icu4j</td>
           <td class="text-muted small font-monospace">com.ibm.icu</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">75.1</span></td>
-          <td class="small text-muted font-monospace">com.ibm.icu:icu4j:75.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1199,19 +2023,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">ez-vcard</td>
           <td class="text-muted small font-monospace">com.googlecode.ez-vcard</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">0.12.1</span></td>
-          <td class="small text-muted font-monospace">com.googlecode.ez-vcard:ez-vcard:0.12.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1228,54 +2063,151 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">axiom-api</td>
           <td class="text-muted small font-monospace">org.apache.ws.commons.axiom</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.4.0</span></td>
-          <td class="small text-muted font-monospace">org.apache.ws.commons.axiom:axiom-api:1.4.0</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">axis2-kernel</td>
           <td class="text-muted small font-monospace">org.apache.axis2</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.8.2</span></td>
-          <td class="small text-muted font-monospace">org.apache.axis2:axis2-kernel:1.8.2</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">cxf-core</td>
           <td class="text-muted small font-monospace">org.apache.cxf</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">4.0.4</span></td>
-          <td class="small text-muted font-monospace">org.apache.cxf:cxf-core:4.0.4</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">2</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-48795</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-400</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache CXF is vulnerable to DoS attacks as entire files are read into memory and logged</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-23184</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-400</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache CXF: Denial of Service vulnerability with temporary files</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">cxf-rt-frontend-jaxrs</td>
           <td class="text-muted small font-monospace">org.apache.cxf</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">4.0.4</span></td>
-          <td class="small text-muted font-monospace">org.apache.cxf:cxf-rt-frontend-jaxrs:4.0.4</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">javax.ws.rs-api</td>
           <td class="text-muted small font-monospace">javax.ws.rs</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.1.1</span></td>
-          <td class="small text-muted font-monospace">javax.ws.rs:javax.ws.rs-api:2.1.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">wsdl4j</td>
           <td class="text-muted small font-monospace">wsdl4j</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.6.3</span></td>
-          <td class="small text-muted font-monospace">wsdl4j:wsdl4j:1.6.3</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1292,47 +2224,543 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">tomcat-catalina-ha</td>
           <td class="text-muted small font-monospace">org.apache.tomcat</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">10.1.28</span></td>
-          <td class="small text-muted font-monospace">org.apache.tomcat:tomcat-catalina-ha:10.1.28</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">tomcat-embed-core</td>
           <td class="text-muted small font-monospace">org.apache.tomcat.embed</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">10.1.28</span></td>
-          <td class="small text-muted font-monospace">org.apache.tomcat.embed:tomcat-embed-core:10.1.28</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">25</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2026-34500</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-287</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat: CLIENT_CERT authentication does not fail as expected</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-53506</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-400</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat Coyote vulnerable to Denial of Service via excessive HTTP/2 streams</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2024-56337</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-367</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat Time-of-check Time-of-use (TOCTOU) Race Condition vulnerability</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-31650</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-459, CWE-460</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat Denial of Service via invalid HTTP priority header</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-49124</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-426</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat installer for Windows has an untrusted search path vulnerability</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2026-24880</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-444</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat has an HTTP Request/Response Smuggling vulnerability</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2024-50379</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-367</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat Time-of-check Time-of-use (TOCTOU) Race Condition vulnerability</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-24813</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">CRITICAL</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-44, CWE-502</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat: Potential RCE and/or information disclosure and/or information corruption with partial PUT</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2026-29145</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">CRITICAL</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-287</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat: CLIENT_CERT authentication does not fail as expected</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2026-25854</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-601</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat has an Open Redirect vulnerability</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-31651</code>
+                
+                <span class="badge
+                  bg-secondary"
+                  style="font-size:.72rem">LOW</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-116, CWE-150</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat Rewrite rule bypass</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-66614</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-20, CWE-295</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat - Client certificate verification bypass</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-48989</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-404</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat Improper Resource Shutdown or Release vulnerability</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-46701</code>
+                
+                <span class="badge
+                  bg-secondary"
+                  style="font-size:.72rem">LOW</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-178</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat - CGI security constraint bypass</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-48988</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-770</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat - DoS in multipart upload</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-61795</code>
+                
+                <span class="badge
+                  bg-secondary"
+                  style="font-size:.72rem">LOW</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-404</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat Vulnerable to Improper Resource Shutdown or Release</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2026-24734</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-20</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat has an Improper Input Validation vulnerability</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2026-24733</code>
+                
+                <span class="badge
+                  bg-secondary"
+                  style="font-size:.72rem">LOW</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-20</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat - Security constraint bypass with HTTP/0.9</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2024-52317</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-326</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat Request and/or response mix-up</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2026-34483</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-116</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat has an Improper Encoding or Escaping of Output vulnerability in the JsonAccessLogValve</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-55754</code>
+                
+                <span class="badge
+                  bg-secondary"
+                  style="font-size:.72rem">LOW</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-150</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat Vulnerable to Improper Neutralization of Escape, Meta, or Control Sequences</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-49125</code>
+                
+                <span class="badge
+                  bg-warning text-dark
+                  "
+                  style="font-size:.72rem">MODERATE</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-288</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat - Security constraint bypass for pre/post-resources</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-55752</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-23</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat Vulnerable to Relative Path Traversal</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2025-52520</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-190</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat Catalina is vulnerable to DoS attack through bypassing of size limits</div>
+              
+            </div>
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2026-34487</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-532</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">Apache Tomcat vulnerable to Insertion of Sensitive Information into Log File</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">tomcat-embed-jasper</td>
           <td class="text-muted small font-monospace">org.apache.tomcat.embed</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">10.1.28</span></td>
-          <td class="small text-muted font-monospace">org.apache.tomcat.embed:tomcat-embed-jasper:10.1.28</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">tomcat-jdbc</td>
           <td class="text-muted small font-monospace">org.apache.tomcat</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">10.1.28</span></td>
-          <td class="small text-muted font-monospace">org.apache.tomcat:tomcat-jdbc:10.1.28</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">tomcat-tribes</td>
           <td class="text-muted small font-monospace">org.apache.tomcat</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">10.1.28</span></td>
-          <td class="small text-muted font-monospace">org.apache.tomcat:tomcat-tribes:10.1.28</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1349,26 +2777,65 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">jdom</td>
           <td class="text-muted small font-monospace">org.jdom</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.1.3</span></td>
-          <td class="small text-muted font-monospace">org.jdom:jdom:1.1.3</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">1</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2021-33813</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-611</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">XML External Entity (XXE) Injection in JDOM</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">jdom2</td>
           <td class="text-muted small font-monospace">org.jdom</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.0.6.1</span></td>
-          <td class="small text-muted font-monospace">org.jdom:jdom2:2.0.6.1</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1385,19 +2852,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">xercesImpl</td>
           <td class="text-muted small font-monospace">xerces</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.12.2</span></td>
-          <td class="small text-muted font-monospace">xerces:xercesImpl:2.12.2</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1414,19 +2892,48 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
         
-        <tr >
+        
+        <tr class="table-danger">
           <td class="fw-semibold">xstream</td>
           <td class="text-muted small font-monospace">com.thoughtworks.xstream</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.4.20</span></td>
-          <td class="small text-muted font-monospace">com.thoughtworks.xstream:xstream:1.4.20</td>
+          <td class="text-center">
+            
+            <span class="badge bg-danger">1</span>
+            
+          </td>
+          <td class="small">
+            
+            
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">CVE-2024-47072</code>
+                
+                <span class="badge
+                  bg-danger
+                  "
+                  style="font-size:.72rem">HIGH</span>
+                
+                
+                <span class="text-muted" style="font-size:.7rem">CWE-121, CWE-502</span>
+                
+              </div>
+              
+              <div class="text-dark" style="font-size:.8rem">XStream is vulnerable to a Denial of Service attack due to stack overflow from a manipulated binary input stream</div>
+              
+            </div>
+            
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1443,26 +2950,47 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">batik-all</td>
           <td class="text-muted small font-monospace">org.apache.xmlgraphics</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">1.17</span></td>
-          <td class="small text-muted font-monospace">org.apache.xmlgraphics:batik-all:1.17</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
+        
         
         <tr >
           <td class="fw-semibold">fop</td>
           <td class="text-muted small font-monospace">org.apache.xmlgraphics</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.10</span></td>
-          <td class="small text-muted font-monospace">org.apache.xmlgraphics:fop:2.10</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>
@@ -1479,19 +3007,30 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
+        
         
         <tr >
           <td class="fw-semibold">zip4j</td>
           <td class="text-muted small font-monospace">net.lingala.zip4j</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">2.11.5</span></td>
-          <td class="small text-muted font-monospace">net.lingala.zip4j:zip4j:2.11.5</td>
+          <td class="text-center">
+            
+            <span class="text-muted small">–</span>
+            
+          </td>
+          <td class="small">
+            
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            
+          </td>
         </tr>
         
       </tbody>

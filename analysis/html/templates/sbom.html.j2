@@ -10,9 +10,14 @@
     </ol>
   </nav>
   <h1><i class="bi bi-box-seam me-2 text-primary"></i>Software Bill of Materials</h1>
+  {% set vuln_count = libraries | sum(attribute='vulns', start=[]) | list | length %}
+  {% set affected_count = libraries | selectattr('vulns') | list | length %}
   <p class="text-muted mb-0 mt-1 small">
     {{ libraries | length }} externe Abhängigkeiten &middot;
-    Quelle: <code>decompiled/build.gradle</code>
+    {% if vuln_count > 0 %}
+    <span class="text-danger fw-semibold"><i class="bi bi-exclamation-triangle me-1"></i>{{ vuln_count }} Schwachstellen in {{ affected_count }} Libraries</span> &middot;
+    {% endif %}
+    Quelle: <code>decompiled/build.gradle</code> &middot; Daten: <a href="https://osv.dev" target="_blank">OSV</a>
   </p>
 </div>
 
@@ -29,19 +34,54 @@
     <table class="table table-sm table-bordered table-hover">
       <thead class="table-light">
         <tr>
-          <th style="width:30%">Artifact</th>
-          <th style="width:30%">Group</th>
-          <th style="width:12%">Version</th>
-          <th>Maven-Koordinaten</th>
+          <th style="width:22%">Artifact</th>
+          <th style="width:26%">Group</th>
+          <th style="width:10%">Version</th>
+          <th style="width:10%">CVEs</th>
+          <th>Schwachstellen</th>
         </tr>
       </thead>
       <tbody>
         {% for lib in cat_libs %}
-        <tr {% if lib.scope == 'test' %}class="table-secondary"{% endif %}>
+        {% set has_vulns = lib.vulns is defined and lib.vulns | length > 0 %}
+        <tr {% if has_vulns %}class="table-danger"{% elif lib.scope == 'test' %}class="table-secondary"{% endif %}>
           <td class="fw-semibold">{{ lib.artifact }}</td>
           <td class="text-muted small font-monospace">{{ lib.group }}</td>
           <td><span class="badge bg-light text-dark border" style="font-size:.75rem;font-family:monospace">{{ lib.version }}</span></td>
-          <td class="small text-muted font-monospace">{{ lib.group }}:{{ lib.artifact }}:{{ lib.version }}</td>
+          <td class="text-center">
+            {% if has_vulns %}
+            <span class="badge bg-danger">{{ lib.vulns | length }}</span>
+            {% else %}
+            <span class="text-muted small">–</span>
+            {% endif %}
+          </td>
+          <td class="small">
+            {% if has_vulns %}
+            {% for v in lib.vulns %}
+            <div class="mb-2">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <code style="font-size:.75rem">{% if v.cves %}{{ v.cves[0] }}{% else %}{{ v.id }}{% endif %}</code>
+                {% if v.severity %}
+                <span class="badge
+                  {% if v.severity == 'CRITICAL' %}bg-danger
+                  {% elif v.severity == 'HIGH' %}bg-danger
+                  {% elif v.severity in ('MODERATE', 'MEDIUM') %}bg-warning text-dark
+                  {% else %}bg-secondary{% endif %}"
+                  style="font-size:.72rem">{{ v.severity }}</span>
+                {% endif %}
+                {% if v.cwe_ids %}
+                <span class="text-muted" style="font-size:.7rem">{{ v.cwe_ids | join(', ') }}</span>
+                {% endif %}
+              </div>
+              {% if v.summary %}
+              <div class="text-dark" style="font-size:.8rem">{{ v.summary }}</div>
+              {% endif %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <span class="text-muted">Keine bekannten Schwachstellen</span>
+            {% endif %}
+          </td>
         </tr>
         {% endfor %}
       </tbody>

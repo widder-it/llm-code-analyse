@@ -968,553 +968,1127 @@
       "artifact": "commons-cli",
       "version": "1.8.0",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "commons-codec",
       "artifact": "commons-codec",
       "version": "1.17.0",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.commons",
       "artifact": "commons-collections4",
       "version": "4.4",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.commons",
       "artifact": "commons-csv",
       "version": "1.11.0",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.commons",
       "artifact": "commons-dbcp2",
       "version": "2.12.0",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "commons-fileupload",
       "artifact": "commons-fileupload",
       "version": "1.5",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-vv7r-c36w-3prj",
+          "cves": [
+            "CVE-2025-48976"
+          ],
+          "summary": "Apache Commons FileUpload, Apache Commons FileUpload: FileUpload DoS via part headers",
+          "details": "Allocation of resources for multipart headers with insufficient limits enabled a DoS vulnerability in Apache Commons FileUpload.\n\nThis issue affects Apache Commons FileUpload: from 1.0 before 1.6; from 2.0.0-M1 before 2.0.0-M4.\n\nUsers are recommended to upgrade to versions 1.6 or 2.0.0-M4, which fix",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-770"
+          ]
+        }
+      ]
     },
     {
       "group": "org.apache.commons",
       "artifact": "commons-imaging",
       "version": "1.0-alpha3",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "commons-io",
       "artifact": "commons-io",
       "version": "2.16.1",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.commons",
       "artifact": "commons-lang3",
       "version": "3.14.0",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-j288-q9x7-2f5v",
+          "cves": [
+            "CVE-2025-48924"
+          ],
+          "summary": "Apache Commons Lang is vulnerable to Uncontrolled Recursion when processing long inputs",
+          "details": "Uncontrolled Recursion vulnerability in Apache Commons Lang.\n\nThis issue affects Apache Commons Lang: Starting with commons-lang:commons-lang 2.0 to 2.6, and, from org.apache.commons:commons-lang3 3.0 before 3.18.0.\n\nThe methods ClassUtils.getClass(...) can throw StackOverflowError on very long inpu",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-674"
+          ]
+        }
+      ]
     },
     {
       "group": "commons-net",
       "artifact": "commons-net",
       "version": "3.11.0",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.commons",
       "artifact": "commons-pool2",
       "version": "2.12.0",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.commons",
       "artifact": "commons-text",
       "version": "1.12.0",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "commons-validator",
       "artifact": "commons-validator",
       "version": "1.9.0",
       "category": "Apache Commons",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.auth0",
       "artifact": "java-jwt",
       "version": "4.4.0",
       "category": "Authentifizierung",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.drewnoakes",
       "artifact": "metadata-extractor",
       "version": "2.19.0",
       "category": "Bild-Metadaten",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.github.ben-manes.caffeine",
       "artifact": "caffeine",
       "version": "3.1.8",
       "category": "Caching",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.tika",
       "artifact": "tika-core",
       "version": "2.9.2",
       "category": "Dokumenten-Analyse",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-f58c-gq56-vjjf",
+          "cves": [
+            "CVE-2025-66516"
+          ],
+          "summary": "Apache Tika has XXE vulnerability",
+          "details": "Critical XXE in Apache Tika tika-core (1.13-3.2.1), tika-pdf-module (2.0.0-3.2.1) and tika-parsers (1.13-1.28.5) modules on all platforms allows an attacker to carry out XML External Entity injection via a crafted XFA file inside of a PDF. \n\nThis CVE covers the same vulnerability as in CVE-2025-5498",
+          "severity": "CRITICAL",
+          "cwe_ids": [
+            "CWE-611"
+          ]
+        }
+      ]
     },
     {
       "group": "org.apache.tika",
       "artifact": "tika-parsers-standard-package",
       "version": "2.9.2",
       "category": "Dokumenten-Analyse",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.sun.mail",
       "artifact": "jakarta.mail",
       "version": "2.0.1",
       "category": "E-Mail",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.sun.mail",
       "artifact": "javax.mail",
       "version": "1.6.2",
       "category": "E-Mail",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.poi",
       "artifact": "poi",
       "version": "5.3.0",
       "category": "Excel / Office",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.poi",
       "artifact": "poi-ooxml",
       "version": "5.3.0",
       "category": "Excel / Office",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-gmg8-593g-7mv3",
+          "cves": [
+            "CVE-2025-31672"
+          ],
+          "summary": "Apache POI OOXML Vulnerable to Improper Input Validation in OOXML File Parsing",
+          "details": "Improper Input Validation vulnerability in Apache POI. The issue affects the parsing of OOXML format files like xlsx, docx and pptx. These file formats are basically zip files and it is possible for malicious users to add zip entries with duplicate names (including the path) in the zip. In this case",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-20"
+          ]
+        }
+      ]
     },
     {
       "group": "de.odysseus.juel",
       "artifact": "juel-api",
       "version": "2.2.7",
       "category": "Expression Language",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "de.odysseus.juel",
       "artifact": "juel-impl",
       "version": "2.2.7",
       "category": "Expression Language",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.googlecode.concurrentlinkedhashmap",
       "artifact": "concurrentlinkedhashmap-lru",
       "version": "1.4.2",
       "category": "Google Libraries",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.google.zxing",
       "artifact": "core",
       "version": "3.5.3",
       "category": "Google Libraries",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.google.guava",
       "artifact": "guava",
       "version": "33.2.1-jre",
       "category": "Google Libraries",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.google.zxing",
       "artifact": "javase",
       "version": "3.5.3",
       "category": "Google Libraries",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.googlecode.libphonenumber",
       "artifact": "libphonenumber",
       "version": "8.13.43",
       "category": "Google Libraries",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.google.re2j",
       "artifact": "re2j",
       "version": "1.7",
       "category": "Google Libraries",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.jsoup",
       "artifact": "jsoup",
       "version": "1.18.1",
       "category": "HTML-Parsing",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.httpcomponents",
       "artifact": "httpclient",
       "version": "4.5.14",
       "category": "HTTP-Client",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.fasterxml.jackson.core",
       "artifact": "jackson-databind",
       "version": "2.17.2",
       "category": "JSON",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "javax.activation",
       "artifact": "activation",
       "version": "1.1.1",
       "category": "Java EE (legacy javax.*)",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "javax.jms",
       "artifact": "javax.jms-api",
       "version": "2.0.1",
       "category": "Java EE (legacy javax.*)",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "javax.servlet.jsp",
       "artifact": "javax.servlet.jsp-api",
       "version": "2.3.3",
       "category": "Java EE (legacy javax.*)",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "javax.xml.bind",
       "artifact": "jaxb-api",
       "version": "2.3.1",
       "category": "Java EE (legacy javax.*)",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.mnode.ical4j",
       "artifact": "ical4j",
       "version": "3.2.19",
       "category": "Kalender (iCal)",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.logging.log4j",
       "artifact": "log4j-api",
       "version": "2.23.1",
       "category": "Logging",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.logging.log4j",
       "artifact": "log4j-core",
       "version": "2.23.1",
       "category": "Logging",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-3pxv-7cmr-fjr4",
+          "cves": [
+            "CVE-2026-34480"
+          ],
+          "summary": "Apache Log4j Core's XmlLayout fails to sanitize characters",
+          "details": "Apache Log4j Core's XmlLayout https://logging.apache.org/log4j/2.x/manual/layouts.html#XmlLayout , in versions up to and including 2.25.3, fails to sanitize characters forbidden by the  XML 1.0 specification https://www.w3.org/TR/xml/#charsets  producing invalid XML output whenever a log message or ",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-116"
+          ]
+        },
+        {
+          "id": "GHSA-vc5p-v9hr-52mj",
+          "cves": [
+            "CVE-2025-68161"
+          ],
+          "summary": "Apache Log4j does not verify the TLS hostname in its Socket Appender",
+          "details": "The Socket Appender in Apache Log4j Core versions 2.0-beta9 through 2.25.2 does not perform TLS hostname verification of the peer certificate, even when the  [verifyHostName](https://logging.apache.org/log4j/2.x/manual/appenders/network.html#SslConfiguration-attr-verifyHostName)  configuration attri",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-297"
+          ]
+        }
+      ]
     },
     {
       "group": "com.lowagie",
       "artifact": "itext",
       "version": "2.1.7",
       "category": "PDF",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-86p9-x5pw-94qx",
+          "cves": [
+            "CVE-2017-9096"
+          ],
+          "summary": "Improper Restriction of XML External Entity Reference in  iText",
+          "details": "The XML parsers in iText before 5.5.12 and 7.x before 7.0.3 do not disable external entities, which might allow remote attackers to conduct XML external entity (XXE) attacks via a crafted PDF.",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-611"
+          ]
+        }
+      ]
     },
     {
       "group": "org.mustangproject",
       "artifact": "library",
       "version": "2.13.0",
       "category": "PDF",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-x832-fpvj-r5ph",
+          "cves": [
+            "CVE-2025-66372"
+          ],
+          "summary": "Mustangproject allows exfiltrating files via XXE attacks",
+          "details": "Mustang before 2.16.3 allows exfiltrating files via XXE attacks.",
+          "severity": "LOW",
+          "cwe_ids": [
+            "CWE-611"
+          ]
+        }
+      ]
     },
     {
       "group": "org.apache.pdfbox",
       "artifact": "pdfbox",
       "version": "3.0.2",
       "category": "PDF",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.rometools",
       "artifact": "rome",
       "version": "2.1.0",
       "category": "RSS / Atom",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "oro",
       "artifact": "oro",
       "version": "2.0.8",
       "category": "Regex (ORO)",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.sshd",
       "artifact": "sshd-core",
       "version": "2.13.1",
       "category": "SFTP / SSH",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.sshd",
       "artifact": "sshd-sftp",
       "version": "2.13.1",
       "category": "SFTP / SSH",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.clojure",
       "artifact": "clojure",
       "version": "1.12.0",
       "category": "Scripting",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.groovy",
       "artifact": "groovy",
       "version": "4.0.21",
       "category": "Scripting",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.groovy",
       "artifact": "groovy-json",
       "version": "4.0.21",
       "category": "Scripting",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.owasp.esapi",
       "artifact": "esapi",
       "version": "2.5.4.0",
       "category": "Security",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-r68h-jhhj-9jvm",
+          "cves": [],
+          "summary": "Validator.isValidSafeHTML is being deprecated and will be deleted from org.owasp.esapi:esapi in 1 year",
+          "details": "### Impact\nThe `Validator.isValidSafeHTML` method can result in false negatives where it reports some input as safe (i.e., returns true), but really isn't, and using that same input as-is can in certain circumstances result in XSS vulnerabilities. Because this method cannot be fixed, it is being dep",
+          "severity": "MODERATE",
+          "cwe_ids": []
+        }
+      ]
     },
     {
       "group": "com.googlecode.owasp-java-html-sanitizer",
       "artifact": "owasp-java-html-sanitizer",
       "version": "20240325.1",
       "category": "Security",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-g9gq-3pfx-2gw2",
+          "cves": [
+            "CVE-2025-66021"
+          ],
+          "summary": "OWASP Java HTML Sanitizer is vulnerable to XSS via noscript tag and improper style tag sanitization ",
+          "details": "### Summary\nIt is observed that OWASP java html sanitizer is vulnerable to XSS if HtmlPolicyBuilder allows `noscript` and `style` tags with `allowTextIn` inside the style tag. This could lead to XSS if the payload is crafted in such a way that it does not sanitise the CSS and allows tags which is no",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-79"
+          ]
+        }
+      ]
     },
     {
       "group": "org.apache.shiro",
       "artifact": "shiro-core",
       "version": "2.0.1",
       "category": "Security",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-c4qc-4q9p-m9q9",
+          "cves": [
+            "CVE-2026-23901"
+          ],
+          "summary": "Apache Shiro Affected by an Observable Timing Discrepancy Vulnerability",
+          "details": "Observable Timing Discrepancy vulnerability in Apache Shiro.\n\nThis issue affects Apache Shiro: from 1.*, 2.* before 2.0.7.\n\nUsers are recommended to upgrade to version 2.0.7 or later, which fixes the issue.\n\nPrior to Shiro 2.0.7, code paths for non-existent vs. existing users are different enough,\nt",
+          "severity": "LOW",
+          "cwe_ids": [
+            "CWE-208"
+          ]
+        }
+      ]
     },
     {
       "group": "org.freemarker",
       "artifact": "freemarker",
       "version": "2.3.33",
       "category": "Template-Engine",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.ant",
       "artifact": "ant",
       "version": "1.10.14",
       "category": "Test",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.ant",
       "artifact": "ant-junit",
       "version": "1.10.14",
       "category": "Test",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "junit",
       "artifact": "junit",
       "version": "4.13.2",
       "category": "Test",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.springframework",
       "artifact": "spring-test",
       "version": "6.1.11",
       "category": "Test",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.geronimo.components",
       "artifact": "geronimo-transaction",
       "version": "3.1.4",
       "category": "Transaktionen",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.ibm.icu",
       "artifact": "icu4j",
       "version": "75.1",
       "category": "Unicode / ICU4J",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.ws.commons.axiom",
       "artifact": "axiom-api",
       "version": "1.4.0",
       "category": "Web Services / SOAP",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.axis2",
       "artifact": "axis2-kernel",
       "version": "1.8.2",
       "category": "Web Services / SOAP",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.cxf",
       "artifact": "cxf-core",
       "version": "4.0.4",
       "category": "Web Services / SOAP",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-36wv-v2qp-v4g4",
+          "cves": [
+            "CVE-2025-48795"
+          ],
+          "summary": "Apache CXF is vulnerable to DoS attacks as entire files are read into memory and logged",
+          "details": "Apache CXF stores large stream based messages as temporary files on the local filesystem. A bug was introduced which means that the entire temporary file is read into memory and then logged. An attacker might be able to exploit this to cause a denial of service attack by causing an out of memory exc",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-400"
+          ]
+        },
+        {
+          "id": "GHSA-fh5r-crhr-qrrq",
+          "cves": [
+            "CVE-2025-23184"
+          ],
+          "summary": "Apache CXF: Denial of Service vulnerability with temporary files",
+          "details": "A potential denial of service vulnerability is present in versions of Apache CXF before 3.5.10, 3.6.5 and 4.0.6. In some edge cases, the CachedOutputStream instances may not be closed and, if backed by temporary files, may fill up the file system (it applies to servers and clients).",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-400"
+          ]
+        }
+      ]
     },
     {
       "group": "org.apache.cxf",
       "artifact": "cxf-rt-frontend-jaxrs",
       "version": "4.0.4",
       "category": "Web Services / SOAP",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "javax.ws.rs",
       "artifact": "javax.ws.rs-api",
       "version": "2.1.1",
       "category": "Web Services / SOAP",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "wsdl4j",
       "artifact": "wsdl4j",
       "version": "1.6.3",
       "category": "Web Services / SOAP",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.tomcat",
       "artifact": "tomcat-catalina-ha",
       "version": "10.1.28",
       "category": "Web-Container",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.tomcat.embed",
       "artifact": "tomcat-embed-core",
       "version": "10.1.28",
       "category": "Web-Container",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-24j9-x2wg-9qv6",
+          "cves": [
+            "CVE-2026-34500"
+          ],
+          "summary": "Apache Tomcat: CLIENT_CERT authentication does not fail as expected",
+          "details": "CLIENT_CERT authentication does not fail as expected for some scenarios when soft fail is disabled and FFM is used in Apache Tomcat.\n\nThis issue affects Apache Tomcat: from 11.0.0-M14 through 11.0.20, from 10.1.22 through 10.1.53, from 9.0.92 through 9.0.116.\n\nUsers are recommended to upgrade to ver",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-287"
+          ]
+        },
+        {
+          "id": "GHSA-25xr-qj8w-c4vf",
+          "cves": [
+            "CVE-2025-53506"
+          ],
+          "summary": "Apache Tomcat Coyote vulnerable to Denial of Service via excessive HTTP/2 streams",
+          "details": "Uncontrolled Resource Consumption vulnerability in Apache Tomcat if an HTTP/2 client did not acknowledge the initial settings frame that reduces the maximum permitted concurrent streams.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.8, from 10.1.0-M1 through 10.1.42, from 9.0.0.M1 t",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-400"
+          ]
+        },
+        {
+          "id": "GHSA-27hp-xhwr-wr2m",
+          "cves": [
+            "CVE-2024-56337"
+          ],
+          "summary": "Apache Tomcat Time-of-check Time-of-use (TOCTOU) Race Condition vulnerability",
+          "details": "Time-of-check Time-of-use (TOCTOU) Race Condition vulnerability in Apache Tomcat.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.1, from 10.1.0-M1 through 10.1.33, from 9.0.0.M1 through 9.0.97.\n\nThe mitigation for CVE-2024-50379 was incomplete.\n\nUsers running Tomcat on a case insensi",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-367"
+          ]
+        },
+        {
+          "id": "GHSA-3p2h-wqq4-wf4h",
+          "cves": [
+            "CVE-2025-31650"
+          ],
+          "summary": "Apache Tomcat Denial of Service via invalid HTTP priority header",
+          "details": "Improper Input Validation vulnerability in Apache Tomcat. Incorrect error handling for some invalid HTTP priority headers resulted in incomplete clean-up of the failed request which created a memory leak. A large number of such requests could trigger an OutOfMemoryException resulting in a denial of ",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-459",
+            "CWE-460"
+          ]
+        },
+        {
+          "id": "GHSA-42wg-hm62-jcwg",
+          "cves": [
+            "CVE-2025-49124"
+          ],
+          "summary": "Apache Tomcat installer for Windows has an untrusted search path vulnerability",
+          "details": "Untrusted Search Path vulnerability in Apache Tomcat installer for Windows. During installation, the Tomcat installer for Windows used icacls.exe without specifying a full path.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.7, from 10.1.0 through 10.1.41, from 9.0.23 through 9.0.105",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-426"
+          ]
+        },
+        {
+          "id": "GHSA-563x-q5rq-57qp",
+          "cves": [
+            "CVE-2026-24880"
+          ],
+          "summary": "Apache Tomcat has an HTTP Request/Response Smuggling vulnerability",
+          "details": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling') vulnerability in Apache Tomcat via invalid chunk extension.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.18, from 10.1.0-M1 through 10.1.52, from 9.0.0.M1 through 9.0.115, from 8.5.0 through 8.5.100, f",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-444"
+          ]
+        },
+        {
+          "id": "GHSA-5j33-cvvr-w245",
+          "cves": [
+            "CVE-2024-50379"
+          ],
+          "summary": "Apache Tomcat Time-of-check Time-of-use (TOCTOU) Race Condition vulnerability",
+          "details": "Time-of-check Time-of-use (TOCTOU) Race Condition vulnerability during JSP compilation in Apache Tomcat permits an RCE on case insensitive file systems when the default servlet is enabled for write (non-default configuration).\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.1, from 10",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-367"
+          ]
+        },
+        {
+          "id": "GHSA-83qj-6fr2-vhqg",
+          "cves": [
+            "CVE-2025-24813"
+          ],
+          "summary": "Apache Tomcat: Potential RCE and/or information disclosure and/or information corruption with partial PUT",
+          "details": "Path Equivalence: 'file.Name' (Internal Dot) leading to Remote Code Execution and/or Information disclosure and/or malicious content added to uploaded files via write enabled Default Servlet in Apache Tomcat.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.2, from 10.1.0-M1 through 10",
+          "severity": "CRITICAL",
+          "cwe_ids": [
+            "CWE-44",
+            "CWE-502"
+          ]
+        },
+        {
+          "id": "GHSA-95jq-rwvf-vjx4",
+          "cves": [
+            "CVE-2026-29145"
+          ],
+          "summary": "Apache Tomcat: CLIENT_CERT authentication does not fail as expected",
+          "details": "CLIENT_CERT authentication does not fail as expected for some scenarios when soft fail is disabled vulnerability in Apache Tomcat, Apache Tomcat Native.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.18, from 10.1.0-M7 through 10.1.52, from 9.0.83 through 9.0.115; Apache Tomcat Nativ",
+          "severity": "CRITICAL",
+          "cwe_ids": [
+            "CWE-287"
+          ]
+        },
+        {
+          "id": "GHSA-9m3c-qcxr-9x87",
+          "cves": [
+            "CVE-2026-25854"
+          ],
+          "summary": "Apache Tomcat has an Open Redirect vulnerability",
+          "details": "Occasional URL redirection to untrusted Site ('Open Redirect') vulnerability in Apache Tomcat via the LoadBalancerDrainingValve.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.18, from 10.1.0-M1 through 10.1.52, from 9.0.0.M23 through 9.0.115, from 8.5.30 through 8.5.100.\nOther, unsu",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-601"
+          ]
+        },
+        {
+          "id": "GHSA-ff77-26x5-69cr",
+          "cves": [
+            "CVE-2025-31651"
+          ],
+          "summary": "Apache Tomcat Rewrite rule bypass",
+          "details": "Improper Neutralization of Escape, Meta, or Control Sequences vulnerability in Apache Tomcat. For a subset of unlikely rewrite rule configurations, it was possible for a specially crafted request to bypass some rewrite rules. If those rewrite rules effectively enforced security constraints, those co",
+          "severity": "LOW",
+          "cwe_ids": [
+            "CWE-116",
+            "CWE-150"
+          ]
+        },
+        {
+          "id": "GHSA-fpj8-gq4v-p354",
+          "cves": [
+            "CVE-2025-66614"
+          ],
+          "summary": "Apache Tomcat - Client certificate verification bypass",
+          "details": "Improper Input Validation vulnerability.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.14, from 10.1.0-M1 through 10.1.49, from 9.0.0-M1 through 9.0.112.\n\nThe following versions were EOL at the time the CVE was created but are known to be affected: 8.5.0 through 8.5.100. Older EOL v",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-20",
+            "CWE-295"
+          ]
+        },
+        {
+          "id": "GHSA-gqp3-2cvr-x8m3",
+          "cves": [
+            "CVE-2025-48989"
+          ],
+          "summary": "Apache Tomcat Improper Resource Shutdown or Release vulnerability",
+          "details": "Improper Resource Shutdown or Release vulnerability in Apache Tomcat made Tomcat vulnerable to the made you reset attack.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.9, from 10.1.0-M1 through 10.1.43 and from 9.0.0.M1 through 9.0.107. Older, EOL versions may also be affected.\n\nUse",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-404"
+          ]
+        },
+        {
+          "id": "GHSA-h2fw-rfh5-95r3",
+          "cves": [
+            "CVE-2025-46701"
+          ],
+          "summary": "Apache Tomcat - CGI security constraint bypass",
+          "details": "Improper Handling of Case Sensitivity vulnerability in Apache Tomcat's GCI servlet allows security constraint bypass of security constraints that apply to the pathInfo component of a URI mapped to the CGI servlet.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.6, from 10.1.0-M1 throu",
+          "severity": "LOW",
+          "cwe_ids": [
+            "CWE-178"
+          ]
+        },
+        {
+          "id": "GHSA-h3gc-qfqq-6h8f",
+          "cves": [
+            "CVE-2025-48988"
+          ],
+          "summary": "Apache Tomcat - DoS in multipart upload",
+          "details": "Allocation of Resources Without Limits or Throttling vulnerability in Apache Tomcat.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.7, from 10.1.0-M1 through 10.1.41, from 9.0.0.M1 through 9.0.105. The following versions were EOL at the time the CVE was created but are known to be af",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-770"
+          ]
+        },
+        {
+          "id": "GHSA-hgrr-935x-pq79",
+          "cves": [
+            "CVE-2025-61795"
+          ],
+          "summary": "Apache Tomcat Vulnerable to Improper Resource Shutdown or Release",
+          "details": "If an error occurred (including exceeding limits) during the processing of a multipart upload, temporary copies of the uploaded parts written to disc were not cleaned up immediately but left for the garbage collection process to delete. Depending on JVM settings, application memory usage and applica",
+          "severity": "LOW",
+          "cwe_ids": [
+            "CWE-404"
+          ]
+        },
+        {
+          "id": "GHSA-mgp5-rv84-w37q",
+          "cves": [
+            "CVE-2026-24734"
+          ],
+          "summary": "Apache Tomcat has an Improper Input Validation vulnerability",
+          "details": "Improper Input Validation vulnerability in Apache Tomcat Native, Apache Tomcat.\n\nWhen using an OCSP responder, Tomcat Native (and Tomcat's FFM port of the Tomcat Native code) did not complete verification or freshness checks on the OCSP response which could allow certificate revocation to be bypasse",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-20"
+          ]
+        },
+        {
+          "id": "GHSA-qq5r-98hh-rxc9",
+          "cves": [
+            "CVE-2026-24733"
+          ],
+          "summary": "Apache Tomcat - Security constraint bypass with HTTP/0.9",
+          "details": "Improper Input Validation vulnerability in Apache Tomcat.\n\nTomcat did not limit HTTP/0.9 requests to the GET method. If a security constraint was configured to allow HEAD requests to a URI but deny GET requests, the user could bypass that constraint on GET requests by sending a (specification invali",
+          "severity": "LOW",
+          "cwe_ids": [
+            "CWE-20"
+          ]
+        },
+        {
+          "id": "GHSA-qvf5-hvjx-wm27",
+          "cves": [
+            "CVE-2024-52317"
+          ],
+          "summary": "Apache Tomcat Request and/or response mix-up",
+          "details": "Incorrect object re-cycling and re-use vulnerability in Apache Tomcat. Incorrect recycling of the request and response used by HTTP/2 requests could lead to request and/or response mix-up between users.\n\nThis issue affects Apache Tomcat: from 11.0.0-M23 through 11.0.0-M26, from 10.1.27 through 10.1.",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-326"
+          ]
+        },
+        {
+          "id": "GHSA-rv64-5gf8-9qq8",
+          "cves": [
+            "CVE-2026-34483"
+          ],
+          "summary": "Apache Tomcat has an Improper Encoding or Escaping of Output vulnerability in the JsonAccessLogValve",
+          "details": "Improper Encoding or Escaping of Output vulnerability in the JsonAccessLogValve component of Apache Tomcat.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.20, from 10.1.0-M1 through 10.1.53, from 9.0.40 through 9.0.116.\n\nUsers are recommended to upgrade to version 11.0.21, 10.1.54 or",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-116"
+          ]
+        },
+        {
+          "id": "GHSA-vfww-5hm6-hx2j",
+          "cves": [
+            "CVE-2025-55754"
+          ],
+          "summary": "Apache Tomcat Vulnerable to Improper Neutralization of Escape, Meta, or Control Sequences",
+          "details": "Tomcat did not escape ANSI escape sequences in log messages. If Tomcat was running in a console on a Windows operating system, and the console supported ANSI escape sequences, it was possible for an attacker to use a specially crafted URL to inject ANSI escape sequences to manipulate the console and",
+          "severity": "LOW",
+          "cwe_ids": [
+            "CWE-150"
+          ]
+        },
+        {
+          "id": "GHSA-wc4r-xq3c-5cf3",
+          "cves": [
+            "CVE-2025-49125"
+          ],
+          "summary": "Apache Tomcat - Security constraint bypass for pre/post-resources",
+          "details": "Authentication Bypass Using an Alternate Path or Channel vulnerability in Apache Tomcat.  When using PreResources or PostResources mounted other than at the root of the web application, it was possible to access those resources via an unexpected path. That path was likely not to be protected by the ",
+          "severity": "MODERATE",
+          "cwe_ids": [
+            "CWE-288"
+          ]
+        },
+        {
+          "id": "GHSA-wmwf-9ccg-fff5",
+          "cves": [
+            "CVE-2025-55752"
+          ],
+          "summary": "Apache Tomcat Vulnerable to Relative Path Traversal",
+          "details": "The fix for bug 60013 introduced a regression where the rewritten URL was normalized before it was decoded. This introduced the possibility that, for rewrite rules that rewrite query parameters to the URL, an attacker could manipulate the request URI to bypass security constraints including the prot",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-23"
+          ]
+        },
+        {
+          "id": "GHSA-wr62-c79q-cv37",
+          "cves": [
+            "CVE-2025-52520"
+          ],
+          "summary": "Apache Tomcat Catalina is vulnerable to DoS attack through bypassing of size limits",
+          "details": "For some unlikely configurations of multipart upload, an Integer Overflow vulnerability in Apache Tomcat could lead to a DoS via bypassing of size limits.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.8, from 10.1.0-M1 through 10.1.42, from 9.0.0.M1 through 9.0.106. The following ve",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-190"
+          ]
+        },
+        {
+          "id": "GHSA-x4m4-345f-5h5g",
+          "cves": [
+            "CVE-2026-34487"
+          ],
+          "summary": "Apache Tomcat vulnerable to Insertion of Sensitive Information into Log File",
+          "details": "Insertion of Sensitive Information into Log File vulnerability in the cloud membership for clustering component of Apache Tomcat exposed the Kubernetes bearer token.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.20, from 10.1.0-M1 through 10.1.53, from 9.0.13 through 9.0.116.\n\nUsers",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-532"
+          ]
+        }
+      ]
     },
     {
       "group": "org.apache.tomcat.embed",
       "artifact": "tomcat-embed-jasper",
       "version": "10.1.28",
       "category": "Web-Container",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.tomcat",
       "artifact": "tomcat-jdbc",
       "version": "10.1.28",
       "category": "Web-Container",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.tomcat",
       "artifact": "tomcat-tribes",
       "version": "10.1.28",
       "category": "Web-Container",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.jdom",
       "artifact": "jdom",
       "version": "1.1.3",
       "category": "XML (JDOM)",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-2363-cqg2-863c",
+          "cves": [
+            "CVE-2021-33813"
+          ],
+          "summary": "XML External Entity (XXE) Injection in JDOM",
+          "details": "An XXE issue in SAXBuilder in JDOM through 2.0.6 allows attackers to cause a denial of service via a crafted HTTP request. As a workaround, to avoid external entities being expanded, one can call `builder.setExpandEntities(false)` and they won't be expanded.",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-611"
+          ]
+        }
+      ]
     },
     {
       "group": "org.jdom",
       "artifact": "jdom2",
       "version": "2.0.6.1",
       "category": "XML (JDOM)",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "xerces",
       "artifact": "xercesImpl",
       "version": "2.12.2",
       "category": "XML-Parser",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.thoughtworks.xstream",
       "artifact": "xstream",
       "version": "1.4.20",
       "category": "XML-Serialisierung",
-      "scope": "main"
+      "scope": "main",
+      "vulns": [
+        {
+          "id": "GHSA-hfq9-hggm-c56q",
+          "cves": [
+            "CVE-2024-47072"
+          ],
+          "summary": "XStream is vulnerable to a Denial of Service attack due to stack overflow from a manipulated binary input stream",
+          "details": "### Impact\nThe vulnerability may allow a remote attacker to terminate the application with a stack overflow error resulting in a denial of service only by manipulating the processed input stream when XStream is configured to use the BinaryStreamDriver.\n\n### Patches\nXStream 1.4.21 detects the manipul",
+          "severity": "HIGH",
+          "cwe_ids": [
+            "CWE-121",
+            "CWE-502"
+          ]
+        }
+      ]
     },
     {
       "group": "org.apache.xmlgraphics",
       "artifact": "batik-all",
       "version": "1.17",
       "category": "XSL-FO / SVG",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "org.apache.xmlgraphics",
       "artifact": "fop",
       "version": "2.10",
       "category": "XSL-FO / SVG",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "net.lingala.zip4j",
       "artifact": "zip4j",
       "version": "2.11.5",
       "category": "ZIP",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     },
     {
       "group": "com.googlecode.ez-vcard",
       "artifact": "ez-vcard",
       "version": "0.12.1",
       "category": "vCard",
-      "scope": "main"
+      "scope": "main",
+      "vulns": []
     }
   ]
 }
