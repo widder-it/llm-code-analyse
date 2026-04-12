@@ -1,6 +1,6 @@
 {
   "module": "accounting",
-  "overview": "Das `accounting`-Modul ist das zentrale Finanzbuchhaltungsmodul von Apache OFBiz. Es umfasst die gesamte Geschäftslogik für Rechnungsstellung, Zahlungsabwicklung, Hauptbuchhaltung, Steuern, Finanzkonten und Reporting. Besonders hervorzuheben ist die Unterstützung von acht externen Payment-Provider-Integrationen (authorizedotnet, clearcommerce, eway, gosoftware, paypal, sagepay, valuelink, worldpay), die über ein einheitliches Gateway-Framework angebunden sind.",
+  "overview": "Das `accounting`-Modul ist das zentrale Finanzbuchhaltungsmodul . Es umfasst die gesamte Geschäftslogik für Rechnungsstellung, Zahlungsabwicklung, Hauptbuchhaltung, Steuern, Finanzkonten und Reporting. Besonders hervorzuheben ist die Unterstützung von acht externen Payment-Provider-Integrationen (authorizedotnet, clearcommerce, eway, gosoftware, paypal, sagepay, valuelink, worldpay), die über ein einheitliches Gateway-Framework angebunden sind.",
   "submodules": [
     {
       "name": "org.apache.ofbiz.accounting",
@@ -155,7 +155,7 @@
       "name": "PaymentGatewayServices",
       "package": "org.apache.ofbiz.accounting.payment",
       "type": "Java-Klasse",
-      "description": "Zentrales Orchestrierungsmodul für alle Zahlungsgateway-Operationen. Implementiert den vollständigen Zahlungslebenszyklus (Autorisierung, Capture, Release, Rückerstattung, Gutschrift) und vermittelt zwischen der OFBiz-Bestelllogik und den konkreten Provider-Adaptern. Enthält außerdem Testprozessoren zur Entwicklungszeit-Simulation.",
+      "description": "Zentrales Orchestrierungsmodul für alle Zahlungsgateway-Operationen. Implementiert den vollständigen Zahlungslebenszyklus (Autorisierung, Capture, Release, Rückerstattung, Gutschrift) und vermittelt zwischen der Bestelllogik und den konkreten Provider-Adaptern. Enthält außerdem Testprozessoren zur Entwicklungszeit-Simulation.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -735,7 +735,7 @@
       "name": "FinAccountPaymentServices",
       "package": "org.apache.ofbiz.accounting.finaccount",
       "type": "Java-Klasse",
-      "description": "Payment-Gateway-Adapter für Finanzkonten. Ermöglicht Finanzkonten als vollwertige Zahlungsmethode im OFBiz-Gateway-Framework (Pre-Auth, Capture, Release, Refund, Einzahlung, Abhebung, Nachfüllung).",
+      "description": "Payment-Gateway-Adapter für Finanzkonten. Ermöglicht Finanzkonten als vollwertige Zahlungsmethode im Gateway-Framework (Pre-Auth, Capture, Release, Refund, Einzahlung, Abhebung, Nachfüllung).",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -1072,7 +1072,7 @@
         },
         {
           "name": "SagePayUtil.buildCardAuthorisationPaymentResponse(...)",
-          "description": "Erstellt die standardisierte OFBiz-Gateway-Antwort-Map aus den SagePay-Rohdaten"
+          "description": "Erstellt die standardisierte Gateway-Antwort-Map aus den SagePay-Rohdaten"
         }
       ],
       "section": "groovy"
@@ -1127,7 +1127,7 @@
         },
         {
           "name": "ValueLinkServices.giftCardProcessor(DispatchContext, Map)",
-          "description": "Payment-Gateway-Adapter: autorisiert Geschenkkartenzahlungen im OFBiz-Framework"
+          "description": "Payment-Gateway-Adapter: autorisiert Geschenkkartenzahlungen im Framework"
         },
         {
           "name": "ValueLinkServices.giftCardRefund(DispatchContext, Map)",

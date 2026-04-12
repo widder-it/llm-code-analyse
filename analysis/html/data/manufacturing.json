@@ -1,6 +1,6 @@
 {
   "module": "manufacturing",
-  "overview": "Das `manufacturing`-Modul implementiert die gesamte Fertigungslogik in Apache OFBiz: von der Stücklisten-Verwaltung (Bill of Materials) über die Materialbedarfsplanung (MRP) bis zur Steuerung von Fertigungsaufträgen (Production Runs). Es bildet den Kern für produzierende Unternehmen und verzahnt Lagerbestände, Verkaufsbedarfe, Einkaufsbestellungen und Produktionskapazitäten zu einem integrierten Planungssystem.",
+  "overview": "Das `manufacturing`-Modul implementiert die gesamte Fertigungslogik : von der Stücklisten-Verwaltung (Bill of Materials) über die Materialbedarfsplanung (MRP) bis zur Steuerung von Fertigungsaufträgen (Production Runs). Es bildet den Kern für produzierende Unternehmen und verzahnt Lagerbestände, Verkaufsbedarfe, Einkaufsbestellungen und Produktionskapazitäten zu einem integrierten Planungssystem.",
   "submodules": [
     {
       "name": "org.apache.ofbiz.manufacturing.bom",
@@ -123,7 +123,7 @@
       "name": "BOMServices",
       "package": "org.apache.ofbiz.manufacturing.bom",
       "type": "Java-Klasse",
-      "description": "Service-Fassade für alle stücklistenbezogenen Operationen. Stellt OFBiz-Services bereit, die über den Service-Dispatcher aufgerufen werden und intern `BOMTree` und `BOMNode` nutzen.",
+      "description": "Service-Fassade für alle stücklistenbezogenen Operationen. Stellt Services bereit, die über den Service-Dispatcher aufgerufen werden und intern `BOMTree` und `BOMNode` nutzen.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -246,7 +246,7 @@
       "name": "ProductionRunServices",
       "package": "org.apache.ofbiz.manufacturing.jobshopmgt",
       "type": "Java-Klasse",
-      "description": "Zentrale Service-Klasse für die gesamte Lebenszyklusverwaltung von Fertigungsaufträgen. Implementiert alle CRUD-Operationen, Statusübergänge, Komponentenverwaltung und Kostenbuchungen als OFBiz-Services.",
+      "description": "Zentrale Service-Klasse für die gesamte Lebenszyklusverwaltung von Fertigungsaufträgen. Implementiert alle CRUD-Operationen, Statusübergänge, Komponentenverwaltung und Kostenbuchungen als Services.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -462,7 +462,7 @@
       "methods": [
         {
           "signature": "createMrpEvent(ctx, context)",
-          "description": "OFBiz-Service-Wrapper für die Upsert-Operation"
+          "description": "Service-Wrapper für die Upsert-Operation"
         },
         {
           "signature": "createOrUpdateMrpEvent(mrpEventKeyMap, newQuantity, facilityId, eventName, isLate, delegator)",

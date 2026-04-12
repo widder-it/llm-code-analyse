@@ -1,6 +1,6 @@
 {
   "module": "content",
-  "overview": "Das `content`-Modul ist das zentrale Content-Management-Framework von Apache OFBiz. Es verwaltet strukturierte Inhaltsobjekte (`Content`, `DataResource`) mit Assoziationen, Zugriffskontrolle, Lokalisierung und Rendering. Neben der Kernfunktionalität enthält das Modul spezialisierte Submodule für FTP/SFTP-Dateitransfer, Umfragen (Survey) mit PDF-Integration, Blog-RSS-Feeds, CMS-Verwaltung und FreeMarker-Template-Transformationen.",
+  "overview": "Das `content`-Modul ist das zentrale Content-Management-Framework . Es verwaltet strukturierte Inhaltsobjekte (`Content`, `DataResource`) mit Assoziationen, Zugriffskontrolle, Lokalisierung und Rendering. Neben der Kernfunktionalität enthält das Modul spezialisierte Submodule für FTP/SFTP-Dateitransfer, Umfragen (Survey) mit PDF-Integration, Blog-RSS-Feeds, CMS-Verwaltung und FreeMarker-Template-Transformationen.",
   "submodules": [
     {
       "name": "org.apache.ofbiz.content",
@@ -188,7 +188,7 @@
       "name": "ContentServices",
       "package": "org.apache.ofbiz.content.content",
       "type": "Java-Klasse (Service-Engine-Dispatcher)",
-      "description": "Stellt OFBiz-Service-Endpunkte für Content-Operationen bereit — von der Beziehungsverwaltung und Traversierung über Publishing bis zu Utility-Diensten für String-Manipulation.",
+      "description": "Stellt Service-Endpunkte für Content-Operationen bereit — von der Beziehungsverwaltung und Traversierung über Publishing bis zu Utility-Diensten für String-Manipulation.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -587,7 +587,7 @@
       "name": "FtpServices",
       "package": "org.apache.ofbiz.content.ftp",
       "type": "Java-Klasse (Service-Engine-Dispatcher)",
-      "description": "OFBiz-Service zum Versenden von Content-Daten via FTP oder SFTP an eine über `FtpAddress`-ContactMech konfigurierte Gegenstelle. Unterstützt optionale ZIP-Komprimierung, konfigurierbares Umleitungs-Ziel und optionale Transfer-Verifikation.",
+      "description": "Service zum Versenden von Content-Daten via FTP oder SFTP an eine über `FtpAddress`-ContactMech konfigurierte Gegenstelle. Unterstützt optionale ZIP-Komprimierung, konfigurierbares Umleitungs-Ziel und optionale Transfer-Verifikation.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -602,7 +602,7 @@
       "name": "SurveyWrapper",
       "package": "org.apache.ofbiz.content.survey",
       "type": "Java-Klasse",
-      "description": "Kapselt die Darstellung und Auswertung von OFBiz-Umfragen (`Survey`). Rendert Fragebögen via FreeMarker-Templates, lädt Antworten und berechnet Ergebnis-Statistiken (Boolean, Zahlen, Text, Optionslisten).",
+      "description": "Kapselt die Darstellung und Auswertung von Umfragen (`Survey`). Rendert Fragebögen via FreeMarker-Templates, lädt Antworten und berechnet Ergebnis-Statistiken (Boolean, Zahlen, Text, Optionslisten).",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -657,7 +657,7 @@
       "name": "PdfSurveyServices",
       "package": "org.apache.ofbiz.content.survey",
       "type": "Java-Klasse (Service-Engine-Dispatcher)",
-      "description": "Ermöglicht den Import von PDF-AcroForms als OFBiz-Umfragen und den Export von Umfrage-Antworten zurück in PDF-Formulare. Nutzt die iText/LoWaGie PDF-Bibliothek.",
+      "description": "Ermöglicht den Import von PDF-AcroForms als Umfragen und den Export von Umfrage-Antworten zurück in PDF-Formulare. Nutzt die iText/LoWaGie PDF-Bibliothek.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -691,7 +691,7 @@
       "name": "BlogRssServices",
       "package": "org.apache.ofbiz.content.blog",
       "type": "Java-Klasse (Service-Engine-Dispatcher)",
-      "description": "Generiert RSS-Feeds für OFBiz-Blogs. Sammelt veröffentlichte Blog-Artikel (PUBLISH_LINK-Assoziationen mit Status CTNT_PUBLISHED), rendert deren Summary-Sub-Content und baut einen ROME-SyndFeed auf.",
+      "description": "Generiert RSS-Feeds für Blogs. Sammelt veröffentlichte Blog-Artikel (PUBLISH_LINK-Assoziationen mit Status CTNT_PUBLISHED), rendert deren Summary-Sub-Content und baut einen ROME-SyndFeed auf.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -851,7 +851,7 @@
       "name": "OutputServices",
       "package": "org.apache.ofbiz.content.output",
       "type": "Java-Klasse (Service-Engine-Dispatcher)",
-      "description": "Rendert OFBiz-Screens via Apache FOP zu PDF oder XSL-FO und sendet das Ergebnis an einen Drucker oder speichert es als Datei. Integriert sich in das Widget-Framework für Screen-Rendering.",
+      "description": "Rendert Screens via Apache FOP zu PDF oder XSL-FO und sendet das Ergebnis an einen Drucker oder speichert es als Datei. Integriert sich in das Widget-Framework für Screen-Rendering.",
       "section": "java",
       "is_group": false,
       "methods": [

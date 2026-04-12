@@ -1,6 +1,6 @@
 {
   "module": "order",
-  "overview": "Das Modul `order` ist der Kern des Bestellwesens in Apache OFBiz und deckt den vollständigen Order-to-Cash-Prozess ab. Es umfasst die Verwaltung des Warenkorbs, die Auftragserfassung und -verarbeitung (für Verkaufs- und Einkaufsbestellungen), das Retourenmanagement, die Angebotserstellung, Einkaufsanforderungen und Einkaufslisten. Das Modul stellt sowohl die Geschäftslogik (Java-Services) als auch UI-Skripte (Groovy) für alle order-bezogenen Screens bereit.",
+  "overview": "Das Modul `order` ist der Kern des Bestellwesens  und deckt den vollständigen Order-to-Cash-Prozess ab. Es umfasst die Verwaltung des Warenkorbs, die Auftragserfassung und -verarbeitung (für Verkaufs- und Einkaufsbestellungen), das Retourenmanagement, die Angebotserstellung, Einkaufsanforderungen und Einkaufslisten. Das Modul stellt sowohl die Geschäftslogik (Java-Services) als auch UI-Skripte (Groovy) für alle order-bezogenen Screens bereit.",
   "submodules": [
     {
       "name": "org.apache.ofbiz.order.shoppingcart",
@@ -511,7 +511,7 @@
       "name": "ShoppingCartServices",
       "package": "org.apache.ofbiz.order.shoppingcart",
       "type": "Java-Klasse (Service-Implementierungen)",
-      "description": "OFBiz-Services rund um den Warenkorb: Positionen zwischen Versandgruppen verschieben, Warenkorb aus einer bestehenden Bestellung wiederherstellen und Warenkorb-Zustände persistieren.",
+      "description": "Services rund um den Warenkorb: Positionen zwischen Versandgruppen verschieben, Warenkorb aus einer bestehenden Bestellung wiederherstellen und Warenkorb-Zustände persistieren.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -956,7 +956,7 @@
       "name": "OrderContentWrapper",
       "package": "org.apache.ofbiz.order.order",
       "type": "Java-Klasse (implementiert ContentWrapper)",
-      "description": "Stellt lokalisierte Content-Inhalte (z.B. Beschreibungen) für Auftragsobjekte bereit, integriert in das OFBiz-Content-Framework.",
+      "description": "Stellt lokalisierte Content-Inhalte (z.B. Beschreibungen) für Auftragsobjekte bereit, integriert in das Content-Framework.",
       "section": "java",
       "is_group": false,
       "methods": []
@@ -1098,7 +1098,7 @@
       "name": "ExpressCheckoutEvents",
       "package": "org.apache.ofbiz.order.thirdparty.paypal",
       "type": "Java-Klasse (Event-Handler)",
-      "description": "Integration des PayPal-ExpressCheckout-Verfahrens: Weiterleitung zu PayPal, Rückverarbeitung nach PayPal-Bestätigung, Fehlerbehandlung und Konvertierung der PayPal-Antwortdaten in OFBiz-Zahlungseinträge.",
+      "description": "Integration des PayPal-ExpressCheckout-Verfahrens: Weiterleitung zu PayPal, Rückverarbeitung nach PayPal-Bestätigung, Fehlerbehandlung und Konvertierung der PayPal-Antwortdaten in Zahlungseinträge.",
       "section": "java",
       "is_group": false,
       "methods": []

@@ -1,6 +1,6 @@
 {
   "module": "product",
-  "overview": "Das Modul `product` ist das zentrale Produktmanagement-Modul von Apache OFBiz. Es deckt die vollständige Lebenszyklus-Verwaltung von Produkten ab: von der Produktstammdaten-Pflege über Kategorie- und Kataloghierarchien, Preisfindung, Lagerhaltung und Lieferung bis hin zu Aktionen, Abonnements und Bilddatei-Verwaltung. Das Modul bildet die fachliche Domäne eines klassischen B2B/B2C-Produktkatalogs ab und stellt sowohl Service-APIs als auch HTTP-Servlet- und FreeMarker-Integrationspunkte bereit.",
+  "overview": "Das Modul `product` ist das zentrale Produktmanagement-Modul . Es deckt die vollständige Lebenszyklus-Verwaltung von Produkten ab: von der Produktstammdaten-Pflege über Kategorie- und Kataloghierarchien, Preisfindung, Lagerhaltung und Lieferung bis hin zu Aktionen, Abonnements und Bilddatei-Verwaltung. Das Modul bildet die fachliche Domäne eines klassischen B2B/B2C-Produktkatalogs ab und stellt sowohl Service-APIs als auch HTTP-Servlet- und FreeMarker-Integrationspunkte bereit.",
   "submodules": [
     {
       "name": "org.apache.ofbiz.product.product",
@@ -76,7 +76,7 @@
     },
     {
       "name": "org.apache.ofbiz.product.*.test",
-      "description": "Automatisierte Integrationstests (OFBizTestCase-Subklassen)"
+      "description": "Automatisierte Integrationstests (TestCase-Subklassen)"
     }
   ],
   "classes": [
@@ -219,8 +219,8 @@
       "id": "ProductServices",
       "name": "ProductServices",
       "package": "org.apache.ofbiz.product.product",
-      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
-      "description": "Service-Methoden für Produktvarianten, Merkmalbaum-Aufbau und Bildverwaltung. Wird als OFBiz-Service-Implementierung registriert.",
+      "type": "Java-Klasse (Service-Implementierung)",
+      "description": "Service-Methoden für Produktvarianten, Merkmalbaum-Aufbau und Bildverwaltung. Wird als Service-Implementierung registriert.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -640,7 +640,7 @@
       "id": "CategoryServices",
       "name": "CategoryServices",
       "package": "org.apache.ofbiz.product.category",
-      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "type": "Java-Klasse (Service-Implementierung)",
       "description": "Service-Methoden für Kategorie-Navigation und -Pflege, insbesondere für die Vor-/Zurück-Navigation innerhalb einer Kategorie.",
       "section": "java",
       "is_group": false,
@@ -664,7 +664,7 @@
       "name": "CatalogUrlFilter",
       "package": "org.apache.ofbiz.product.category",
       "type": "Servlet / Servlet-Filter",
-      "description": "URL-Routing-Infrastruktur für SEO-freundliche Katalog- und Kategorie-URLs. Die Filter rewrite eingehende SEO-URLs auf interne OFBiz-Pfade; die Servlets bedienen direkte Katalog-Requests. `CategoryControlServlet` erweitert den OFBiz-Standard-ControlServlet für Kategorie-Kontext.",
+      "description": "URL-Routing-Infrastruktur für SEO-freundliche Katalog- und Kategorie-URLs. Die Filter rewrite eingehende SEO-URLs auf interne Pfade; die Servlets bedienen direkte Katalog-Requests. `CategoryControlServlet` erweitert den Standard-ControlServlet für Kategorie-Kontext.",
       "section": "java",
       "is_group": false,
       "methods": []
@@ -804,7 +804,7 @@
       "id": "ProductFeatureServices",
       "name": "ProductFeatureServices",
       "package": "org.apache.ofbiz.product.feature",
-      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "type": "Java-Klasse (Service-Implementierung)",
       "description": "Service-Methoden zum Abfragen und Verwalten von Produktmerkmalen und Merkmaltypen.",
       "section": "java",
       "is_group": false,
@@ -887,7 +887,7 @@
       "id": "InventoryServices",
       "name": "InventoryServices",
       "package": "org.apache.ofbiz.product.inventory",
-      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "type": "Java-Klasse (Service-Implementierung)",
       "description": "Kernservices für Lagerbestandsverwaltung: Umbuchungen, Reservierungen und Bestandsabfragen.",
       "section": "java",
       "is_group": false,
@@ -944,7 +944,7 @@
       "id": "PriceServices",
       "name": "PriceServices",
       "package": "org.apache.ofbiz.product.price",
-      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "type": "Java-Klasse (Service-Implementierung)",
       "description": "Berechnet den aktuellen Produktpreis unter Berücksichtigung von Preisregeln, Mengenstaffeln, Vereinbarungspreisen, Kundengruppen und Steuern.",
       "section": "java",
       "is_group": false,
@@ -971,7 +971,7 @@
       "id": "PromoServices",
       "name": "PromoServices",
       "package": "org.apache.ofbiz.product.promo",
-      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "type": "Java-Klasse (Service-Implementierung)",
       "description": "Verwaltung von Aktionscodes: Massengenerierung, Import aus Dateien und Bereinigung abgelaufener Shop-Aktionen.",
       "section": "java",
       "is_group": false,
@@ -998,7 +998,7 @@
       "id": "SubscriptionServices",
       "name": "SubscriptionServices",
       "package": "org.apache.ofbiz.product.subscription",
-      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "type": "Java-Klasse (Service-Implementierung)",
       "description": "Verwaltung von Produktabonnements: Laufzeitverlängerung und Ablaufprüfung.",
       "section": "java",
       "is_group": false,
@@ -1021,7 +1021,7 @@
       "id": "SupplierProductServices",
       "name": "SupplierProductServices",
       "package": "org.apache.ofbiz.product.supplier",
-      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
+      "type": "Java-Klasse (Service-Implementierung)",
       "description": "Abfrage von Lieferanten-Produkt-Kombinationen mit Preis- und Staffelangaben.",
       "section": "java",
       "is_group": false,
@@ -1110,8 +1110,8 @@
       "id": "MigrationServices",
       "name": "MigrationServices",
       "package": "org.apache.ofbiz.product.migrate",
-      "type": "Java-Klasse (OFBiz-Service-Implementierung)",
-      "description": "Datenbankmigrationen zwischen OFBiz-Versionen (z.B. Umschlüsselung von Entitäten).",
+      "type": "Java-Klasse (Service-Implementierung)",
+      "description": "Datenbankmigrationen zwischen Versionen (z.B. Umschlüsselung von Entitäten).",
       "section": "java",
       "is_group": false,
       "methods": []

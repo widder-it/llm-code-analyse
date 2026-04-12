@@ -1,6 +1,6 @@
 {
   "module": "shipment",
-  "overview": "Das Modul `shipment` steuert den gesamten Versandprozess in Apache OFBiz — von der Erstellung und Kostenschätzung von Sendungen über das interaktive Verpacken und Gewichtserfassen bis hin zur Kommunikation mit Carrier-APIs (UPS, FedEx, DHL, USPS). Es bildet die Brücke zwischen Auftragsabwicklung und physischem Warenausgang und enthält sowohl sessionbasierte Zustandsmodelle für den Lagerarbeitsplatz als auch externe Webservice-Integrationen.",
+  "overview": "Das Modul `shipment` steuert den gesamten Versandprozess  — von der Erstellung und Kostenschätzung von Sendungen über das interaktive Verpacken und Gewichtserfassen bis hin zur Kommunikation mit Carrier-APIs (UPS, FedEx, DHL, USPS). Es bildet die Brücke zwischen Auftragsabwicklung und physischem Warenausgang und enthält sowohl sessionbasierte Zustandsmodelle für den Lagerarbeitsplatz als auch externe Webservice-Integrationen.",
   "submodules": [
     {
       "name": "org.apache.ofbiz.shipment.shipment",
@@ -49,7 +49,7 @@
       "name": "ShipmentServices",
       "package": "org.apache.ofbiz.shipment.shipment",
       "type": "Java-Klasse",
-      "description": "Stellt OFBiz-Services für Versandkostenschätzung, ODBC-Staging-Tabellen und ergänzende Versandfunktionen bereit. Kernklasse für alle nicht-carrier-spezifischen Operationen auf der Sendungsebene.",
+      "description": "Stellt Services für Versandkostenschätzung, ODBC-Staging-Tabellen und ergänzende Versandfunktionen bereit. Kernklasse für alle nicht-carrier-spezifischen Operationen auf der Sendungsebene.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -154,7 +154,7 @@
       "name": "PackingSession",
       "package": "org.apache.ofbiz.shipment.packing",
       "type": "Java-Klasse (serialisierbar, session-scoped)",
-      "description": "Modelliert eine interaktive Packsitzung für eine oder mehrere Bestellungen. Verwaltet den Zustand aller gepackten Zeilen und Pakete im Arbeitsspeicher und orchestriert beim Abschluss die vollständige Erstellung von Sendung, Paketen, Bestandsausgaben und Statusübergängen in OFBiz. Dies ist die zentrale Zustandsklasse des gesamten Packprozesses.",
+      "description": "Modelliert eine interaktive Packsitzung für eine oder mehrere Bestellungen. Verwaltet den Zustand aller gepackten Zeilen und Pakete im Arbeitsspeicher und orchestriert beim Abschluss die vollständige Erstellung von Sendung, Paketen, Bestandsausgaben und Statusübergängen in. Dies ist die zentrale Zustandsklasse des gesamten Packprozesses.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -244,7 +244,7 @@
       "name": "PackingServices",
       "package": "org.apache.ofbiz.shipment.packing",
       "type": "Java-Klasse",
-      "description": "OFBiz-Service-Fassade für die `PackingSession`. Stellt Einstiegspunkte für Controller und andere Services bereit, die auf der Sitzung operieren.",
+      "description": "Service-Fassade für die `PackingSession`. Stellt Einstiegspunkte für Controller und andere Services bereit, die auf der Sitzung operieren.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -369,7 +369,7 @@
       "name": "WeightPackageServices",
       "package": "org.apache.ofbiz.shipment.weightPackage",
       "type": "Java-Klasse",
-      "description": "OFBiz-Service-Fassade für `WeightPackageSession`.",
+      "description": "Service-Fassade für `WeightPackageSession`.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -395,7 +395,7 @@
         },
         {
           "signature": "savePackagesInfo(dctx, context)",
-          "description": "Legt die Pakete in OFBiz an und löst ggf. UPS-Bestätigung aus, ohne den Sendungsstatus zu setzen."
+          "description": "Legt die Pakete in an und löst ggf. UPS-Bestätigung aus, ohne den Sendungsstatus zu setzen."
         }
       ]
     },
@@ -458,7 +458,7 @@
       "name": "VerifyPickServices",
       "package": "org.apache.ofbiz.shipment.verify",
       "type": "Java-Klasse",
-      "description": "OFBiz-Service-Fassade für `VerifyPickSession`.",
+      "description": "Service-Fassade für `VerifyPickSession`.",
       "section": "java",
       "is_group": false,
       "methods": [

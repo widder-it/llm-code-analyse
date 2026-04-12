@@ -1,6 +1,6 @@
 {
   "module": "marketing",
-  "overview": "Das `marketing`-Modul implementiert Kampagnen- und Kontaktlistenverwaltung, Kampagnenauswertung sowie Vertriebsunterstützung (Sales Force Automation) in Apache OFBiz. Es umfasst die Newsletter-Anmeldung und -Abmeldung, das Tracking von Website-Besuchern und Bestellungen über Tracking-Codes sowie SFA-Funktionen zur Lead-Verwaltung, Konvertierung von Leads zu Kontakten und zum Zusammenführen von Kontaktdatensätzen. Ergänzende Groovy-Scripts liefern Berichtsdaten zu E-Mail-Kommunikation, Kampagnenleistung und Tracking-Code-Konversionen.",
+  "overview": "Das `marketing`-Modul implementiert Kampagnen- und Kontaktlistenverwaltung, Kampagnenauswertung sowie Vertriebsunterstützung (Sales Force Automation) . Es umfasst die Newsletter-Anmeldung und -Abmeldung, das Tracking von Website-Besuchern und Bestellungen über Tracking-Codes sowie SFA-Funktionen zur Lead-Verwaltung, Konvertierung von Leads zu Kontakten und zum Zusammenführen von Kontaktdatensätzen. Ergänzende Groovy-Scripts liefern Berichtsdaten zu E-Mail-Kommunikation, Kampagnenleistung und Tracking-Code-Konversionen.",
   "submodules": [
     {
       "name": "org.apache.ofbiz.marketing.marketing",
@@ -45,7 +45,7 @@
       "name": "MarketingServices",
       "package": "org.apache.ofbiz.marketing.marketing",
       "type": "Java-Klasse (Service)",
-      "description": "Stellt OFBiz-Services für die Verwaltung von Kontaktlisten-Mitgliedschaften bereit. Implementiert die Newsletter-Anmeldung mit E-Mail-Validierung, Duplikatsprüfung und Status-Steuerung sowie das gezielte Löschen ausstehender Anmeldeanforderungen.",
+      "description": "Stellt Services für die Verwaltung von Kontaktlisten-Mitgliedschaften bereit. Implementiert die Newsletter-Anmeldung mit E-Mail-Validierung, Duplikatsprüfung und Status-Steuerung sowie das gezielte Löschen ausstehender Anmeldeanforderungen.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -79,7 +79,7 @@
       "name": "TrackingCodeEvents",
       "package": "org.apache.ofbiz.marketing.tracking",
       "type": "Java-Klasse (Event-Handler)",
-      "description": "HTTP-Event-Handler für die gesamte Tracking-Code-Verarbeitung in OFBiz. Erfasst Tracking-Codes aus URL-Parametern und Cookies, schreibt Besuchszuordnungen (`TrackingCodeVisit`), setzt nachverfolgbare und abrechenbare Cookies mit konfigurierbarer Lebensdauer, verwaltet Partner-Tracking-Codes durch automatische Anlage fehlender Einträge anhand von Standardwerten und steuert den Zugriff über zugriffsbeschränkte Tracking-Codes.",
+      "description": "HTTP-Event-Handler für die gesamte Tracking-Code-Verarbeitung in. Erfasst Tracking-Codes aus URL-Parametern und Cookies, schreibt Besuchszuordnungen (`TrackingCodeVisit`), setzt nachverfolgbare und abrechenbare Cookies mit konfigurierbarer Lebensdauer, verwaltet Partner-Tracking-Codes durch automatische Anlage fehlender Einträge anhand von Standardwerten und steuert den Zugriff über zugriffsbeschränkte Tracking-Codes.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -159,7 +159,7 @@
       "id": "Groovy-Scripts-Tests-test",
       "name": "Groovy-Scripts: Tests (`test`)",
       "package": "org.apache.ofbiz.marketing.marketing.test",
-      "type": "Groovy-Script (Integrationstest, erweitert OFBizTestCase)",
+      "type": "Groovy-Script (Integrationstest, erweitertTestCase)",
       "description": "| Script | Fachliche Funktion |",
       "is_group": true,
       "members": [

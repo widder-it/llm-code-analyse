@@ -8,7 +8,7 @@
   "tech_foundation": [
     {
       "Eigenschaft": "Framework",
-      "Wert": "Apache OFBiz (erkennbar an Paketstruktur org.apache.ofbiz.*)"
+      "Wert": "(erkennbar an Paketstruktur org.apache.ofbiz.*)"
     },
     {
       "Eigenschaft": "Java-Version (Kompilat)",
@@ -76,7 +76,7 @@
       "Klassen": "125",
       "Public Methoden": "520",
       "Typ": "Script-Engine",
-      "Beschreibung": "Interpreter für proprietäre XML-DSL (MiniLang); seit OFBiz 18.12 deprecated"
+      "Beschreibung": "Interpreter für proprietäre XML-DSL (MiniLang); seit 18.12 deprecated"
     },
     {
       "Modul": "accounting",
@@ -181,7 +181,7 @@
       "Klassen": "7",
       "Public Methoden": "31",
       "Typ": "Test-Infrastruktur",
-      "Beschreibung": "Basis-Testklassen für OFBiz-Services und Groovy-basierte Integrationstests"
+      "Beschreibung": "Basis-Testklassen für Services und Groovy-basierte Integrationstests"
     },
     {
       "Modul": "catalina",
@@ -195,7 +195,7 @@
       "Klassen": "7",
       "Public Methoden": "36",
       "Typ": "Querschnitt",
-      "Beschreibung": "System-Info-Services, Setup-Assistent für neue OFBiz-Instanzen"
+      "Beschreibung": "System-Info-Services, Setup-Assistent für neue Instanzen"
     },
     {
       "Modul": "securityext",
@@ -219,7 +219,7 @@
       "Beschreibung": "Sales Force Automation: Kontakt-Export via vCard (ezvcard)"
     }
   ],
-  "language_split": "Von den 2.932 Class-Files stammen:\n- **~70 % (≈2.050)** aus Java-Quellcode — sauber dekompilierbar\n- **~30 % (≈880)** aus Groovy-Skripten — als `.class` vorhanden, Quellcode nicht rekonstruierbar\n\nDie Groovy-Klassen sind Groovy-Skripte des OFBiz-Service-Frameworks (Business-Logik als Groovy-Scripts konfiguriert), erkennbar an `extends groovy.lang.Script` und Closure-Klassen (`$_run_closure`).\n\n---",
+  "language_split": "Von den 2.932 Class-Files stammen:\n- **~70 % (≈2.050)** aus Java-Quellcode — sauber dekompilierbar\n- **~30 % (≈880)** aus Groovy-Skripten — als `.class` vorhanden, Quellcode nicht rekonstruierbar\n\nDie Groovy-Klassen sind Groovy-Skripte des Service-Frameworks (Business-Logik als Groovy-Scripts konfiguriert), erkennbar an `extends groovy.lang.Script` und Closure-Klassen (`$_run_closure`).\n\n---",
   "dependency_cycles": [
     {
       "cycle": "order ↔ accounting",
@@ -676,7 +676,7 @@
     {
       "Muster": "Service-Layer",
       "Fundstelle": "*Services.java, service-Modul",
-      "Bewertung": "OFBiz Service-Engine (120+ Service-Klassen)"
+      "Bewertung": "Service-Engine (120+ Service-Klassen)"
     },
     {
       "Muster": "Repository/DAO",
@@ -686,7 +686,7 @@
     {
       "Muster": "MVC",
       "Fundstelle": "webapp, widget, Controller-Klassen",
-      "Bewertung": "OFBiz Widget-Framework"
+      "Bewertung": "Widget-Framework"
     },
     {
       "Muster": "Script-Engine",
@@ -711,7 +711,7 @@
     {
       "Muster": "Job Scheduler",
       "Fundstelle": "PersistedServiceJob, JobManager, JobPoller in service",
-      "Bewertung": "Interner OFBiz-eigener Scheduler (kein Quartz/Spring Batch)"
+      "Bewertung": "Interner eigener Scheduler (kein Quartz/Spring Batch)"
     },
     {
       "Muster": "Plugin/Gateway",
@@ -784,7 +784,7 @@
       "value": "— weit verbreitet im System"
     },
     {
-      "key": "Seit OFBiz 18.12 offiziell als Deprecated markiert",
+      "key": "Seit 18.12 offiziell als Deprecated markiert",
       "value": "— vorliegender Code nutzt es noch aktiv"
     },
     {
@@ -1179,7 +1179,7 @@
       "version": "1.6.2",
       "category": "E-Mail",
       "scope": "main",
-      "description": "Jakarta Mail 1.x (javax.*-Namespace, Legacy): wird für ältere OFBiz-Komponenten benötigt.",
+      "description": "Jakarta Mail 1.x (javax.*-Namespace, Legacy): wird für ältere Komponenten benötigt.",
       "vulns": []
     },
     {
@@ -1354,7 +1354,7 @@
       "version": "3.2.19",
       "category": "Kalender (iCal)",
       "scope": "main",
-      "description": "Parsing und Erzeugung von iCalendar-Daten (RFC 5545); Basis für OFBiz-Kalender.",
+      "description": "Parsing und Erzeugung von iCalendar-Daten (RFC 5545); Basis für Kalender.",
       "vulns": []
     },
     {
@@ -1495,7 +1495,7 @@
       "version": "1.12.0",
       "category": "Scripting",
       "scope": "main",
-      "description": "Funktionale Lisp-Dialekt-Sprache auf der JVM; wird für einzelne OFBiz-Komponenten genutzt.",
+      "description": "Funktionale Lisp-Dialekt-Sprache auf der JVM; wird für einzelne Komponenten genutzt.",
       "vulns": []
     },
     {
@@ -1504,7 +1504,7 @@
       "version": "4.0.21",
       "category": "Scripting",
       "scope": "main",
-      "description": "Dynamische JVM-Skriptsprache; wird für OFBiz-Groovy-Scripts (Service-Layer, Views) benötigt.",
+      "description": "Dynamische JVM-Skriptsprache; wird für Groovy-Scripts (Service-Layer, Views) benötigt.",
       "vulns": []
     },
     {
@@ -1584,7 +1584,7 @@
       "version": "2.3.33",
       "category": "Template-Engine",
       "scope": "main",
-      "description": "Template-Engine für HTML, XML und Textgenerierung; zentral für OFBiz-Views.",
+      "description": "Template-Engine für HTML, XML und Textgenerierung; zentral für Views.",
       "vulns": []
     },
     {
@@ -1593,7 +1593,7 @@
       "version": "1.10.14",
       "category": "Test",
       "scope": "main",
-      "description": "Apache Ant: Build-Tool; wird für Test-Support-Klassen in OFBiz verwendet.",
+      "description": "Apache Ant: Build-Tool; wird für Test-Support-Klassen in verwendet.",
       "vulns": []
     },
     {
@@ -2076,7 +2076,7 @@
       "version": "1.1.3",
       "category": "XML (JDOM)",
       "scope": "main",
-      "description": "JDOM 1 (Legacy): ältere Java-XML-API, noch von einzelnen OFBiz-Komponenten verwendet.",
+      "description": "JDOM 1 (Legacy): ältere Java-XML-API, noch von einzelnen Komponenten verwendet.",
       "vulns": [
         {
           "id": "GHSA-2363-cqg2-863c",

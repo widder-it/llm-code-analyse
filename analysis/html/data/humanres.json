@@ -1,6 +1,6 @@
 {
   "module": "humanres",
-  "overview": "Das Modul **humanres** (Human Resources) verwaltet Organisationsstrukturen, Stellen und Mitarbeiterzuordnungen im OFBiz-HR-Bereich. Es stellt Event-Handler für die UI-seitige Darstellung von Organigrammen bereit und nutzt dabei die OFBiz-Entitäten `EmplPosition`, `EmplPositionFulfillment` und `PartyRelationship`.",
+  "overview": "Das Modul **humanres** (Human Resources) verwaltet Organisationsstrukturen, Stellen und Mitarbeiterzuordnungen im HR-Bereich. Es stellt Event-Handler für die UI-seitige Darstellung von Organigrammen bereit und nutzt dabei die Entitäten `EmplPosition`, `EmplPositionFulfillment` und `PartyRelationship`.",
   "submodules": [
     {
       "name": "org.apache.ofbiz.humanres",

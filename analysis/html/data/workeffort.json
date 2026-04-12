@@ -1,6 +1,6 @@
 {
   "module": "workeffort",
-  "overview": "Das `workeffort`-Modul implementiert die zentrale Arbeitsaufgaben-Verwaltung in Apache OFBiz: von Terminen, Aufgaben und Aktivitäten über iCalendar-basierte Kalenderintegration bis zur Volltextsuche. Es bildet die gemeinsame Grundlage für Projektarbeit, Produktionsaufträge und Workflow-Aktivitäten und verknüpft Personen, Betriebsmittel, Inhalte und Zeitausdrücke in einem einheitlichen Domänenmodell.",
+  "overview": "Das `workeffort`-Modul implementiert die zentrale Arbeitsaufgaben-Verwaltung : von Terminen, Aufgaben und Aktivitäten über iCalendar-basierte Kalenderintegration bis zur Volltextsuche. Es bildet die gemeinsame Grundlage für Projektarbeit, Produktionsaufträge und Workflow-Aktivitäten und verknüpft Personen, Betriebsmittel, Inhalte und Zeitausdrücke in einem einheitlichen Domänenmodell.",
   "submodules": [
     {
       "name": "org.apache.ofbiz.workeffort.workeffort",
@@ -84,7 +84,7 @@
       "name": "ICalConverter",
       "package": "org.apache.ofbiz.workeffort.workeffort",
       "type": "Java-Klasse (Konverter)",
-      "description": "Kernkomponente der iCalendar-Integration. Wandelt `WorkEffort`-Entitäten (Typ `EVENT` und `TASK`) in iCalendar-Komponenten (`VEVENT` / `VTODO`) um und liest importierte iCalendar-Daten zurück in die Datenbank. Bildet OFBiz-Statuswerte, Sichtbarkeitsklassen, Teilnehmerstatus und wiederkehrende Ausdrücke (`TemporalExpression`) auf die entsprechenden iCal4j-Eigenschaften ab.",
+      "description": "Kernkomponente der iCalendar-Integration. Wandelt `WorkEffort`-Entitäten (Typ `EVENT` und `TASK`) in iCalendar-Komponenten (`VEVENT` / `VTODO`) um und liest importierte iCalendar-Daten zurück in die Datenbank. Bildet Statuswerte, Sichtbarkeitsklassen, Teilnehmerstatus und wiederkehrende Ausdrücke (`TemporalExpression`) auf die entsprechenden iCal4j-Eigenschaften ab.",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -146,7 +146,7 @@
       "name": "ICalRecurConverter",
       "package": "org.apache.ofbiz.workeffort.workeffort",
       "type": "Java-Klasse (Visitor)",
-      "description": "Implementiert `TemporalExpressionVisitor` und konvertiert OFBiz-`TemporalExpression`-Objekte (Frequenz, Wochentag-Bereiche, Monat-Bereiche usw.) in iCalendar-`RRULE`-, `EXRULE`-, `RDATE`- und `EXDATE`-Eigenschaften. Verwaltet einen Zustandsstapel zur korrekten Behandlung von Verschachtelungen (`Intersection`, `Difference`, `Union`).",
+      "description": "Implementiert `TemporalExpressionVisitor` und konvertiert `TemporalExpression`-Objekte (Frequenz, Wochentag-Bereiche, Monat-Bereiche usw.) in iCalendar-`RRULE`-, `EXRULE`-, `RDATE`- und `EXDATE`-Eigenschaften. Verwaltet einen Zustandsstapel zur korrekten Behandlung von Verschachtelungen (`Intersection`, `Difference`, `Union`).",
       "section": "java",
       "is_group": false,
       "methods": [
@@ -375,7 +375,7 @@
       "name": "WorkEffortServices",
       "package": "org.apache.ofbiz.workeffort.workeffort",
       "type": "Java-Klasse (Service)",
-      "description": "Sammlung von OFBiz-Services für Abfragen und Datenaggregation rund um `WorkEffort`-Entitäten. Deckt Kalenderabfragen (Ereignisse nach Zeitraum mit Wiederholungsregel-Auflösung), Aufgaben- und Aktivitätslisten je Benutzer, Fertigungsauftrags-Zusammenfassungen je Lager sowie die Verarbeitung von Erinnerungs-Benachrichtigungen ab.",
+      "description": "Sammlung von Services für Abfragen und Datenaggregation rund um `WorkEffort`-Entitäten. Deckt Kalenderabfragen (Ereignisse nach Zeitraum mit Wiederholungsregel-Auflösung), Aufgaben- und Aktivitätslisten je Benutzer, Fertigungsauftrags-Zusammenfassungen je Lager sowie die Verarbeitung von Erinnerungs-Benachrichtigungen ab.",
       "section": "java",
       "is_group": false,
       "methods": [

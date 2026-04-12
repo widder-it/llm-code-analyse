@@ -3,7 +3,7 @@
     {
       "id": "party",
       "name": "party",
-      "overview": "Das Modul `party` ist die zentrale Stammdatenverwaltung für alle Akteure im OFBiz-System. Es modelliert Personen, Organisationen (PartyGroups) und deren Beziehungen untereinander sowie alle zugehörige…",
+      "overview": "Das Modul `party` ist die zentrale Stammdatenverwaltung für alle Akteure im System. Es modelliert Personen, Organisationen (PartyGroups) und deren Beziehungen untereinander sowie alle zugehörige…",
       "stats": {
         "classes": 22,
         "methods": 173
@@ -12,7 +12,7 @@
     {
       "id": "order",
       "name": "order",
-      "overview": "Das Modul `order` ist der Kern des Bestellwesens in Apache OFBiz und deckt den vollständigen Order-to-Cash-Prozess ab. Es umfasst die Verwaltung des Warenkorbs, die Auftragserfassung und -verarbeitung…",
+      "overview": "Das Modul `order` ist der Kern des Bestellwesens  und deckt den vollständigen Order-to-Cash-Prozess ab. Es umfasst die Verwaltung des Warenkorbs, die Auftragserfassung und -verarbeitung…",
       "stats": {
         "classes": 37,
         "methods": 170
@@ -21,7 +21,7 @@
     {
       "id": "product",
       "name": "product",
-      "overview": "Das Modul `product` ist das zentrale Produktmanagement-Modul von Apache OFBiz. Es deckt die vollständige Lebenszyklus-Verwaltung von Produkten ab: von der Produktstammdaten-Pflege über Kategorie- und …",
+      "overview": "Das Modul `product` ist das zentrale Produktmanagement-Modul . Es deckt die vollständige Lebenszyklus-Verwaltung von Produkten ab: von der Produktstammdaten-Pflege über Kategorie- und …",
       "stats": {
         "classes": 58,
         "methods": 257
@@ -30,7 +30,7 @@
     {
       "id": "accounting",
       "name": "accounting",
-      "overview": "Das `accounting`-Modul ist das zentrale Finanzbuchhaltungsmodul von Apache OFBiz. Es umfasst die gesamte Geschäftslogik für Rechnungsstellung, Zahlungsabwicklung, Hauptbuchhaltung, Steuern, Finanzkont…",
+      "overview": "Das `accounting`-Modul ist das zentrale Finanzbuchhaltungsmodul . Es umfasst die gesamte Geschäftslogik für Rechnungsstellung, Zahlungsabwicklung, Hauptbuchhaltung, Steuern, Finanzkont…",
       "stats": {
         "classes": 33,
         "methods": 152
@@ -39,7 +39,7 @@
     {
       "id": "content",
       "name": "content",
-      "overview": "Das `content`-Modul ist das zentrale Content-Management-Framework von Apache OFBiz. Es verwaltet strukturierte Inhaltsobjekte (`Content`, `DataResource`) mit Assoziationen, Zugriffskontrolle, Lokalisi…",
+      "overview": "Das `content`-Modul ist das zentrale Content-Management-Framework . Es verwaltet strukturierte Inhaltsobjekte (`Content`, `DataResource`) mit Assoziationen, Zugriffskontrolle, Lokalisi…",
       "stats": {
         "classes": 28,
         "methods": 134
@@ -48,7 +48,7 @@
     {
       "id": "manufacturing",
       "name": "manufacturing",
-      "overview": "Das `manufacturing`-Modul implementiert die gesamte Fertigungslogik in Apache OFBiz: von der Stücklisten-Verwaltung (Bill of Materials) über die Materialbedarfsplanung (MRP) bis zur Steuerung von Fert…",
+      "overview": "Das `manufacturing`-Modul implementiert die gesamte Fertigungslogik : von der Stücklisten-Verwaltung (Bill of Materials) über die Materialbedarfsplanung (MRP) bis zur Steuerung von Fert…",
       "stats": {
         "classes": 17,
         "methods": 74
@@ -57,7 +57,7 @@
     {
       "id": "shipment",
       "name": "shipment",
-      "overview": "Das Modul `shipment` steuert den gesamten Versandprozess in Apache OFBiz — von der Erstellung und Kostenschätzung von Sendungen über das interaktive Verpacken und Gewichtserfassen bis hin zur Kommunik…",
+      "overview": "Das Modul `shipment` steuert den gesamten Versandprozess  — von der Erstellung und Kostenschätzung von Sendungen über das interaktive Verpacken und Gewichtserfassen bis hin zur Kommunik…",
       "stats": {
         "classes": 23,
         "methods": 117
@@ -66,7 +66,7 @@
     {
       "id": "workeffort",
       "name": "workeffort",
-      "overview": "Das `workeffort`-Modul implementiert die zentrale Arbeitsaufgaben-Verwaltung in Apache OFBiz: von Terminen, Aufgaben und Aktivitäten über iCalendar-basierte Kalenderintegration bis zur Volltextsuche. …",
+      "overview": "Das `workeffort`-Modul implementiert die zentrale Arbeitsaufgaben-Verwaltung : von Terminen, Aufgaben und Aktivitäten über iCalendar-basierte Kalenderintegration bis zur Volltextsuche. …",
       "stats": {
         "classes": 18,
         "methods": 76
@@ -75,7 +75,7 @@
     {
       "id": "marketing",
       "name": "marketing",
-      "overview": "Das `marketing`-Modul implementiert Kampagnen- und Kontaktlistenverwaltung, Kampagnenauswertung sowie Vertriebsunterstützung (Sales Force Automation) in Apache OFBiz. Es umfasst die Newsletter-Anmeldu…",
+      "overview": "Das `marketing`-Modul implementiert Kampagnen- und Kontaktlistenverwaltung, Kampagnenauswertung sowie Vertriebsunterstützung (Sales Force Automation) . Es umfasst die Newsletter-Anmeldu…",
       "stats": {
         "classes": 8,
         "methods": 10
@@ -84,7 +84,7 @@
     {
       "id": "humanres",
       "name": "humanres",
-      "overview": "Das Modul **humanres** (Human Resources) verwaltet Organisationsstrukturen, Stellen und Mitarbeiterzuordnungen im OFBiz-HR-Bereich. Es stellt Event-Handler für die UI-seitige Darstellung von Organigra…",
+      "overview": "Das Modul **humanres** (Human Resources) verwaltet Organisationsstrukturen, Stellen und Mitarbeiterzuordnungen im HR-Bereich. Es stellt Event-Handler für die UI-seitige Darstellung von Organigra…",
       "stats": {
         "classes": 2,
         "methods": 1
