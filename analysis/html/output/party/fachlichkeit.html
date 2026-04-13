@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>party — Fachliche Beschreibung</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --sidebar-width: 220px; }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width); min-height: 100vh;
+      background: #1e2430; color: #c9d1d9;
+      position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem; font-weight: 700; color: #fff;
+      padding: 1.25rem 1rem .75rem; display: block;
+      text-decoration: none; border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0; padding: .35rem 1rem; font-size: .85rem;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff; background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
+      color: #4a5568; padding: .75rem 1rem .25rem;
+    }
+    #main { margin-left: var(--sidebar-width); min-height: 100vh; }
+    .page-header {
+      background: #f8f9fa; border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .section-title {
+      font-size: 1rem; font-weight: 600; color: #1e2430;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: .4rem; margin-bottom: 1rem;
+    }
+    .stat-pill {
+      background: #eef2ff; color: #3730a3; border-radius: 20px;
+      padding: .15rem .65rem; font-size: .78rem; font-weight: 600;
+    }
+    .diagram-box {
+      background: #fff; border: 1px solid #dee2e6;
+      border-radius: 8px; padding: 1.5rem;
+    }
+    .diagram-caption {
+      text-align: center; font-size: .78rem;
+      color: #64748b; margin-top: .5rem;
+    }
+    .domain-card {
+      border: 1px solid #e2e8f0; border-radius: 8px;
+      padding: 1rem 1.25rem; height: 100%;
+      border-left: 4px solid;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>Architekturdoku
+  </a>
+  <div class="nav-section">Modul</div>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" href="index.html">
+        <i class="bi bi-box me-1"></i>Übersicht &amp; Klassen
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="fachlichkeit.html">
+        <i class="bi bi-book me-1"></i>Fachliche Beschreibung
+      </a>
+    </li>
+  </ul>
+  <div class="nav-section">Abschnitte</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="#partymodell"><i class="bi bi-people me-1"></i>Party-Modell</a></li>
+    <li class="nav-item"><a class="nav-link" href="#kontaktmechanismen"><i class="bi bi-geo-alt me-1"></i>Kontaktmechanismen</a></li>
+    <li class="nav-item"><a class="nav-link" href="#beziehungen"><i class="bi bi-diagram-2 me-1"></i>Parteienbeziehungen</a></li>
+    <li class="nav-item"><a class="nav-link" href="#kommunikation"><i class="bi bi-chat-dots me-1"></i>Kommunikation</a></li>
+    <li class="nav-item"><a class="nav-link" href="#berechtigungen"><i class="bi bi-shield-check me-1"></i>Berechtigungen</a></li>
+    <li class="nav-item"><a class="nav-link" href="#besucher"><i class="bi bi-eye me-1"></i>Besuchererfassung</a></li>
+    <li class="nav-item"><a class="nav-link" href="#abhaengigkeiten"><i class="bi bi-share me-1"></i>Modulabhängigkeiten</a></li>
+  </ul>
+</nav>
+
+<div id="main">
+
+  <div class="page-header">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="../index.html">Übersicht</a></li>
+        <li class="breadcrumb-item"><a href="index.html">party</a></li>
+        <li class="breadcrumb-item active">Fachliche Beschreibung</li>
+      </ol>
+    </nav>
+    <h1><i class="bi bi-box me-2 text-primary"></i>Modul <code>party</code> — Fachliche Beschreibung</h1>
+    <p class="text-muted small mt-1 mb-2">
+      Zentrale Stammdatenverwaltung: Personen, Organisationen, Kontaktdaten, Beziehungen und Kommunikation.
+    </p>
+    <div class="d-flex gap-2 flex-wrap">
+      <span class="stat-pill"><i class="bi bi-layers me-1"></i>5 Submodule</span>
+      <span class="stat-pill"><i class="bi bi-lightning me-1"></i>22 Klassen</span>
+      <span class="stat-pill"><i class="bi bi-people me-1"></i>Fundament aller Akteure</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <!-- ── Einleitung ──────────────────────────────────────────────────── -->
+    <div class="alert alert-light border mb-4">
+      <p class="mb-2">
+        Das <code>party</code>-Modul ist das Fundament des gesamten Systems: Jeder Akteur —
+        ob Endkunde, Unternehmen, Lieferant, Mitarbeiter oder internes System — wird als
+        <strong>Party</strong> modelliert. Dieses einheitliche Modell vermeidet Redundanz und
+        ermöglicht konsistente Adress-, Kontakt- und Beziehungsverwaltung über alle Prozesse hinweg.
+      </p>
+      <p class="mb-0">
+        Kein anderes Modul kommt ohne <code>party</code> aus: <code>order</code> braucht Kunden-
+        und Lieferantenadressen, <code>accounting</code> Debitoren- und Kreditorenstammdaten,
+        <code>shipment</code> Absender und Empfänger. Das <code>party</code>-Modul ist damit
+        systemweit eine Querschnittskomponente.
+      </p>
+    </div>
+
+    <!-- ── 1. Party-Modell ───────────────────────────────────────────── -->
+    <section class="mb-5" id="partymodell">
+      <h4 class="section-title"><i class="bi bi-people me-2 text-primary"></i>1. Das Party-Modell</h4>
+
+      <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    P[Party\nAbstrakter Akteur] --> PE[Person\nnatürliche Person]
+    P --> PG[PartyGroup\nOrganisation / Firma]
+    PE --> EMP[Employee\nMitarbeiter]
+    PE --> CUST[Customer\nEndkunde]
+    PG --> COMP[Company\nUnternehmen]
+    PG --> DEPT[Department\nAbteilung]
+    PG --> SUPP[Supplier\nLieferant]
+    COMP --> DEPT
+            </pre>
+            <div class="diagram-caption">Abb. 1 — Party-Typhierarchie: Person und Organisation als spezialisierte Party-Typen</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <p class="small text-muted mb-3">
+            Der Kern des Party-Modells ist denkbar einfach: Die Entity <code>Party</code>
+            ist der gemeinsame Nenner. Alle Rollen (Kunde, Lieferant, Mitarbeiter) sind
+            keine eigenen Tabellen, sondern <strong>Beziehungstypen</strong> — eine Party
+            kann gleichzeitig Kunde und Lieferant sein.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Party-Typ</th><th>Subtyp</th><th>Verwendung</th></tr></thead>
+              <tbody>
+                <tr><td><code>Person</code></td><td>Privatperson</td><td>Endkunden, Mitarbeiter, Kontaktpersonen</td></tr>
+                <tr><td><code>PartyGroup</code></td><td>Organisation</td><td>Firmen, Lieferanten, Abteilungen, Filialen</td></tr>
+                <tr><td><code>Party</code></td><td>Generisch</td><td>Systeminterne Akteure, Gateways</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-info py-2 small mt-2">
+            <i class="bi bi-info-circle me-1"></i>
+            <code>PartyTypeHelper</code> prüft die Typhierarchie zur Laufzeit — ein
+            Mitarbeiter ist gleichzeitig eine <code>Person</code> und eine <code>Party</code>.
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#3b82f6">
+            <h6 class="fw-semibold mb-2"><code>PartyServices</code></h6>
+            <p class="small text-muted mb-0">Zentraler Service für CRUD-Verwaltung von Parteistammdaten. Legt Person- und PartyGroup-Datensätze an, aktualisiert Namens- und Klassifikationsfelder.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#8b5cf6">
+            <h6 class="fw-semibold mb-2"><code>PartyWorker</code></h6>
+            <p class="small text-muted mb-0">Suchmethoden für Parteien über verschiedene Identifikatoren: partyId, E-Mail, Benutzername, externe ID. Verwaltet parteibezogene Klassifikationen.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#10b981">
+            <h6 class="fw-semibold mb-2"><code>PartyHelper</code></h6>
+            <p class="small text-muted mb-0">Formatiert Anzeigenamen nach Typ: „Max Mustermann" für Personen, „Musterfirma GmbH" für Organisationen. Wird in Listen, Briefköpfen und Suchen genutzt.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Kontaktmechanismen ──────────────────────────────────────── -->
+    <section class="mb-5" id="kontaktmechanismen">
+      <h4 class="section-title"><i class="bi bi-geo-alt me-2 text-primary"></i>2. Kontaktmechanismen</h4>
+
+      <p class="small text-muted mb-3">
+        Adressen, Telefonnummern, E-Mail-Adressen und ähnliche Kontaktdaten werden einheitlich
+        als <strong>ContactMech</strong> modelliert. Jede Party kann beliebig viele Kontaktmechanismen
+        haben, jeweils mit einem Verwendungszweck (Purpose) versehen.
+      </p>
+
+      <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    CM[ContactMech\nAbstrakter Kontakt] --> PA[PostalAddress\nPostanschrift]
+    CM --> TN[TelecomNumber\nTelefon / Fax]
+    CM --> EMAIL[Email\nE-Mail-Adresse]
+    CM --> WEB[ElectronicAddress\nURL / IP]
+    PA --> SHIP[Purpose:\nLieferadresse]
+    PA --> BILL[Purpose:\nRechnungsadresse]
+    EMAIL --> PRIM[Purpose:\nPrimäre E-Mail]
+    TN --> WORK[Purpose:\nGeschäftlich]
+    TN --> MOB[Purpose:\nMobil]
+            </pre>
+            <div class="diagram-caption">Abb. 2 — ContactMech-Hierarchie und Verwendungszwecke</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Typ</th><th>Entity</th><th>Felder</th></tr></thead>
+              <tbody>
+                <tr><td>Postanschrift</td><td><code>PostalAddress</code></td><td>Straße, Ort, PLZ, Land, Bundesland</td></tr>
+                <tr><td>Telefon</td><td><code>TelecomNumber</code></td><td>Vorwahl, Nummer, Durchwahl</td></tr>
+                <tr><td>E-Mail</td><td><code>ContactMech</code></td><td>infoString (Adresse)</td></tr>
+                <tr><td>URL / Web</td><td><code>ContactMech</code></td><td>infoString (URL)</td></tr>
+                <tr><td>IP-Adresse</td><td><code>ContactMech</code></td><td>infoString (IP)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-info py-2 small mt-2">
+            <i class="bi bi-info-circle me-1"></i>
+            <code>ContactMechWorker</code> filtert Kontakte nach Typ und Zweck — z.&nbsp;B.
+            „alle aktiven Lieferadressen einer Party" — und wird von <code>order</code>
+            und <code>shipment</code> genutzt.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Parteienbeziehungen ─────────────────────────────────────── -->
+    <section class="mb-5" id="beziehungen">
+      <h4 class="section-title"><i class="bi bi-diagram-2 me-2 text-primary"></i>3. Parteienbeziehungen</h4>
+
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    P1[Party A] -- CUSTOMER_REL --> P2[Party B]
+    P1 -- EMPLOYMENT --> P3[Party C]
+    P2 -- SUPPLIER_REL --> P4[Party D]
+    P3 -- MEMBER_OF --> P5[Party Group]
+    P1 -- CONTACT_REL --> P6[Kontaktperson]
+
+    style P1 fill:#3b82f6,color:#fff
+    style P2 fill:#8b5cf6,color:#fff
+    style P3 fill:#10b981,color:#fff
+    style P5 fill:#f59e0b,color:#fff
+            </pre>
+            <div class="diagram-caption">Abb. 3 — Parteienbeziehungen: typisierte, gerichtete Verbindungen zwischen Parteien</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <p class="small text-muted mb-3">
+            Beziehungen zwischen Parteien werden als typisierte, gerichtete und zeitlich
+            befristete Verbindungen modelliert. <code>PartyRelationshipServices</code>
+            stellt Idempotenz sicher — doppelt angelegte Beziehungen werden erkannt und
+            ignoriert.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Beziehungstyp</th><th>Bedeutung</th></tr></thead>
+              <tbody>
+                <tr><td><code>CUSTOMER_REL</code></td><td>Party ist Kunde einer Organisation</td></tr>
+                <tr><td><code>SUPPLIER_REL</code></td><td>Party ist Lieferant</td></tr>
+                <tr><td><code>EMPLOYMENT</code></td><td>Arbeitsverhältnis (Person → Org)</td></tr>
+                <tr><td><code>MEMBER_OF</code></td><td>Mitglied einer Gruppe / Abteilung</td></tr>
+                <tr><td><code>CONTACT_REL</code></td><td>Ansprechpartner für eine Org</td></tr>
+                <tr><td><code>AGENT</code></td><td>Handelsvertreter / Bevollmächtigter</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. Kommunikation ───────────────────────────────────────────── -->
+    <section class="mb-5" id="kommunikation">
+      <h4 class="section-title"><i class="bi bi-chat-dots me-2 text-primary"></i>4. Kommunikation</h4>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <p class="small text-muted mb-3">
+            Das Submodul <code>party.communication</code> verwaltet alle Kommunikationsereignisse
+            mit Parteien — eingehende und ausgehende E-Mails, Notizen, Anrufe und Aufgaben.
+            <code>CommunicationEventServices</code> koordiniert den Versand und die Archivierung.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Typ</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>E-Mail eingehend</td><td>Import aus IMAP-Postfach, Zuordnung zu Party</td></tr>
+                <tr><td>E-Mail ausgehend</td><td>Versand mit Template, Archivierung</td></tr>
+                <tr><td>Notiz</td><td>Interne Gesprächsnotiz zur Party</td></tr>
+                <tr><td>Anruf</td><td>Telefonprotokoll mit Dauer und Ergebnis</td></tr>
+                <tr><td>Aufgabe</td><td>Zu-erledigendes für eine Party (→ workeffort)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart TD
+    A([E-Mail\neingehend]) --> B[CommunicationEvent\nanlegen]
+    B --> C{Party\nbekannt?}
+    C -- Ja --> D[Party\nzuordnen]
+    C -- Nein --> E[Neue Party\nanlegen]
+    D --> F[Status: COM_ENTERED]
+    E --> F
+    F --> G{Antwort\nerforderlich?}
+    G -- Ja --> H[Aufgabe\nerstellen]
+    G -- Nein --> I[Status: COM_COMPLETE]
+    H --> I
+            </pre>
+            <div class="diagram-caption">Abb. 4 — Eingehende Kommunikation: Zuordnung und Bearbeitungsstatus</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Berechtigungen & Einladungen ────────────────────────────── -->
+    <section class="mb-5" id="berechtigungen">
+      <h4 class="section-title"><i class="bi bi-shield-check me-2 text-primary"></i>5. Berechtigungen &amp; Einladungen</h4>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Berechtigungsprüfung</h6>
+          <p class="small text-muted mb-2">
+            <code>PartyPermissionServices</code> implementiert feingranulare Berechtigungsprüfungen:
+            Darf die angemeldete Party die angefragte Party einsehen oder bearbeiten?
+            Die Prüfung berücksichtigt Rollenzugehörigkeit, Beziehungstypen und
+            Organisation.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Szenario</th><th>Regel</th></tr></thead>
+              <tbody>
+                <tr><td>Eigene Daten</td><td>Party darf immer eigene Daten sehen</td></tr>
+                <tr><td>Mitarbeiter</td><td>Sieht alle Parteien der eigenen Organisation</td></tr>
+                <tr><td>Administrator</td><td>Uneingeschränkter Zugriff</td></tr>
+                <tr><td>Anonym</td><td>Nur öffentliche Felder</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Einladungsprozess</h6>
+          <p class="small text-muted mb-2">
+            <code>PartyInvitationServices</code> verwaltet den Lebenszyklus von Partyeinladungen:
+            Einladung erstellen, E-Mail versenden, Einladungslink validieren, Party anlegen.
+            Unterstützt sowohl Kunden-Selbstregistrierung als auch Mitarbeiteranlage.
+          </p>
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart LR
+    A([Admin]) --> B[Einladung\nerstellen]
+    B --> C[E-Mail mit\nInvitation-Link]
+    C --> D([Eingeladene\nPerson])
+    D --> E[Link aufrufen\nToken prüfen]
+    E --> F[Registrierung\nformular]
+    F --> G[Party\nanlegen]
+    G --> H([Aktiv])
+            </pre>
+            <div class="diagram-caption">Abb. 5 — Einladungsprozess: Token-basierte Party-Registrierung</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Besuchererfassung ───────────────────────────────────────── -->
+    <section class="mb-5" id="besucher">
+      <h4 class="section-title"><i class="bi bi-eye me-2 text-primary"></i>6. Besuchererfassung</h4>
+
+      <div class="row g-4">
+        <div class="col-md-7">
+          <p class="small text-muted mb-3">
+            Das Submodul <code>party.visit</code> erfasst Web-Besuche und verknüpft sie mit
+            Parteien. Jede HTTP-Session wird als <code>Visit</code> angelegt — mit IP-Adresse,
+            Browser, Einstiegsseite und Dauer. Bekannte Benutzer werden über ihre
+            <code>UserLogin</code>-Verknüpfung zugeordnet.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Entity</th><th>Inhalt</th></tr></thead>
+              <tbody>
+                <tr><td><code>Visit</code></td><td>Session-ID, Start, Ende, IP, Browser, Kanal</td></tr>
+                <tr><td><code>ServerHit</code></td><td>Einzelner Seitenaufruf mit Antwortzeit</td></tr>
+                <tr><td><code>UserAgent</code></td><td>Browser-Fingerprint (normalisiert)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="alert alert-info py-2 small mb-2">
+            <i class="bi bi-info-circle me-1"></i>
+            <strong>Anonyme Besuche:</strong> Visits werden auch ohne angemeldete Party
+            erfasst. Bei späterer Anmeldung kann der Visit rückwirkend der Party
+            zugeordnet werden — für vollständige Besucherhistorie.
+          </div>
+          <div class="alert alert-warning py-2 small">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>Datenschutz:</strong> Die IP-Adresse wird direkt gespeichert.
+            Für DSGVO-konforme Deployments ist eine Anonymisierungsschicht empfohlen.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. Modulabhängigkeiten ─────────────────────────────────────── -->
+    <section class="mb-5" id="abhaengigkeiten">
+      <h4 class="section-title"><i class="bi bi-share me-2 text-primary"></i>7. Modulabhängigkeiten</h4>
+
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    order -->|Kunden, Adressen| party
+    accounting -->|Debitoren, Kreditoren| party
+    shipment -->|Absender, Empfänger| party
+    humanres -->|Mitarbeiterstammdaten| party
+    marketing -->|Zielgruppen, Segmente| party
+    sfa -->|Vertriebskontakte| party
+    content -->|Profilbilder, Dokumente| party
+
+    style party fill:#3b82f6,color:#fff
+            </pre>
+            <div class="diagram-caption">Abb. 6 — <code>party</code> als Querschnittsmodul: alle Business-Module nutzen Stammdaten</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Modul</th><th>Nutzung von <code>party</code></th></tr></thead>
+              <tbody>
+                <tr><td><code>order</code></td><td>Kunden, Lieferadressen, Rechnungsempfänger</td></tr>
+                <tr><td><code>accounting</code></td><td>Debitoren, Kreditoren, Zahlungsempfänger</td></tr>
+                <tr><td><code>shipment</code></td><td>Absender- und Empfängeradressen</td></tr>
+                <tr><td><code>humanres</code></td><td>Mitarbeiterstammdaten, Abteilungen</td></tr>
+                <tr><td><code>marketing</code></td><td>Kundensegmente, Kampagnenzielgruppen</td></tr>
+                <tr><td><code>sfa</code></td><td>Vertriebskontakte, Leads, Accounts</td></tr>
+                <tr><td><code>content</code></td><td>Profilbilder, Dokumente per Party</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- content-area -->
+</div><!-- main -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+</script>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>order — Fachliche Beschreibung</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --sidebar-width: 220px; }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width); min-height: 100vh;
+      background: #1e2430; color: #c9d1d9;
+      position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem; font-weight: 700; color: #fff;
+      padding: 1.25rem 1rem .75rem; display: block;
+      text-decoration: none; border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0; padding: .35rem 1rem; font-size: .85rem;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff; background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
+      color: #4a5568; padding: .75rem 1rem .25rem;
+    }
+    #main { margin-left: var(--sidebar-width); min-height: 100vh; }
+    .page-header {
+      background: #f8f9fa; border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .section-title {
+      font-size: 1rem; font-weight: 600; color: #1e2430;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: .4rem; margin-bottom: 1rem;
+    }
+    .stat-pill {
+      background: #eef2ff; color: #3730a3; border-radius: 20px;
+      padding: .15rem .65rem; font-size: .78rem; font-weight: 600;
+    }
+    .diagram-box {
+      background: #fff; border: 1px solid #dee2e6;
+      border-radius: 8px; padding: 1.5rem;
+    }
+    .diagram-caption {
+      text-align: center; font-size: .78rem;
+      color: #64748b; margin-top: .5rem;
+    }
+    .domain-card {
+      border: 1px solid #e2e8f0; border-radius: 8px;
+      padding: 1rem 1.25rem; height: 100%;
+      border-left: 4px solid;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>Architekturdoku
+  </a>
+  <div class="nav-section">Modul</div>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" href="index.html">
+        <i class="bi bi-box me-1"></i>Übersicht &amp; Klassen
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="fachlichkeit.html">
+        <i class="bi bi-book me-1"></i>Fachliche Beschreibung
+      </a>
+    </li>
+  </ul>
+  <div class="nav-section">Abschnitte</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="#warenkorb"><i class="bi bi-cart me-1"></i>Warenkorb</a></li>
+    <li class="nav-item"><a class="nav-link" href="#checkout"><i class="bi bi-credit-card me-1"></i>Checkout</a></li>
+    <li class="nav-item"><a class="nav-link" href="#auftragsverarbeitung"><i class="bi bi-file-earmark-text me-1"></i>Auftragsverarbeitung</a></li>
+    <li class="nav-item"><a class="nav-link" href="#retouren"><i class="bi bi-arrow-return-left me-1"></i>Retouren</a></li>
+    <li class="nav-item"><a class="nav-link" href="#angebote"><i class="bi bi-clipboard me-1"></i>Angebote &amp; Anforderungen</a></li>
+    <li class="nav-item"><a class="nav-link" href="#einkaufslisten"><i class="bi bi-list-check me-1"></i>Einkaufslisten</a></li>
+    <li class="nav-item"><a class="nav-link" href="#promotions"><i class="bi bi-gift me-1"></i>Promotions</a></li>
+    <li class="nav-item"><a class="nav-link" href="#integrationen"><i class="bi bi-plug me-1"></i>Integrationen</a></li>
+    <li class="nav-item"><a class="nav-link" href="#abhaengigkeiten"><i class="bi bi-share me-1"></i>Modulabhängigkeiten</a></li>
+  </ul>
+</nav>
+
+<div id="main">
+
+  <div class="page-header">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="../index.html">Übersicht</a></li>
+        <li class="breadcrumb-item"><a href="index.html">order</a></li>
+        <li class="breadcrumb-item active">Fachliche Beschreibung</li>
+      </ol>
+    </nav>
+    <h1><i class="bi bi-box me-2 text-primary"></i>Modul <code>order</code> — Fachliche Beschreibung</h1>
+    <p class="text-muted small mt-1 mb-2">
+      Order-to-Cash-Kern: Warenkorb, Checkout, Auftragsverarbeitung, Retouren und Angebote.
+    </p>
+    <div class="d-flex gap-2 flex-wrap">
+      <span class="stat-pill"><i class="bi bi-layers me-1"></i>23 Submodule</span>
+      <span class="stat-pill"><i class="bi bi-lightning me-1"></i>37 Klassen</span>
+      <span class="stat-pill"><i class="bi bi-diagram-2 me-1"></i>7 Domänen</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <!-- ── Einleitung ──────────────────────────────────────────────────── -->
+    <div class="alert alert-light border mb-4">
+      <p class="mb-2">
+        Das <code>order</code>-Modul ist das Herzstück des Bestellwesens und deckt den vollständigen
+        <strong>Order-to-Cash-Prozess</strong> ab — vom ersten Klick auf „In den Warenkorb" bis zur
+        abgeschlossenen Zahlung und Retourenabwicklung. Es umfasst Verkaufs- und Einkaufsbestellungen,
+        Angebote, Einkaufsanforderungen und persistente Einkaufslisten.
+      </p>
+      <p class="mb-0">
+        Es ist das meistgenutzte Integrationsmodul des Systems: <strong>accounting</strong> erzeugt
+        Rechnungen und verarbeitet Zahlungen, <strong>product</strong> liefert Preise und Lagerbestand,
+        <strong>shipment</strong> übernimmt die physische Lieferung und <strong>party</strong> stellt
+        Kunden- und Lieferantenstammdaten bereit.
+      </p>
+    </div>
+
+    <!-- ── 1. Warenkorb ──────────────────────────────────────────────── -->
+    <section class="mb-5" id="warenkorb">
+      <h4 class="section-title"><i class="bi bi-cart me-2 text-primary"></i>1. Warenkorb</h4>
+
+      <div class="row g-4 mb-4">
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#3b82f6">
+            <h6 class="fw-semibold mb-2"><code>ShoppingCart</code></h6>
+            <p class="small text-muted mb-0">
+              Zentrales In-Memory-Objekt einer laufenden Bestellung. Hält alle Positionen,
+              Promotions-Adjustments, Versandgruppen, Zahlungsmethoden und Kontaktdaten bis
+              zum Abschluss. Wird per Session gehalten und kann als <code>ShoppingList</code>
+              persistiert werden.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#8b5cf6">
+            <h6 class="fw-semibold mb-2"><code>ShoppingCartItem</code></h6>
+            <p class="small text-muted mb-0">
+              Repräsentiert eine einzelne Warenkorb-Position mit Produkt-ID, Menge, Einzel-
+              und Gesamtpreis, Rabatten, Seriennummern und Sonderattributen (z.&nbsp;B.
+              Lieferdatum, Lieferant). Unterstützt digitale und physische Produkte gleichermaßen.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#10b981">
+            <h6 class="fw-semibold mb-2">Versandgruppen</h6>
+            <p class="small text-muted mb-0">
+              Positionen können auf mehrere Versandgruppen (Ship Groups) aufgeteilt werden —
+              mit unterschiedlichen Lieferadressen, Versandmethoden und Terminen. Der
+              <code>ShoppingCartHelper</code> stellt die zugehörigen Web-Operationen bereit.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    SC[ShoppingCart] --> SCI1[ShoppingCartItem\nProdukt A]
+    SC --> SCI2[ShoppingCartItem\nProdukt B]
+    SC --> SG1[ShipGroup 1\nLieferadresse A]
+    SC --> SG2[ShipGroup 2\nLieferadresse B]
+    SC --> PM[Zahlungsmethode\nKreditkarte / FinAccount]
+    SC --> ADJ[Adjustments\nPromotion / Versand / Steuer]
+    SCI1 --> SG1
+    SCI2 --> SG2
+            </pre>
+            <div class="diagram-caption">Abb. 1 — Warenkorb-Datenmodell: Positionen, Versandgruppen und Adjustments</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light">
+                <tr><th>Klasse</th><th>Aufgabe</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>ShoppingCart</code></td><td>Session-Objekt der laufenden Bestellung</td></tr>
+                <tr><td><code>ShoppingCartItem</code></td><td>Eine Warenkorb-Position</td></tr>
+                <tr><td><code>ShoppingCartFactory</code></td><td>Erzeugung von Cart-Instanzen (Factory Pattern)</td></tr>
+                <tr><td><code>ShoppingCartBuilder</code></td><td>Schrittweiser Aufbau (Builder Pattern)</td></tr>
+                <tr><td><code>WebShoppingCart</code></td><td>Web-Unterklasse, initialisiert aus HTTP-Request</td></tr>
+                <tr><td><code>ShoppingCartHelper</code></td><td>Hilfsfunktionen für Web-Operationen</td></tr>
+                <tr><td><code>ShoppingCartEvents</code></td><td>HTTP-Handler: Hinzufügen, Entfernen, Mengenänderung</td></tr>
+                <tr><td><code>CartEventListener</code></td><td>Session-Ablauf → Cart automatisch als Liste speichern</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Checkout ────────────────────────────────────────────────── -->
+    <section class="mb-5" id="checkout">
+      <h4 class="section-title"><i class="bi bi-credit-card me-2 text-primary"></i>2. Checkout-Prozess</h4>
+
+      <p class="text-muted small mb-3">
+        Der Checkout ist ein mehrstufiger, zustandsgesteuerter Prozess. Der <code>CheckOutHelper</code>
+        koordiniert alle Schritte sequenziell und validiert nach jeder Stufe. Fehlende Angaben führen
+        zu einer Weiterleitung zurück auf die entsprechende Eingabemaske.
+      </p>
+
+      <div class="row g-4 mb-4">
+        <div class="col-lg-8">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart LR
+    A([Warenkorb]) --> B[Lieferadresse\nwählen]
+    B --> C[Versandmethode\nwählen]
+    C --> D[Zahlungsmethode\nwählen]
+    D --> E{Validierung\nCheckOutHelper}
+    E -- Fehler --> D
+    E -- OK --> F[Bestellzusammenfassung]
+    F --> G[Bestellung\naufgeben]
+    G --> H([OrderHeader\nerstellt])
+    H --> I[Zahlung\nverarbeiten]
+    I --> J([Bestätigung\nE-Mail])
+            </pre>
+            <div class="diagram-caption">Abb. 2 — Checkout-Ablauf: von der Lieferadresse bis zur Bestellbestätigung</div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="alert alert-info py-2 small">
+            <i class="bi bi-info-circle me-1"></i>
+            <strong>Steuerberechnung:</strong> Der <code>ZipSalesServices</code> ermöglicht
+            ZIP-Code-basierte US-Steuerberechnung aus importierten Steuertabellen.
+            Für andere Regionen übernimmt das <code>accounting</code>-Modul die Steuerermittlung.
+          </div>
+          <div class="alert alert-warning py-2 small mt-2">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>PayPal Express:</strong> Der <code>ExpressCheckoutEvents</code>-Handler
+            leitet den Kunden vor der Adresseingabe zu PayPal um — der Checkout-Fluss
+            wird dadurch abgekürzt.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Auftragsverarbeitung ────────────────────────────────────── -->
+    <section class="mb-5" id="auftragsverarbeitung">
+      <h4 class="section-title"><i class="bi bi-file-earmark-text me-2 text-primary"></i>3. Auftragsverarbeitung</h4>
+
+      <div class="row g-4 mb-4">
+        <div class="col-md-6">
+          <p class="small text-muted">
+            <code>OrderServices</code> implementiert den vollständigen Lebenszyklus eines Auftrags:
+            Anlage, Statusübergänge, Stornierung und Änderungen. <code>OrderReadHelper</code> ist
+            das zentrale Leseobjekt und kapselt alle Datenbankzugriffe auf einen persistierten Auftrag —
+            er wird in nahezu allen anderen Modulen verwendet.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Status</th><th>Bedeutung</th></tr></thead>
+              <tbody>
+                <tr><td><code>ORDER_CREATED</code></td><td>Bestellung aufgenommen, Zahlung ausstehend</td></tr>
+                <tr><td><code>ORDER_PROCESSING</code></td><td>Zahlung eingegangen, Kommissionierung</td></tr>
+                <tr><td><code>ORDER_APPROVED</code></td><td>Freigegeben für Versand</td></tr>
+                <tr><td><code>ORDER_SENT</code></td><td>An Logistik übergeben</td></tr>
+                <tr><td><code>ORDER_COMPLETED</code></td><td>Vollständig ausgeliefert</td></tr>
+                <tr><td><code>ORDER_CANCELLED</code></td><td>Storniert (reversibel bis APPROVED)</td></tr>
+                <tr><td><code>ORDER_REJECTED</code></td><td>Abgelehnt (z.&nbsp;B. Zahlungsfehler)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+stateDiagram-v2
+    [*] --> ORDER_CREATED
+    ORDER_CREATED --> ORDER_PROCESSING : Zahlung OK
+    ORDER_CREATED --> ORDER_REJECTED : Zahlung fehlgeschlagen
+    ORDER_PROCESSING --> ORDER_APPROVED : Freigabe
+    ORDER_PROCESSING --> ORDER_CANCELLED : Storno
+    ORDER_APPROVED --> ORDER_SENT : Übergabe Logistik
+    ORDER_SENT --> ORDER_COMPLETED : Zustellung bestätigt
+    ORDER_APPROVED --> ORDER_CANCELLED : Storno
+    ORDER_COMPLETED --> [*]
+    ORDER_CANCELLED --> [*]
+    ORDER_REJECTED --> [*]
+            </pre>
+            <div class="diagram-caption">Abb. 3 — Auftrags-Statusmaschine</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#3b82f6">
+            <h6 class="fw-semibold mb-2"><code>OrderServices</code></h6>
+            <p class="small text-muted mb-0">Auftragsanlage, Statusübergänge, Stornierung, Änderungen am laufenden Auftrag (Mengen, Adressen, Zahlungsmethode).</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#8b5cf6">
+            <h6 class="fw-semibold mb-2"><code>OrderReadHelper</code></h6>
+            <p class="small text-muted mb-0">Zentrales Leseobjekt: kapselt alle DB-Zugriffe auf einen Auftrag. Wird von accounting, shipment und product genutzt.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#10b981">
+            <h6 class="fw-semibold mb-2"><code>OrderChangeHelper</code></h6>
+            <p class="small text-muted mb-0">Workflow-Hilfsmethoden für Statusübergänge: Genehmigen, Ablehnen, Stornieren — inklusive Benachrichtigungen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. Retouren ────────────────────────────────────────────────── -->
+    <section class="mb-5" id="retouren">
+      <h4 class="section-title"><i class="bi bi-arrow-return-left me-2 text-primary"></i>4. Retourenmanagement</h4>
+
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart TD
+    A([Abgeschlossener\nAuftrag]) --> B[Retourenantrag\nerstellen]
+    B --> C{Prüfung\nBerechtigung}
+    C -- Abgelehnt --> D([Abgelehnt])
+    C -- Genehmigt --> E[Retourenauftrag\nRETURN_REQUESTED]
+    E --> F[Ware eingegangen\nRETURN_RECEIVED]
+    F --> G{Erstattungsart}
+    G -- Rückbuchung --> H[Kreditkarte\nerstattet]
+    G -- Gutschrift --> I[Store-Credit\nFinAccount]
+    G -- Ersatzlieferung --> J[Neue Bestellung\nausgelöst]
+    H --> K([RETURN_COMPLETED])
+    I --> K
+    J --> K
+            </pre>
+            <div class="diagram-caption">Abb. 4 — Retourenprozess: Antrag, Eingang und Erstattungsoptionen</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <p class="small text-muted mb-3">
+            <code>OrderReturnServices</code> verwaltet den vollständigen Rückgabeprozess:
+            Rückgabeanträge anlegen und prüfen, Erstattungsbeträge berechnen
+            (proportional zu Rabatten und Steuern), Rücksendungen entgegennehmen
+            und die Erstattung auslösen.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Erstattungsart</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>Kreditkarten-Rückbuchung</td><td>Über ursprüngliches Payment-Gateway</td></tr>
+                <tr><td>Store-Credit</td><td>Gutschrift auf FinAccount (Kundenkonto)</td></tr>
+                <tr><td>Ersatzlieferung</td><td>Auslösung einer neuen Bestellung</td></tr>
+                <tr><td>Gutschein</td><td>Generierung eines Gift Certificate</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Angebote & Anforderungen ───────────────────────────────── -->
+    <section class="mb-5" id="angebote">
+      <h4 class="section-title"><i class="bi bi-clipboard me-2 text-primary"></i>5. Angebote &amp; Einkaufsanforderungen</h4>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Angebotsverwaltung (Quotes)</h6>
+          <p class="small text-muted mb-2">
+            <code>QuoteServices</code> verwaltet formelle Angebote an Kunden. Ein Angebot enthält
+            Positionen, Konditionen und ein Ablaufdatum. Es kann per E-Mail versandt und bei
+            Zustimmung des Kunden direkt in einen Verkaufsauftrag umgewandelt werden.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Funktion</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>Angebot erstellen</td><td>Aus Warenkorb oder manuell</td></tr>
+                <tr><td>Angebot versenden</td><td>E-Mail an Kunden mit PDF</td></tr>
+                <tr><td>Angebot annehmen</td><td>Automatische Auftragsanlage</td></tr>
+                <tr><td>Angebot ablaufen</td><td>Automatisch nach Ablaufdatum</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Einkaufsanforderungen (Requirements)</h6>
+          <p class="small text-muted mb-2">
+            <code>RequirementServices</code> verwaltet interne Einkaufsanforderungen: Bedarfe
+            werden gesammelt, einem Lieferanten zugeordnet und in Einkaufsbestellungen
+            (<em>Purchase Orders</em>) umgewandelt. Unterstützt den B2B-Beschaffungsprozess.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Schritt</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>Bedarfserfassung</td><td>Anforderung mit Produkt, Menge, Termin</td></tr>
+                <tr><td>Lieferantenzuordnung</td><td>Anforderungen bündeln pro Lieferant</td></tr>
+                <tr><td>PO-Erstellung</td><td>Automatische Einkaufsbestellung</td></tr>
+                <tr><td>Wareneingang</td><td>Mengenabgleich gegen Anforderung</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Einkaufslisten ──────────────────────────────────────────── -->
+    <section class="mb-5" id="einkaufslisten">
+      <h4 class="section-title"><i class="bi bi-list-check me-2 text-primary"></i>6. Einkaufslisten</h4>
+
+      <div class="row g-4">
+        <div class="col-md-5">
+          <p class="small text-muted">
+            <code>ShoppingListServices</code> verwaltet persistente Einkaufslisten für Kunden.
+            Es gibt drei Listentypen mit unterschiedlicher Semantik:
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Typ</th><th>Verhalten</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>Auto-Save</strong></td>
+                  <td>Warenkorb wird bei Session-Ablauf automatisch gespeichert</td>
+                </tr>
+                <tr>
+                  <td><strong>Wunschliste</strong></td>
+                  <td>Manuell gepflegte Liste, teilbar mit anderen Nutzern</td>
+                </tr>
+                <tr>
+                  <td><strong>Abo-Liste</strong></td>
+                  <td>Wiederkehrende Bestellung nach Intervall (täglich / wöchentlich / monatlich)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart LR
+    A([Warenkorb]) -- Session-Ablauf --> B[Auto-Save-Liste\nShoppingList]
+    C([Kunde]) -- manuell --> D[Wunschliste]
+    E([Scheduler]) -- Intervall --> F[Abo-Liste]
+    B -- Wiederherstellen --> A
+    D -- In Warenkorb --> A
+    F -- Automatisch --> G([Neue Bestellung\nausgelöst])
+            </pre>
+            <div class="diagram-caption">Abb. 5 — Einkaufslisten-Typen und ihre Übergänge in Bestellungen</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. Promotions ──────────────────────────────────────────────── -->
+    <section class="mb-5" id="promotions">
+      <h4 class="section-title"><i class="bi bi-gift me-2 text-primary"></i>7. Promotions im Bestellkontext</h4>
+
+      <p class="small text-muted mb-3">
+        Die Promotionsberechnung liegt konzeptionell im <code>product</code>-Modul
+        (<code>ProductPromoWorker</code>), wird aber unmittelbar auf dem <code>ShoppingCart</code>
+        ausgeführt und ist damit fachlich zentraler Bestandteil des Bestellprozesses.
+      </p>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Aktionstyp</th><th>Beispiel</th></tr></thead>
+              <tbody>
+                <tr><td>Prozentrabatt</td><td>10&nbsp;% auf gesamten Warenkorb</td></tr>
+                <tr><td>Festbetrag</td><td>5&nbsp;€ ab 50&nbsp;€ Bestellwert</td></tr>
+                <tr><td>Gratis-Artikel</td><td>3 kaufen, 1 gratis</td></tr>
+                <tr><td>Versandkostenfrei</td><td>Ab bestimmtem Bestellwert</td></tr>
+                <tr><td>Produktgruppen-Rabatt</td><td>20&nbsp;% auf Kategorie X</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="alert alert-info py-2 small">
+            <i class="bi bi-info-circle me-1"></i>
+            Promotions-Adjustments werden als eigene Zeilen im <code>ShoppingCart</code>
+            gespeichert und nach Auftragsanlage als <code>OrderAdjustment</code>-Einträge
+            persistiert. Sie beeinflussen die Steuer- und Rechnungsberechnung in
+            <code>accounting</code>.
+          </div>
+          <div class="alert alert-warning py-2 small mt-2">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>FinAccount:</strong> Der <code>FinAccountHelper</code> erlaubt die Nutzung
+            von Geschenkgutscheinen und Store-Credits als Zahlungsmittel im Checkout —
+            er prüft Guthaben und sperrt Beträge.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 8. Integrationen ───────────────────────────────────────────── -->
+    <section class="mb-5" id="integrationen">
+      <h4 class="section-title"><i class="bi bi-plug me-2 text-primary"></i>8. Externe Integrationen</h4>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">PayPal Express Checkout</h6>
+          <p class="small text-muted mb-2">
+            <code>ExpressCheckoutEvents</code> integriert PayPal als abgekürzten Checkout-Pfad.
+            Der Kunde wird vor der Adresseingabe zu PayPal umgeleitet; nach Bestätigung
+            werden Adresse und Zahlungsdaten automatisch aus der PayPal-Antwort befüllt.
+          </p>
+        </div>
+        <div class="col-md-6">
+          <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">ZIP-Code-Steuerberechnung</h6>
+          <p class="small text-muted mb-2">
+            <code>ZipSalesServices</code> importiert US-spezifische Steuertabellen und
+            berechnet die Steuer anhand von Liefer-ZIP-Code und Produktkategorie.
+            Für internationale Szenarien übernimmt <code>TaxAuthorityServices</code>
+            aus <code>accounting</code> diese Rolle.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 9. Modulabhängigkeiten ──────────────────────────────────────── -->
+    <section class="mb-5" id="abhaengigkeiten">
+      <h4 class="section-title"><i class="bi bi-share me-2 text-primary"></i>9. Modulabhängigkeiten</h4>
+
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    order -->|Rechnungen, Zahlungen| accounting
+    order -->|Preise, Lagerbestand, Promotions| product
+    order -->|Lieferaufträge, Picklists| shipment
+    order -->|Kunden- und Adressstammdaten| party
+    order -->|Digitale Inhalte| content
+    order -->|Aufgaben, Workflows| workeffort
+    accounting -->|Produktpreise| product
+    shipment -->|Produktdaten| product
+            </pre>
+            <div class="diagram-caption">Abb. 6 — Modulabhängigkeiten: <code>order</code> als zentrales Integrationsmodul</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Modul</th><th>Nutzung durch <code>order</code></th></tr></thead>
+              <tbody>
+                <tr><td><code>accounting</code></td><td>Rechnungserzeugung, Zahlungsverarbeitung, Steuerberechnung</td></tr>
+                <tr><td><code>product</code></td><td>Produktdaten, Preisfindung, Lagerprüfung, Promotionen</td></tr>
+                <tr><td><code>shipment</code></td><td>Lieferaufträge, Picklists, Versandkostenberechnung</td></tr>
+                <tr><td><code>party</code></td><td>Kunden-, Lieferanten- und Adressstammdaten</td></tr>
+                <tr><td><code>content</code></td><td>Digitale Produkte (Download nach Kauf)</td></tr>
+                <tr><td><code>workeffort</code></td><td>Aufgaben und Genehmigungsworkflows</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- content-area -->
+</div><!-- main -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+</script>
+</body>
+</html>

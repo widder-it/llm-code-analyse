@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>accounting — Fachliche Beschreibung</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --sidebar-width: 220px; }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width); min-height: 100vh;
+      background: #1e2430; color: #c9d1d9;
+      position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem; font-weight: 700; color: #fff;
+      padding: 1.25rem 1rem .75rem; display: block;
+      text-decoration: none; border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0; padding: .35rem 1rem; font-size: .85rem;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff; background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
+      color: #4a5568; padding: .75rem 1rem .25rem;
+    }
+    #main { margin-left: var(--sidebar-width); min-height: 100vh; }
+    .page-header {
+      background: #f8f9fa; border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .section-title {
+      font-size: 1rem; font-weight: 600; color: #1e2430;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: .4rem; margin-bottom: 1rem;
+    }
+    .stat-pill {
+      background: #eef2ff; color: #3730a3; border-radius: 20px;
+      padding: .15rem .65rem; font-size: .78rem; font-weight: 600;
+    }
+    .diagram-box {
+      background: #fff; border: 1px solid #dee2e6;
+      border-radius: 8px; padding: 1.5rem;
+    }
+    .diagram-caption {
+      text-align: center; font-size: .78rem;
+      color: #64748b; margin-top: .5rem;
+    }
+    .domain-card {
+      border: 1px solid #e2e8f0; border-radius: 8px;
+      padding: 1rem 1.25rem; height: 100%;
+      border-left: 4px solid;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>Architekturdoku
+  </a>
+  <div class="nav-section">Modul</div>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" href="index.html">
+        <i class="bi bi-box me-1"></i>Übersicht &amp; Klassen
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="fachlichkeit.html">
+        <i class="bi bi-book me-1"></i>Fachliche Beschreibung
+      </a>
+    </li>
+  </ul>
+  <div class="nav-section">Abschnitte</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="#rechnungen"><i class="bi bi-receipt me-1"></i>Rechnungsstellung</a></li>
+    <li class="nav-item"><a class="nav-link" href="#zahlungen"><i class="bi bi-credit-card me-1"></i>Zahlungsabwicklung</a></li>
+    <li class="nav-item"><a class="nav-link" href="#hauptbuch"><i class="bi bi-journal-text me-1"></i>Hauptbuch (GL)</a></li>
+    <li class="nav-item"><a class="nav-link" href="#steuern"><i class="bi bi-calculator me-1"></i>Steuern</a></li>
+    <li class="nav-item"><a class="nav-link" href="#finaccounts"><i class="bi bi-wallet me-1"></i>Finanzkonten</a></li>
+    <li class="nav-item"><a class="nav-link" href="#gateways"><i class="bi bi-plug me-1"></i>Payment-Gateways</a></li>
+    <li class="nav-item"><a class="nav-link" href="#perioden"><i class="bi bi-calendar3 me-1"></i>Perioden &amp; Abschlüsse</a></li>
+    <li class="nav-item"><a class="nav-link" href="#abhaengigkeiten"><i class="bi bi-share me-1"></i>Modulabhängigkeiten</a></li>
+  </ul>
+</nav>
+
+<div id="main">
+
+  <div class="page-header">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="../index.html">Übersicht</a></li>
+        <li class="breadcrumb-item"><a href="index.html">accounting</a></li>
+        <li class="breadcrumb-item active">Fachliche Beschreibung</li>
+      </ol>
+    </nav>
+    <h1><i class="bi bi-box me-2 text-primary"></i>Modul <code>accounting</code> — Fachliche Beschreibung</h1>
+    <p class="text-muted small mt-1 mb-2">
+      Zentrales Finanzbuchhaltungsmodul: Rechnungsstellung, Zahlungen, Hauptbuch, Steuern und 8 Payment-Gateway-Integrationen.
+    </p>
+    <div class="d-flex gap-2 flex-wrap">
+      <span class="stat-pill"><i class="bi bi-layers me-1"></i>29 Submodule</span>
+      <span class="stat-pill"><i class="bi bi-lightning me-1"></i>33 Klassen</span>
+      <span class="stat-pill"><i class="bi bi-plug me-1"></i>8 Payment-Gateways</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <!-- ── Einleitung ──────────────────────────────────────────────────── -->
+    <div class="alert alert-light border mb-4">
+      <p class="mb-2">
+        Das <code>accounting</code>-Modul ist die finanzielle Schaltzentrale des Systems. Es verbindet
+        den Bestellprozess (<code>order</code>) mit der Buchhaltung: jede Bestellung erzeugt eine Rechnung,
+        jede Zahlung löst GL-Buchungen aus, jede Rücksendung eine Gutschrift. Das Modul deckt
+        Debitoren (<em>AR</em>), Kreditoren (<em>AP</em>), Hauptbuch (<em>GL</em>),
+        Anlagenbuchhaltung und Budgetplanung ab.
+      </p>
+      <p class="mb-0">
+        Besonders hervorzuheben ist die Breite der Payment-Gateway-Integrationen:
+        8 externe Zahlungsdienstleister werden über ein einheitliches Abstractions-Interface angebunden.
+      </p>
+    </div>
+
+    <!-- ── 1. Rechnungsstellung ───────────────────────────────────────── -->
+    <section class="mb-5" id="rechnungen">
+      <h4 class="section-title"><i class="bi bi-receipt me-2 text-primary"></i>1. Rechnungsstellung</h4>
+
+      <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart TD
+    A([Bestellung\nOrderHeader]) --> B[InvoiceServices\nRechnung erzeugen]
+    B --> C[Invoice\nKopfdaten]
+    C --> D[InvoiceItem\nPositionen]
+    D --> E[InvoiceItem\nSteuern]
+    E --> F{Zahlungseingang?}
+    F -- Ja --> G[Payment\nzuordnen]
+    F -- Nein --> H[Mahnwesen\nAR-Aging]
+    G --> I[GL-Buchung\n automatisch]
+    I --> J([Rechnung\nINVOICE_PAID])
+    H --> K([Rechnung\nINVOICE_WRITEOFF])
+            </pre>
+            <div class="diagram-caption">Abb. 1 — Rechnungslebenszyklus: Erzeugung, Zahlung und GL-Buchung</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <p class="small text-muted mb-3">
+            <code>InvoiceServices</code> erzeugt Rechnungen aus verschiedenen Quellen — Verkaufsaufträgen,
+            Einkaufsbestellungen, Retouren und manuell. <code>InvoiceWorker</code> berechnet
+            Zwischensummen, Steuern und angewendete Zahlungen.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Rechnungstyp</th><th>Quelle</th></tr></thead>
+              <tbody>
+                <tr><td>Verkaufsrechnung (AR)</td><td>Verkaufsauftrag nach Versand</td></tr>
+                <tr><td>Eingangsrechnung (AP)</td><td>Einkaufsbestellung nach Wareneingang</td></tr>
+                <tr><td>Gutschrift</td><td>Retoure oder manuelle Korrektur</td></tr>
+                <tr><td>Kommissionsrechnung</td><td>Provisionsabrechnung (AgreementServices)</td></tr>
+                <tr><td>Wiederkehrende Rechnung</td><td>Abonnements über ShoppingList-Scheduler</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Zahlungsabwicklung ──────────────────────────────────────── -->
+    <section class="mb-5" id="zahlungen">
+      <h4 class="section-title"><i class="bi bi-credit-card me-2 text-primary"></i>2. Zahlungsabwicklung</h4>
+
+      <div class="row g-4 mb-4">
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#3b82f6">
+            <h6 class="fw-semibold mb-2"><code>PaymentGatewayServices</code></h6>
+            <p class="small text-muted mb-0">
+              Zentrales Orchestrierungsmodul für alle Gateway-Operationen. Implementiert
+              Autorisierung, Abbuchung, Stornierung und Rückbuchung als einheitliche
+              Schnittstelle — unabhängig vom konkreten Anbieter.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#8b5cf6">
+            <h6 class="fw-semibold mb-2"><code>PaymentMethodServices</code></h6>
+            <p class="small text-muted mb-0">
+              CRUD für Zahlungsmethoden: Kreditkarten, Geschenkgutscheine, EFT-Konten
+              und Bankverbindungen. Verwaltet sichere Tokenisierung und Ablaufdaten.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#10b981">
+            <h6 class="fw-semibold mb-2"><code>GiftCertificateServices</code></h6>
+            <p class="small text-muted mb-0">
+              Vollständiger Lebenszyklus für Geschenkgutscheine: Erstellung, Aufladung,
+              Einlösung und Stornierung. Integriert mit FinAccount-Guthaben.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart LR
+    A([Checkout]) --> B[PaymentGatewayServices\nAutorisierung]
+    B --> C{Gateway-Antwort}
+    C -- Approved --> D[Payment\nPMT_NOT_PAID]
+    C -- Declined --> E([Fehler\nan Kunde])
+    D --> F[Versand\nfreigegeben]
+    F --> G[Abbuchung\nCapture]
+    G --> H[Payment\nPMT_RECEIVED]
+    H --> I[GL-Buchung\nautomatisch]
+    I --> J([Rechnung\nbeglichen])
+    H -- Rückgabe --> K[Rückbuchung\nRefund]
+    K --> L[Payment\nPMT_CANCELLED]
+            </pre>
+            <div class="diagram-caption">Abb. 2 — Zahlungsablauf: Autorisierung → Abbuchung → GL-Buchung</div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="alert alert-info py-2 small mb-2">
+            <i class="bi bi-info-circle me-1"></i>
+            <strong>Zweistufige Autorisierung:</strong> Autorisierung (Reserve) und Abbuchung
+            (Capture) sind getrennte Schritte — die Abbuchung erfolgt erst nach Versandbestätigung.
+          </div>
+          <div class="alert alert-warning py-2 small">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>BillingAccount:</strong> <code>BillingAccountWorker</code> verwaltet
+            Abrechnungskonten für Kreditlimits — nützlich für B2B-Kunden mit Zahlungsziel.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Hauptbuch ───────────────────────────────────────────────── -->
+    <section class="mb-5" id="hauptbuch">
+      <h4 class="section-title"><i class="bi bi-journal-text me-2 text-primary"></i>3. Hauptbuch (General Ledger)</h4>
+
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <p class="small text-muted mb-3">
+            Das Hauptbuch wird vollautomatisch durch Transaktionen aus Rechnungen und Zahlungen
+            befüllt. <code>GeneralLedgerServices</code> verwaltet Kostenstellen, <code>UtilAccounting</code>
+            löst GL-Konten anhand von Produkt, Buchungsregel und Organisation auf.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Auslöser</th><th>GL-Buchung</th></tr></thead>
+              <tbody>
+                <tr><td>Rechnungserzeugung</td><td>Forderungen (AR) an Umsatzerlöse</td></tr>
+                <tr><td>Zahlungseingang</td><td>Bank an Forderungen (AR)</td></tr>
+                <tr><td>Eingangsrechnung</td><td>Aufwand an Verbindlichkeiten (AP)</td></tr>
+                <tr><td>Zahlungsausgang</td><td>Verbindlichkeiten an Bank</td></tr>
+                <tr><td>Inventurkorrektur</td><td>Lagerbestand an Bestandsveränderung</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    A[Rechnung\nerzeugt] --> B[AcctgTrans\nBuchungssatz]
+    B --> C[AcctgTransEntry\nSoll: Forderung]
+    B --> D[AcctgTransEntry\nHaben: Umsatz]
+    E[Zahlung\neingegangen] --> F[AcctgTrans\nBuchungssatz]
+    F --> G[AcctgTransEntry\nSoll: Bank]
+    F --> H[AcctgTransEntry\nHaben: Forderung]
+    B --> I[GlAccount\nKontenrahmen]
+    F --> I
+    I --> J[Kostenstelle\nInternalOrganisation]
+            </pre>
+            <div class="diagram-caption">Abb. 3 — Doppelte Buchführung: automatische GL-Buchungssätze</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. Steuern ─────────────────────────────────────────────────── -->
+    <section class="mb-5" id="steuern">
+      <h4 class="section-title"><i class="bi bi-calculator me-2 text-primary"></i>4. Steuerberechnung</h4>
+
+      <div class="row g-4">
+        <div class="col-md-7">
+          <p class="small text-muted mb-3">
+            <code>TaxAuthorityServices</code> berechnet Steuern auf Basis eines mehrstufigen
+            Regelwerks: Steuerbehörde (z.&nbsp;B. Finanzamt), Produktkategorie, Liefer- und
+            Rechnungsadresse sowie Kundensteuerstatus. Das System unterstützt parallele
+            Steuerbehörden (z.&nbsp;B. Bund + Bundesstaat) und steuerfreie Produkte.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Dimension</th><th>Beispiel</th></tr></thead>
+              <tbody>
+                <tr><td>Steuerbehörde</td><td>Finanzamt DE, IRS US, HMRC UK</td></tr>
+                <tr><td>Produktkategorie</td><td>Lebensmittel (7&nbsp;%) vs. Elektronik (19&nbsp;%)</td></tr>
+                <tr><td>Geografie</td><td>Lieferadresse bestimmt Steuersatz</td></tr>
+                <tr><td>Kundenstatus</td><td>B2B mit USt-ID → Reverse Charge</td></tr>
+                <tr><td>Promotion</td><td>Steuer auf rabattierten Preis</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="alert alert-warning py-2 small mb-2">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>Steuer und Promotion:</strong> Die Reihenfolge
+            „erst Rabatt, dann Steuer" ist systemseitig fest vorgegeben.
+            Promotions-Adjustments reduzieren die Steuerbemessungsgrundlage.
+          </div>
+          <div class="alert alert-info py-2 small">
+            <i class="bi bi-info-circle me-1"></i>
+            <strong>US-Alternative:</strong> Für US-spezifische ZIP-Code-basierte Steuerberechnung
+            steht <code>ZipSalesServices</code> im <code>order</code>-Modul als Alternative bereit.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Finanzkonten ────────────────────────────────────────────── -->
+    <section class="mb-5" id="finaccounts">
+      <h4 class="section-title"><i class="bi bi-wallet me-2 text-primary"></i>5. Finanzkonten &amp; Vereinbarungen</h4>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Finanzkonten (FinAccount)</h6>
+          <p class="small text-muted mb-2">
+            <code>FinAccountServices</code> verwaltet interne Kundenguthaben: Store-Credits,
+            Geschenkgutscheine und vorausbezahlte Bankkonten. Ein FinAccount kann als
+            vollwertige Zahlungsmethode im Checkout genutzt werden.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Kontotyp</th><th>Einsatz</th></tr></thead>
+              <tbody>
+                <tr><td>Store-Credit</td><td>Retourengutschrift, manuelle Aufladung</td></tr>
+                <tr><td>Geschenkgutschein</td><td>Kauf eines Gutschein-Produkts</td></tr>
+                <tr><td>Bankkonto (EFT)</td><td>Lastschriftverfahren</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Vereinbarungen &amp; Provisionen</h6>
+          <p class="small text-muted mb-2">
+            <code>AgreementServices</code> berechnet Provisionen auf Basis aktiver Vertrags-
+            vereinbarungen — etwa für Handelsvertreter oder Partnerkanäle. Unterstützt
+            produktvarianten-spezifische Provisionssätze.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Typ</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>Provision</td><td>Prozent vom Umsatz pro Produkt/Kategorie</td></tr>
+                <tr><td>Rabattvereinbarung</td><td>Feste Sonderkonditionen für Kunden</td></tr>
+                <tr><td>Anlagenleasing</td><td>Buchung über FixedAsset-Modul</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Payment-Gateways ────────────────────────────────────────── -->
+    <section class="mb-5" id="gateways">
+      <h4 class="section-title"><i class="bi bi-plug me-2 text-primary"></i>6. Payment-Gateway-Integrationen</h4>
+
+      <p class="small text-muted mb-3">
+        Alle acht Gateways werden über das einheitliche Interface von <code>PaymentGatewayServices</code>
+        angebunden. Jedes Gateway implementiert die gleichen Operationen: Autorisierung, Abbuchung,
+        Stornierung und Rückbuchung.
+      </p>
+
+      <div class="row g-4 mb-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    PGS[PaymentGatewayServices\nInterface] --> AN[Authorize.Net\nAIM-Protokoll]
+    PGS --> CC[ClearCommerce\nXML-basiert]
+    PGS --> EW[eWay\nREST-API]
+    PGS --> GS[GoSoftware\nPcCharge / Rita]
+    PGS --> PP[PayPal\nRedirect / IPN]
+    PGS --> SP[SagePay\nForm-Protokoll]
+    PGS --> VL[ValueLink\nGift Cards]
+    PGS --> WP[WorldPay\nHosted Page]
+            </pre>
+            <div class="diagram-caption">Abb. 4 — Payment-Gateway-Architektur: einheitliches Interface, 8 Implementierungen</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light">
+                <tr><th>Gateway</th><th>Protokoll</th><th>Besonderheit</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Authorize.Net</strong></td><td>AIM / HTTP-POST</td><td>Marktführer USA</td></tr>
+                <tr><td><strong>ClearCommerce</strong></td><td>XML</td><td>Enterprise-Segment</td></tr>
+                <tr><td><strong>eWay</strong></td><td>REST</td><td>Australien / NZ</td></tr>
+                <tr><td><strong>GoSoftware</strong></td><td>PcCharge / Rita</td><td>Proprietäres Terminal</td></tr>
+                <tr><td><strong>PayPal</strong></td><td>Redirect + IPN</td><td>Sofortzahlung</td></tr>
+                <tr><td><strong>SagePay</strong></td><td>Form-Protokoll</td><td>UK / Europa</td></tr>
+                <tr><td><strong>ValueLink</strong></td><td>Proprietär</td><td>Geschenkgutscheine</td></tr>
+                <tr><td><strong>WorldPay</strong></td><td>Hosted Page</td><td>Redirect-Verfahren</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. Perioden & Abschlüsse ────────────────────────────────────── -->
+    <section class="mb-5" id="perioden">
+      <h4 class="section-title"><i class="bi bi-calendar3 me-2 text-primary"></i>7. Buchungsperioden &amp; Abschlüsse</h4>
+
+      <div class="row g-4">
+        <div class="col-md-7">
+          <p class="small text-muted mb-3">
+            <code>PeriodServices</code> verwaltet Buchungsperioden für Jahres-, Quartals- und
+            Monatsabschlüsse. Periodenabschlüsse sperren nachträgliche Buchungen und
+            ermöglichen die Erstellung von Periodenberichten. Das Budget-Modul erlaubt
+            die Planung und den Soll-Ist-Vergleich je Kostenstelle.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Funktion</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>Periodenanlage</td><td>Monat / Quartal / Jahr pro Organisation</td></tr>
+                <tr><td>Periodenabschluss</td><td>Buchungssperre, Saldovortrag</td></tr>
+                <tr><td>Budget</td><td>Planung je Kostenstelle und Periode</td></tr>
+                <tr><td>Anlagenbuchhaltung</td><td>Abschreibungsberechnungen (FixedAsset)</td></tr>
+                <tr><td>Reporting</td><td>GuV, Bilanz, Cashflow (GL-Reports)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="alert alert-warning py-2 small">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>Abschlussrisiko:</strong> Buchungen außerhalb abgeschlossener Perioden
+            werden technisch nicht verhindert — die Prüfung obliegt dem Anwendungsprozess.
+            Eine hardcodierte Prüfung fehlt; Customizing empfohlen.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 8. Modulabhängigkeiten ─────────────────────────────────────── -->
+    <section class="mb-5" id="abhaengigkeiten">
+      <h4 class="section-title"><i class="bi bi-share me-2 text-primary"></i>8. Modulabhängigkeiten</h4>
+
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    accounting -->|Bestelldaten für Rechnungen| order
+    accounting -->|Produktpreise, Steuerkategorien| product
+    accounting -->|Kunden- und Lieferantenstamm| party
+    order -->|Rechnungen und Zahlungen| accounting
+    shipment -->|Lieferkosten für Buchung| accounting
+    workeffort -->|Projektkosten| accounting
+            </pre>
+            <div class="diagram-caption">Abb. 5 — Modulabhängigkeiten des <code>accounting</code>-Moduls</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Modul</th><th>Nutzung</th></tr></thead>
+              <tbody>
+                <tr><td><code>order</code></td><td>Bestelldaten als Grundlage für Rechnungserzeugung</td></tr>
+                <tr><td><code>product</code></td><td>Produktpreise, Steuerkategorien, Kontenregeln</td></tr>
+                <tr><td><code>party</code></td><td>Kunden- und Lieferantenstammdaten</td></tr>
+                <tr><td><code>shipment</code></td><td>Lieferkosten für Eingangsrechnungsbuchung</td></tr>
+                <tr><td><code>workeffort</code></td><td>Projektzeiten und -kosten für GL</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- content-area -->
+</div><!-- main -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+</script>
+</body>
+</html>
