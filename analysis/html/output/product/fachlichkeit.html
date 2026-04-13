@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>product — Fachliche Beschreibung</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --sidebar-width: 220px; }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width); min-height: 100vh;
+      background: #1e2430; color: #c9d1d9;
+      position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem; font-weight: 700; color: #fff;
+      padding: 1.25rem 1rem .75rem; display: block;
+      text-decoration: none; border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0; padding: .35rem 1rem; font-size: .85rem;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff; background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
+      color: #4a5568; padding: .75rem 1rem .25rem;
+    }
+    #main { margin-left: var(--sidebar-width); min-height: 100vh; }
+    .page-header {
+      background: #f8f9fa; border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .section-title {
+      font-size: 1rem; font-weight: 600; color: #1e2430;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: .4rem; margin-bottom: 1rem;
+    }
+    .stat-pill {
+      background: #eef2ff; color: #3730a3; border-radius: 20px;
+      padding: .15rem .65rem; font-size: .78rem; font-weight: 600;
+    }
+    .diagram-box {
+      background: #fff; border: 1px solid #dee2e6;
+      border-radius: 8px; padding: 1.5rem;
+    }
+    .diagram-caption {
+      text-align: center; font-size: .78rem;
+      color: #64748b; margin-top: .5rem;
+    }
+    .domain-card {
+      border: 1px solid #e2e8f0; border-radius: 8px;
+      padding: 1rem 1.25rem; height: 100%;
+      border-left: 4px solid;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>OFBiz Docs
+  </a>
+  <div class="nav-section">Modul</div>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" href="index.html">
+        <i class="bi bi-box me-1"></i>Übersicht &amp; Klassen
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="fachlichkeit.html">
+        <i class="bi bi-book me-1"></i>Fachliche Beschreibung
+      </a>
+    </li>
+  </ul>
+  <div class="nav-section">Submodule</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="#produktmodell"><i class="bi bi-diagram-2 me-1"></i>Produktmodell</a></li>
+    <li class="nav-item"><a class="nav-link" href="#katalog"><i class="bi bi-folder me-1"></i>Katalog &amp; Kategorien</a></li>
+    <li class="nav-item"><a class="nav-link" href="#preisfindung"><i class="bi bi-currency-euro me-1"></i>Preisfindung</a></li>
+    <li class="nav-item"><a class="nav-link" href="#lager"><i class="bi bi-boxes me-1"></i>Lagerbestand</a></li>
+    <li class="nav-item"><a class="nav-link" href="#promotions"><i class="bi bi-gift me-1"></i>Promotions</a></li>
+    <li class="nav-item"><a class="nav-link" href="#versand"><i class="bi bi-truck me-1"></i>Versand</a></li>
+    <li class="nav-item"><a class="nav-link" href="#suche"><i class="bi bi-search me-1"></i>Produktsuche</a></li>
+    <li class="nav-item"><a class="nav-link" href="#content"><i class="bi bi-image me-1"></i>Bilder &amp; Content</a></li>
+    <li class="nav-item"><a class="nav-link" href="#abo"><i class="bi bi-arrow-repeat me-1"></i>Abonnements</a></li>
+  </ul>
+</nav>
+
+<div id="main">
+
+  <div class="page-header">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="../index.html">Übersicht</a></li>
+        <li class="breadcrumb-item"><a href="index.html">product</a></li>
+        <li class="breadcrumb-item active">Fachliche Beschreibung</li>
+      </ol>
+    </nav>
+    <h1><i class="bi bi-box me-2 text-primary"></i>Modul <code>product</code> — Fachliche Beschreibung</h1>
+    <p class="text-muted small mt-1 mb-2">
+      Zentrales Produktmanagement-Modul: Stammdaten, Katalog, Preisfindung, Lager, Promotions und Versand.
+    </p>
+    <div class="d-flex gap-2 flex-wrap">
+      <span class="stat-pill"><i class="bi bi-layers me-1"></i>19 Submodule</span>
+      <span class="stat-pill"><i class="bi bi-lightning me-1"></i>58 Klassen</span>
+      <span class="stat-pill"><i class="bi bi-diagram-2 me-1"></i>5 Domänen</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <!-- ── Einleitung ──────────────────────────────────────────────────── -->
+    <div class="alert alert-light border mb-4">
+      <p class="mb-2">
+        Das <code>product</code>-Modul ist das Herzstück des Produktkatalogs und deckt den vollständigen
+        Lebenszyklus eines Produkts ab — von der Anlage über Preisfindung, Lagerbestand und Aktionen
+        bis zur Auslieferung. Es ist eng verzahnt mit den Modulen <strong>order</strong>,
+        <strong>accounting</strong> und <strong>content</strong>.
+      </p>
+      <p class="mb-0">
+        Das Modul unterstützt sowohl <strong>B2C-Szenarien</strong> (Online-Shop mit SEO-URLs,
+        Aktionscodes, Bildverwaltung) als auch <strong>B2B-Szenarien</strong>
+        (Vereinbarungspreise, Mengenstaffeln, Lieferantenkonditionen, Abonnements).
+      </p>
+    </div>
+
+    <!-- ── 1. Produktmodell ────────────────────────────────────────────── -->
+    <section class="mb-5" id="produktmodell">
+      <h4 class="section-title"><i class="bi bi-diagram-2 me-2 text-primary"></i>1. Produktmodell</h4>
+
+      <div class="row g-4 mb-4">
+        <div class="col-lg-7">
+          <p>
+            Das Produktmodell unterscheidet zwischen drei grundlegenden <strong>Produkttypen</strong>
+            und zwei <strong>Lieferformen</strong>:
+          </p>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <div class="domain-card" style="border-left-color:#0d6efd">
+                <div class="fw-semibold mb-1"><i class="bi bi-diagram-3 me-1 text-primary"></i>Virtuelles Produkt</div>
+                <p class="small text-muted mb-0">
+                  Hülle für Varianten (z. B. T-Shirt in verschiedenen Farben und Größen).
+                  Selbst nicht bestellbar — Kunden wählen immer eine konkrete Variante.
+                  Gemeinsame Stammdaten (Beschreibung, Bilder) liegen auf der virtuellen Ebene.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="domain-card" style="border-left-color:#198754">
+                <div class="fw-semibold mb-1"><i class="bi bi-tag me-1 text-success"></i>Variante</div>
+                <p class="small text-muted mb-0">
+                  Konkrete, bestellbare Ausprägung eines virtuellen Produkts.
+                  Unterscheidet sich durch Merkmale wie Farbe, Größe, Material.
+                  Hat eigenen Lagerbestand und eigene SKU.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="domain-card" style="border-left-color:#6f42c1">
+                <div class="fw-semibold mb-1"><i class="bi bi-sliders me-1 text-purple"></i>Konfigurierbares Produkt</div>
+                <p class="small text-muted mb-0">
+                  Produkt, dessen Eigenschaften vom Kunden zur Bestellzeit konfiguriert werden
+                  (z. B. Computer mit wählbarer CPU, RAM, Festplatte).
+                  Erzeugt bei der Konfiguration eine eindeutige Instanz.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="domain-card" style="border-left-color:#fd7e14">
+                <div class="fw-semibold mb-1"><i class="bi bi-box2 me-1 text-warning"></i>Einfaches Produkt</div>
+                <p class="small text-muted mb-0">
+                  Direkt bestellbares Einzelprodukt ohne Varianten.
+                  Kann physisch (Warenversand) oder digital (Download/Zugang) sein.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="diagram-box">
+            <pre class="mermaid">
+graph TD
+  VP["🗂 Virtuelles Produkt<br/>(nicht bestellbar)"]
+  V1["📦 Variante A<br/>(z. B. Rot / S)"]
+  V2["📦 Variante B<br/>(z. B. Blau / M)"]
+  V3["📦 Variante C<br/>(z. B. Grün / L)"]
+  KP["⚙️ Konfigurierbares<br/>Produkt"]
+  I1["🔧 Instanz<br/>(Konfiguration X)"]
+  EP["📦 Einfaches<br/>Produkt"]
+
+  VP -->|PRODUCT_VARIANT| V1
+  VP -->|PRODUCT_VARIANT| V2
+  VP -->|PRODUCT_VARIANT| V3
+  KP -->|Instanz erzeugen| I1
+  EP
+
+  style VP fill:#dbeafe,stroke:#1d4ed8
+  style V1 fill:#dcfce7,stroke:#166534
+  style V2 fill:#dcfce7,stroke:#166534
+  style V3 fill:#dcfce7,stroke:#166534
+  style KP fill:#ede9fe,stroke:#6d28d9
+  style I1 fill:#f3e8ff,stroke:#7e22ce
+  style EP fill:#fff7ed,stroke:#c2410c
+            </pre>
+            <div class="diagram-caption">Produkt-Typ-Hierarchie</div>
+          </div>
+        </div>
+      </div>
+
+      <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Produktmerkmale (Features)</h6>
+      <p class="small">
+        Merkmale (Features) beschreiben die Eigenschaften eines Produkts und steuern die Variantenauswahl.
+        Sie sind typisiert (<code>color</code>, <code>size</code>, <code>weight</code> etc.) und können
+        als <strong>wählbar</strong> (Variantenauswahl durch Kunden), <strong>optisch</strong> (nur zur
+        Anzeige) oder <strong>standard</strong> (immer enthalten) klassifiziert sein. Für die
+        Variantenauswahl baut <code>ProductServices.prodMakeFeatureTree()</code> einen hierarchischen
+        Merkmalsbaum auf, der nur verfügbare Kombinationen anzeigt.
+      </p>
+    </section>
+
+    <!-- ── 2. Katalog & Kategorien ─────────────────────────────────────── -->
+    <section class="mb-5" id="katalog">
+      <h4 class="section-title"><i class="bi bi-folder me-2 text-warning"></i>2. Katalog &amp; Kategoriestruktur</h4>
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="diagram-box">
+            <pre class="mermaid">
+graph TD
+  S["🏪 ProductStore<br/>(Shop)"]
+  C1["📚 Katalog A"]
+  C2["📚 Katalog B"]
+  K1["🗂 Kategorie 1"]
+  K2["🗂 Kategorie 2"]
+  K3["🗂 Kategorie 3<br/>(Unterkategorie)"]
+  P1["📦 Produkt"]
+  P2["📦 Produkt"]
+  P3["📦 Produkt"]
+
+  S --> C1
+  S --> C2
+  C1 --> K1
+  C1 --> K2
+  K2 --> K3
+  K1 --> P1
+  K2 --> P2
+  K3 --> P3
+
+  style S fill:#fef9c3,stroke:#854d0e
+  style C1 fill:#dbeafe,stroke:#1d4ed8
+  style C2 fill:#dbeafe,stroke:#1d4ed8
+  style K1 fill:#dcfce7,stroke:#166534
+  style K2 fill:#dcfce7,stroke:#166534
+  style K3 fill:#bbf7d0,stroke:#166534
+            </pre>
+            <div class="diagram-caption">Store → Katalog → Kategorie → Produkt</div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <table class="table table-sm table-bordered">
+            <thead class="table-light">
+              <tr><th>Ebene</th><th>Entity</th><th>Bedeutung</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-semibold small">Shop</td>
+                <td><code class="small">ProductStore</code></td>
+                <td class="small text-muted">Konfiguration eines Verkaufskanals (Währung, Lagerhaltung, Checkout-Ablauf, Steuerkonfiguration)</td>
+              </tr>
+              <tr>
+                <td class="fw-semibold small">Katalog</td>
+                <td><code class="small">ProdCatalog</code></td>
+                <td class="small text-muted">Benannte Sammlung von Kategorien; ein Shop kann mehrere Kataloge führen</td>
+              </tr>
+              <tr>
+                <td class="fw-semibold small">Kategorie</td>
+                <td><code class="small">ProductCategory</code></td>
+                <td class="small text-muted">Hierarchische Einordnung der Produkte; beliebig tief verschachtelbar. Unterstützt SEO-URLs und Rollup-Mengen</td>
+              </tr>
+              <tr>
+                <td class="fw-semibold small">Mitgliedschaft</td>
+                <td><code class="small">ProductCategoryMember</code></td>
+                <td class="small text-muted">Zeitlich begrenzte Zuordnung eines Produkts zu einer Kategorie (fromDate / thruDate)</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="alert alert-info py-2 small">
+            <i class="bi bi-link-45deg me-1"></i>
+            <strong>SEO-URLs:</strong> <code>CatalogUrlFilter</code> und <code>SeoUrlUtil</code>
+            rewrite eingehende sprechende URLs (<code>/product/rotes-t-shirt</code>) auf interne
+            Katalog-Pfade — ohne Redirect, transparent für den Nutzer.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Preisfindung ─────────────────────────────────────────────── -->
+    <section class="mb-5" id="preisfindung">
+      <h4 class="section-title"><i class="bi bi-currency-euro me-2 text-success"></i>3. Preisfindung</h4>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <p class="small">
+            Die Preisfindung (<code>PriceServices</code>) wertet eine priorisierte Regelkette aus.
+            Jede Preisregel (<code>ProductPrice</code>) ist an Bedingungen geknüpft:
+            Gültigkeitszeitraum, Mengenstaffel, Kundengruppe, Vereinbarung oder Shop.
+            Der höchstpriorisierte zutreffende Preis gewinnt.
+          </p>
+          <div class="diagram-box">
+            <pre class="mermaid">
+flowchart TD
+  A([Preisanfrage]) --> B{Vereinbarungspreis\nvorhanden?}
+  B -- Ja --> C[Vereinbarungspreis\nanwenden]
+  B -- Nein --> D{Mengenstaffel\ntrifft zu?}
+  D -- Ja --> E[Staffelpreis\nanwenden]
+  D -- Nein --> F{Aktionspreis\ngültig?}
+  F -- Ja --> G[Aktionspreis\nanwenden]
+  F -- Nein --> H[Listenpreis\n DEFAULT_PRICE]
+  C --> I{Steuer\nberechnen?}
+  E --> I
+  G --> I
+  H --> I
+  I -- Ja --> J[Steuer addieren\nbzw. inkludieren]
+  I -- Nein --> K([Endpreis])
+  J --> K
+
+  style A fill:#dbeafe,stroke:#1d4ed8
+  style K fill:#dcfce7,stroke:#166534
+  style C fill:#fef9c3,stroke:#854d0e
+  style E fill:#fef9c3,stroke:#854d0e
+  style G fill:#fef9c3,stroke:#854d0e
+            </pre>
+            <div class="diagram-caption">Preisfindungs-Ablauf</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Preistypen</h6>
+          <table class="table table-sm table-bordered mb-3">
+            <thead class="table-light"><tr><th>Typ</th><th>Beschreibung</th></tr></thead>
+            <tbody>
+              <tr><td><code class="small">DEFAULT_PRICE</code></td><td class="small text-muted">Standardlistenpreis</td></tr>
+              <tr><td><code class="small">PROMO_PRICE</code></td><td class="small text-muted">Zeitlich befristeter Aktionspreis</td></tr>
+              <tr><td><code class="small">MINIMUM_PRICE</code></td><td class="small text-muted">Untergrenze für Rabatte</td></tr>
+              <tr><td><code class="small">AVERAGE_COST</code></td><td class="small text-muted">Durchschnittlicher Einstandspreis</td></tr>
+              <tr><td><code class="small">COMPETITIVE</code></td><td class="small text-muted">Wettbewerbspreis (manuell gepflegt)</td></tr>
+            </tbody>
+          </table>
+          <div class="alert alert-warning py-2 small">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>Vereinbarungspreise (Agreements):</strong> Im B2B-Kontext können
+            kundenspezifische Preise über <code>Agreement</code>-Datensätze hinterlegt
+            werden, die alle anderen Regeln übersteuern.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. Lagerbestand ─────────────────────────────────────────────── -->
+    <section class="mb-5" id="lager">
+      <h4 class="section-title"><i class="bi bi-boxes me-2 text-danger"></i>4. Lagerbestand &amp; Verfügbarkeit</h4>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <p class="small">
+            Der Lagerbestand wird pro <strong>Lager</strong> (<code>Facility</code>) und
+            pro <strong>Produkt</strong> geführt. Jede Bewegung (Wareneingang, Entnahme,
+            Umbuchung, Verbrauch) wird als <code>InventoryItemDetail</code> protokolliert.
+            Seriennummernpflichtige Produkte erhalten einen eigenen
+            <code>InventoryItem</code>-Datensatz pro Einheit.
+          </p>
+          <table class="table table-sm table-bordered">
+            <thead class="table-light"><tr><th>Service</th><th>Funktion</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><code class="small">isProductInStock</code></td>
+                <td class="small text-muted">Verfügbarkeitsprüfung (mit ATP-Berechnung)</td>
+              </tr>
+              <tr>
+                <td><code class="small">reserveProductInventory</code></td>
+                <td class="small text-muted">Reservierung für eine Bestellung</td>
+              </tr>
+              <tr>
+                <td><code class="small">issueOrderItemShipGrpInvRes</code></td>
+                <td class="small text-muted">Lagerentnahme bei Versand</td>
+              </tr>
+              <tr>
+                <td><code class="small">receiveInventoryProduct</code></td>
+                <td class="small text-muted">Wareneingang (erhöht Bestand)</td>
+              </tr>
+              <tr>
+                <td><code class="small">getProductInventoryAvailable</code></td>
+                <td class="small text-muted">QOH / ATP über alle Lager</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-lg-6">
+          <div class="diagram-box">
+            <pre class="mermaid">
+graph LR
+  WE["📥 Wareneingang<br/>receiveInventory"] --> II["📋 InventoryItem<br/>(QOH +)"]
+  II --> RES["🔒 Reservierung<br/>bei Bestellung"]
+  RES --> ENT["📤 Lagerentnahme<br/>bei Versand"]
+  ENT --> II2["📋 InventoryItem<br/>(QOH −)"]
+  UMB["🔄 Umbuchung"] --> II
+  VER["🗑 Verbrauch/\nAbschreibung"] --> II2
+
+  style WE fill:#dcfce7,stroke:#166534
+  style ENT fill:#fee2e2,stroke:#991b1b
+  style RES fill:#fef9c3,stroke:#854d0e
+  style II fill:#dbeafe,stroke:#1d4ed8
+  style II2 fill:#dbeafe,stroke:#1d4ed8
+            </pre>
+            <div class="diagram-caption">Lagerbestandsbewegungen</div>
+          </div>
+          <div class="alert alert-info py-2 mt-2 small">
+            <i class="bi bi-info-circle me-1"></i>
+            <strong>ATP vs. QOH:</strong> <em>Quantity On Hand</em> (physischer Bestand) minus
+            offene Reservierungen ergibt <em>Available To Promise</em> — der Wert, der dem Kunden
+            im Shop angezeigt wird.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Promotions & Aktionen ────────────────────────────────────── -->
+    <section class="mb-5" id="promotions">
+      <h4 class="section-title"><i class="bi bi-gift me-2 text-danger"></i>5. Promotions &amp; Aktionen</h4>
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="diagram-box">
+            <pre class="mermaid">
+flowchart TD
+  W([Warenkorb]) --> PC{Promo-Bedingung\nerfüllt?}
+  PC -- Nein --> END([Keine Aktion])
+  PC -- Ja --> AT{Aktionstyp?}
+  AT --> RB["💸 Rabatt\n(% oder Fixbetrag)"]
+  AT --> GA["🎁 Gratisartikel\n(free item)"]
+  AT --> VS["🚚 Kostenloser\nVersand"]
+  AT --> SU["➕ Aufwertung\n(upgrade)"]
+  RB --> OA["📝 OrderAdjustment\n anlegen"]
+  GA --> OA
+  VS --> OA
+  SU --> OA
+
+  style W fill:#dbeafe,stroke:#1d4ed8
+  style OA fill:#dcfce7,stroke:#166534
+  style END fill:#f1f5f9,stroke:#94a3b8
+            </pre>
+            <div class="diagram-caption">Promotions-Auswertungsablauf</div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <p class="small">
+            Promotions (<code>ProductPromo</code>) bestehen aus <strong>Bedingungen</strong>
+            (<code>ProductPromoCondServices</code>) und <strong>Aktionen</strong>
+            (<code>ProductPromoActionServices</code>), die bei Erfüllung Auftragsanpassungen
+            (<code>OrderAdjustment</code>) erzeugen.
+          </p>
+          <h6 class="text-muted text-uppercase mt-3" style="font-size:.72rem;letter-spacing:.07em">Bedingungstypen</h6>
+          <ul class="small text-muted mb-3">
+            <li>Mindestumsatz / Mindestmenge im Warenkorb</li>
+            <li>Bestimmte Produkte oder Kategorien enthalten</li>
+            <li>Kundengruppe / Kundenstatus (Neukunde, VIP)</li>
+            <li>Gültiger Promo-Code eingegeben</li>
+            <li>Zeitraum (fromDate / thruDate)</li>
+          </ul>
+          <h6 class="text-muted text-uppercase" style="font-size:.72rem;letter-spacing:.07em">Aktionstypen</h6>
+          <ul class="small text-muted">
+            <li>Prozentualer Rabatt auf Warenkorb oder einzelne Positionen</li>
+            <li>Fixer Rabattbetrag</li>
+            <li>Gratisartikel (automatisch in den Warenkorb legen)</li>
+            <li>Kostenloser Versand</li>
+            <li>Produkt-Upgrade (günstigere Variante durch teurere ersetzen)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Versand & Kommissionierung ───────────────────────────────── -->
+    <section class="mb-5" id="versand">
+      <h4 class="section-title"><i class="bi bi-truck me-2 text-secondary"></i>6. Versand &amp; Kommissionierung</h4>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid">
+flowchart LR
+  O["📋 Bestellung\nbestätigt"] --> PL["📄 Pickliste\nerstellen"]
+  PL --> PK["📦 Kommissionierung\n(Picking)"]
+  PK --> PA["📦 Verpackung\n(Packing)"]
+  PA --> SH["🚚 Sendung\n(Shipment)"]
+  SH --> TR["🛣 Transport\n(RouteSegment)"]
+  TR --> DE["✅ Zustellung\n(Delivered)"]
+  WE["📥 Wareneingang\n(Receipt)"] -.->|Rückgabe| O
+
+  style O fill:#dbeafe,stroke:#1d4ed8
+  style DE fill:#dcfce7,stroke:#166534
+  style WE fill:#fef9c3,stroke:#854d0e
+            </pre>
+            <div class="diagram-caption">Versand- und Kommissionierungsablauf</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <table class="table table-sm table-bordered">
+            <thead class="table-light"><tr><th>Klasse</th><th>Verantwortung</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><code class="small">PicklistServices</code></td>
+                <td class="small text-muted">Picklisten generieren, zuweisen, abschließen</td>
+              </tr>
+              <tr>
+                <td><code class="small">ShipmentServices</code></td>
+                <td class="small text-muted">Sendungen anlegen, Pakete packen, Labels</td>
+              </tr>
+              <tr>
+                <td><code class="small">ShipmentReceiptServices</code></td>
+                <td class="small text-muted">Wareneingang (erhöht Lagerbestand)</td>
+              </tr>
+              <tr>
+                <td><code class="small">IssuanceServices</code></td>
+                <td class="small text-muted">Lagerentnahme beim Versand</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="small text-muted">
+            Versandkosten werden über <code>ShipmentCostEstimate</code>-Regeln berechnet, die
+            nach Versandmethode, Gewicht, Postleitzahl und Shop-Konfiguration differenzieren.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. Produktsuche ─────────────────────────────────────────────── -->
+    <section class="mb-5" id="suche">
+      <h4 class="section-title"><i class="bi bi-search me-2 text-primary"></i>7. Produktsuche</h4>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <p class="small">
+            Die Produktsuche (<code>ProductSearch</code>, <code>ParametricSearch</code>) ist
+            datenbankbasiert und kombiniert mehrere Einschränkungstypen:
+          </p>
+          <ul class="small text-muted">
+            <li><strong>Keyword-Suche</strong> — Volltext über den <code>ProductKeyword</code>-Index,
+              der automatisch aus Produktnamen, Beschreibungen und Kategorien aufgebaut wird</li>
+            <li><strong>Kategorie-Filter</strong> — rekursiv über alle Unterkategorien</li>
+            <li><strong>Merkmalsfilter</strong> — parametrische Suche nach Feature-Werten</li>
+            <li><strong>Preis-Bereich</strong> — Min/Max-Preisfilter</li>
+            <li><strong>Lager-Filter</strong> — nur verfügbare Produkte</li>
+          </ul>
+          <p class="small text-muted">
+            Suchanfragen werden in der <code>ProductSearchSession</code> gespeichert,
+            sodass Nutzer ihre Suche verfeinern können, ohne Parameter neu eingeben zu müssen.
+          </p>
+        </div>
+        <div class="col-lg-6">
+          <div class="alert alert-light border small">
+            <strong>Keyword-Indexierung (<code>KeywordIndex</code>):</strong><br>
+            Beim Speichern oder Aktualisieren eines Produkts wird automatisch ein
+            Keyword-Index aufgebaut. Stemming und Stopword-Filter verbessern die Trefferqualität.
+            Der Index wird in <code>ProductKeyword</code> gespeichert und bei der Suche
+            mit einem Relevanz-Score versehen.
+          </div>
+          <div class="alert alert-warning py-2 small mt-2">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            Die Suche ist <strong>datenbankbasiert</strong> (kein Elasticsearch / Solr).
+            Bei großen Produktkatalogen kann dies ein Performance-Engpass sein.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 8. Bilder & Content ─────────────────────────────────────────── -->
+    <section class="mb-5" id="content">
+      <h4 class="section-title"><i class="bi bi-image me-2 text-info"></i>8. Bilder &amp; Content</h4>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <p class="small">
+            Produktbilder werden in vier Standardgrößen verwaltet:
+            <code>small</code>, <code>medium</code>, <code>large</code> und <code>detail</code>.
+            <code>ScaleImage</code> skaliert beim Upload automatisch in alle Größen.
+            Das erweiterte Modul <code>imagemanagement</code> bietet zusätzlich:
+          </p>
+          <ul class="small text-muted">
+            <li>Upload und Zuschneiden (Crop)</li>
+            <li>Drehen und Rahmen hinzufügen</li>
+            <li>Genehmigungsworkflow (Approved / Rejected)</li>
+            <li>Mehrere Zusatzbilder pro Produkt (<em>Additional Views</em>)</li>
+          </ul>
+        </div>
+        <div class="col-lg-6">
+          <p class="small">
+            Produkttexte (Beschreibungen, Marketing-Texte) werden über das
+            <code>content</code>-Modul als <code>Content</code>-Objekte verwaltet und
+            über <code>ProductContentWrapper</code> für Templates bereitgestellt.
+            Dies ermöglicht mehrsprachige Inhalte über <code>ContentAssoc</code>-Verknüpfungen
+            und zeitlich gesteuerte Veröffentlichung.
+          </p>
+          <table class="table table-sm table-bordered">
+            <thead class="table-light"><tr><th>Content-Typ</th><th>Verwendung</th></tr></thead>
+            <tbody>
+              <tr><td><code class="small">PRODUCT_IMAGE</code></td><td class="small text-muted">Hauptbild</td></tr>
+              <tr><td><code class="small">ADDITIONAL_IMAGE</code></td><td class="small text-muted">Zusatzbild (Galerie)</td></tr>
+              <tr><td><code class="small">PRODUCT_DESCRIPTION</code></td><td class="small text-muted">Kurzbeschreibung</td></tr>
+              <tr><td><code class="small">PRODUCT_LONG_DESC</code></td><td class="small text-muted">Langbeschreibung</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 9. Abonnements ─────────────────────────────────────────────── -->
+    <section class="mb-5" id="abo">
+      <h4 class="section-title"><i class="bi bi-arrow-repeat me-2 text-success"></i>9. Abonnements</h4>
+      <p class="small">
+        Das Submodul <code>subscription</code> ermöglicht die Verwaltung wiederkehrender
+        Leistungen (z. B. Software-Lizenzen, Mitgliedschaften, Zeitschriften).
+        <code>SubscriptionServices</code> prüft Berechtigungen, verlängert Laufzeiten automatisch
+        und setzt Ablaufdaten beim Kauf oder Wareneingang.
+      </p>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#0d6efd">
+            <div class="fw-semibold small mb-1">Laufzeitverlängerung</div>
+            <p class="small text-muted mb-0">Beim Kauf oder Eingang eines Abonnementprodukts wird die Laufzeit automatisch um die konfigurierte Periode verlängert.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#198754">
+            <div class="fw-semibold small mb-1">Berechtigungsprüfung</div>
+            <p class="small text-muted mb-0">Services prüfen, ob ein Nutzer zum aktuellen Zeitpunkt berechtigt ist, auf ein abonniertes Produkt oder eine Leistung zuzugreifen.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#fd7e14">
+            <div class="fw-semibold small mb-1">Ablaufmanagement</div>
+            <p class="small text-muted mb-0">Abgelaufene Abonnements können automatisch deaktiviert oder zur Verlängerung vorgemerkt werden.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Abhängigkeiten ─────────────────────────────────────────────── -->
+    <section class="mb-5">
+      <h4 class="section-title"><i class="bi bi-diagram-3 me-2 text-secondary"></i>Modulabhängigkeiten</h4>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="diagram-box">
+            <pre class="mermaid">
+graph LR
+  P["📦 product"]
+  O["🛒 order"]
+  A["💰 accounting"]
+  C["📄 content"]
+  S["🚚 shipment"]
+  PA["👤 party"]
+
+  O -->|Bestellpositionen,\nPreisabfragen| P
+  A -->|Kostenermittlung| P
+  P -->|Produktbilder,\nTexte| C
+  S -->|Lagerentnahme,\nVersandkosten| P
+  O -->|Lieferungen| S
+  PA -->|Lieferadresse,\nKundengruppe| P
+
+  style P fill:#dbeafe,stroke:#1d4ed8,font-weight:bold
+            </pre>
+            <div class="diagram-caption">Abhängigkeiten zu anderen Modulen</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <table class="table table-sm table-bordered">
+            <thead class="table-light"><tr><th>Modul</th><th>Beziehung zu <code>product</code></th></tr></thead>
+            <tbody>
+              <tr>
+                <td><code class="small">order</code></td>
+                <td class="small text-muted">Liest Produktdaten, Preise, Lagerverfügbarkeit; schreibt Reservierungen</td>
+              </tr>
+              <tr>
+                <td><code class="small">accounting</code></td>
+                <td class="small text-muted">Liest Einstandspreise und Kostenstrukturen für Buchungen</td>
+              </tr>
+              <tr>
+                <td><code class="small">content</code></td>
+                <td class="small text-muted">Speichert Produktbilder und -texte als Content-Objekte</td>
+              </tr>
+              <tr>
+                <td><code class="small">shipment</code></td>
+                <td class="small text-muted">Löst Lagerentnahmen aus; berechnet Versandkosten</td>
+              </tr>
+              <tr>
+                <td><code class="small">party</code></td>
+                <td class="small text-muted">Liefert Kundenzuordnung für Vereinbarungspreise und Geo-Checks</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true, theme:'default', flowchart:{curve:'basis'}});</script>
+</body>
+</html>

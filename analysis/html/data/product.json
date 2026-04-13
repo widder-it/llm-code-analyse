@@ -1804,5 +1804,6 @@
   "stats": {
     "classes": 58,
     "methods": 257
-  }
+  },
+  "fachlichkeit": "fachlichkeit.html"
 }
