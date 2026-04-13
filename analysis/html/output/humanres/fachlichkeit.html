@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>humanres — Fachliche Beschreibung</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --sidebar-width: 220px; }
+    body { font-size: .925rem; }
+    #sidebar { width: var(--sidebar-width); min-height: 100vh; background: #1e2430; color: #c9d1d9; position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100; }
+    #sidebar .sidebar-brand { font-size: 1rem; font-weight: 700; color: #fff; padding: 1.25rem 1rem .75rem; display: block; text-decoration: none; border-bottom: 1px solid #2d3748; }
+    #sidebar .nav-link { color: #a0aec0; padding: .35rem 1rem; font-size: .85rem; }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active { color: #fff; background: #2d3748; }
+    #sidebar .nav-section { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: #4a5568; padding: .75rem 1rem .25rem; }
+    #main { margin-left: var(--sidebar-width); min-height: 100vh; }
+    .page-header { background: #f8f9fa; border-bottom: 1px solid #dee2e6; padding: 1.5rem 2rem; }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .section-title { font-size: 1rem; font-weight: 600; color: #1e2430; border-bottom: 2px solid #e2e8f0; padding-bottom: .4rem; margin-bottom: 1rem; }
+    .stat-pill { background: #eef2ff; color: #3730a3; border-radius: 20px; padding: .15rem .65rem; font-size: .78rem; font-weight: 600; }
+    .diagram-box { background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; }
+    .diagram-caption { text-align: center; font-size: .78rem; color: #64748b; margin-top: .5rem; }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html"><i class="bi bi-diagram-3 me-2"></i>Architekturdoku</a>
+  <div class="nav-section">Modul</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-box me-1"></i>Übersicht &amp; Klassen</a></li>
+    <li class="nav-item"><a class="nav-link active" href="fachlichkeit.html"><i class="bi bi-book me-1"></i>Fachliche Beschreibung</a></li>
+  </ul>
+  <div class="nav-section">Abschnitte</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="#modell"><i class="bi bi-diagram-2 me-1"></i>Datenmodell</a></li>
+    <li class="nav-item"><a class="nav-link" href="#organigramm"><i class="bi bi-people me-1"></i>Organigramm</a></li>
+    <li class="nav-item"><a class="nav-link" href="#stellen"><i class="bi bi-briefcase me-1"></i>Stellen</a></li>
+    <li class="nav-item"><a class="nav-link" href="#abhaengigkeiten"><i class="bi bi-share me-1"></i>Modulabhängigkeiten</a></li>
+  </ul>
+</nav>
+
+<div id="main">
+  <div class="page-header">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="../index.html">Übersicht</a></li>
+        <li class="breadcrumb-item"><a href="index.html">humanres</a></li>
+        <li class="breadcrumb-item active">Fachliche Beschreibung</li>
+      </ol>
+    </nav>
+    <h1><i class="bi bi-box me-2 text-primary"></i>Modul <code>humanres</code> — Fachliche Beschreibung</h1>
+    <p class="text-muted small mt-1 mb-2">Human Resources: Organisationsstruktur, Stellen, Stelleninhaber und Organigramm-Visualisierung.</p>
+    <div class="d-flex gap-2 flex-wrap">
+      <span class="stat-pill"><i class="bi bi-layers me-1"></i>2 Submodule</span>
+      <span class="stat-pill"><i class="bi bi-lightning me-1"></i>2 Klassen</span>
+      <span class="stat-pill"><i class="bi bi-diagram-3 me-1"></i>JSON-Organigramm</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <div class="alert alert-light border mb-4">
+      <p class="mb-2">
+        Das <code>humanres</code>-Modul verwaltet die Organisationsstruktur und das Stellenmanagement.
+        Es baut auf dem <code>party</code>-Modul auf: Mitarbeiter sind Parteien vom Typ
+        <code>Person</code>, Abteilungen sind <code>PartyGroup</code>-Einträge und die
+        Zugehörigkeit wird über <code>PartyRelationship</code> modelliert.
+      </p>
+      <p class="mb-0">
+        Der Funktionsumfang des Moduls ist bewusst schlank gehalten: Es stellt primär die
+        Infrastruktur für Organigramm-Darstellung und Stellenverwaltung bereit.
+        Gehaltsabrechnung, Urlaubsverwaltung und Zeiterfassung sind nicht Teil dieses Moduls.
+      </p>
+    </div>
+
+    <!-- ── 1. Datenmodell ─────────────────────────────────────────────── -->
+    <section class="mb-5" id="modell">
+      <h4 class="section-title"><i class="bi bi-diagram-2 me-2 text-primary"></i>1. Datenmodell</h4>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    EP[EmplPosition\nStelle] --> EPF[EmplPositionFulfillment\nStellenzuordnung]
+    EPF --> P[Party\nPerson = Mitarbeiter]
+    EP --> EPT[EmplPositionType\nStellentyp]
+    EP --> EPR[EmplPositionReportingStruct\nBerichtslinie]
+    EPR --> EP2[EmplPosition\nVorgesetzte Stelle]
+    P --> PR[PartyRelationship\nMITGLIEDSCHAFT\nABTEILUNG]
+    PR --> PG[PartyGroup\nAbteilung]
+            </pre>
+            <div class="diagram-caption">Abb. 1 — HR-Datenmodell: Stellen, Stelleninhaber und Berichtslinien</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Entity</th><th>Bedeutung</th></tr></thead>
+              <tbody>
+                <tr><td><code>EmplPosition</code></td><td>Stelle in der Organisationsstruktur (z.&nbsp;B. „Leiter Einkauf")</td></tr>
+                <tr><td><code>EmplPositionFulfillment</code></td><td>Zuordnung einer Person zu einer Stelle (zeitlich befristet)</td></tr>
+                <tr><td><code>EmplPositionType</code></td><td>Kategorie der Stelle (Vollzeit, Teilzeit, Führungskraft)</td></tr>
+                <tr><td><code>EmplPositionReportingStruct</code></td><td>Berichtslinie: Stelle → übergeordnete Stelle</td></tr>
+                <tr><td><code>PartyRelationship</code></td><td>Abteilungszugehörigkeit (Person → PartyGroup)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-info py-2 small mt-2">
+            <i class="bi bi-info-circle me-1"></i>
+            Eine Stelle kann unbesetzt sein (keine aktive <code>EmplPositionFulfillment</code>)
+            oder mehrfach besetzt (z.&nbsp;B. Jobsharing). Die Zuordnung ist zeitlich
+            befristet — Stellenwechsel werden historisiert.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Organigramm ─────────────────────────────────────────────── -->
+    <section class="mb-5" id="organigramm">
+      <h4 class="section-title"><i class="bi bi-people me-2 text-primary"></i>2. Organigramm-Visualisierung</h4>
+      <div class="row g-4">
+        <div class="col-md-7">
+          <p class="small text-muted mb-3">
+            <code>HumanResEvents</code> baut einen JSON-kompatiblen Baum der Organisationshierarchie auf.
+            Startpunkt ist eine Stelle; rekursiv werden alle untergeordneten Stellen und ihre
+            aktuellen Stelleninhaber eingesammelt. Das Ergebnis wird als JSON an die
+            Web-Oberfläche übergeben, die daraus ein interaktives Organigramm rendert.
+          </p>
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    CEO[CEO\nMax Mustermann] --> CFO[CFO\nAnna Schmidt]
+    CEO --> COO[COO\nTom Meier]
+    CFO --> ACC[Leiter Buchhaltung\nUnbesetzt]
+    CFO --> CTR[Controller\nLisa Braun]
+    COO --> LOG[Leiter Logistik\nPeter Klein]
+    COO --> IT[Leiter IT\nKai Hoffmann]
+
+    style CEO fill:#3b82f6,color:#fff
+    style CFO fill:#8b5cf6,color:#fff
+    style COO fill:#8b5cf6,color:#fff
+    style ACC fill:#e5e7eb,color:#374151
+            </pre>
+            <div class="diagram-caption">Abb. 2 — Beispiel-Organigramm: Stellen mit Stelleninhabern (grau = unbesetzt)</div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="table-responsive mb-3">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>JSON-Feld</th><th>Inhalt</th></tr></thead>
+              <tbody>
+                <tr><td><code>positionId</code></td><td>Stellen-ID</td></tr>
+                <tr><td><code>positionName</code></td><td>Bezeichnung der Stelle</td></tr>
+                <tr><td><code>partyId</code></td><td>Aktueller Stelleninhaber</td></tr>
+                <tr><td><code>name</code></td><td>Formatierter Name der Person</td></tr>
+                <tr><td><code>children</code></td><td>Untergeordnete Stellen (rekursiv)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-warning py-2 small">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            Der Organigramm-Baum wird zur Laufzeit aus der Datenbank aufgebaut —
+            bei tiefer Hierarchie und vielen Stellen kann dies zu Performance-Engpässen
+            führen. Ein Caching-Mechanismus ist nicht implementiert.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Stellen ─────────────────────────────────────────────────── -->
+    <section class="mb-5" id="stellen">
+      <h4 class="section-title"><i class="bi bi-briefcase me-2 text-primary"></i>3. Stellen &amp; Kategorien</h4>
+      <div class="row g-4">
+        <div class="col-md-7">
+          <p class="small text-muted mb-2">
+            Das Kategorien-Submodul (<code>humanres.category</code>) verwaltet Stellenkategorien
+            und -klassifikationen. Stellen können nach Funktion, Ebene oder Bereich gruppiert
+            werden — als Basis für Berechtigungsgruppen, Gehaltsgruppen oder Berichtsfilter.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Stellenattribut</th><th>Beispiel</th></tr></thead>
+              <tbody>
+                <tr><td>Stellentyp</td><td>Vollzeit, Teilzeit, Projektmitarbeiter</td></tr>
+                <tr><td>Statuscode</td><td>Aktiv, Vakant, Eingefroren</td></tr>
+                <tr><td>Budgetiert</td><td>Ja / Nein (Planstelle)</td></tr>
+                <tr><td>Temporär</td><td>Befristete Stelle</td></tr>
+                <tr><td>Gehaltsgruppe</td><td>Klassifikation für Vergütungsrahmen</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="alert alert-info py-2 small">
+            <i class="bi bi-info-circle me-1"></i>
+            <strong>Abgrenzung zu <code>party</code>:</strong> Das <code>humanres</code>-Modul
+            modelliert <em>Stellen</em> (organisatorische Positionen, unabhängig von Personen).
+            Die Personen selbst — mit ihren Kontaktdaten und Beziehungen — verbleiben im
+            <code>party</code>-Modul. Die Verknüpfung erfolgt über
+            <code>EmplPositionFulfillment</code>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. Modulabhängigkeiten ─────────────────────────────────────── -->
+    <section class="mb-5" id="abhaengigkeiten">
+      <h4 class="section-title"><i class="bi bi-share me-2 text-primary"></i>4. Modulabhängigkeiten</h4>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    humanres -->|Mitarbeiterstammdaten| party
+    humanres -->|Abteilungs-PartyGroups| party
+    accounting -->|Lohnkosten nach Stelle| humanres
+    workeffort -->|Mitarbeiter-Aufgaben| humanres
+
+    style humanres fill:#3b82f6,color:#fff
+            </pre>
+            <div class="diagram-caption">Abb. 3 — Modulabhängigkeiten von <code>humanres</code></div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Modul</th><th>Beziehung</th></tr></thead>
+              <tbody>
+                <tr><td><code>party</code></td><td>Mitarbeiter als Personen; Abteilungen als PartyGroups (Fundament)</td></tr>
+                <tr><td><code>accounting</code></td><td>Lohnkosten und Budgets nach Kostenstelle / Stelle</td></tr>
+                <tr><td><code>workeffort</code></td><td>Mitarbeiter-Aufgaben, Zeiterfassung nach Stelle</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+</script>
+</body>
+</html>

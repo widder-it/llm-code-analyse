@@ -220,5 +220,6 @@
   "stats": {
     "classes": 8,
     "methods": 10
-  }
+  },
+  "fachlichkeit": "fachlichkeit.html"
 }

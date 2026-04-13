@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>content — Fachliche Beschreibung</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --sidebar-width: 220px; }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width); min-height: 100vh;
+      background: #1e2430; color: #c9d1d9;
+      position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100;
+    }
+    #sidebar .sidebar-brand { font-size: 1rem; font-weight: 700; color: #fff; padding: 1.25rem 1rem .75rem; display: block; text-decoration: none; border-bottom: 1px solid #2d3748; }
+    #sidebar .nav-link { color: #a0aec0; padding: .35rem 1rem; font-size: .85rem; }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active { color: #fff; background: #2d3748; }
+    #sidebar .nav-section { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: #4a5568; padding: .75rem 1rem .25rem; }
+    #main { margin-left: var(--sidebar-width); min-height: 100vh; }
+    .page-header { background: #f8f9fa; border-bottom: 1px solid #dee2e6; padding: 1.5rem 2rem; }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .section-title { font-size: 1rem; font-weight: 600; color: #1e2430; border-bottom: 2px solid #e2e8f0; padding-bottom: .4rem; margin-bottom: 1rem; }
+    .stat-pill { background: #eef2ff; color: #3730a3; border-radius: 20px; padding: .15rem .65rem; font-size: .78rem; font-weight: 600; }
+    .diagram-box { background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; }
+    .diagram-caption { text-align: center; font-size: .78rem; color: #64748b; margin-top: .5rem; }
+    .domain-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 1.25rem; height: 100%; border-left: 4px solid; }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html"><i class="bi bi-diagram-3 me-2"></i>Architekturdoku</a>
+  <div class="nav-section">Modul</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-box me-1"></i>Übersicht &amp; Klassen</a></li>
+    <li class="nav-item"><a class="nav-link active" href="fachlichkeit.html"><i class="bi bi-book me-1"></i>Fachliche Beschreibung</a></li>
+  </ul>
+  <div class="nav-section">Abschnitte</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="#modell"><i class="bi bi-diagram-2 me-1"></i>Datenmodell</a></li>
+    <li class="nav-item"><a class="nav-link" href="#rendering"><i class="bi bi-code-slash me-1"></i>Rendering</a></li>
+    <li class="nav-item"><a class="nav-link" href="#cms"><i class="bi bi-window me-1"></i>CMS &amp; Website</a></li>
+    <li class="nav-item"><a class="nav-link" href="#berechtigungen"><i class="bi bi-shield-check me-1"></i>Berechtigungen</a></li>
+    <li class="nav-item"><a class="nav-link" href="#survey"><i class="bi bi-card-checklist me-1"></i>Umfragen</a></li>
+    <li class="nav-item"><a class="nav-link" href="#dateitransfer"><i class="bi bi-arrow-up-right-square me-1"></i>FTP / SFTP</a></li>
+    <li class="nav-item"><a class="nav-link" href="#suche"><i class="bi bi-search me-1"></i>Suche</a></li>
+    <li class="nav-item"><a class="nav-link" href="#abhaengigkeiten"><i class="bi bi-share me-1"></i>Modulabhängigkeiten</a></li>
+  </ul>
+</nav>
+
+<div id="main">
+  <div class="page-header">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="../index.html">Übersicht</a></li>
+        <li class="breadcrumb-item"><a href="index.html">content</a></li>
+        <li class="breadcrumb-item active">Fachliche Beschreibung</li>
+      </ol>
+    </nav>
+    <h1><i class="bi bi-box me-2 text-primary"></i>Modul <code>content</code> — Fachliche Beschreibung</h1>
+    <p class="text-muted small mt-1 mb-2">Zentrales Content-Management-Framework: strukturierte Inhalte, Rendering, CMS, Umfragen, FTP-Transfer und Volltextsuche.</p>
+    <div class="d-flex gap-2 flex-wrap">
+      <span class="stat-pill"><i class="bi bi-layers me-1"></i>16 Submodule</span>
+      <span class="stat-pill"><i class="bi bi-lightning me-1"></i>28 Klassen</span>
+      <span class="stat-pill"><i class="bi bi-file-earmark-text me-1"></i>FreeMarker + FOP</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <div class="alert alert-light border mb-4">
+      <p class="mb-2">
+        Das <code>content</code>-Modul ist das Content-Management-Framework des Systems. Es verwaltet
+        strukturierte Inhaltsobjekte (<code>Content</code>, <code>DataResource</code>) mit
+        Assoziationen, Lokalisierung, Zugriffskontrolle und verschiedenen Rendering-Mechanismen.
+        Es dient als gemeinsame Infrastruktur für alle anderen Module, die Inhalte anzeigen oder
+        verwalten — Produktbeschreibungen, Profilbilder, Auftragsnotizen, CMS-Seiten, Blogs.
+      </p>
+      <p class="mb-0">
+        Spezialisierte Submodule erweitern den Kern: Umfragen mit PDF-Integration,
+        FTP/SFTP-Dateitransfer, Blog-RSS-Feeds, CMS-Seitenverwaltung und PDF-Ausgabe via Apache FOP.
+      </p>
+    </div>
+
+    <!-- ── 1. Datenmodell ─────────────────────────────────────────────── -->
+    <section class="mb-5" id="modell">
+      <h4 class="section-title"><i class="bi bi-diagram-2 me-2 text-primary"></i>1. Datenmodell: Content und DataResource</h4>
+      <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    C[Content\nStrukturknoten] --> DR[DataResource\nTatsächliche Daten]
+    C --> CA[ContentAssoc\nBeziehung zu\nanderem Content]
+    C --> CP[ContentPurpose\nVerwendungszweck]
+    C --> CL[ContentLocale\nSprachvariante]
+    DR --> ET[ElectronicText\nText in DB]
+    DR --> IF[ImageDataResource\nBinärbild in DB]
+    DR --> FF[FileDataResource\nDateipfad]
+    DR --> UR[URLDataResource\nURL-Referenz]
+    CA --> C2[Content\nKind / Eltern]
+            </pre>
+            <div class="diagram-caption">Abb. 1 — Zweistufiges Content-Modell: Struktur (Content) und Daten (DataResource)</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <p class="small text-muted mb-3">
+            Das Modell trennt bewusst <strong>Strukturknoten</strong> (<code>Content</code>) von den
+            <strong>tatsächlichen Daten</strong> (<code>DataResource</code>). Ein Content-Knoten
+            beschreibt Metadaten, Beziehungen und Zugriff; die DataResource enthält den eigentlichen
+            Inhalt — als Text in der Datenbank, als Binärbild, als Dateipfad oder als URL.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>DataResource-Typ</th><th>Speicherort</th></tr></thead>
+              <tbody>
+                <tr><td><code>ELECTRONIC_TEXT</code></td><td>Text in DB-Tabelle <code>ElectronicText</code></td></tr>
+                <tr><td><code>IMAGE_OBJECT</code></td><td>Binärbild in DB</td></tr>
+                <tr><td><code>LOCAL_FILE</code></td><td>Dateipfad im Dateisystem</td></tr>
+                <tr><td><code>URL_RESOURCE</code></td><td>Externe URL-Referenz</td></tr>
+                <tr><td><code>OFBIZ_FILE</code></td><td>Relativer Pfad im OFBiz-Verzeichnis</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Rendering ───────────────────────────────────────────────── -->
+    <section class="mb-5" id="rendering">
+      <h4 class="section-title"><i class="bi bi-code-slash me-2 text-primary"></i>2. Rendering</h4>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart TD
+    A([Content-ID\nangefordert]) --> B[ContentWorker\nRendering-Engine]
+    B --> C{DataResource-Typ}
+    C -- ElectronicText --> D[FreeMarker\nTemplate-Engine]
+    C -- Image --> E[Binärbild\ndirekt ausliefern]
+    C -- LocalFile --> F[Datei\nlesen]
+    C -- URL --> G[HTTP-Redirect\noder Proxy]
+    D --> H{Mime-Typ}
+    H -- text/html --> I[HTML\nan Browser]
+    H -- application/pdf --> J[Apache FOP\nXSL-FO → PDF]
+    H -- application/rss+xml --> K[RSS-Feed]
+    I --> L([HTTP-Response])
+    J --> L
+    K --> L
+            </pre>
+            <div class="diagram-caption">Abb. 2 — Rendering-Pipeline: von der Content-ID zur HTTP-Response</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <p class="small text-muted mb-3">
+            <code>ContentWorker</code> ist die zentrale Rendering-Engine. Sie traversiert
+            Content-Assoziationsbäume, löst Sprachvarianten auf und rendert den Inhalt
+            je nach Mime-Typ über unterschiedliche Ausgabekanäle.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Renderer</th><th>Ausgabe</th></tr></thead>
+              <tbody>
+                <tr><td>FreeMarker</td><td>HTML, Text, XML — dynamisch</td></tr>
+                <tr><td>Apache FOP</td><td>PDF aus XSL-FO (via <code>OutputServices</code>)</td></tr>
+                <tr><td>Direktauslieferung</td><td>Bilder, Dateien, Downloads</td></tr>
+                <tr><td>RSS</td><td>Blog-Feeds (via <code>BlogRssServices</code>)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-info py-2 small mt-2">
+            <i class="bi bi-info-circle me-1"></i>
+            <code>ContentMapFacade</code> stellt Content-Daten als lazy-geladene Map für
+            FreeMarker-Templates bereit — Content-Felder werden erst beim Zugriff
+            aus der DB geladen.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. CMS & Website ───────────────────────────────────────────── -->
+    <section class="mb-5" id="cms">
+      <h4 class="section-title"><i class="bi bi-window me-2 text-primary"></i>3. CMS &amp; Website-Verwaltung</h4>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <p class="small text-muted mb-2">
+            Das CMS-Submodul verwaltet Webseiten als Content-Baum: Seiten bestehen aus
+            verschachtelten Content-Knoten (Layouts, Blöcke, Texte, Bilder). Redakteure
+            können Seiten anlegen, bearbeiten und veröffentlichen, ohne direkten Datenbankzugriff.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Konzept</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>SubSite</td><td>Eigene Website mit eigenem URL-Präfix</td></tr>
+                <tr><td>WebPage</td><td>Eine Seite im Content-Baum</td></tr>
+                <tr><td>Layout</td><td>Wiederverwendbares Seitenlayout</td></tr>
+                <tr><td>Block</td><td>Inhaltsbaustein (Text, Bild, HTML)</td></tr>
+                <tr><td>PUBLISH_LINK</td><td>Assoziation: Inhalt ist veröffentlicht</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    WS[WebSite\nSubSite] --> PG[WebPage\nSeite]
+    PG --> LY[Layout\nSeitenlayout]
+    PG --> BL1[Block\nHaupttext]
+    PG --> BL2[Block\nBild]
+    PG --> BL3[Block\nSeitenleiste]
+    BL1 --> ET[ElectronicText\nHTML-Inhalt]
+    BL2 --> IMG[ImageDataResource\nBild]
+    PG -- PUBLISH_LINK --> PUB([Veröffentlicht])
+            </pre>
+            <div class="diagram-caption">Abb. 3 — CMS-Seitenstruktur: Website → Seite → Blöcke → Daten</div>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-warning py-2 small mt-3">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        <strong>URL-Auflösung:</strong> <code>ContentUrlFilter</code> löst alternative Content-URLs
+        (Suffix <code>-content</code>) auf die echte Content-ID auf — ermöglicht sprechende URLs
+        ohne eigene URL-Rewrite-Konfiguration.
+      </div>
+    </section>
+
+    <!-- ── 4. Berechtigungen ──────────────────────────────────────────── -->
+    <section class="mb-5" id="berechtigungen">
+      <h4 class="section-title"><i class="bi bi-shield-check me-2 text-primary"></i>4. Berechtigungen</h4>
+      <div class="row g-4">
+        <div class="col-md-7">
+          <p class="small text-muted mb-3">
+            <code>ContentPermissionServices</code> implementiert rollenbasierte Berechtigungsprüfungen
+            für alle Content-Operationen. Geprüft wird gegen Content-Rollen, Party-Beziehungen
+            und explizite Berechtigungseinträge — mit konfigurierbarer Fallback-Logik.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Operation</th><th>Prüfung</th></tr></thead>
+              <tbody>
+                <tr><td>Lesen</td><td>Öffentlich oder explizite Lesefreigabe</td></tr>
+                <tr><td>Bearbeiten</td><td>Content-Rolle AUTHOR oder EDITOR</td></tr>
+                <tr><td>Veröffentlichen</td><td>Rolle PUBLISHER</td></tr>
+                <tr><td>Löschen</td><td>Rolle OWNER oder Administratorrecht</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="alert alert-info py-2 small">
+            <i class="bi bi-info-circle me-1"></i>
+            <strong>Debug-Modus:</strong> <code>PermissionRecorder</code> protokolliert
+            jeden Berechtigungsprüfungsschritt detailliert — nützlich bei komplexen
+            Rollenhierarchien. Im Produktionsbetrieb deaktivieren.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Umfragen ────────────────────────────────────────────────── -->
+    <section class="mb-5" id="survey">
+      <h4 class="section-title"><i class="bi bi-card-checklist me-2 text-primary"></i>5. Umfragen &amp; PDF-Formulare</h4>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <p class="small text-muted mb-2">
+            Das Survey-Submodul ermöglicht die Erstellung und Auswertung von Umfragen.
+            Fragebögen werden über FreeMarker-Templates gerendert; Antworten werden je
+            Umfrage und Befragten gespeichert und können ausgewertet werden.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Fragetyp</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>Freitext</td><td>Offene Texteingabe</td></tr>
+                <tr><td>Single-Choice</td><td>Eine Antwort aus vorgegebenen Optionen</td></tr>
+                <tr><td>Multi-Choice</td><td>Mehrere Antworten möglich</td></tr>
+                <tr><td>Skala</td><td>Bewertungsskala (1–5, 1–10)</td></tr>
+                <tr><td>Datum</td><td>Datumseingabe mit Validierung</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart LR
+    A([PDF-AcroForm\nhochladen]) --> B[PdfSurveyServices\nImport]
+    B --> C[Survey\nFragen extrahiert]
+    C --> D[SurveyWrapper\nRendering]
+    D --> E([Web-Formular\nan Nutzer])
+    E --> F[SurveyEvents\nAntworten speichern]
+    F --> G[PdfSurveyServices\nExport]
+    G --> H([PDF mit\nausgefüllten Antworten])
+            </pre>
+            <div class="diagram-caption">Abb. 4 — PDF-AcroForm-Integration: Import → Web-Umfrage → PDF-Export</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. FTP / SFTP ─────────────────────────────────────────────── -->
+    <section class="mb-5" id="dateitransfer">
+      <h4 class="section-title"><i class="bi bi-arrow-up-right-square me-2 text-primary"></i>6. FTP / SFTP-Dateitransfer</h4>
+      <div class="row g-4">
+        <div class="col-md-5">
+          <p class="small text-muted mb-2">
+            <code>FtpServices</code> überträgt Content-Daten an externe Server über FTP oder SFTP.
+            Die Zieladresse wird als <code>FtpAddress</code>-ContactMech konfiguriert und kann
+            einer Party oder einem System zugeordnet werden.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Client</th><th>Protokoll</th></tr></thead>
+              <tbody>
+                <tr><td><code>SimpleFtpClient</code></td><td>Standard FTP (Apache Commons Net)</td></tr>
+                <tr><td><code>SshFtpClient</code></td><td>SFTP über SSH (Apache MINA SSHD)</td></tr>
+                <tr><td><code>SecureFtpClient</code></td><td>FTPS (Platzhalter, nicht implementiert)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-warning py-2 small mt-2">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>FTPS nicht implementiert:</strong> <code>SecureFtpClient</code> enthält
+            nur leere Methoden — FTPS (FTP über TLS) ist laut Kommentar im Code bewusst
+            nicht realisiert.
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    FS[FtpServices] --> FI[FtpClientInterface\nAbstraktion]
+    FI --> SF[SimpleFtpClient\nFTP]
+    FI --> SH[SshFtpClient\nSFTP]
+    SH --> SCH[SshClientHelper\nShared SSH Session]
+    SF --> EXT([Externer FTP-Server])
+    SH --> EXT2([Externer SFTP-Server])
+            </pre>
+            <div class="diagram-caption">Abb. 5 — FTP/SFTP-Architektur: gemeinsames Interface, zwei Implementierungen</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. Suche ───────────────────────────────────────────────────── -->
+    <section class="mb-5" id="suche">
+      <h4 class="section-title"><i class="bi bi-search me-2 text-primary"></i>7. Volltextsuche</h4>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <p class="small text-muted mb-2">
+            <code>ContentSearch</code> implementiert eine strukturierte Volltextsuche über
+            alle Content-Objekte. <code>ContentKeywordIndex</code> indiziert Keywords aus
+            Content-ID, Name, Beschreibung und dem eigentlichen Inhalt. Der Suchzustand
+            wird session-persistent von <code>ContentSearchSession</code> verwaltet.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Suchkriterium</th><th>Beispiel</th></tr></thead>
+              <tbody>
+                <tr><td>Volltext</td><td>Stichwort im Inhalt oder Metadaten</td></tr>
+                <tr><td>Content-Typ</td><td>Nur CMS-Seiten / Nur Bilder</td></tr>
+                <tr><td>Status</td><td>Nur veröffentlichte Inhalte</td></tr>
+                <tr><td>Sprache</td><td>Nur Inhalte in de_DE</td></tr>
+                <tr><td>Datum</td><        <td>Zuletzt geändert in Zeitraum</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="alert alert-info py-2 small">
+            <i class="bi bi-info-circle me-1"></i>
+            <strong>Blog &amp; RSS:</strong> <code>BlogRssServices</code> erzeugt RSS-Feeds
+            aus veröffentlichten Blog-Artikeln (Content-Knoten mit <code>PUBLISH_LINK</code>-
+            Assoziation und Status <code>CTN_PUBLISHED</code>). Feeds können von externen
+            Readern und Aggregatoren abonniert werden.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 8. Modulabhängigkeiten ─────────────────────────────────────── -->
+    <section class="mb-5" id="abhaengigkeiten">
+      <h4 class="section-title"><i class="bi bi-share me-2 text-primary"></i>8. Modulabhängigkeiten</h4>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    product -->|Produktbilder, Beschreibungen| content
+    party -->|Profilbilder, Dokumente| content
+    order -->|Digitale Produkte als Download| content
+    workeffort -->|Anhänge an Aufgaben| content
+    marketing -->|Newsletter-Inhalte| content
+    content -->|Parteistammdaten für Berechtigungen| party
+
+    style content fill:#3b82f6,color:#fff
+            </pre>
+            <div class="diagram-caption">Abb. 6 — <code>content</code> als Infrastrukturmodul für alle inhaltsbezogenen Funktionen</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Modul</th><th>Nutzung von <code>content</code></th></tr></thead>
+              <tbody>
+                <tr><td><code>product</code></td><td>Produktbilder, -beschreibungen, SEO-Texte</td></tr>
+                <tr><td><code>party</code></td><td>Profilbilder, Dokumente, Anhänge</td></tr>
+                <tr><td><code>order</code></td><td>Digitale Produkte (Download nach Kauf)</td></tr>
+                <tr><td><code>workeffort</code></td><td>Dokumente und Anhänge an Aufgaben</td></tr>
+                <tr><td><code>marketing</code></td><td>Newsletter-Templates und -Inhalte</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+</script>
+</body>
+</html>

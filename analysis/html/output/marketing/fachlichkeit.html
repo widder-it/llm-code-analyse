@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>marketing — Fachliche Beschreibung</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --sidebar-width: 220px; }
+    body { font-size: .925rem; }
+    #sidebar { width: var(--sidebar-width); min-height: 100vh; background: #1e2430; color: #c9d1d9; position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100; }
+    #sidebar .sidebar-brand { font-size: 1rem; font-weight: 700; color: #fff; padding: 1.25rem 1rem .75rem; display: block; text-decoration: none; border-bottom: 1px solid #2d3748; }
+    #sidebar .nav-link { color: #a0aec0; padding: .35rem 1rem; font-size: .85rem; }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active { color: #fff; background: #2d3748; }
+    #sidebar .nav-section { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: #4a5568; padding: .75rem 1rem .25rem; }
+    #main { margin-left: var(--sidebar-width); min-height: 100vh; }
+    .page-header { background: #f8f9fa; border-bottom: 1px solid #dee2e6; padding: 1.5rem 2rem; }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .section-title { font-size: 1rem; font-weight: 600; color: #1e2430; border-bottom: 2px solid #e2e8f0; padding-bottom: .4rem; margin-bottom: 1rem; }
+    .stat-pill { background: #eef2ff; color: #3730a3; border-radius: 20px; padding: .15rem .65rem; font-size: .78rem; font-weight: 600; }
+    .diagram-box { background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; }
+    .diagram-caption { text-align: center; font-size: .78rem; color: #64748b; margin-top: .5rem; }
+    .domain-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 1.25rem; height: 100%; border-left: 4px solid; }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html"><i class="bi bi-diagram-3 me-2"></i>Architekturdoku</a>
+  <div class="nav-section">Modul</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-box me-1"></i>Übersicht &amp; Klassen</a></li>
+    <li class="nav-item"><a class="nav-link active" href="fachlichkeit.html"><i class="bi bi-book me-1"></i>Fachliche Beschreibung</a></li>
+  </ul>
+  <div class="nav-section">Abschnitte</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="#kontaktlisten"><i class="bi bi-people me-1"></i>Kontaktlisten</a></li>
+    <li class="nav-item"><a class="nav-link" href="#kampagnen"><i class="bi bi-megaphone me-1"></i>Kampagnen</a></li>
+    <li class="nav-item"><a class="nav-link" href="#tracking"><i class="bi bi-graph-up me-1"></i>Tracking-Codes</a></li>
+    <li class="nav-item"><a class="nav-link" href="#sfa"><i class="bi bi-person-lines-fill me-1"></i>SFA: Leads &amp; Accounts</a></li>
+    <li class="nav-item"><a class="nav-link" href="#abhaengigkeiten"><i class="bi bi-share me-1"></i>Modulabhängigkeiten</a></li>
+  </ul>
+</nav>
+
+<div id="main">
+  <div class="page-header">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="../index.html">Übersicht</a></li>
+        <li class="breadcrumb-item"><a href="index.html">marketing</a></li>
+        <li class="breadcrumb-item active">Fachliche Beschreibung</li>
+      </ol>
+    </nav>
+    <h1><i class="bi bi-box me-2 text-primary"></i>Modul <code>marketing</code> — Fachliche Beschreibung</h1>
+    <p class="text-muted small mt-1 mb-2">Kampagnenverwaltung, Kontaktlisten, Tracking-Codes, Konversionsauswertung und Sales Force Automation (SFA).</p>
+    <div class="d-flex gap-2 flex-wrap">
+      <span class="stat-pill"><i class="bi bi-layers me-1"></i>9 Submodule</span>
+      <span class="stat-pill"><i class="bi bi-lightning me-1"></i>8 Klassen</span>
+      <span class="stat-pill"><i class="bi bi-person-lines-fill me-1"></i>SFA integriert</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <div class="alert alert-light border mb-4">
+      <p class="mb-2">
+        Das <code>marketing</code>-Modul verbindet Kampagnenverwaltung, Kontaktlistenpflege
+        und Besuchertracking zu einem integrierten Marketingwerkzeug. Es misst den Erfolg
+        von Marketingmaßnahmen über Tracking-Codes — von der ersten Website-Anfrage bis
+        zum abgeschlossenen Kauf.
+      </p>
+      <p class="mb-0">
+        Das SFA-Submodul (Sales Force Automation) ergänzt den Vertriebsprozess:
+        Leads werden erfasst, qualifiziert und in vollwertige Kontakte überführt. Der
+        vCard-Import/-Export (im Modul <code>sfa</code>) ermöglicht den Datenaustausch
+        mit externen CRM-Systemen.
+      </p>
+    </div>
+
+    <!-- ── 1. Kontaktlisten ───────────────────────────────────────────── -->
+    <section class="mb-5" id="kontaktlisten">
+      <h4 class="section-title"><i class="bi bi-people me-2 text-primary"></i>1. Kontaktlisten &amp; Newsletter</h4>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart TD
+    A([Kunde]) --> B{Newsletter\nAnmeldung}
+    B -- Web-Formular --> C[MarketingServices\nanmelden]
+    B -- Import --> D[Bulk-Import\nKontaktliste]
+    C --> E[ContactListParty\nEintrag]
+    D --> E
+    E --> F[Status:\nCLPT_ACCEPTED]
+    F --> G{Versand}
+    G --> H([E-Mail\nNewsletter])
+    H --> I{Abmeldung?}
+    I -- Ja --> J[MarketingServices\nabmelden]
+    J --> K[Status:\nCLPT_REMOVED]
+    I -- Nein --> G
+            </pre>
+            <div class="diagram-caption">Abb. 1 — Kontaktlisten-Lifecycle: Anmeldung, Versand, Abmeldung</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <p class="small text-muted mb-3">
+            <code>MarketingServices</code> verwaltet Kontaktlisten-Mitgliedschaften.
+            Newsletter-Anmeldungen und -Abmeldungen werden statusbasiert verwaltet —
+            abgemeldete Adressen bleiben im System (für Audit-Trail), werden aber
+            nicht mehr angeschrieben.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Status</th><th>Bedeutung</th></tr></thead>
+              <tbody>
+                <tr><td><code>CLPT_ACCEPTED</code></td><td>Angemeldet, aktiv</td></tr>
+                <tr><td><code>CLPT_PENDING</code></td><td>Double-Opt-In ausstehend</td></tr>
+                <tr><td><code>CLPT_REMOVED</code></td><td>Abgemeldet (kein Versand)</td></tr>
+                <tr><td><code>CLPT_BOUNCED</code></td><td>E-Mail-Adresse ungültig</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Kampagnen ───────────────────────────────────────────────── -->
+    <section class="mb-5" id="kampagnen">
+      <h4 class="section-title"><i class="bi bi-megaphone me-2 text-primary"></i>2. Kampagnenverwaltung &amp; Auswertung</h4>
+      <div class="row g-4">
+        <div class="col-md-5">
+          <p class="small text-muted mb-3">
+            Kampagnen verknüpfen Marketingmaßnahmen mit Kontaktlisten und Tracking-Codes.
+            <code>ReportHelper</code> berechnet Konversionsraten, indem Besuchs- und
+            Bestelldaten über den gemeinsamen Tracking-Code verbunden werden.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Kennzahl</th><th>Berechnung</th></tr></thead>
+              <tbody>
+                <tr><td>Reichweite</td><td>Anzahl Kontakte in Kampagne</td></tr>
+                <tr><td>Öffnungsrate</td><td>Besuche / versandte E-Mails</td></tr>
+                <tr><td>Klickrate</td><td>Tracking-Code-Aktivierungen</td></tr>
+                <tr><td>Konversionsrate</td><td>Bestellungen / Besuche via Tracking-Code</td></tr>
+                <tr><td>Umsatz</td><td>Summe der Bestellwerte mit Tracking-Code</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    K[Kampagne] --> KL[Kontaktliste]
+    K --> TC[Tracking-Code]
+    KL --> P1[Party / E-Mail 1]
+    KL --> P2[Party / E-Mail 2]
+    TC --> V1[Visit\nBesucher 1]
+    TC --> V2[Visit\nBesucher 2]
+    V1 --> O1[Order\nBestellung]
+    V2 --> X([Kein Kauf])
+    O1 --> R[ReportHelper\nKonversionsrate\n= 1/2 = 50%]
+            </pre>
+            <div class="diagram-caption">Abb. 2 — Kampagnenauswertung: Tracking-Code verbindet Besuche und Bestellungen</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Tracking-Codes ──────────────────────────────────────────── -->
+    <section class="mb-5" id="tracking">
+      <h4 class="section-title"><i class="bi bi-graph-up me-2 text-primary"></i>3. Tracking-Codes</h4>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart LR
+    A([Besucher\nklickt Link]) --> B[URL mit\n?tc=SOMMER2024]
+    B --> C[TrackingCodeEvents\nCode auslesen]
+    C --> D{Code\ngültig?}
+    D -- Nein --> E([Ignoriert])
+    D -- Ja --> F[TrackingCodeVisit\nin Session]
+    F --> G[Visit\ngespeichert]
+    G --> H{Bestellung\naufgegeben?}
+    H -- Ja --> I[TrackingCodeOrder\nangelegt]
+    I --> J([ReportHelper\nKonversion +1])
+    H -- Nein --> K([Session\nabgelaufen])
+            </pre>
+            <div class="diagram-caption">Abb. 3 — Tracking-Code-Verarbeitung: URL-Parameter → Visit → Bestellung</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <p class="small text-muted mb-3">
+            <code>TrackingCodeEvents</code> liest Tracking-Codes aus URL-Parametern aus,
+            speichert sie in der HTTP-Session und verknüpft sie mit dem Visit-Objekt.
+            Wenn der Besucher anschließend eine Bestellung aufgibt, wird der Code
+            automatisch als <code>TrackingCodeOrder</code> persistiert.
+          </p>
+          <div class="alert alert-info py-2 small">
+            <i class="bi bi-info-circle me-1"></i>
+            Tracking-Codes überleben den Browser-Tab nicht: Sie sind session-gebunden.
+            Cookie-basiertes Cross-Session-Tracking ist nicht implementiert.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. SFA: Leads & Accounts ──────────────────────────────────── -->
+    <section class="mb-5" id="sfa">
+      <h4 class="section-title"><i class="bi bi-person-lines-fill me-2 text-primary"></i>4. Sales Force Automation: Leads &amp; Accounts</h4>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <p class="small text-muted mb-3">
+            Das SFA-Submodul unterstützt den Vertriebsprozess: Interessenten werden als
+            <strong>Leads</strong> erfasst, qualifiziert und bei Erfolg in vollwertige
+            <strong>Kontakte</strong> und <strong>Accounts</strong> (Firmen) überführt.
+            Doppelte Datensätze können erkannt und zusammengeführt werden.
+          </p>
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+stateDiagram-v2
+    [*] --> LEAD_NEW : Lead erfasst
+    LEAD_NEW --> LEAD_ASSIGNED : Vertrieb\nzugewiesen
+    LEAD_ASSIGNED --> LEAD_IN_PROCESS : Kontakt\naufgenommen
+    LEAD_IN_PROCESS --> LEAD_CONVERTED : Konvertiert\nzu Kontakt
+    LEAD_IN_PROCESS --> LEAD_LOST : Nicht\ninteressiert
+    LEAD_CONVERTED --> [*]
+    LEAD_LOST --> [*]
+            </pre>
+            <div class="diagram-caption">Abb. 4 — Lead-Lifecycle im SFA-Prozess</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="table-responsive mb-3">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>SFA-Funktion</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>Lead erfassen</td><td>Name, Firma, Kontaktdaten, Quelle</td></tr>
+                <tr><td>Lead zuweisen</td><td>Verantwortlichen Vertriebsmitarbeiter festlegen</td></tr>
+                <tr><td>Lead konvertieren</td><td>Party + Account-Beziehung anlegen</td></tr>
+                <tr><td>Zusammenführen</td><td>Doppelte Leads/Kontakte zusammenführen</td></tr>
+                <tr><td>Account verwalten</td><td>Firmenkonto mit Kontaktpersonen pflegen</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-info py-2 small">
+            <i class="bi bi-info-circle me-1"></i>
+            <strong>vCard-Integration:</strong> Das Modul <code>sfa</code> stellt
+            <code>VCard</code>-Import und -Export bereit (RFC 6350) — für den
+            Datenaustausch mit Outlook, Apple Contacts und anderen CRM-Systemen.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Modulabhängigkeiten ─────────────────────────────────────── -->
+    <section class="mb-5" id="abhaengigkeiten">
+      <h4 class="section-title"><i class="bi bi-share me-2 text-primary"></i>5. Modulabhängigkeiten</h4>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    marketing -->|Kontakt- und Firmenstammdaten| party
+    marketing -->|Besuchsdaten für Tracking| party
+    marketing -->|Bestelldaten für Konversionsrate| order
+    marketing -->|Newsletter-Inhalte| content
+    sfa -->|Kontaktstammdaten vCard| party
+            </pre>
+            <div class="diagram-caption">Abb. 5 — Modulabhängigkeiten von <code>marketing</code> und <code>sfa</code></div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Modul</th><th>Nutzung</th></tr></thead>
+              <tbody>
+                <tr><td><code>party</code></td><td>Kontakt- und Firmenstammdaten, Besuchs-Visits</td></tr>
+                <tr><td><code>order</code></td><td>Bestellungen für Konversionsraten-Berechnung</td></tr>
+                <tr><td><code>content</code></td><td>Newsletter-Templates und -Inhalte</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+</script>
+</body>
+</html>
