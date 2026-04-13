@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>shipment — Fachliche Beschreibung</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --sidebar-width: 220px; }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width); min-height: 100vh;
+      background: #1e2430; color: #c9d1d9;
+      position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem; font-weight: 700; color: #fff;
+      padding: 1.25rem 1rem .75rem; display: block;
+      text-decoration: none; border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link { color: #a0aec0; padding: .35rem 1rem; font-size: .85rem; }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active { color: #fff; background: #2d3748; }
+    #sidebar .nav-section {
+      font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
+      color: #4a5568; padding: .75rem 1rem .25rem;
+    }
+    #main { margin-left: var(--sidebar-width); min-height: 100vh; }
+    .page-header { background: #f8f9fa; border-bottom: 1px solid #dee2e6; padding: 1.5rem 2rem; }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .section-title {
+      font-size: 1rem; font-weight: 600; color: #1e2430;
+      border-bottom: 2px solid #e2e8f0; padding-bottom: .4rem; margin-bottom: 1rem;
+    }
+    .stat-pill {
+      background: #eef2ff; color: #3730a3; border-radius: 20px;
+      padding: .15rem .65rem; font-size: .78rem; font-weight: 600;
+    }
+    .diagram-box { background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; }
+    .diagram-caption { text-align: center; font-size: .78rem; color: #64748b; margin-top: .5rem; }
+    .domain-card {
+      border: 1px solid #e2e8f0; border-radius: 8px;
+      padding: 1rem 1.25rem; height: 100%; border-left: 4px solid;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>Architekturdoku
+  </a>
+  <div class="nav-section">Modul</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-box me-1"></i>Übersicht &amp; Klassen</a></li>
+    <li class="nav-item"><a class="nav-link active" href="fachlichkeit.html"><i class="bi bi-book me-1"></i>Fachliche Beschreibung</a></li>
+  </ul>
+  <div class="nav-section">Abschnitte</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="#ablauf"><i class="bi bi-arrow-right-circle me-1"></i>Versandablauf</a></li>
+    <li class="nav-item"><a class="nav-link" href="#pickliste"><i class="bi bi-list-ol me-1"></i>Pickliste</a></li>
+    <li class="nav-item"><a class="nav-link" href="#verpackung"><i class="bi bi-box-seam me-1"></i>Verpackung</a></li>
+    <li class="nav-item"><a class="nav-link" href="#gewicht"><i class="bi bi-speedometer me-1"></i>Gewichtserfassung</a></li>
+    <li class="nav-item"><a class="nav-link" href="#carrier"><i class="bi bi-truck me-1"></i>Carrier-Integration</a></li>
+    <li class="nav-item"><a class="nav-link" href="#kosten"><i class="bi bi-currency-euro me-1"></i>Versandkosten</a></li>
+    <li class="nav-item"><a class="nav-link" href="#abhaengigkeiten"><i class="bi bi-share me-1"></i>Modulabhängigkeiten</a></li>
+  </ul>
+</nav>
+
+<div id="main">
+  <div class="page-header">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="../index.html">Übersicht</a></li>
+        <li class="breadcrumb-item"><a href="index.html">shipment</a></li>
+        <li class="breadcrumb-item active">Fachliche Beschreibung</li>
+      </ol>
+    </nav>
+    <h1><i class="bi bi-box me-2 text-primary"></i>Modul <code>shipment</code> — Fachliche Beschreibung</h1>
+    <p class="text-muted small mt-1 mb-2">
+      Vollständiger Versandprozess: Pickliste, Kommissionierung, Verpackung, Gewichtserfassung und 4 Carrier-Integrationen.
+    </p>
+    <div class="d-flex gap-2 flex-wrap">
+      <span class="stat-pill"><i class="bi bi-layers me-1"></i>10 Submodule</span>
+      <span class="stat-pill"><i class="bi bi-lightning me-1"></i>23 Klassen</span>
+      <span class="stat-pill"><i class="bi bi-truck me-1"></i>4 Carrier-APIs</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <div class="alert alert-light border mb-4">
+      <p class="mb-2">
+        Das <code>shipment</code>-Modul steuert den gesamten physischen Warenausgang — von der
+        Pickliste für den Lagerarbeiter über das interaktive Verpacken und Gewichtserfassen bis
+        zur Übergabe an den Carrier und der Sendungsverfolgung. Es bildet die Brücke zwischen
+        Auftragsabwicklung (<code>order</code>) und der physischen Logistik.
+      </p>
+      <p class="mb-0">
+        Besonders hervorzuheben sind die vier integrierten Carrier-APIs (<strong>UPS, FedEx,
+        DHL, USPS</strong>) sowie die sessionbasierten Arbeitsplatzmodelle, die den
+        Lagerarbeiter Schritt für Schritt durch den Versandprozess führen.
+      </p>
+    </div>
+
+    <!-- ── 1. Versandablauf ──────────────────────────────────────────── -->
+    <section class="mb-5" id="ablauf">
+      <h4 class="section-title"><i class="bi bi-arrow-right-circle me-2 text-primary"></i>1. Gesamtablauf</h4>
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart TD
+    A([Auftrag\nORDER_APPROVED]) --> B[Pickliste\nerstellen]
+    B --> C[Kommissionierung\nVerifyPickSession]
+    C --> D{Mengen\nkorrekt?}
+    D -- Nein --> C
+    D -- Ja --> E[Verpackung\nPackingSession]
+    E --> F[Gewichtserfassung\nWeightPackageSession]
+    F --> G[Label-Anfrage\nan Carrier-API]
+    G --> H[Versandlabel\ngedruckt]
+    H --> I[Sendung\nübergeben]
+    I --> J[Tracking\naktiv]
+    J --> K([Zustellung\nbestätigt])
+            </pre>
+            <div class="diagram-caption">Abb. 1 — Versandablauf: vom freigegebenen Auftrag bis zur Zustellbestätigung</div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <p class="small text-muted mb-3">
+            Jede Phase des Versandprozesses wird durch ein eigenes <strong>Session-Objekt</strong>
+            modelliert, das den Zustand des Lagerarbeitsplatzes kapselt. Das ermöglicht
+            Unterbrechungen und Wiederaufnahme ohne Datenverlust.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Phase</th><th>Session-Klasse</th></tr></thead>
+              <tbody>
+                <tr><td>Kommissionierung</td><td><code>VerifyPickSession</code></td></tr>
+                <tr><td>Verpackung</td><td><code>PackingSession</code></td></tr>
+                <tr><td>Gewichtserfassung</td><td><code>WeightPackageSession</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Pickliste ──────────────────────────────────────────────── -->
+    <section class="mb-5" id="pickliste">
+      <h4 class="section-title"><i class="bi bi-list-ol me-2 text-primary"></i>2. Pickliste &amp; Kommissionierung</h4>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <p class="small text-muted mb-3">
+            <code>PickListServices</code> erzeugt Picklisten aus offenen Auftragsreservierungen.
+            Eine Pickliste fasst mehrere Aufträge zusammen und optimiert die Laufwege im Lager
+            (Lagerplatz-sortiert). Der Lagerarbeiter bestätigt mit <code>VerifyPickSession</code>
+            die tatsächlich gepickten Mengen.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Entity</th><th>Inhalt</th></tr></thead>
+              <tbody>
+                <tr><td><code>Picklist</code></td><td>Kopfdaten: Lager, Datum, Status</td></tr>
+                <tr><td><code>PicklistBin</code></td><td>Pickbehälter (Trolley / Kiste)</td></tr>
+                <tr><td><code>PicklistItem</code></td><td>Position: Produkt, Menge, Lagerplatz</td></tr>
+                <tr><td><code>VerifyPickSessionRow</code></td><td>Bestätigte Pickzeile mit tatsächlicher Menge</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    PL[Picklist] --> BIN1[PicklistBin 1\nTrolley A]
+    PL --> BIN2[PicklistBin 2\nTrolley B]
+    BIN1 --> I1[Item: Produkt X\nRegal 3-A-5]
+    BIN1 --> I2[Item: Produkt Y\nRegal 1-B-2]
+    BIN2 --> I3[Item: Produkt Z\nRegal 7-C-1]
+    I1 --> V1[VerifyPickSessionRow\nMenge bestätigt]
+    I2 --> V2[VerifyPickSessionRow\nMenge bestätigt]
+            </pre>
+            <div class="diagram-caption">Abb. 2 — Picklisten-Struktur: Behälter, Positionen und Verifikation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Verpackung ─────────────────────────────────────────────── -->
+    <section class="mb-5" id="verpackung">
+      <h4 class="section-title"><i class="bi bi-box-seam me-2 text-primary"></i>3. Verpackung</h4>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#3b82f6">
+            <h6 class="fw-semibold mb-2"><code>PackingSession</code></h6>
+            <p class="small text-muted mb-0">
+              Interaktive Packsitzung für eine oder mehrere Bestellungen. Verwaltet Pakete,
+              weist Positionen Paketen zu, berechnet Gewicht und schließt die Sitzung ab —
+              dabei wird die Sendung (<code>Shipment</code>) persistiert.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#8b5cf6">
+            <h6 class="fw-semibold mb-2"><code>PackingSessionLine</code></h6>
+            <p class="small text-muted mb-0">
+              Eine einzelne Zeile in der Packsitzung: welches Produkt aus welcher
+              Bestellreservierung in welches Paket gelegt wurde, mit Menge und
+              optionaler Seriennummer.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="domain-card" style="border-left-color:#10b981">
+            <h6 class="fw-semibold mb-2"><code>PackingEvent</code></h6>
+            <p class="small text-muted mb-0">
+              Listener-Interface für Ereignisse innerhalb der Packsitzung (Position
+              hinzugefügt, Paket abgeschlossen, Sitzung abgebrochen). Ermöglicht
+              erweiterbare Reaktionen ohne direkte Kopplung.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. Gewichtserfassung ──────────────────────────────────────── -->
+    <section class="mb-5" id="gewicht">
+      <h4 class="section-title"><i class="bi bi-speedometer me-2 text-primary"></i>4. Gewichtserfassung</h4>
+      <div class="row g-4">
+        <div class="col-md-7">
+          <p class="small text-muted mb-3">
+            Nach dem Verpacken gibt der Lagerarbeiter die tatsächlichen Paketmaße ein:
+            Gewicht, Länge, Breite, Höhe. <code>WeightPackageSession</code> überträgt diese
+            Daten an die Carrier-API, die daraus das endgültige Versandlabel und den
+            exakten Versandpreis ermittelt.
+          </p>
+          <div class="alert alert-info py-2 small">
+            <i class="bi bi-info-circle me-1"></i>
+            <strong>Zweistufige Preisermittlung:</strong> Im Checkout wird ein
+            <em>Schätzpreis</em> angezeigt (basierend auf Produktgewicht). Der
+            <em>Endpreis</em> wird erst nach Gewichtserfassung vom Carrier bestätigt.
+            Differenzen können nachbelastet werden.
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Feld</th><th>Einheit</th></tr></thead>
+              <tbody>
+                <tr><td>Gewicht</td><td>kg / lbs (konfigurierbar)</td></tr>
+                <tr><td>Länge / Breite / Höhe</td><td>cm / in</td></tr>
+                <tr><td>Versicherungswert</td><td>Währung</td></tr>
+                <tr><td>Pakettyp</td><td>Eigene Box, Carrier-Verpackung</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Carrier-Integration ────────────────────────────────────── -->
+    <section class="mb-5" id="carrier">
+      <h4 class="section-title"><i class="bi bi-truck me-2 text-primary"></i>5. Carrier-Integrationen</h4>
+      <div class="row g-4 mb-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    SW[ShipmentWorker\nCarrier-Dispatcher] --> UPS[UpsServices\nXML-Webservice]
+    SW --> FX[FedexServices\nXML + FreeMarker]
+    SW --> DHL[DhlServices\nXML + FreeMarker]
+    SW --> USPS[UspsServices\nUSPS Web Tools]
+    UPS --> R1[Rate\nLabel\nTracking\nVoid]
+    FX --> R2[Rate\nLabel\nTracking]
+    DHL --> R3[Rate\nLabel\nTracking]
+    USPS --> R4[Rate\nLabel\nTracking\nAdressvalidierung]
+            </pre>
+            <div class="diagram-caption">Abb. 3 — Carrier-Architektur: vier Integrationen mit einheitlichem Dispatcher</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light">
+                <tr><th>Carrier</th><th>Protokoll</th><th>Funktionen</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>UPS</strong></td><td>XML-Webservice</td><td>Rate, Label, Tracking, Stornierung, Adressvalidierung</td></tr>
+                <tr><td><strong>FedEx</strong></td><td>XML + FreeMarker</td><td>Rate, Label, Tracking</td></tr>
+                <tr><td><strong>DHL</strong></td><td>XML + FreeMarker</td><td>Rate, Registrierung, Label, Tracking</td></tr>
+                <tr><td><strong>USPS</strong></td><td>USPS Web Tools</td><td>Rate, Label, Tracking, Adressvalidierung, Zoll</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-warning py-2 small mt-2">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <code>UspsMockApiServlet</code> simuliert den USPS-API für Integrationstests
+            ohne echte Carrier-Verbindung.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Versandkosten ──────────────────────────────────────────── -->
+    <section class="mb-5" id="kosten">
+      <h4 class="section-title"><i class="bi bi-currency-euro me-2 text-primary"></i>6. Versandkostenkalkulation</h4>
+      <div class="row g-4">
+        <div class="col-md-7">
+          <p class="small text-muted mb-2">
+            Versandkosten werden in zwei Phasen ermittelt:
+          </p>
+          <ol class="small text-muted">
+            <li><strong>Checkout-Schätzung:</strong> <code>ShippingEstimateWrapper</code> berechnet einen
+              Schätzpreis auf Basis von Produktgewicht und -maßen aus dem Produktkatalog.</li>
+            <li><strong>Carrier-Bestätigung:</strong> Nach Gewichtserfassung im Lager liefert die
+              Carrier-API den exakten Preis anhand der tatsächlichen Paketdaten.</li>
+          </ol>
+          <div class="table-responsive mt-2">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Berechnungsgrundlage</th><th>Quelle</th></tr></thead>
+              <tbody>
+                <tr><td>Produktgewicht (geschätzt)</td><td>Produktkatalog (<code>product</code>)</td></tr>
+                <tr><td>Liefer-ZIP / -Land</td><td>Kundenadresse (<code>party</code>)</td></tr>
+                <tr><td>Versandmethode</td><td>Checkout-Auswahl</td></tr>
+                <tr><td>Tatsächliches Gewicht</td><td>Waage im Lager</td></tr>
+                <tr><td>Endpreis</td><td>Carrier-API-Antwort</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart TD
+    A([Checkout]) --> B[ShippingEstimateWrapper\nSchätzpreis]
+    B --> C[Anzeige\nan Kunden]
+    C --> D([Bestellung\nbestätigt])
+    D --> E[Lager\nGewichtserfassung]
+    E --> F[Carrier-API\nEndpreis]
+    F --> G{Abweichung?}
+    G -- Ja --> H[Nachbelastung\noder Gutschrift]
+    G -- Nein --> I([Label\ngedruckt])
+            </pre>
+            <div class="diagram-caption">Abb. 4 — Zweistufige Versandkostenkalkulation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. Modulabhängigkeiten ─────────────────────────────────────── -->
+    <section class="mb-5" id="abhaengigkeiten">
+      <h4 class="section-title"><i class="bi bi-share me-2 text-primary"></i>7. Modulabhängigkeiten</h4>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    shipment -->|Auftragsreservierungen, Picklisten| order
+    shipment -->|Produktgewicht und -maße| product
+    shipment -->|Absender- und Empfängeradressen| party
+    shipment -->|Lieferkosten-Buchung| accounting
+    order -->|Versandauftrag auslösen| shipment
+            </pre>
+            <div class="diagram-caption">Abb. 5 — Modulabhängigkeiten des <code>shipment</code>-Moduls</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Modul</th><th>Nutzung</th></tr></thead>
+              <tbody>
+                <tr><td><code>order</code></td><td>Auftragsreservierungen als Grundlage für Picklisten</td></tr>
+                <tr><td><code>product</code></td><td>Produktgewicht und -abmessungen für Schätzung</td></tr>
+                <tr><td><code>party</code></td><td>Absender- und Lieferadressen</td></tr>
+                <tr><td><code>accounting</code></td><td>Lieferkostenbuchung im Hauptbuch</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+</script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>manufacturing — Fachliche Beschreibung</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --sidebar-width: 220px; }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width); min-height: 100vh;
+      background: #1e2430; color: #c9d1d9;
+      position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem; font-weight: 700; color: #fff;
+      padding: 1.25rem 1rem .75rem; display: block;
+      text-decoration: none; border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link { color: #a0aec0; padding: .35rem 1rem; font-size: .85rem; }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active { color: #fff; background: #2d3748; }
+    #sidebar .nav-section {
+      font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
+      color: #4a5568; padding: .75rem 1rem .25rem;
+    }
+    #main { margin-left: var(--sidebar-width); min-height: 100vh; }
+    .page-header { background: #f8f9fa; border-bottom: 1px solid #dee2e6; padding: 1.5rem 2rem; }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .section-title {
+      font-size: 1rem; font-weight: 600; color: #1e2430;
+      border-bottom: 2px solid #e2e8f0; padding-bottom: .4rem; margin-bottom: 1rem;
+    }
+    .stat-pill {
+      background: #eef2ff; color: #3730a3; border-radius: 20px;
+      padding: .15rem .65rem; font-size: .78rem; font-weight: 600;
+    }
+    .diagram-box { background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; }
+    .diagram-caption { text-align: center; font-size: .78rem; color: #64748b; margin-top: .5rem; }
+    .domain-card {
+      border: 1px solid #e2e8f0; border-radius: 8px;
+      padding: 1rem 1.25rem; height: 100%; border-left: 4px solid;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>Architekturdoku
+  </a>
+  <div class="nav-section">Modul</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-box me-1"></i>Übersicht &amp; Klassen</a></li>
+    <li class="nav-item"><a class="nav-link active" href="fachlichkeit.html"><i class="bi bi-book me-1"></i>Fachliche Beschreibung</a></li>
+  </ul>
+  <div class="nav-section">Abschnitte</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="#bom"><i class="bi bi-diagram-2 me-1"></i>Stückliste (BOM)</a></li>
+    <li class="nav-item"><a class="nav-link" href="#produktionsauftrag"><i class="bi bi-gear me-1"></i>Fertigungsauftrag</a></li>
+    <li class="nav-item"><a class="nav-link" href="#mrp"><i class="bi bi-calculator me-1"></i>MRP</a></li>
+    <li class="nav-item"><a class="nav-link" href="#routing"><i class="bi bi-signpost-split me-1"></i>Arbeitspläne</a></li>
+    <li class="nav-item"><a class="nav-link" href="#kapazitaet"><i class="bi bi-calendar2-week me-1"></i>Kapazitätsplanung</a></li>
+    <li class="nav-item"><a class="nav-link" href="#abhaengigkeiten"><i class="bi bi-share me-1"></i>Modulabhängigkeiten</a></li>
+  </ul>
+</nav>
+
+<div id="main">
+  <div class="page-header">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="../index.html">Übersicht</a></li>
+        <li class="breadcrumb-item"><a href="index.html">manufacturing</a></li>
+        <li class="breadcrumb-item active">Fachliche Beschreibung</li>
+      </ol>
+    </nav>
+    <h1><i class="bi bi-box me-2 text-primary"></i>Modul <code>manufacturing</code> — Fachliche Beschreibung</h1>
+    <p class="text-muted small mt-1 mb-2">
+      Fertigungslogik: Stücklisten (BOM), Fertigungsaufträge (Production Runs), Materialbedarfsplanung (MRP) und Kapazitätsplanung.
+    </p>
+    <div class="d-flex gap-2 flex-wrap">
+      <span class="stat-pill"><i class="bi bi-layers me-1"></i>6 Submodule</span>
+      <span class="stat-pill"><i class="bi bi-lightning me-1"></i>17 Klassen</span>
+      <span class="stat-pill"><i class="bi bi-gear me-1"></i>Vollständiges MRP</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <div class="alert alert-light border mb-4">
+      <p class="mb-2">
+        Das <code>manufacturing</code>-Modul implementiert die gesamte Fertigungslogik für
+        produzierende Unternehmen: Es verwaltet Stücklisten (was wird aus welchen Komponenten
+        gefertigt?), steuert Fertigungsaufträge (wann wird was produziert?) und führt die
+        <strong>Materialbedarfsplanung (MRP)</strong> durch — den Algorithmus, der aus Verkaufsbedarfen
+        automatisch Fertigungs- und Beschaffungsvorschläge ableitet.
+      </p>
+      <p class="mb-0">
+        Das Modul ist eng mit <code>product</code> (Lagerbestand), <code>order</code>
+        (Verkaufsbedarf) und <code>workeffort</code> (Fertigungsaufträge als WorkEffort) verzahnt.
+      </p>
+    </div>
+
+    <!-- ── 1. Stückliste ─────────────────────────────────────────────── -->
+    <section class="mb-5" id="bom">
+      <h4 class="section-title"><i class="bi bi-diagram-2 me-2 text-primary"></i>1. Stückliste (Bill of Materials)</h4>
+      <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    FP[Fertigprodukt\nFahrrad] --> R1[Rahmen\n1 Stück]
+    FP --> R2[Laufrad vorne\n1 Stück]
+    FP --> R3[Laufrad hinten\n1 Stück]
+    FP --> R4[Schaltung\n1 Satz]
+    R2 --> C1[Felge\n1 Stück]
+    R2 --> C2[Speichen\n32 Stück]
+    R2 --> C3[Nabe\n1 Stück]
+    R3 --> C1
+    R3 --> C2
+    R3 --> C4[Nabe hinten\n1 Stück]
+
+    style FP fill:#3b82f6,color:#fff
+    style R1 fill:#8b5cf6,color:#fff
+    style R2 fill:#8b5cf6,color:#fff
+    style R3 fill:#8b5cf6,color:#fff
+            </pre>
+            <div class="diagram-caption">Abb. 1 — Mehrstufige Stücklistenstruktur (BOM-Baum)</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <p class="small text-muted mb-3">
+            <code>BOMTree</code> und <code>BOMNode</code> modellieren die mehrstufige
+            Stücklistenstruktur. Eine Stückliste kann mehrere Ebenen tief sein — ein
+            Fertigprodukt besteht aus Baugruppen, die ihrerseits aus Einzelteilen bestehen.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Traversierungstyp</th><th>Verwendung</th></tr></thead>
+              <tbody>
+                <tr><td>Materialliste</td><td>Alle Rohmaterialien für eine Menge</td></tr>
+                <tr><td>Bedarfsauflösung</td><td>MRP-Eingabe: Nettobedarf je Ebene</td></tr>
+                <tr><td>Kostenberechnung</td><td>Gesamtkosten aus Komponentenpreisen</td></tr>
+                <tr><td>Verwendungsnachweis</td><td>In welchen Produkten steckt Komponente X?</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-info py-2 small mt-2">
+            <i class="bi bi-info-circle me-1"></i>
+            BOM-Typen unterscheiden Fertigungs-BOM (wie wird gebaut), Vertriebs-BOM
+            (was wird verkauft) und Engineering-BOM (wie wird konstruiert).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Fertigungsauftrag ──────────────────────────────────────── -->
+    <section class="mb-5" id="produktionsauftrag">
+      <h4 class="section-title"><i class="bi bi-gear me-2 text-primary"></i>2. Fertigungsauftrag (Production Run)</h4>
+      <div class="row g-4">
+        <div class="col-md-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+stateDiagram-v2
+    [*] --> PRUN_CREATED : MRP-Vorschlag\nangenommen
+    PRUN_CREATED --> PRUN_SCHEDULED : Ressourcen\ngeplant
+    PRUN_SCHEDULED --> PRUN_DOC_PRINTED : Arbeitsunterlagen\ngedruckt
+    PRUN_DOC_PRINTED --> PRUN_RUNNING : Fertigung\ngestartet
+    PRUN_RUNNING --> PRUN_COMPLETED : Rückmeldung\nerfolgt
+    PRUN_COMPLETED --> [*]
+    PRUN_CREATED --> PRUN_CANCELLED : Storniert
+    PRUN_SCHEDULED --> PRUN_CANCELLED : Storniert
+    PRUN_CANCELLED --> [*]
+            </pre>
+            <div class="diagram-caption">Abb. 2 — Fertigungsauftrag-Lebenszyklus</div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <p class="small text-muted mb-3">
+            Ein Fertigungsauftrag (<code>ProductionRun</code>) ist technisch ein
+            <code>WorkEffort</code> vom Typ <code>PROD_ORDER_HEADER</code>. Er kapselt
+            den vollständigen Produktionsvorgang: geplante und tatsächliche Menge,
+            Start- und Endtermin, benötigte Komponenten und Ressourcen.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Komponente</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>Kopfdaten</td><td>Produkt, Menge, Termine, Status</td></tr>
+                <tr><td>Komponenten</td><td>Materialentnahme aus Lager (ProductionRunComponent)</td></tr>
+                <tr><td>Aufgaben</td><td>Arbeitsschritte gemäß Arbeitsplan (Routing)</td></tr>
+                <tr><td>Rückmeldung</td><td>Tatsächliche Mengen, Ausschuss, Nacharbeit</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. MRP ────────────────────────────────────────────────────── -->
+    <section class="mb-5" id="mrp">
+      <h4 class="section-title"><i class="bi bi-calculator me-2 text-primary"></i>3. Materialbedarfsplanung (MRP)</h4>
+      <div class="row g-4 mb-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart TD
+    A([Verkaufsbedarfe\nAuftragsreservierungen]) --> B[Phase 1\nEreignismatrix aufbauen]
+    C([Lagerbestand\naktuelle Bestände]) --> B
+    D([Offene Fertigungs-\nund Einkaufsaufträge]) --> B
+    B --> E[Phase 2\nBedarfsauflösung\nje Produkt und Periode]
+    E --> F{Nettobedarf\n> 0?}
+    F -- Nein --> G([Kein Handlungsbedarf])
+    F -- Ja --> H{Eigenfertig\noder Kaufteil?}
+    H -- Eigenfertig --> I[ProposedOrder\nFertigungsauftrag]
+    H -- Kaufteil --> J[ProposedOrder\nBestellvorschlag]
+    I --> K([Genehmigung\nund Auslösung])
+    J --> K
+            </pre>
+            <div class="diagram-caption">Abb. 3 — MRP-Algorithmus: zweiphasige Bedarfsauflösung</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <p class="small text-muted mb-3">
+            <code>MrpServices</code> implementiert den MRP-Algorithmus als zweiphasigen Prozess:
+            Zunächst wird eine Ereignismatrix aus allen bedarfs- und bestandsrelevanten
+            Einträgen aufgebaut (<code>MrpEvent</code>), dann wird je Produkt und Periode
+            der Nettobedarf berechnet und in Planungsaufträge (<code>ProposedOrder</code>)
+            überführt.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>MrpEvent-Typ</th><th>Wirkung</th></tr></thead>
+              <tbody>
+                <tr><td>Verkaufsbedarf</td><td>Bedarf erhöht (negativ)</td></tr>
+                <tr><td>Lagerbestand</td><td>Verfügbarkeit erhöht (positiv)</td></tr>
+                <tr><td>Fertigungsauftrag</td><td>Zukünftiger Zugang (positiv)</td></tr>
+                <tr><td>Bestellvorschlag</td><td>Geplanter Zugang (positiv)</td></tr>
+                <tr><td>Sicherheitsbestand</td><td>Mindestpuffer (negativ)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. Arbeitspläne ────────────────────────────────────────────── -->
+    <section class="mb-5" id="routing">
+      <h4 class="section-title"><i class="bi bi-signpost-split me-2 text-primary"></i>4. Arbeitspläne (Routing)</h4>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <p class="small text-muted mb-3">
+            Ein Arbeitsplan definiert die Fertigungsschritte für ein Produkt: welche
+            Arbeitsschritte in welcher Reihenfolge an welchen Maschinen oder Arbeitsplätzen
+            ausgeführt werden. <code>RoutingServices</code> berechnet die Gesamtdurchlaufzeit
+            als Grundlage für Terminplanung und Kapazitätsauslastung.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Element</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>Routing</td><td>Arbeitsplan für ein Produkt</td></tr>
+                <tr><td>RoutingTask</td><td>Einzelner Arbeitsschritt mit Zeitvorgaben</td></tr>
+                <tr><td>WorkCenter</td><td>Maschine oder Arbeitsgruppe</td></tr>
+                <tr><td>Rüstzeit</td><td>Einmalaufwand je Auftrag</td></tr>
+                <tr><td>Stückzeit</td><td>Zeitaufwand je Einheit</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    R[Routing\nFahrradmontage] --> T1[Task 1\nRahmenmontage\nArbeitsplatz A]
+    R --> T2[Task 2\nLaufradmontage\nArbeitsplatz B]
+    R --> T3[Task 3\nSchaltungsmontage\nArbeitsplatz C]
+    R --> T4[Task 4\nEndkontrolle\nArbeitsplatz D]
+    T1 --> T2
+    T2 --> T3
+    T3 --> T4
+            </pre>
+            <div class="diagram-caption">Abb. 4 — Arbeitsplan mit sequenziellen Fertigungsschritten</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Kapazitätsplanung ──────────────────────────────────────── -->
+    <section class="mb-5" id="kapazitaet">
+      <h4 class="section-title"><i class="bi bi-calendar2-week me-2 text-primary"></i>5. Kapazitätsplanung</h4>
+      <div class="row g-4">
+        <div class="col-md-7">
+          <p class="small text-muted mb-3">
+            <code>TechDataServices</code> ist die Kernkomponente der Kapazitätsterminierung.
+            Es berechnet auf Basis von Arbeitsplänen, Schichtkalendern und Maschinenkapazitäten
+            die frühest- und spätestmöglichen Start- und Endtermine für Fertigungsaufträge —
+            sowohl als Vorwärtsterminierung (ab Starttermin) als auch als Rückwärtsterminierung
+            (ab Bedarfstermin).
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Terminierungsart</th><th>Beschreibung</th></tr></thead>
+              <tbody>
+                <tr><td>Vorwärtsterminierung</td><td>Ab heute: frühestmöglicher Fertigstellungstermin</td></tr>
+                <tr><td>Rückwärtsterminierung</td><td>Ab Bedarfsdatum: spätestmöglicher Starttermin</td></tr>
+                <tr><td>Schichtkalender</td><td>Betriebszeiten, Feiertage, Schichtpausen</td></tr>
+                <tr><td>Kapazitätsauslastung</td><td>Vergleich Bedarf vs. verfügbare Maschinenzeit</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="alert alert-warning py-2 small">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>MRP und Kapazität:</strong> Der MRP-Algorithmus berücksichtigt
+            Durchlaufzeiten aus den Arbeitsplänen, plant aber keine explizite
+            Kapazitätsgrenzen. Überlastungen werden im Fertigungsauftrag sichtbar
+            und müssen manuell aufgelöst werden.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Modulabhängigkeiten ─────────────────────────────────────── -->
+    <section class="mb-5" id="abhaengigkeiten">
+      <h4 class="section-title"><i class="bi bi-share me-2 text-primary"></i>6. Modulabhängigkeiten</h4>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    manufacturing -->|Lagerbestand, Produktstamm| product
+    manufacturing -->|Verkaufsbedarfe für MRP| order
+    manufacturing -->|Fertigungsaufträge als WorkEffort| workeffort
+    manufacturing -->|Einkaufsbestellungen aus MRP| order
+    product -->|Stücklistenprodukte| manufacturing
+            </pre>
+            <div class="diagram-caption">Abb. 5 — Modulabhängigkeiten des <code>manufacturing</code>-Moduls</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Modul</th><th>Nutzung</th></tr></thead>
+              <tbody>
+                <tr><td><code>product</code></td><td>Lagerbestand, Produktstamm, Stücklistenprodukte</td></tr>
+                <tr><td><code>order</code></td><td>Verkaufsbedarfe als MRP-Eingabe; Einkaufsbestellungen als MRP-Ausgabe</td></tr>
+                <tr><td><code>workeffort</code></td><td>Fertigungsaufträge sind WorkEffort-Einträge</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+</script>
+</body>
+</html>

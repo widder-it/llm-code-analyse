@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>workeffort — Fachliche Beschreibung</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root { --sidebar-width: 220px; }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width); min-height: 100vh;
+      background: #1e2430; color: #c9d1d9;
+      position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem; font-weight: 700; color: #fff;
+      padding: 1.25rem 1rem .75rem; display: block;
+      text-decoration: none; border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link { color: #a0aec0; padding: .35rem 1rem; font-size: .85rem; }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active { color: #fff; background: #2d3748; }
+    #sidebar .nav-section {
+      font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
+      color: #4a5568; padding: .75rem 1rem .25rem;
+    }
+    #main { margin-left: var(--sidebar-width); min-height: 100vh; }
+    .page-header { background: #f8f9fa; border-bottom: 1px solid #dee2e6; padding: 1.5rem 2rem; }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .section-title {
+      font-size: 1rem; font-weight: 600; color: #1e2430;
+      border-bottom: 2px solid #e2e8f0; padding-bottom: .4rem; margin-bottom: 1rem;
+    }
+    .stat-pill {
+      background: #eef2ff; color: #3730a3; border-radius: 20px;
+      padding: .15rem .65rem; font-size: .78rem; font-weight: 600;
+    }
+    .diagram-box { background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; }
+    .diagram-caption { text-align: center; font-size: .78rem; color: #64748b; margin-top: .5rem; }
+    .domain-card {
+      border: 1px solid #e2e8f0; border-radius: 8px;
+      padding: 1rem 1.25rem; height: 100%; border-left: 4px solid;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <a class="sidebar-brand" href="../index.html">
+    <i class="bi bi-diagram-3 me-2"></i>Architekturdoku
+  </a>
+  <div class="nav-section">Modul</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-box me-1"></i>Übersicht &amp; Klassen</a></li>
+    <li class="nav-item"><a class="nav-link active" href="fachlichkeit.html"><i class="bi bi-book me-1"></i>Fachliche Beschreibung</a></li>
+  </ul>
+  <div class="nav-section">Abschnitte</div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link" href="#modell"><i class="bi bi-diagram-2 me-1"></i>WorkEffort-Modell</a></li>
+    <li class="nav-item"><a class="nav-link" href="#typen"><i class="bi bi-tags me-1"></i>Typen &amp; Verwendung</a></li>
+    <li class="nav-item"><a class="nav-link" href="#personen"><i class="bi bi-person-check me-1"></i>Personenzuordnung</a></li>
+    <li class="nav-item"><a class="nav-link" href="#ical"><i class="bi bi-calendar-event me-1"></i>iCalendar-Integration</a></li>
+    <li class="nav-item"><a class="nav-link" href="#suche"><i class="bi bi-search me-1"></i>Suche &amp; Index</a></li>
+    <li class="nav-item"><a class="nav-link" href="#abhaengigkeiten"><i class="bi bi-share me-1"></i>Modulabhängigkeiten</a></li>
+  </ul>
+</nav>
+
+<div id="main">
+  <div class="page-header">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="../index.html">Übersicht</a></li>
+        <li class="breadcrumb-item"><a href="index.html">workeffort</a></li>
+        <li class="breadcrumb-item active">Fachliche Beschreibung</li>
+      </ol>
+    </nav>
+    <h1><i class="bi bi-box me-2 text-primary"></i>Modul <code>workeffort</code> — Fachliche Beschreibung</h1>
+    <p class="text-muted small mt-1 mb-2">
+      Universelles Aufgaben- und Aktivitätsmodell: Termine, Projekte, Produktionsaufträge, iCalendar-Integration und Volltextsuche.
+    </p>
+    <div class="d-flex gap-2 flex-wrap">
+      <span class="stat-pill"><i class="bi bi-layers me-1"></i>3 Submodule</span>
+      <span class="stat-pill"><i class="bi bi-lightning me-1"></i>18 Klassen</span>
+      <span class="stat-pill"><i class="bi bi-calendar-event me-1"></i>iCalendar / WebDAV</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <div class="alert alert-light border mb-4">
+      <p class="mb-2">
+        Das <code>workeffort</code>-Modul implementiert ein universelles Domänenmodell für
+        <strong>Arbeitsaufgaben</strong> jeder Art — von einfachen To-dos und Terminen über
+        Projektaufgaben bis hin zu Fertigungsaufträgen. Es ist damit ein echtes Querschnittsmodul:
+        <code>manufacturing</code> modelliert Fertigungsaufträge als WorkEffort,
+        <code>order</code> nutzt WorkEffort für auftragsbezogene Aufgaben.
+      </p>
+      <p class="mb-0">
+        Besonders ist die vollständige <strong>iCalendar-Integration</strong> (RFC 5545) mit
+        WebDAV-Endpunkt: Kalenderclients wie Outlook, Apple Calendar oder Thunderbird können
+        den Kalender direkt abonnieren und Termine bearbeiten.
+      </p>
+    </div>
+
+    <!-- ── 1. WorkEffort-Modell ──────────────────────────────────────── -->
+    <section class="mb-5" id="modell">
+      <h4 class="section-title"><i class="bi bi-diagram-2 me-2 text-primary"></i>1. Das WorkEffort-Domänenmodell</h4>
+      <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph TD
+    WE[WorkEffort\nAbstrakte Arbeitseinheit] --> ASSOC[WorkEffortAssoc\nEltern-Kind-Beziehung]
+    WE --> PARTY[WorkEffortPartyAssignment\nZugeordnete Person]
+    WE --> KW[WorkEffortKeyword\nSuchindex]
+    WE --> CONT[WorkEffortContent\nAngehängte Dokumente]
+    WE --> FIX[WorkEffortFixedAsset\nGenutzte Ressource]
+    ASSOC --> WE2[Unteraufgabe\n/ Teilprojekt]
+    PARTY --> P[Party\nPerson / Org]
+            </pre>
+            <div class="diagram-caption">Abb. 1 — WorkEffort-Assoziationen: Personen, Ressourcen, Inhalte und Hierarchien</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <p class="small text-muted mb-3">
+            Eine <code>WorkEffort</code>-Entität ist bewusst generisch gehalten:
+            Typ, Status und Verhalten werden über den <code>WorkEffortTypeId</code>
+            und den <code>currentStatusId</code> gesteuert. Alle spezialisierten
+            Verwendungen — Termin, Aufgabe, Projekt, Fertigungsauftrag — sind
+            Instanzen desselben Basismusters.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Kernfeld</th><th>Bedeutung</th></tr></thead>
+              <tbody>
+                <tr><td><code>workEffortTypeId</code></td><td>Differenziert Termin, Aufgabe, Projekt etc.</td></tr>
+                <tr><td><code>currentStatusId</code></td><td>Workflowstatus (offen, in Bearbeitung, abgeschlossen)</td></tr>
+                <tr><td><code>estimatedStartDate</code></td><td>Geplanter Beginn</td></tr>
+                <tr><td><code>estimatedCompletionDate</code></td><td>Geplantes Ende</td></tr>
+                <tr><td><code>actualStartDate</code></td><td>Tatsächlicher Beginn (Rückmeldung)</td></tr>
+                <tr><td><code>actualCompletionDate</code></td><td>Tatsächliches Ende (Rückmeldung)</td></tr>
+                <tr><td><code>estimatedMilliSeconds</code></td><td>Geplanter Aufwand in ms</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Typen & Verwendung ─────────────────────────────────────── -->
+    <section class="mb-5" id="typen">
+      <h4 class="section-title"><i class="bi bi-tags me-2 text-primary"></i>2. Typen &amp; modulübergreifende Verwendung</h4>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    WE[WorkEffort] --> EVENT[EVENT\nKalendertermin]
+    WE --> TASK[TASK\nAufgabe / To-do]
+    WE --> PROJECT[PROJECT\nProjekt]
+    WE --> MILESTONE[MILESTONE\nMeilenstein]
+    WE --> PROD_HEADER[PROD_ORDER_HEADER\nFertigungsauftrag]
+    WE --> PROD_TASK[PROD_ORDER_TASK\nFertigungsschritt]
+    WE --> ROUTE[ROUTING_TASK\nArbeitsplan-Schritt]
+
+    style PROD_HEADER fill:#f59e0b,color:#fff
+    style PROD_TASK fill:#f59e0b,color:#fff
+    style ROUTE fill:#f59e0b,color:#fff
+            </pre>
+            <div class="diagram-caption">Abb. 2 — WorkEffort-Typen: generisches Modell, vielfältige Verwendung</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Typ</th><th>Genutzt von</th><th>Bedeutung</th></tr></thead>
+              <tbody>
+                <tr><td><code>EVENT</code></td><td><code>workeffort</code></td><td>Kalendertermin mit iCal-Export</td></tr>
+                <tr><td><code>TASK</code></td><td><code>order</code>, <code>party</code></td><td>Auftragsbezogene Aufgabe, CRM-Aktivität</td></tr>
+                <tr><td><code>PROJECT</code></td><td><code>workeffort</code></td><td>Projekt mit Meilenstein und Teilaufgaben</td></tr>
+                <tr><td><code>PROD_ORDER_HEADER</code></td><td><code>manufacturing</code></td><td>Fertigungsauftrag</td></tr>
+                <tr><td><code>PROD_ORDER_TASK</code></td><td><code>manufacturing</code></td><td>Einzelner Fertigungsschritt</td></tr>
+                <tr><td><code>ROUTING_TASK</code></td><td><code>manufacturing</code></td><td>Schritt im Arbeitsplan</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Personenzuordnung ──────────────────────────────────────── -->
+    <section class="mb-5" id="personen">
+      <h4 class="section-title"><i class="bi bi-person-check me-2 text-primary"></i>3. Personenzuordnung &amp; Workflow</h4>
+      <div class="row g-4">
+        <div class="col-md-5">
+          <p class="small text-muted mb-3">
+            Jeder WorkEffort kann beliebig vielen Personen und Ressourcen zugeordnet werden.
+            Die Zuordnung ist typisiert (Verantwortlicher, Teilnehmer, Beobachter) und
+            zeitlich befristet. <code>WorkEffortPartyAssignmentServices</code> verknüpft
+            Statusänderungen an Zuordnungen mit der Workflow-Engine.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Zuordnungstyp</th><th>Rolle</th></tr></thead>
+              <tbody>
+                <tr><td><code>CAL_OWNER</code></td><td>Verantwortlicher / Eigentümer</td></tr>
+                <tr><td><code>CAL_ATTENDEE</code></td><td>Teilnehmer (optional / erforderlich)</td></tr>
+                <tr><td><code>CAL_DELEGATE</code></td><td>Delegierter</td></tr>
+                <tr><td><code>PROD_MACH_ASGN</code></td><td>Maschine / Ressource</td></tr>
+                <tr><td><code>PROD_EMPL_ASGN</code></td><td>Mitarbeiter in der Fertigung</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart LR
+    A([Aufgabe\nerstellt]) --> B[Person\nzuordnen]
+    B --> C[Status:\nPRJ_ASSIGNED]
+    C --> D[Person\nbenachrichtigt]
+    D --> E{Annahme?}
+    E -- Angenommen --> F[Status:\nPRJ_STARTED]
+    E -- Abgelehnt --> G[Neu zuweisen]
+    F --> H[Arbeit\ngeleistet]
+    H --> I[Status:\nPRJ_COMPLETED]
+    I --> J([Aufgabe\nabgeschlossen])
+            </pre>
+            <div class="diagram-caption">Abb. 3 — Personenzuordnung und Statusworkflow</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. iCalendar-Integration ─────────────────────────────────── -->
+    <section class="mb-5" id="ical">
+      <h4 class="section-title"><i class="bi bi-calendar-event me-2 text-primary"></i>4. iCalendar-Integration</h4>
+      <div class="row g-4 mb-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart LR
+    CAL[Kalender-Client\nOutlook / Apple / Thunderbird] -- GET --> WD[ICalWorker\nWebDAV-Endpunkt]
+    WD --> IC[ICalConverter\nWorkEffort → iCal]
+    IC --> VE[VEVENT\nKalendertermin]
+    IC --> VT[VTODO\nAufgabe]
+    VE --> CAL
+    VT --> CAL
+    CAL -- PUT --> WD2[ICalWorker\niCal → WorkEffort]
+    WD2 --> DB[(WorkEffort\nDatenbank)]
+            </pre>
+            <div class="diagram-caption">Abb. 4 — iCalendar-Datenfluss: bidirektionale Synchronisation über WebDAV</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <p class="small text-muted mb-3">
+            <code>ICalConverter</code> wandelt WorkEffort-Einträge in RFC-5545-konforme
+            iCalendar-Objekte um — und umgekehrt. <code>ICalWorker</code> stellt den
+            WebDAV-Endpunkt bereit, über den Kalenderclients GET (lesen), PUT (schreiben)
+            und DELETE (löschen) ausführen können.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>iCal-Objekt</th><th>WorkEffort-Typ</th></tr></thead>
+              <tbody>
+                <tr><td><code>VEVENT</code></td><td><code>EVENT</code></td></tr>
+                <tr><td><code>VTODO</code></td><td><code>TASK</code></td></tr>
+                <tr><td><code>RRULE</code></td><td><code>TemporalExpression</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-info py-2 small mt-2">
+            <i class="bi bi-info-circle me-1"></i>
+            <code>ICalRecurConverter</code> übersetzt Wiederholungsregeln (täglich,
+            wöchentlich, monatlich) zwischen dem iCal-Format (<code>RRULE</code>)
+            und internen <code>TemporalExpression</code>-Objekten.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Suche & Index ───────────────────────────────────────────── -->
+    <section class="mb-5" id="suche">
+      <h4 class="section-title"><i class="bi bi-search me-2 text-primary"></i>5. Suche &amp; Keyword-Index</h4>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <p class="small text-muted mb-3">
+            <code>WorkEffortSearch</code> implementiert eine vollständige Suchmaschinerie
+            auf Basis dynamischer SQL-Views. Suchanfragen können nach mehreren Kriterien
+            gleichzeitig filtern und werden als kombinierte SQL-Queries ausgeführt.
+            Der Suchzustand (Filter, Sortierung, Seite) wird in der HTTP-Session
+            durch <code>WorkEffortSearchSession</code> persistiert.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Suchkriterium</th><th>Beispiel</th></tr></thead>
+              <tbody>
+                <tr><td>Volltext (Keyword)</td><td>Titel, Beschreibung, Notizen</td></tr>
+                <tr><td>Typ</td><td>Nur Termine / Nur Aufgaben</td></tr>
+                <tr><td>Status</td><td>Nur offene Aufgaben</td></tr>
+                <tr><td>Person</td><td>Alle Aufgaben von Person X</td></tr>
+                <tr><td>Zeitraum</td><td>Termine im Monat April</td></tr>
+                <tr><td>Priorität</td><td>Nur hohe Priorität</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+flowchart TD
+    A([WorkEffort\ngespeichert]) --> B[WorkEffortKeywordIndex\nStichworte extrahieren]
+    B --> C[WorkEffortKeyword\nTabelle]
+    D([Suchanfrage]) --> E[WorkEffortSearch\nSQL-Query aufbauen]
+    E --> F[JOIN auf\nWorkEffortKeyword]
+    F --> G[Ergebnisliste\nmit Ranking]
+    G --> H([Trefferanzeige])
+            </pre>
+            <div class="diagram-caption">Abb. 5 — Keyword-Indexierung und Volltextsuche</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Modulabhängigkeiten ─────────────────────────────────────── -->
+    <section class="mb-5" id="abhaengigkeiten">
+      <h4 class="section-title"><i class="bi bi-share me-2 text-primary"></i>6. Modulabhängigkeiten</h4>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="diagram-box">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    manufacturing -->|Fertigungsaufträge als WorkEffort| workeffort
+    order -->|Auftragsbezogene Aufgaben| workeffort
+    party -->|Kommunikationsaktivitäten| workeffort
+    accounting -->|Projektkosten| workeffort
+    workeffort -->|Personenstammdaten| party
+    workeffort -->|Inhalte und Dokumente| content
+
+    style workeffort fill:#3b82f6,color:#fff
+            </pre>
+            <div class="diagram-caption">Abb. 6 — <code>workeffort</code> als Querschnittsmodul für Aktivitäten und Aufgaben</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light"><tr><th>Modul</th><th>Nutzung</th></tr></thead>
+              <tbody>
+                <tr><td><code>manufacturing</code></td><td>Fertigungsaufträge und Arbeitsplanschritte als WorkEffort</td></tr>
+                <tr><td><code>order</code></td><td>Auftragsbezogene Aufgaben und Genehmigungen</td></tr>
+                <tr><td><code>party</code></td><td>Kommunikationsereignisse als WorkEffort-Aktivitäten</td></tr>
+                <tr><td><code>accounting</code></td><td>Zeiterfassung und Projektkosten</td></tr>
+                <tr><td><code>content</code></td><td>Dokumente und Anhänge an WorkEffort</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+</script>
+</body>
+</html>
