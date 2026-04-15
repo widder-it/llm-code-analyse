@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KRITIS-Sicherheitsbewertung</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --sidebar-width: 220px;
+      --accent: #0d6efd;
+    }
+    body { font-size: .925rem; }
+    #sidebar {
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      background: #1e2430;
+      color: #c9d1d9;
+      position: fixed;
+      top: 0; left: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    #sidebar .sidebar-brand {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      padding: 1.25rem 1rem .75rem;
+      display: block;
+      text-decoration: none;
+      border-bottom: 1px solid #2d3748;
+    }
+    #sidebar .nav-link {
+      color: #a0aec0;
+      padding: .35rem 1rem;
+      font-size: .85rem;
+      border-radius: 0;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      color: #fff;
+      background: #2d3748;
+    }
+    #sidebar .nav-section {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #4a5568;
+      padding: .75rem 1rem .25rem;
+    }
+    #main {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+    }
+    .page-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 1.5rem 2rem;
+    }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .content-area { padding: 2rem; }
+    .badge-type {
+      font-size: .7rem;
+      font-weight: 500;
+    }
+    .method-table th { white-space: nowrap; }
+    .method-sig {
+      font-family: SFMono-Regular, Menlo, monospace;
+      font-size: .82rem;
+      color: #0550ae;
+    }
+    .class-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: box-shadow .15s;
+    }
+    .class-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .class-card .card-title { font-size: .95rem; }
+    .breadcrumb { font-size: .82rem; }
+    .stat-pill {
+      background: #eef2ff;
+      color: #3730a3;
+      border-radius: 20px;
+      padding: .15rem .65rem;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    code { color: #0550ae; background: #f0f4ff; padding: .1em .35em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <a class="sidebar-brand" href="./index.html">
+    <i class="bi bi-diagram-3 me-2"></i>OFBiz Docs
+  </a>
+  <div class="nav-section">Analyse</div>
+  <ul class="nav flex-column mb-2">
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./sbom.html">
+        <i class="bi bi-box-seam me-1"></i>SBOM
+        <span class="stat-pill ms-1">79</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./tech-debt.html">
+        <i class="bi bi-exclamation-triangle me-1"></i>Tech Debt
+        <span class="stat-pill ms-1">31</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./database.html">
+        <i class="bi bi-database me-1"></i>Datenbank
+        <span class="stat-pill ms-1">1900</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./schema.html">
+        <i class="bi bi-table me-1"></i>DB-Schema
+        <span class="stat-pill ms-1">248</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./complexity.html">
+        <i class="bi bi-graph-up me-1"></i>Komplexität
+        <span class="stat-pill ms-1">26</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active"
+         href="./kritis.html">
+        <i class="bi bi-shield-exclamation me-1"></i>KRITIS
+        <span class="stat-pill ms-1" style="background:#fee2e2;color:#991b1b">6 C</span>
+      </a>
+    </li>
+  </ul>
+  <div class="nav-section">Module</div>
+  <ul class="nav flex-column">
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./party/index.html">
+        <i class="bi bi-box me-1"></i>party
+        <span class="stat-pill ms-1">22</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./order/index.html">
+        <i class="bi bi-box me-1"></i>order
+        <span class="stat-pill ms-1">37</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./product/index.html">
+        <i class="bi bi-box me-1"></i>product
+        <span class="stat-pill ms-1">58</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./accounting/index.html">
+        <i class="bi bi-box me-1"></i>accounting
+        <span class="stat-pill ms-1">33</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./content/index.html">
+        <i class="bi bi-box me-1"></i>content
+        <span class="stat-pill ms-1">28</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./manufacturing/index.html">
+        <i class="bi bi-box me-1"></i>manufacturing
+        <span class="stat-pill ms-1">17</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./shipment/index.html">
+        <i class="bi bi-box me-1"></i>shipment
+        <span class="stat-pill ms-1">23</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./workeffort/index.html">
+        <i class="bi bi-box me-1"></i>workeffort
+        <span class="stat-pill ms-1">18</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./marketing/index.html">
+        <i class="bi bi-box me-1"></i>marketing
+        <span class="stat-pill ms-1">8</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./humanres/index.html">
+        <i class="bi bi-box me-1"></i>humanres
+        <span class="stat-pill ms-1">2</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link "
+         href="./sfa/index.html">
+        <i class="bi bi-box me-1"></i>sfa
+        <span class="stat-pill ms-1">1</span>
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+<!-- Main -->
+<div id="main">
+  
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="./index.html">Übersicht</a></li>
+      <li class="breadcrumb-item active">KRITIS-Sicherheitsbewertung</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-shield-exclamation me-2 text-danger"></i>KRITIS-Sicherheitsbewertung</h1>
+  <p class="text-muted mb-2 mt-1 small">
+    Bewertungsstufe: <strong class="text-danger">Höchste KRITIS-Stufe</strong> &middot;
+    Analyse: 2026-04-15 &middot;
+    Grundlage: IT-SiG 2.0, NIS2, BSI TR-02102, BSI TR-03183
+  </p>
+  <div class="d-flex gap-2 flex-wrap">
+    <span class="stat-pill" style="background:#fee2e2;color:#991b1b">
+      <i class="bi bi-exclamation-octagon-fill me-1"></i>6 CRITICAL — Sofortmaßnahme
+    </span>
+    <span class="stat-pill" style="background:#fef3c7;color:#92400e">
+      <i class="bi bi-exclamation-triangle-fill me-1"></i>8 HIGH — Kurzfristig
+    </span>
+    <span class="stat-pill" style="background:#f3f4f6;color:#374151">
+      <i class="bi bi-building-x me-1"></i>6 Strukturelle Risiken
+    </span>
+  </div>
+</div>
+
+<div class="content-area">
+
+  <!-- ── Lageübersicht ──────────────────────────────────────────────────── -->
+  <div class="alert alert-danger border-danger mb-4 d-flex gap-3 align-items-start">
+    <i class="bi bi-shield-exclamation fs-4 flex-shrink-0 mt-1"></i>
+    <div>
+      <strong>Akuter Handlungsbedarf für KRITIS-Betrieb.</strong>
+      Das System weist 6 kritische Schwachstellen auf, die bei einem
+      Betreiber der höchsten KRITIS-Stufe einen sofortigen Betriebsstopp erfordern würden — darunter
+      Remote Code Execution auf der Laufzeitumgebung sowie mehrere XML External Entity (XXE)-Lücken.
+      Hinzu kommen 8 Schwachstellen mit hohem Risiko sowie
+      6 strukturelle Sicherheitsrisiken, die einer
+      umfassenderen Sanierung bedürfen.
+    </div>
+  </div>
+
+  <!-- ── 1. CRITICAL — Sofortmaßnahmen ─────────────────────────────────── -->
+  <section class="mb-5" id="sofort">
+    <h4 class="section-title" style="color:#991b1b;border-color:#fca5a5">
+      <i class="bi bi-exclamation-octagon-fill me-2"></i>1. CRITICAL — Sofortmaßnahmen
+    </h4>
+    <p class="small text-muted mb-3">
+      Diese Schwachstellen müssen <strong>ohne Wartungsfenster</strong> behoben werden.
+      Jede der folgenden CVEs stellt für einen KRITIS-Betreiber ein K.O.-Kriterium dar.
+    </p>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-danger">
+          <tr>
+            <th style="width:14%">CVE</th>
+            <th style="width:14%">Bibliothek</th>
+            <th style="width:7%">Version</th>
+            <th style="width:30%">Angriffsvektor</th>
+            <th style="width:20%">Sofortmaßnahme</th>
+            <th>KRITIS-Begründung</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr class="table-danger">
+            <td>
+              <code class="fw-bold" style="color:#991b1b;background:#fee2e2">CVE-2025-24813</code><br>
+              <span class="badge" style="background:#dc2626;font-size:.65rem">CRITICAL</span>
+            </td>
+            <td class="fw-semibold">Apache Tomcat<br><span class="text-muted small font-monospace">10.1.28</span></td>
+            <td class="text-center">
+              <span class="badge bg-danger">CRITICAL</span>
+            </td>
+            <td class="small">Remote Code Execution via partial PUT — Angreifer kann beliebigen Code ausführen</td>
+            <td class="small">Tomcat sofort auf aktuelle Patch-Version anheben</td>
+            <td class="small text-danger">RCE auf der Laufzeitumgebung ist K.O.-Kriterium für KRITIS-Betrieb</td>
+          </tr>
+          
+          <tr class="table-danger">
+            <td>
+              <code class="fw-bold" style="color:#991b1b;background:#fee2e2">CVE-2026-29145</code><br>
+              <span class="badge" style="background:#dc2626;font-size:.65rem">CRITICAL</span>
+            </td>
+            <td class="fw-semibold">Apache Tomcat<br><span class="text-muted small font-monospace">10.1.28</span></td>
+            <td class="text-center">
+              <span class="badge bg-danger">CRITICAL</span>
+            </td>
+            <td class="small">CLIENT_CERT-Authentifizierung wird nicht wie erwartet abgelehnt — mTLS-Schutz umgehbar</td>
+            <td class="small">Tomcat patchen; mTLS-Zertifikatsprüfung verifizieren</td>
+            <td class="small text-danger">Authentifizierungs-Bypass gefährdet Zugangskontrolle zu KRITIS-Systemen</td>
+          </tr>
+          
+          <tr class="table-danger">
+            <td>
+              <code class="fw-bold" style="color:#991b1b;background:#fee2e2">CVE-2025-66516</code><br>
+              <span class="badge" style="background:#dc2626;font-size:.65rem">CRITICAL</span>
+            </td>
+            <td class="fw-semibold">Apache Tika<br><span class="text-muted small font-monospace">2.9.2</span></td>
+            <td class="text-center">
+              <span class="badge bg-danger">CRITICAL</span>
+            </td>
+            <td class="small">XXE-Injection über präparierte PDF/XFA-Dateien — Datei-Exfiltration und SSRF möglich</td>
+            <td class="small">Tika sofort patchen oder Datei-Upload bis zum Patch deaktivieren</td>
+            <td class="small text-danger">Unkontrollierte Datei-Exfiltration verletzt Vertraulichkeit kritischer Daten</td>
+          </tr>
+          
+          <tr class="table-danger">
+            <td>
+              <code class="fw-bold" style="color:#991b1b;background:#fee2e2">CVE-2017-9096</code><br>
+              <span class="badge" style="background:#dc2626;font-size:.65rem">HIGH</span>
+            </td>
+            <td class="fw-semibold">iText<br><span class="text-muted small font-monospace">2.1.7</span></td>
+            <td class="text-center">
+              <span class="badge bg-danger">HIGH</span>
+            </td>
+            <td class="small">XXE in XML-Parser — seit 2017 bekannt und unbehandelt</td>
+            <td class="small">iText ablösen (End-of-Life) oder External Entity Processing deaktivieren</td>
+            <td class="small text-danger">8 Jahre offene bekannte Schwachstelle ist für KRITIS nicht tolerierbar</td>
+          </tr>
+          
+          <tr class="table-danger">
+            <td>
+              <code class="fw-bold" style="color:#991b1b;background:#fee2e2">CVE-2021-33813</code><br>
+              <span class="badge" style="background:#dc2626;font-size:.65rem">HIGH</span>
+            </td>
+            <td class="fw-semibold">JDOM<br><span class="text-muted small font-monospace">1.1.3</span></td>
+            <td class="text-center">
+              <span class="badge bg-danger">HIGH</span>
+            </td>
+            <td class="small">XXE-Injection via SAXBuilder — DoS und Datei-Exfiltration möglich</td>
+            <td class="small">JDOM patchen; setExpandEntities(false) als Sofortmaßnahme</td>
+            <td class="small text-danger">4 Jahre offene XXE-Schwachstelle; betrifft XML-Verarbeitung im Kern</td>
+          </tr>
+          
+          <tr class="table-danger">
+            <td>
+              <code class="fw-bold" style="color:#991b1b;background:#fee2e2">CVE-2025-66021</code><br>
+              <span class="badge" style="background:#dc2626;font-size:.65rem">HIGH</span>
+            </td>
+            <td class="fw-semibold">OWASP HTML Sanitizer<br><span class="text-muted small font-monospace">20240325.1</span></td>
+            <td class="text-center">
+              <span class="badge bg-danger">HIGH</span>
+            </td>
+            <td class="small">XSS durch Schwachstelle im Schutzmechanismus selbst — noscript/style-Tags passieren den Sanitizer</td>
+            <td class="small">Sofort patchen; alternative Sanitizer-Bibliothek evaluieren</td>
+            <td class="small text-danger">XSS im eigenen Abwehrmechanismus hebelt alle Input-Validierungen aus</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── 2. HIGH — Kurzfristig ──────────────────────────────────────────── -->
+  <section class="mb-5" id="kurzfristig">
+    <h4 class="section-title" style="color:#92400e;border-color:#fcd34d">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>2. HIGH — Kurzfristig zu beheben
+    </h4>
+    <p class="small text-muted mb-3">
+      Diese HIGH-CVEs erhöhen die Angriffsfläche signifikant. Im KRITIS-Kontext sind sie innerhalb
+      von Wochen zu schließen — nicht innerhalb regulärer Patch-Zyklen.
+    </p>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-warning">
+          <tr>
+            <th style="width:14%">CVE</th>
+            <th style="width:14%">Bibliothek</th>
+            <th style="width:7%">Version</th>
+            <th style="width:35%">Angriffsvektor</th>
+            <th>Maßnahme</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr class="table-warning">
+            <td>
+              <code class="fw-bold" style="color:#92400e;background:#fef3c7">CVE-2026-24880</code><br>
+              <span class="badge" style="background:#d97706;font-size:.65rem">HIGH</span>
+            </td>
+            <td class="fw-semibold">Apache Tomcat<br><span class="text-muted small font-monospace">10.1.28</span></td>
+            <td class="text-center">
+              <span class="badge bg-warning text-dark">HIGH</span>
+            </td>
+            <td class="small">HTTP Request/Response Smuggling — Session-Hijacking, Sicherheitskontrollen umgehbar</td>
+            <td class="small">Tomcat patchen (gleicher Patch-Zyklus wie CRITICAL-CVEs)</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td>
+              <code class="fw-bold" style="color:#92400e;background:#fef3c7">CVE-2026-24734</code><br>
+              <span class="badge" style="background:#d97706;font-size:.65rem">HIGH</span>
+            </td>
+            <td class="fw-semibold">Apache Tomcat<br><span class="text-muted small font-monospace">10.1.28</span></td>
+            <td class="text-center">
+              <span class="badge bg-warning text-dark">HIGH</span>
+            </td>
+            <td class="small">OCSP-Antwort wird nicht vollständig validiert — zurückgerufene Zertifikate werden akzeptiert</td>
+            <td class="small">Tomcat patchen; OCSP-Konfiguration prüfen</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td>
+              <code class="fw-bold" style="color:#92400e;background:#fef3c7">CVE-2026-34487</code><br>
+              <span class="badge" style="background:#d97706;font-size:.65rem">HIGH</span>
+            </td>
+            <td class="fw-semibold">Apache Tomcat<br><span class="text-muted small font-monospace">10.1.28</span></td>
+            <td class="text-center">
+              <span class="badge bg-warning text-dark">HIGH</span>
+            </td>
+            <td class="small">Kubernetes Bearer Token wird in Logdatei geschrieben</td>
+            <td class="small">Tomcat patchen; Logdateien auf Token prüfen und rotieren</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td>
+              <code class="fw-bold" style="color:#92400e;background:#fef3c7">CVE-2025-48976</code><br>
+              <span class="badge" style="background:#d97706;font-size:.65rem">HIGH</span>
+            </td>
+            <td class="fw-semibold">Commons FileUpload<br><span class="text-muted small font-monospace">1.5</span></td>
+            <td class="text-center">
+              <span class="badge bg-warning text-dark">HIGH</span>
+            </td>
+            <td class="small">DoS via Part-Headers ohne Ressourcenlimit — Systemverfügbarkeit gefährdet</td>
+            <td class="small">Auf Version 1.6 oder 2.0.0-M4 aktualisieren</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td>
+              <code class="fw-bold" style="color:#92400e;background:#fef3c7">CVE-2025-23184</code><br>
+              <span class="badge" style="background:#d97706;font-size:.65rem">HIGH</span>
+            </td>
+            <td class="fw-semibold">Apache CXF<br><span class="text-muted small font-monospace">4.0.4</span></td>
+            <td class="text-center">
+              <span class="badge bg-warning text-dark">HIGH</span>
+            </td>
+            <td class="small">DoS — temporäre Dateien werden nicht geschlossen und füllen das Dateisystem</td>
+            <td class="small">Auf CXF 4.0.6 oder neuer aktualisieren</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td>
+              <code class="fw-bold" style="color:#92400e;background:#fef3c7">CVE-2024-47072</code><br>
+              <span class="badge" style="background:#d97706;font-size:.65rem">HIGH</span>
+            </td>
+            <td class="fw-semibold">XStream<br><span class="text-muted small font-monospace">1.4.20</span></td>
+            <td class="text-center">
+              <span class="badge bg-warning text-dark">HIGH</span>
+            </td>
+            <td class="small">DoS via manipuliertem Binärstrom — Stack Overflow beim Deserialisieren</td>
+            <td class="small">Auf XStream 1.4.21 aktualisieren</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td>
+              <code class="fw-bold" style="color:#92400e;background:#fef3c7">CVE-2025-68161</code><br>
+              <span class="badge" style="background:#d97706;font-size:.65rem">MODERATE</span>
+            </td>
+            <td class="fw-semibold">Apache Log4j<br><span class="text-muted small font-monospace">2.23.1</span></td>
+            <td class="text-center">
+              <span class="badge bg-warning text-dark">MODERATE</span>
+            </td>
+            <td class="small">Socket Appender ohne TLS-Hostname-Verifikation — Man-in-the-Middle auf Log-Transport möglich</td>
+            <td class="small">Log4j patchen; Socket Appender TLS-Konfiguration prüfen</td>
+          </tr>
+          
+          <tr class="table-warning">
+            <td>
+              <code class="fw-bold" style="color:#92400e;background:#fef3c7">CVE-2026-23901</code><br>
+              <span class="badge" style="background:#d97706;font-size:.65rem">LOW</span>
+            </td>
+            <td class="fw-semibold">Apache Shiro<br><span class="text-muted small font-monospace">2.0.1</span></td>
+            <td class="text-center">
+              <span class="badge bg-warning text-dark">LOW</span>
+            </td>
+            <td class="small">Timing-Angriff — Existenz von Benutzernamen erkennbar (User-Enumeration)</td>
+            <td class="small">Auf Shiro 2.0.7 aktualisieren</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── 3. Strukturelle Risiken ────────────────────────────────────────── -->
+  <section class="mb-5" id="strukturell">
+    <h4 class="section-title">
+      <i class="bi bi-building-x me-2 text-secondary"></i>3. Strukturelle Sicherheitsrisiken
+    </h4>
+    <p class="small text-muted mb-3">
+      Diese Risiken sind nicht durch einen einzelnen Patch behebbar — sie erfordern
+      Architekturentscheidungen und mittelfristige Maßnahmen.
+    </p>
+    <div class="row g-3">
+      
+      <div class="col-md-6">
+        <div class="card border border-danger h-100">
+          <div class="card-body py-3">
+            <div class="d-flex align-items-start gap-2 mb-2">
+              <span class="badge bg-danger flex-shrink-0 mt-1" style="font-size:.7rem">
+                Kritisch
+              </span>
+              <h6 class="card-title mb-0" style="font-size:.9rem">Legacy-Kryptographie (EntityCrypto)</h6>
+            </div>
+            <p class="card-text small text-muted mb-2">Verwendete Algorithmen und Schlüssellängen in EntityCrypto sind aus dem kompilierten Code nicht vollständig rekonstruierbar. Schwache oder veraltete Verschlüsselung (DES, 3DES, RSA<2048) wäre für KRITIS nicht zulässig.</p>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-light text-dark border" style="font-size:.68rem"><i class="bi bi-bookmark me-1"></i>BSI TR-02102</span>
+              <span class="small text-muted"><i class="bi bi-wrench me-1"></i>Vollständige Kryptoanalyse der EntityCrypto-Implementierung; Abgleich gegen BSI TR-02102</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card border border-warning h-100">
+          <div class="card-body py-3">
+            <div class="d-flex align-items-start gap-2 mb-2">
+              <span class="badge bg-warning text-dark flex-shrink-0 mt-1" style="font-size:.7rem">
+                Hoch
+              </span>
+              <h6 class="card-title mb-0" style="font-size:.9rem">OWASP ESAPI — isValidSafeHTML deprecated</h6>
+            </div>
+            <p class="card-text small text-muted mb-2">Die Methode isValidSafeHTML ist vom Hersteller für veraltet erklärt, weil sie XSS-Payloads als sicher einstufen kann. Überall wo sie zur Eingabevalidierung eingesetzt wird, besteht ein direktes XSS-Risiko.</p>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-light text-dark border" style="font-size:.68rem"><i class="bi bi-bookmark me-1"></i>OWASP ASVS V5</span>
+              <span class="small text-muted"><i class="bi bi-wrench me-1"></i>Alle Verwendungsstellen auditieren und durch sichere Alternative ersetzen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card border border-warning h-100">
+          <div class="card-body py-3">
+            <div class="d-flex align-items-start gap-2 mb-2">
+              <span class="badge bg-warning text-dark flex-shrink-0 mt-1" style="font-size:.7rem">
+                Hoch
+              </span>
+              <h6 class="card-title mb-0" style="font-size:.9rem">~30 % Groovy-Code nicht vollständig analysierbar</h6>
+            </div>
+            <p class="card-text small text-muted mb-2">Ca. 30 % der Klassen sind in Groovy implementiert. Die Dekompilierung liefert nur eingeschränkte Ergebnisse — Sicherheitsrelevante Logik in diesen Klassen kann nicht vollständig bewertet werden (blinde Flecken).</p>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-light text-dark border" style="font-size:.68rem"><i class="bi bi-bookmark me-1"></i>BSI IT-Grundschutz OPS.1.1.3</span>
+              <span class="small text-muted"><i class="bi bi-wrench me-1"></i>Groovy-Quellcode beschaffen oder durch unabhängige Methode analysieren (AST-Analyse, manuelle Prüfung)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card border border-warning h-100">
+          <div class="card-body py-3">
+            <div class="d-flex align-items-start gap-2 mb-2">
+              <span class="badge bg-warning text-dark flex-shrink-0 mt-1" style="font-size:.7rem">
+                Hoch
+              </span>
+              <h6 class="card-title mb-0" style="font-size:.9rem">Supply-Chain-Angriffsfläche: 191 externe Abhängigkeiten</h6>
+            </div>
+            <p class="card-text small text-muted mb-2">14 von 79 analysierten Libraries haben bekannte Schwachstellen. Die Gesamtzahl transitiver Dependencies ist deutlich höher. Kein automatisiertes CVE-Monitoring erkennbar.</p>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-light text-dark border" style="font-size:.68rem"><i class="bi bi-bookmark me-1"></i>IT-SiG 2.0 §8a / BSI TR-03183</span>
+              <span class="small text-muted"><i class="bi bi-wrench me-1"></i>Kontinuierliches SCA-Monitoring etablieren (z.B. OWASP Dependency-Check, Trivy); SBOM nach BSI TR-03183 führen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card border border-secondary h-100">
+          <div class="card-body py-3">
+            <div class="d-flex align-items-start gap-2 mb-2">
+              <span class="badge bg-secondary flex-shrink-0 mt-1" style="font-size:.7rem">
+                Mittel
+              </span>
+              <h6 class="card-title mb-0" style="font-size:.9rem">8 eingebettete Payment-Gateway-Integrationen</h6>
+            </div>
+            <p class="card-text small text-muted mb-2">Jede Gateway-Integration öffnet eine externe Kommunikationsverbindung. TLS-Pinning, Circuit Breaker und Anomalie-Erkennung sind im Code nicht erkennbar. Ausfall oder Kompromittierung eines Gateways kann den gesamten Zahlungsprozess betreffen.</p>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-light text-dark border" style="font-size:.68rem"><i class="bi bi-bookmark me-1"></i>PCI DSS v4 / BSI IT-Grundschutz NET.1</span>
+              <span class="small text-muted"><i class="bi bi-wrench me-1"></i>Alle externen Verbindungen dokumentieren, TLS-Konfiguration prüfen, Timeouts und Fallback-Strategien implementieren</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card border border-secondary h-100">
+          <div class="card-body py-3">
+            <div class="d-flex align-items-start gap-2 mb-2">
+              <span class="badge bg-secondary flex-shrink-0 mt-1" style="font-size:.7rem">
+                Mittel
+              </span>
+              <h6 class="card-title mb-0" style="font-size:.9rem">Keine erkennbare Netzwerk-Schichtentrennung im Code</h6>
+            </div>
+            <p class="card-text small text-muted mb-2">Business-Logik, Datenzugriff und HTTP-Handler sind direkt gekoppelt (keine dedizierte Controller-Schicht). Eine Kompromittierung eines Moduls kann sich horizontal ausbreiten.</p>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-light text-dark border" style="font-size:.68rem"><i class="bi bi-bookmark me-1"></i>BSI IT-Grundschutz NET.3.2</span>
+              <span class="small text-muted"><i class="bi bi-wrench me-1"></i>Netzwerksegmentierung auf Infrastrukturebene kompensieren; Web Application Firewall vorschalten</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ── 4. Maßnahmenplan ───────────────────────────────────────────────── -->
+  <section class="mb-5" id="massnahmenplan">
+    <h4 class="section-title">
+      <i class="bi bi-list-check me-2 text-primary"></i>4. Maßnahmenplan
+    </h4>
+    <div class="row g-3">
+      
+      <div class="col-md-6">
+        <div class="card border-danger h-100">
+          <div class="card-header bg-danger text-white py-2">
+            <i class="bi-exclamation-octagon-fill me-2"></i><strong>Sofort</strong>
+            <span class="float-end small opacity-75">Notfall-Patches — ohne Wartungsfenster</span>
+          </div>
+          <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-danger flex-shrink-0 mt-1"></i>
+              Apache Tomcat patchen (RCE CVE-2025-24813 + CLIENT_CERT-Bypass CVE-2026-29145)
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-danger flex-shrink-0 mt-1"></i>
+              Apache Tika patchen oder Datei-Upload bis zum Patch deaktivieren
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-danger flex-shrink-0 mt-1"></i>
+              iText ablösen oder XML External Entity Processing deaktivieren
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-danger flex-shrink-0 mt-1"></i>
+              JDOM patchen und setExpandEntities(false) als Sofortmaßnahme setzen
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-danger flex-shrink-0 mt-1"></i>
+              OWASP HTML Sanitizer patchen
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card border-warning h-100">
+          <div class="card-header bg-warning text-dark py-2">
+            <i class="bi-exclamation-triangle-fill me-2"></i><strong>Kurzfristig</strong>
+            <span class="float-end small opacity-75">Innerhalb von 4 Wochen</span>
+          </div>
+          <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-warning flex-shrink-0 mt-1"></i>
+              Verbleibende Tomcat-CVEs patchen (HTTP Smuggling, OCSP, Token-in-Log)
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-warning flex-shrink-0 mt-1"></i>
+              Commons FileUpload auf 1.6 aktualisieren
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-warning flex-shrink-0 mt-1"></i>
+              Apache CXF auf 4.0.6 aktualisieren
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-warning flex-shrink-0 mt-1"></i>
+              XStream auf 1.4.21 aktualisieren
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-warning flex-shrink-0 mt-1"></i>
+              Log4j Socket Appender TLS-Konfiguration prüfen und patchen
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-warning flex-shrink-0 mt-1"></i>
+              Alle Logdateien auf versehentlich geschriebene Credentials / Tokens prüfen
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card border-primary h-100">
+          <div class="card-header bg-primary text-white py-2">
+            <i class="bi-clipboard-check me-2"></i><strong>Mittelfristig</strong>
+            <span class="float-end small opacity-75">Innerhalb von 3 Monaten</span>
+          </div>
+          <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-primary flex-shrink-0 mt-1"></i>
+              EntityCrypto vollständig analysieren und gegen BSI TR-02102 prüfen
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-primary flex-shrink-0 mt-1"></i>
+              ESAPI isValidSafeHTML-Nutzung auditieren und ersetzen
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-primary flex-shrink-0 mt-1"></i>
+              Groovy-Quellcode beschaffen oder unabhängig analysieren
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-primary flex-shrink-0 mt-1"></i>
+              SCA-Monitoring automatisieren (OWASP Dependency-Check / Trivy in CI/CD)
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-primary flex-shrink-0 mt-1"></i>
+              SBOM nach BSI TR-03183 erstellen und pflegen
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-primary flex-shrink-0 mt-1"></i>
+              Penetrationstest mit Fokus XXE, HTTP Smuggling, Auth-Bypass beauftragen
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card border-secondary h-100">
+          <div class="card-header bg-secondary text-white py-2">
+            <i class="bi-shield-check me-2"></i><strong>Strukturell</strong>
+            <span class="float-end small opacity-75">Dauerhaft / laufend</span>
+          </div>
+          <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-secondary flex-shrink-0 mt-1"></i>
+              Meldeprozess nach IT-SiG 2.0 §8b sicherstellen (24h-Meldepflicht bei Vorfällen)
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-secondary flex-shrink-0 mt-1"></i>
+              Web Application Firewall zum Schutz vor HTTP Smuggling und XXE vorschalten
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-secondary flex-shrink-0 mt-1"></i>
+              Alle externen Gateway-Verbindungen dokumentieren und TLS-Konfiguration überwachen
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-secondary flex-shrink-0 mt-1"></i>
+              PCI DSS v4 Compliance für Payment-Gateway-Integrationen sicherstellen
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-secondary flex-shrink-0 mt-1"></i>
+              BSI IT-Grundschutz Assessment beauftragen
+            </li>
+            
+            <li class="list-group-item py-2 small d-flex gap-2">
+              <i class="bi bi-check2-circle text-secondary flex-shrink-0 mt-1"></i>
+              Netzwerksegmentierung auf Infrastrukturebene prüfen und ggf. verstärken
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ── 5. Rechtsgrundlagen ────────────────────────────────────────────── -->
+  <section class="mb-5" id="rechtsgrundlagen">
+    <h4 class="section-title">
+      <i class="bi bi-file-earmark-ruled me-2 text-primary"></i>5. Relevante Rechtsgrundlagen &amp; Normen
+    </h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="table-light">
+          <tr>
+            <th style="width:18%">Norm / Gesetz</th>
+            <th style="width:25%">Titel</th>
+            <th>Relevanz für dieses System</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><code class="fw-semibold">IT-SiG 2.0 §8a</code></td>
+            <td class="small fw-semibold">Technische und organisatorische Maßnahmen</td>
+            <td class="small text-muted">Betreiber kritischer Infrastrukturen müssen angemessene Vorkehrungen treffen. Offene CRITICAL-CVEs in Produktivsystemen verletzen diese Anforderung.</td>
+          </tr>
+          
+          <tr>
+            <td><code class="fw-semibold">IT-SiG 2.0 §8b</code></td>
+            <td class="small fw-semibold">Meldepflicht</td>
+            <td class="small text-muted">Erhebliche Störungen sind dem BSI innerhalb von 24 Stunden zu melden. RCE oder Auth-Bypass-Ausnutzung sind meldepflichtige Sicherheitsvorfälle.</td>
+          </tr>
+          
+          <tr>
+            <td><code class="fw-semibold">BSI TR-02102</code></td>
+            <td class="small fw-semibold">Kryptographische Verfahren</td>
+            <td class="small text-muted">Die ungeklärte EntityCrypto-Implementierung muss gegen die BSI-Empfehlungen zu Algorithmen und Schlüssellängen geprüft werden.</td>
+          </tr>
+          
+          <tr>
+            <td><code class="fw-semibold">BSI TR-03183</code></td>
+            <td class="small fw-semibold">Software Bill of Materials (SBOM)</td>
+            <td class="small text-muted">KRITIS-Betreiber sind verpflichtet, eine aktuelle SBOM zu führen und bekannte Schwachstellen kontinuierlich zu überwachen.</td>
+          </tr>
+          
+          <tr>
+            <td><code class="fw-semibold">NIS2-Richtlinie</code></td>
+            <td class="small fw-semibold">EU-Netzwerk- und Informationssicherheit</td>
+            <td class="small text-muted">Supply-Chain-Sicherheit, Patch-Management und Incident Response sind explizite NIS2-Anforderungen für wesentliche Einrichtungen.</td>
+          </tr>
+          
+          <tr>
+            <td><code class="fw-semibold">PCI DSS v4</code></td>
+            <td class="small fw-semibold">Payment Card Industry Data Security Standard</td>
+            <td class="small text-muted">Die 8 eingebetteten Payment-Gateway-Integrationen unterliegen PCI DSS. TLS-Konfiguration, Logging und Zugangskontrolle der Gateways müssen geprüft werden.</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true, theme:'default', flowchart:{curve:'basis'}});</script>
+</body>
+</html>

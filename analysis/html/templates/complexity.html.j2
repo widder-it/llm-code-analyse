@@ -1,0 +1,374 @@
+{% extends "base.html.j2" %}
+{% block title %}Komplexitätsanalyse{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item"><a href="{{ root }}index.html">Übersicht</a></li>
+      <li class="breadcrumb-item active">Komplexitätsanalyse</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-graph-up me-2 text-primary"></i>Komplexitätsanalyse</h1>
+  <p class="text-muted mb-2 mt-1 small">
+    Statische Analyse der Codekomplexität: Klassen, Methoden, Abhängigkeiten, God-Objects, Tech-Debt.
+    Grundlage: {{ complexity.zusammenfassung.gesamt_klassen | int }} Class-Files, {{ complexity.zusammenfassung.module }} Module.
+  </p>
+  <div class="d-flex gap-2 flex-wrap">
+    <span class="stat-pill" style="background:#fee2e2;color:#991b1b">
+      <i class="bi bi-exclamation-octagon me-1"></i>Gesamturteil: {{ complexity.urteil.wertung }}
+    </span>
+    <span class="stat-pill">
+      <i class="bi bi-box me-1"></i>{{ complexity.zusammenfassung.module }} Module
+    </span>
+    <span class="stat-pill">
+      <i class="bi bi-braces me-1"></i>{{ complexity.zusammenfassung.top_level_klassen | int }} Klassen
+    </span>
+    <span class="stat-pill">
+      <i class="bi bi-lightning me-1"></i>{{ complexity.zusammenfassung.gesamt_methoden | int }} Methoden
+    </span>
+    <span class="stat-pill">
+      <i class="bi bi-share me-1"></i>{{ complexity.zusammenfassung.zyklen }} Abhängigkeitszyklen
+    </span>
+  </div>
+</div>
+
+<div class="content-area">
+
+  <!-- ── Gesamturteil ──────────────────────────────────────────────────────── -->
+  <div class="alert alert-danger border-danger mb-4">
+    <div class="d-flex gap-3 align-items-start">
+      <i class="bi bi-graph-up-arrow fs-3 text-danger flex-shrink-0 mt-1"></i>
+      <div>
+        <strong class="d-block mb-1">Gesamtbewertung: {{ complexity.urteil.wertung }}</strong>
+        <span class="d-block mb-2 small">{{ complexity.urteil.kurztext }}</span>
+        <span class="small text-muted">{{ complexity.urteil.details }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Kennzahlen ────────────────────────────────────────────────────────── -->
+  <section class="mb-5" id="kennzahlen">
+    <h4 class="section-title"><i class="bi bi-123 me-2 text-primary"></i>1. Systemkennzahlen</h4>
+    <div class="row g-3 mb-3">
+      {% set kpis = [
+        ('bi-box', 'Module', complexity.zusammenfassung.module, '#3b82f6', '#eff6ff'),
+        ('bi-braces', 'Top-Level-Klassen', complexity.zusammenfassung.top_level_klassen, '#7c3aed', '#f5f3ff'),
+        ('bi-stack', 'Klassen gesamt (inkl. Inner)', complexity.zusammenfassung.gesamt_klassen, '#6d28d9', '#ede9fe'),
+        ('bi-lightning', 'Public Methoden', complexity.zusammenfassung.gesamt_methoden, '#0369a1', '#e0f2fe'),
+        ('bi-calculator', 'Ø Methoden / Klasse', complexity.zusammenfassung.avg_methoden_global, '#0e7490', '#ecfeff'),
+        ('bi-diagram-3', 'Externe Bibliotheken', complexity.zusammenfassung.sbom_abhaengigkeiten, '#065f46', '#ecfdf5'),
+        ('bi-bug', 'Libs mit CVEs', complexity.zusammenfassung.sbom_mit_cves, '#991b1b', '#fee2e2'),
+        ('bi-person-arms-up', 'God-Objects', complexity.zusammenfassung.god_objekte, '#92400e', '#fef3c7'),
+        ('bi-arrow-repeat', 'Abhängigkeitszyklen', complexity.zusammenfassung.zyklen, '#be123c', '#fff1f2'),
+        ('bi-exclamation-triangle', 'Tech-Debt-Einträge', complexity.zusammenfassung.tech_debt_items, '#78350f', '#fffbeb'),
+      ] %}
+      {% for icon, label, val, color, bg in kpis %}
+      <div class="col-6 col-md-4 col-lg-2-5">
+        <div class="p-3 rounded border text-center h-100" style="background:{{ bg }}">
+          <div class="mb-1"><i class="{{ icon }} fs-4" style="color:{{ color }}"></i></div>
+          <div class="fw-bold fs-5" style="color:{{ color }}">{{ val }}</div>
+          <div class="small text-muted">{{ label }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Modul-Komplexitäts-Verteilung -->
+    <div class="row g-3">
+      {% set dist = [
+        ('Sehr hoch', complexity.zusammenfassung.sehr_hoch_module, 'danger', 'Avg. ≥ 12 Methoden/Klasse UND > 500 Methoden'),
+        ('Hoch',      complexity.zusammenfassung.hoch_module,      'warning', 'Avg. ≥ 7 Methoden/Klasse ODER > 700 Methoden'),
+        ('Mittel',    complexity.zusammenfassung.mittel_module,     'secondary', 'Avg. ≥ 4 Methoden/Klasse ODER > 100 Methoden'),
+        ('Niedrig',   complexity.zusammenfassung.niedrig_module,    'success', 'Avg. < 4 Methoden/Klasse'),
+      ] %}
+      {% for label, cnt, farbe, kriterium in dist %}
+      <div class="col-6 col-md-3">
+        <div class="card border-{{ farbe }} text-center py-3">
+          <div class="fw-bold fs-3 text-{{ farbe }}">{{ cnt }}</div>
+          <div class="small fw-semibold">Module — {{ label }}</div>
+          <div class="text-muted" style="font-size:.72rem;margin-top:.25rem">{{ kriterium }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ── Modul-Tabelle ─────────────────────────────────────────────────────── -->
+  <section class="mb-5" id="module">
+    <h4 class="section-title"><i class="bi bi-table me-2 text-primary"></i>2. Modul-Komplexität im Detail</h4>
+    <p class="small text-muted mb-3">
+      Sortiert nach Gesamtzahl öffentlicher Methoden (absteigend).
+      <strong>Ø Methoden/Klasse</strong> ist der primäre Komplexitätsindikator — er spiegelt die
+      durchschnittliche Verantwortlichkeit je Klasse wider.
+    </p>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th style="width:12%">Modul</th>
+            <th style="width:18%">Typ</th>
+            <th class="text-end" style="width:8%">Klassen</th>
+            <th class="text-end" style="width:10%">Methoden</th>
+            <th class="text-end" style="width:12%">Ø M./Klasse</th>
+            <th style="width:12%">Komplexität</th>
+            <th>Inhalt</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in complexity.module_metriken %}
+          <tr>
+            <td class="fw-semibold"><code>{{ m.modul }}</code></td>
+            <td><span class="badge bg-light text-dark border" style="font-size:.7rem">{{ m.typ }}</span></td>
+            <td class="text-end font-monospace small">{{ m.klassen }}</td>
+            <td class="text-end font-monospace small fw-semibold">{{ m.methoden }}</td>
+            <td class="text-end">
+              {% set avg = m.avg_methoden %}
+              <span class="fw-bold {% if avg >= 12 %}text-danger{% elif avg >= 7 %}text-warning{% elif avg >= 4 %}text-secondary{% else %}text-success{% endif %}">
+                {{ avg }}
+              </span>
+            </td>
+            <td>
+              <span class="badge bg-{{ m.farbe }} {% if m.farbe == 'warning' %}text-dark{% endif %}" style="font-size:.72rem">
+                {{ m.komplexitaet }}
+              </span>
+            </td>
+            <td class="small text-muted">{{ m.beschreibung }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── God-Objects ──────────────────────────────────────────────────────── -->
+  <section class="mb-5" id="god-objects">
+    <h4 class="section-title"><i class="bi bi-person-arms-up me-2 text-warning"></i>3. God-Objects &amp; Monster-Klassen</h4>
+    <p class="small text-muted mb-3">
+      God-Objects sind Klassen mit exzessiver Verantwortung — sie bündeln zu viel Logik,
+      sind schwer testbar und blockieren Refactoring. Faustformel: &gt; 50 Methoden = problematisch,
+      &gt; 100 = ernst, &gt; 200 = kritisch.
+    </p>
+    <div class="row g-3">
+      {% for go in god_objects %}
+      {% set methods = go['Public Methoden'] | int %}
+      {% if methods >= 200 %}{% set severity = 'danger' %}{% set icon = 'bi-exclamation-octagon-fill' %}
+      {% elif methods >= 100 %}{% set severity = 'warning' %}{% set icon = 'bi-exclamation-triangle-fill' %}
+      {% else %}{% set severity = 'secondary' %}{% set icon = 'bi-info-circle-fill' %}{% endif %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-{{ severity }} h-100">
+          <div class="card-body py-3">
+            <div class="d-flex align-items-start gap-2 mb-1">
+              <i class="{{ icon }} text-{{ severity }} flex-shrink-0 mt-1"></i>
+              <div>
+                <code class="fw-bold" style="font-size:.9rem">{{ go['Klasse'] }}</code>
+                <span class="badge bg-light text-dark border ms-1" style="font-size:.65rem">{{ go['Modul'] }}</span>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <span class="badge bg-{{ severity }} {% if severity == 'warning' %}text-dark{% endif %}">{{ methods }} Methoden</span>
+            </div>
+            <p class="card-text small text-muted mb-0">{{ go['Bewertung'] }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ── Abhängigkeitszyklen ───────────────────────────────────────────────── -->
+  <section class="mb-5" id="zyklen">
+    <h4 class="section-title"><i class="bi bi-arrow-repeat me-2 text-danger"></i>4. Zyklische Abhängigkeiten</h4>
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="alert alert-warning py-2 small mb-3">
+          <i class="bi bi-exclamation-triangle me-1"></i>
+          Zyklische Abhängigkeiten zwischen Modulen verhindern unabhängiges Deployment,
+          erschweren Testbarkeit und machen schrittweise Ablösung schwieriger.
+          Jeder Zyklus erhöht die strukturelle Kopplung.
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered">
+            <thead class="table-danger">
+              <tr><th>Zyklus</th><th>Art</th></tr>
+            </thead>
+            <tbody>
+              {% for zyklus in dependency_cycles %}
+              <tr>
+                <td><code class="fw-bold text-danger">{{ zyklus.cycle }}</code></td>
+                <td class="small text-muted">{{ zyklus.note }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="card border">
+          <div class="card-header py-2 small fw-semibold bg-light">Abhängigkeitsstruktur (Business-Module)</div>
+          <div class="card-body">
+            <pre class="mermaid" style="text-align:center">
+graph LR
+    order -->|Invoice/GL| accounting
+    accounting -->|Orders| order
+    order -->|Produkt-Daten| product
+    product -->|Order-Kontext| order
+    party -->|Buchungs-Parteien| accounting
+    accounting -->|Kunden/Lieferanten| party
+    party -->|Produkt-Stammdaten| product
+    product -->|Party-Referenzen| party
+
+    order -->|Party-Stammdaten| party
+    order -->|Kampagnen| marketing
+    order -->|Content| content
+    product -->|Lagerort| shipment
+    accounting -->|Frachtkosten| shipment
+    manufacturing -->|Aufträge| order
+    manufacturing -->|Produkte| product
+    shipment -->|Produkte| product
+    shipment -->|Parteien| party
+    workeffort -->|Content| content
+    marketing -->|Parteien| party
+    marketing -->|Produkte| product
+    humanres -->|Mitarbeiter| party
+    sfa -->|Kontakte| party
+
+    style order fill:#fde68a,color:#78350f
+    style accounting fill:#fde68a,color:#78350f
+    style product fill:#fde68a,color:#78350f
+    style party fill:#fde68a,color:#78350f
+            </pre>
+            <p class="text-center small text-muted mt-1 mb-0">Gelb = in Zyklen involvierte Module</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Tech-Debt ─────────────────────────────────────────────────────────── -->
+  <section class="mb-5" id="tech-debt">
+    <h4 class="section-title"><i class="bi bi-exclamation-triangle me-2 text-warning"></i>5. Tech-Debt-Verteilung</h4>
+    <div class="row g-4">
+      <div class="col-md-5">
+        <p class="small text-muted mb-3">
+          {{ complexity.zusammenfassung.tech_debt_items }} identifizierte Tech-Debt-Einträge,
+          kategorisiert nach Themenbereich und Schwere.
+          Kategorie <strong>Komplexität</strong> dominiert mit 11 Einträgen.
+        </p>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered">
+            <thead class="table-light">
+              <tr>
+                <th>Kategorie</th>
+                <th class="text-center">Kritisch</th>
+                <th class="text-center">Hoch</th>
+                <th class="text-center">Mittel</th>
+                <th class="text-center">∑</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for kat in complexity.tech_debt_kategorien %}
+              <tr>
+                <td class="fw-semibold">{{ kat.kategorie }}</td>
+                <td class="text-center">
+                  {% if kat.kritisch > 0 %}<span class="badge bg-danger">{{ kat.kritisch }}</span>{% else %}<span class="text-muted">—</span>{% endif %}
+                </td>
+                <td class="text-center">
+                  {% if kat.hoch > 0 %}<span class="badge bg-warning text-dark">{{ kat.hoch }}</span>{% else %}<span class="text-muted">—</span>{% endif %}
+                </td>
+                <td class="text-center">
+                  {% if kat.mittel > 0 %}<span class="badge bg-secondary">{{ kat.mittel }}</span>{% else %}<span class="text-muted">—</span>{% endif %}
+                </td>
+                <td class="text-center fw-bold">{{ kat.anzahl }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="card border">
+          <div class="card-header py-2 small fw-semibold bg-light">Top Tech-Debt-Einträge (Kritisch/Hoch)</div>
+          <ul class="list-group list-group-flush" style="max-height:340px;overflow-y:auto">
+            {% for td in debts %}
+            {% if td.schwere in ('Kritisch', 'Hoch') %}
+            <li class="list-group-item py-2">
+              <div class="d-flex align-items-start gap-2">
+                <span class="badge {% if td.schwere == 'Kritisch' %}bg-danger{% else %}bg-warning text-dark{% endif %} flex-shrink-0 mt-1" style="font-size:.68rem">
+                  {{ td.schwere }}
+                </span>
+                <div>
+                  <div class="fw-semibold small">{{ td.titel }}</div>
+                  <div class="text-muted" style="font-size:.78rem">{{ td.beschreibung }}</div>
+                </div>
+              </div>
+            </li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Externe Abhängigkeiten ────────────────────────────────────────────── -->
+  <section class="mb-5" id="abhaengigkeiten">
+    <h4 class="section-title"><i class="bi bi-box-seam me-2 text-primary"></i>6. Externe Abhängigkeiten (SBOM)</h4>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="alert alert-secondary py-2 small mb-3">
+          <i class="bi bi-info-circle me-1"></i>
+          <strong>{{ complexity.zusammenfassung.sbom_abhaengigkeiten }}</strong> externe Bibliotheken
+          (aus <code>build.gradle</code>). Davon
+          <strong class="text-danger">{{ complexity.zusammenfassung.sbom_mit_cves }}</strong> mit
+          bekannten CVEs ({{ complexity.zusammenfassung.gesamt_cves }} CVEs gesamt).
+          Jede Bibliothek ist ein potentieller Update-Aufwand und Supply-Chain-Risiko.
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered">
+            <thead class="table-light"><tr><th>Metrik</th><th>Wert</th><th>Bewertung</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Bibliotheken gesamt</td>
+                <td class="fw-bold">{{ complexity.zusammenfassung.sbom_abhaengigkeiten }}</td>
+                <td><span class="badge bg-warning text-dark">Hoch</span></td>
+              </tr>
+              <tr>
+                <td>Bibliotheken mit CVEs</td>
+                <td class="fw-bold text-danger">{{ complexity.zusammenfassung.sbom_mit_cves }}</td>
+                <td><span class="badge bg-danger">Sehr hoch</span></td>
+              </tr>
+              <tr>
+                <td>CVEs gesamt</td>
+                <td class="fw-bold text-danger">{{ complexity.zusammenfassung.gesamt_cves }}</td>
+                <td><span class="badge bg-danger">Sehr hoch</span></td>
+              </tr>
+              <tr>
+                <td>CVEs pro betroffener Lib</td>
+                {% set ratio = (complexity.zusammenfassung.gesamt_cves / complexity.zusammenfassung.sbom_mit_cves) | round(1) %}
+                <td class="fw-bold">{{ ratio }}</td>
+                <td><span class="badge bg-secondary">Mittel</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card border h-100">
+          <div class="card-header py-2 small fw-semibold bg-light">Komplexitätstreiber — Zusammenfassung</div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item py-2 small"><i class="bi bi-check2 text-danger me-2"></i><strong>Codeumfang:</strong> 1.568 Klassen, 2.932 gesamt (Groovy-Closures eingerechnet)</li>
+            <li class="list-group-item py-2 small"><i class="bi bi-check2 text-danger me-2"></i><strong>God-Objects:</strong> 11 Monster-Klassen, Spitze ShoppingCart mit 388 Methoden</li>
+            <li class="list-group-item py-2 small"><i class="bi bi-check2 text-danger me-2"></i><strong>Zyklen:</strong> 4 bidirektionale Modulkopplungen verhindern isolierte Ablösung</li>
+            <li class="list-group-item py-2 small"><i class="bi bi-check2 text-warning me-2"></i><strong>Groovy-Blindstelle:</strong> ~30 % des Codes (≈880 Klassen) nicht rekonstruierbar</li>
+            <li class="list-group-item py-2 small"><i class="bi bi-check2 text-warning me-2"></i><strong>Proprietäres ORM:</strong> Kein JPA — eigene Entity-Engine mit 146 Klassen</li>
+            <li class="list-group-item py-2 small"><i class="bi bi-check2 text-warning me-2"></i><strong>Kein DI-Framework:</strong> Manuelle Objektverdrahtung erschwert Testbarkeit</li>
+            <li class="list-group-item py-2 small"><i class="bi bi-check2 text-secondary me-2"></i><strong>Heterogene Sprachen:</strong> Java + Groovy + MiniLang-XML-DSL (deprecated)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

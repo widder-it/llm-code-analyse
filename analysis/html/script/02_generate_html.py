@@ -63,11 +63,14 @@ def main():
     }
 
     # --- nav_stats: counts shown in sidebar for all pages ---
+    kritis_data = architektur.get("kritis", {})
     nav_stats = {
         "sbom":       len(architektur.get("sbom_libraries", [])),
         "tech_debt":  len(architektur.get("tech_debt", [])),
         "schema":     len(architektur.get("schema_entities", [])),
         "database":   architektur.get("db_framework_summary", {}).get("entity_query_calls", 0),
+        "kritis":     len(kritis_data.get("sofort", [])),
+        "complexity":  len(architektur.get("complexity", {}).get("module_metriken", [])),
     }
 
     # --- index.html ---
@@ -104,6 +107,31 @@ def main():
                    nav_stats=nav_stats, root=relative_root(0), active_module="__schema__")
         total_fields = sum(e["field_count"] for e in schema_entities)
         print(f"  schema.html  ({len(schema_entities)} entities, {total_fields} fields)")
+
+    # --- complexity.html ---
+    complexity_data = architektur.get("complexity", {})
+    god_objects = architektur.get("god_objects", [])
+    tech_debt = architektur.get("tech_debt", [])
+    dep_cycles = architektur.get("dependency_cycles", [])
+    if complexity_data:
+        write_html(env, "complexity.html.j2", OUTPUT_DIR / "complexity.html",
+                   modules=modules_meta,
+                   complexity=complexity_data,
+                   god_objects=god_objects,
+                   debts=tech_debt,
+                   dependency_cycles=dep_cycles,
+                   nav_stats=nav_stats, root=relative_root(0), active_module="__complexity__")
+        n_mod = len(complexity_data.get("module_metriken", []))
+        print(f"  complexity.html  ({n_mod} modules)")
+
+    # --- kritis.html ---
+    if kritis_data:
+        write_html(env, "kritis.html.j2", OUTPUT_DIR / "kritis.html",
+                   modules=modules_meta, kritis=kritis_data,
+                   nav_stats=nav_stats, root=relative_root(0), active_module="__kritis__")
+        sofort_n = len(kritis_data.get("sofort", []))
+        kurz_n = len(kritis_data.get("kurzfristig", []))
+        print(f"  kritis.html  ({sofort_n} CRITICAL, {kurz_n} HIGH)")
 
     # --- database.html ---
     db_summary = architektur.get("db_framework_summary", {})

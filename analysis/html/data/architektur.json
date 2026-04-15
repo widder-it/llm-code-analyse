@@ -75281,5 +75281,588 @@
         }
       ]
     }
-  ]
+  ],
+  "kritis": {
+    "stufe": "Höchste KRITIS-Stufe",
+    "analyse_datum": "2026-04-15",
+    "sofort": [
+      {
+        "bibliothek": "Apache Tomcat",
+        "version": "10.1.28",
+        "cve_id": "CVE-2025-24813",
+        "nvd_schwere": "CRITICAL",
+        "angriff": "Remote Code Execution via partial PUT — Angreifer kann beliebigen Code ausführen",
+        "massnahme": "Tomcat sofort auf aktuelle Patch-Version anheben",
+        "kritis_begruendung": "RCE auf der Laufzeitumgebung ist K.O.-Kriterium für KRITIS-Betrieb"
+      },
+      {
+        "bibliothek": "Apache Tomcat",
+        "version": "10.1.28",
+        "cve_id": "CVE-2026-29145",
+        "nvd_schwere": "CRITICAL",
+        "angriff": "CLIENT_CERT-Authentifizierung wird nicht wie erwartet abgelehnt — mTLS-Schutz umgehbar",
+        "massnahme": "Tomcat patchen; mTLS-Zertifikatsprüfung verifizieren",
+        "kritis_begruendung": "Authentifizierungs-Bypass gefährdet Zugangskontrolle zu KRITIS-Systemen"
+      },
+      {
+        "bibliothek": "Apache Tika",
+        "version": "2.9.2",
+        "cve_id": "CVE-2025-66516",
+        "nvd_schwere": "CRITICAL",
+        "angriff": "XXE-Injection über präparierte PDF/XFA-Dateien — Datei-Exfiltration und SSRF möglich",
+        "massnahme": "Tika sofort patchen oder Datei-Upload bis zum Patch deaktivieren",
+        "kritis_begruendung": "Unkontrollierte Datei-Exfiltration verletzt Vertraulichkeit kritischer Daten"
+      },
+      {
+        "bibliothek": "iText",
+        "version": "2.1.7",
+        "cve_id": "CVE-2017-9096",
+        "nvd_schwere": "HIGH",
+        "angriff": "XXE in XML-Parser — seit 2017 bekannt und unbehandelt",
+        "massnahme": "iText ablösen (End-of-Life) oder External Entity Processing deaktivieren",
+        "kritis_begruendung": "8 Jahre offene bekannte Schwachstelle ist für KRITIS nicht tolerierbar"
+      },
+      {
+        "bibliothek": "JDOM",
+        "version": "1.1.3",
+        "cve_id": "CVE-2021-33813",
+        "nvd_schwere": "HIGH",
+        "angriff": "XXE-Injection via SAXBuilder — DoS und Datei-Exfiltration möglich",
+        "massnahme": "JDOM patchen; setExpandEntities(false) als Sofortmaßnahme",
+        "kritis_begruendung": "4 Jahre offene XXE-Schwachstelle; betrifft XML-Verarbeitung im Kern"
+      },
+      {
+        "bibliothek": "OWASP HTML Sanitizer",
+        "version": "20240325.1",
+        "cve_id": "CVE-2025-66021",
+        "nvd_schwere": "HIGH",
+        "angriff": "XSS durch Schwachstelle im Schutzmechanismus selbst — noscript/style-Tags passieren den Sanitizer",
+        "massnahme": "Sofort patchen; alternative Sanitizer-Bibliothek evaluieren",
+        "kritis_begruendung": "XSS im eigenen Abwehrmechanismus hebelt alle Input-Validierungen aus"
+      }
+    ],
+    "kurzfristig": [
+      {
+        "bibliothek": "Apache Tomcat",
+        "version": "10.1.28",
+        "cve_id": "CVE-2026-24880",
+        "nvd_schwere": "HIGH",
+        "angriff": "HTTP Request/Response Smuggling — Session-Hijacking, Sicherheitskontrollen umgehbar",
+        "massnahme": "Tomcat patchen (gleicher Patch-Zyklus wie CRITICAL-CVEs)"
+      },
+      {
+        "bibliothek": "Apache Tomcat",
+        "version": "10.1.28",
+        "cve_id": "CVE-2026-24734",
+        "nvd_schwere": "HIGH",
+        "angriff": "OCSP-Antwort wird nicht vollständig validiert — zurückgerufene Zertifikate werden akzeptiert",
+        "massnahme": "Tomcat patchen; OCSP-Konfiguration prüfen"
+      },
+      {
+        "bibliothek": "Apache Tomcat",
+        "version": "10.1.28",
+        "cve_id": "CVE-2026-34487",
+        "nvd_schwere": "HIGH",
+        "angriff": "Kubernetes Bearer Token wird in Logdatei geschrieben",
+        "massnahme": "Tomcat patchen; Logdateien auf Token prüfen und rotieren"
+      },
+      {
+        "bibliothek": "Commons FileUpload",
+        "version": "1.5",
+        "cve_id": "CVE-2025-48976",
+        "nvd_schwere": "HIGH",
+        "angriff": "DoS via Part-Headers ohne Ressourcenlimit — Systemverfügbarkeit gefährdet",
+        "massnahme": "Auf Version 1.6 oder 2.0.0-M4 aktualisieren"
+      },
+      {
+        "bibliothek": "Apache CXF",
+        "version": "4.0.4",
+        "cve_id": "CVE-2025-23184",
+        "nvd_schwere": "HIGH",
+        "angriff": "DoS — temporäre Dateien werden nicht geschlossen und füllen das Dateisystem",
+        "massnahme": "Auf CXF 4.0.6 oder neuer aktualisieren"
+      },
+      {
+        "bibliothek": "XStream",
+        "version": "1.4.20",
+        "cve_id": "CVE-2024-47072",
+        "nvd_schwere": "HIGH",
+        "angriff": "DoS via manipuliertem Binärstrom — Stack Overflow beim Deserialisieren",
+        "massnahme": "Auf XStream 1.4.21 aktualisieren"
+      },
+      {
+        "bibliothek": "Apache Log4j",
+        "version": "2.23.1",
+        "cve_id": "CVE-2025-68161",
+        "nvd_schwere": "MODERATE",
+        "angriff": "Socket Appender ohne TLS-Hostname-Verifikation — Man-in-the-Middle auf Log-Transport möglich",
+        "massnahme": "Log4j patchen; Socket Appender TLS-Konfiguration prüfen"
+      },
+      {
+        "bibliothek": "Apache Shiro",
+        "version": "2.0.1",
+        "cve_id": "CVE-2026-23901",
+        "nvd_schwere": "LOW",
+        "angriff": "Timing-Angriff — Existenz von Benutzernamen erkennbar (User-Enumeration)",
+        "massnahme": "Auf Shiro 2.0.7 aktualisieren"
+      }
+    ],
+    "strukturelle_risiken": [
+      {
+        "titel": "Legacy-Kryptographie (EntityCrypto)",
+        "schwere": "Kritisch",
+        "beschreibung": "Verwendete Algorithmen und Schlüssellängen in EntityCrypto sind aus dem kompilierten Code nicht vollständig rekonstruierbar. Schwache oder veraltete Verschlüsselung (DES, 3DES, RSA<2048) wäre für KRITIS nicht zulässig.",
+        "massnahme": "Vollständige Kryptoanalyse der EntityCrypto-Implementierung; Abgleich gegen BSI TR-02102",
+        "norm": "BSI TR-02102"
+      },
+      {
+        "titel": "OWASP ESAPI — isValidSafeHTML deprecated",
+        "schwere": "Hoch",
+        "beschreibung": "Die Methode isValidSafeHTML ist vom Hersteller für veraltet erklärt, weil sie XSS-Payloads als sicher einstufen kann. Überall wo sie zur Eingabevalidierung eingesetzt wird, besteht ein direktes XSS-Risiko.",
+        "massnahme": "Alle Verwendungsstellen auditieren und durch sichere Alternative ersetzen",
+        "norm": "OWASP ASVS V5"
+      },
+      {
+        "titel": "~30 % Groovy-Code nicht vollständig analysierbar",
+        "schwere": "Hoch",
+        "beschreibung": "Ca. 30 % der Klassen sind in Groovy implementiert. Die Dekompilierung liefert nur eingeschränkte Ergebnisse — Sicherheitsrelevante Logik in diesen Klassen kann nicht vollständig bewertet werden (blinde Flecken).",
+        "massnahme": "Groovy-Quellcode beschaffen oder durch unabhängige Methode analysieren (AST-Analyse, manuelle Prüfung)",
+        "norm": "BSI IT-Grundschutz OPS.1.1.3"
+      },
+      {
+        "titel": "Supply-Chain-Angriffsfläche: 191 externe Abhängigkeiten",
+        "schwere": "Hoch",
+        "beschreibung": "14 von 79 analysierten Libraries haben bekannte Schwachstellen. Die Gesamtzahl transitiver Dependencies ist deutlich höher. Kein automatisiertes CVE-Monitoring erkennbar.",
+        "massnahme": "Kontinuierliches SCA-Monitoring etablieren (z.B. OWASP Dependency-Check, Trivy); SBOM nach BSI TR-03183 führen",
+        "norm": "IT-SiG 2.0 §8a / BSI TR-03183"
+      },
+      {
+        "titel": "8 eingebettete Payment-Gateway-Integrationen",
+        "schwere": "Mittel",
+        "beschreibung": "Jede Gateway-Integration öffnet eine externe Kommunikationsverbindung. TLS-Pinning, Circuit Breaker und Anomalie-Erkennung sind im Code nicht erkennbar. Ausfall oder Kompromittierung eines Gateways kann den gesamten Zahlungsprozess betreffen.",
+        "massnahme": "Alle externen Verbindungen dokumentieren, TLS-Konfiguration prüfen, Timeouts und Fallback-Strategien implementieren",
+        "norm": "PCI DSS v4 / BSI IT-Grundschutz NET.1"
+      },
+      {
+        "titel": "Keine erkennbare Netzwerk-Schichtentrennung im Code",
+        "schwere": "Mittel",
+        "beschreibung": "Business-Logik, Datenzugriff und HTTP-Handler sind direkt gekoppelt (keine dedizierte Controller-Schicht). Eine Kompromittierung eines Moduls kann sich horizontal ausbreiten.",
+        "massnahme": "Netzwerksegmentierung auf Infrastrukturebene kompensieren; Web Application Firewall vorschalten",
+        "norm": "BSI IT-Grundschutz NET.3.2"
+      }
+    ],
+    "massnahmenplan": [
+      {
+        "horizont": "Sofort",
+        "farbe": "danger",
+        "icon": "bi-exclamation-octagon-fill",
+        "beschreibung": "Notfall-Patches — ohne Wartungsfenster",
+        "items": [
+          "Apache Tomcat patchen (RCE CVE-2025-24813 + CLIENT_CERT-Bypass CVE-2026-29145)",
+          "Apache Tika patchen oder Datei-Upload bis zum Patch deaktivieren",
+          "iText ablösen oder XML External Entity Processing deaktivieren",
+          "JDOM patchen und setExpandEntities(false) als Sofortmaßnahme setzen",
+          "OWASP HTML Sanitizer patchen"
+        ]
+      },
+      {
+        "horizont": "Kurzfristig",
+        "farbe": "warning",
+        "icon": "bi-exclamation-triangle-fill",
+        "beschreibung": "Innerhalb von 4 Wochen",
+        "items": [
+          "Verbleibende Tomcat-CVEs patchen (HTTP Smuggling, OCSP, Token-in-Log)",
+          "Commons FileUpload auf 1.6 aktualisieren",
+          "Apache CXF auf 4.0.6 aktualisieren",
+          "XStream auf 1.4.21 aktualisieren",
+          "Log4j Socket Appender TLS-Konfiguration prüfen und patchen",
+          "Alle Logdateien auf versehentlich geschriebene Credentials / Tokens prüfen"
+        ]
+      },
+      {
+        "horizont": "Mittelfristig",
+        "farbe": "primary",
+        "icon": "bi-clipboard-check",
+        "beschreibung": "Innerhalb von 3 Monaten",
+        "items": [
+          "EntityCrypto vollständig analysieren und gegen BSI TR-02102 prüfen",
+          "ESAPI isValidSafeHTML-Nutzung auditieren und ersetzen",
+          "Groovy-Quellcode beschaffen oder unabhängig analysieren",
+          "SCA-Monitoring automatisieren (OWASP Dependency-Check / Trivy in CI/CD)",
+          "SBOM nach BSI TR-03183 erstellen und pflegen",
+          "Penetrationstest mit Fokus XXE, HTTP Smuggling, Auth-Bypass beauftragen"
+        ]
+      },
+      {
+        "horizont": "Strukturell",
+        "farbe": "secondary",
+        "icon": "bi-shield-check",
+        "beschreibung": "Dauerhaft / laufend",
+        "items": [
+          "Meldeprozess nach IT-SiG 2.0 §8b sicherstellen (24h-Meldepflicht bei Vorfällen)",
+          "Web Application Firewall zum Schutz vor HTTP Smuggling und XXE vorschalten",
+          "Alle externen Gateway-Verbindungen dokumentieren und TLS-Konfiguration überwachen",
+          "PCI DSS v4 Compliance für Payment-Gateway-Integrationen sicherstellen",
+          "BSI IT-Grundschutz Assessment beauftragen",
+          "Netzwerksegmentierung auf Infrastrukturebene prüfen und ggf. verstärken"
+        ]
+      }
+    ],
+    "rechtsgrundlagen": [
+      {
+        "norm": "IT-SiG 2.0 §8a",
+        "titel": "Technische und organisatorische Maßnahmen",
+        "relevanz": "Betreiber kritischer Infrastrukturen müssen angemessene Vorkehrungen treffen. Offene CRITICAL-CVEs in Produktivsystemen verletzen diese Anforderung."
+      },
+      {
+        "norm": "IT-SiG 2.0 §8b",
+        "titel": "Meldepflicht",
+        "relevanz": "Erhebliche Störungen sind dem BSI innerhalb von 24 Stunden zu melden. RCE oder Auth-Bypass-Ausnutzung sind meldepflichtige Sicherheitsvorfälle."
+      },
+      {
+        "norm": "BSI TR-02102",
+        "titel": "Kryptographische Verfahren",
+        "relevanz": "Die ungeklärte EntityCrypto-Implementierung muss gegen die BSI-Empfehlungen zu Algorithmen und Schlüssellängen geprüft werden."
+      },
+      {
+        "norm": "BSI TR-03183",
+        "titel": "Software Bill of Materials (SBOM)",
+        "relevanz": "KRITIS-Betreiber sind verpflichtet, eine aktuelle SBOM zu führen und bekannte Schwachstellen kontinuierlich zu überwachen."
+      },
+      {
+        "norm": "NIS2-Richtlinie",
+        "titel": "EU-Netzwerk- und Informationssicherheit",
+        "relevanz": "Supply-Chain-Sicherheit, Patch-Management und Incident Response sind explizite NIS2-Anforderungen für wesentliche Einrichtungen."
+      },
+      {
+        "norm": "PCI DSS v4",
+        "titel": "Payment Card Industry Data Security Standard",
+        "relevanz": "Die 8 eingebetteten Payment-Gateway-Integrationen unterliegen PCI DSS. TLS-Konfiguration, Logging und Zugangskontrolle der Gateways müssen geprüft werden."
+      }
+    ]
+  },
+  "complexity": {
+    "urteil": {
+      "wertung": "Sehr hoch",
+      "farbe": "danger",
+      "kurztext": "2 Sehr-hoch-Module, 8 Hoch-Module, 4 Zyklen, 11 God-Objects. Das System liegt deutlich oberhalb industrieüblicher Komplexitätsgrenzen.",
+      "details": "Die Kombination aus großen Modulen mit hoher Methodendichte (order: ∅ 13,4 Methoden/Klasse, entity: ∅ 12,9), bidirektionalen Abhängigkeitszyklen zwischen 4 Kernmodulen, 11 God-Objects mit bis zu 388 Methoden (ShoppingCart) und 79 externen Bibliotheken (davon 14 mit bekannten CVEs) ergibt eine Gesamtkomplexität, die Refactoring, Onboarding und Ablöseplanung erheblich erschwert."
+    },
+    "zusammenfassung": {
+      "module": 26,
+      "top_level_klassen": 1568,
+      "gesamt_klassen": 2932,
+      "gesamt_methoden": 13398,
+      "avg_methoden_global": 8.5,
+      "sbom_abhaengigkeiten": 79,
+      "sbom_mit_cves": 14,
+      "gesamt_cves": 40,
+      "god_objekte": 11,
+      "zyklen": 4,
+      "tech_debt_items": 31,
+      "sehr_hoch_module": 2,
+      "hoch_module": 9,
+      "mittel_module": 12,
+      "niedrig_module": 3
+    },
+    "module_metriken": [
+      {
+        "modul": "order",
+        "typ": "Business",
+        "klassen": 147,
+        "methoden": 1974,
+        "avg_methoden": 13.4,
+        "komplexitaet": "Sehr hoch",
+        "farbe": "danger",
+        "beschreibung": "Bestellverwaltung, Warenkorb, Checkout, Rückgaben, Angebote, Shopping-Listen"
+      },
+      {
+        "modul": "entity",
+        "typ": "Kern-Framework",
+        "klassen": 146,
+        "methoden": 1882,
+        "avg_methoden": 12.9,
+        "komplexitaet": "Sehr hoch",
+        "farbe": "danger",
+        "beschreibung": "Proprietäres ORM: Delegator, GenericEntity, EntityQuery, Transaktionen, Kryptographie"
+      },
+      {
+        "modul": "base",
+        "typ": "Kern-Framework",
+        "klassen": 155,
+        "methoden": 1611,
+        "avg_methoden": 10.4,
+        "komplexitaet": "Hoch",
+        "farbe": "warning",
+        "beschreibung": "Utilities (DateTime, HTTP, XML, Cache), Konfiguration, Container-Lifecycle, Konvertierungen"
+      },
+      {
+        "modul": "product",
+        "typ": "Business",
+        "klassen": 181,
+        "methoden": 1218,
+        "avg_methoden": 6.7,
+        "komplexitaet": "Hoch",
+        "farbe": "warning",
+        "beschreibung": "Produktkatalog, Kategorien, Preise, Varianten, Lager, Promotions, Lieferanten"
+      },
+      {
+        "modul": "service",
+        "typ": "Kern-Framework",
+        "klassen": 126,
+        "methoden": 1078,
+        "avg_methoden": 8.6,
+        "komplexitaet": "Hoch",
+        "farbe": "warning",
+        "beschreibung": "Service-Engine: Dispatching, Job-Scheduler, JMS-Integration, RMI, Service-Metadaten"
+      },
+      {
+        "modul": "accounting",
+        "typ": "Business",
+        "klassen": 113,
+        "methoden": 955,
+        "avg_methoden": 8.5,
+        "komplexitaet": "Hoch",
+        "farbe": "warning",
+        "beschreibung": "Buchhaltung, Rechnungen, Zahlungen, Hauptbuch, Budgets, Anlagevermögen, 8 Payment-Provider"
+      },
+      {
+        "modul": "widget",
+        "typ": "UI-Framework",
+        "klassen": 95,
+        "methoden": 939,
+        "avg_methoden": 9.9,
+        "komplexitaet": "Hoch",
+        "farbe": "warning",
+        "beschreibung": "Deklarative UI-Engine: Screen-, Form-, Menu- und Tree-Renderer (FreeMarker/FO/Macro)"
+      },
+      {
+        "modul": "content",
+        "typ": "Business",
+        "klassen": 77,
+        "methoden": 602,
+        "avg_methoden": 7.8,
+        "komplexitaet": "Hoch",
+        "farbe": "warning",
+        "beschreibung": "Content-Management, Datei-Verwaltung, Surveys, Blog, SFTP-Client, FTP-Integration"
+      },
+      {
+        "modul": "minilang",
+        "typ": "Script-Engine",
+        "klassen": 125,
+        "methoden": 520,
+        "avg_methoden": 4.2,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "Interpreter für proprietäre XML-DSL (MiniLang); seit 18.12 deprecated"
+      },
+      {
+        "modul": "webapp",
+        "typ": "Web-Infrastruktur",
+        "klassen": 75,
+        "methoden": 370,
+        "avg_methoden": 4.9,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "Servlet-Controller, Request-Routing, Login, Session, WebDAV, CSRF-Schutz, JWT"
+      },
+      {
+        "modul": "webtools",
+        "typ": "Web-Infrastruktur",
+        "klassen": 54,
+        "methoden": 370,
+        "avg_methoden": 6.9,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "Admin-Werkzeuge: Cache-Verwaltung, DB-Tools, Service-Browser, Testausführung, FO-Druck"
+      },
+      {
+        "modul": "party",
+        "typ": "Business",
+        "klassen": 52,
+        "methoden": 362,
+        "avg_methoden": 7.0,
+        "komplexitaet": "Hoch",
+        "farbe": "warning",
+        "beschreibung": "Stammdaten für Personen/Organisationen, Kontaktdaten, Kommunikation, Einladungen"
+      },
+      {
+        "modul": "common",
+        "typ": "Querschnitt",
+        "klassen": 54,
+        "methoden": 332,
+        "avg_methoden": 6.1,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "E-Mail, Geo-Daten, Login-Services, Portal-Seiten, Einstellungen, QR-Code, Status"
+      },
+      {
+        "modul": "manufacturing",
+        "typ": "Business",
+        "klassen": 44,
+        "methoden": 302,
+        "avg_methoden": 6.9,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "Fertigung: Stücklisten (BOM), Produktionsaufträge, Routing, MRP, Kostenkalkulation"
+      },
+      {
+        "modul": "shipment",
+        "typ": "Business",
+        "klassen": 25,
+        "methoden": 301,
+        "avg_methoden": 12.0,
+        "komplexitaet": "Hoch",
+        "farbe": "warning",
+        "beschreibung": "Versand, Kommissionierung, Verpackung, Carrier-Integration (UPS, FedEx, DHL, USPS)"
+      },
+      {
+        "modul": "datafile",
+        "typ": "Dateiverarbeitung",
+        "klassen": 9,
+        "methoden": 124,
+        "avg_methoden": 13.8,
+        "komplexitaet": "Hoch",
+        "farbe": "warning",
+        "beschreibung": "Strukturierte Dateiimporte (CSV, Fixlänge) über konfigurierbare Metadaten-Definitionen"
+      },
+      {
+        "modul": "workeffort",
+        "typ": "Business",
+        "klassen": 23,
+        "methoden": 120,
+        "avg_methoden": 5.2,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "Aufgaben, Projekte, Kalender-Events, Ressourcenzuweisung, Arbeitszeiterfassung"
+      },
+      {
+        "modul": "entityext",
+        "typ": "Framework-Erweiterung",
+        "klassen": 18,
+        "methoden": 119,
+        "avg_methoden": 6.6,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "Entity-Synchronisation zwischen Instanzen, Cache-Services, Daten-Import/Export, Upgrades"
+      },
+      {
+        "modul": "security",
+        "typ": "Querschnitt",
+        "klassen": 10,
+        "methoden": 61,
+        "avg_methoden": 6.1,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "Berechtigungsprüfung, CSRF-Strategien; enthält auch ZUGFeRD/E-Rechnung (Mustang)"
+      },
+      {
+        "modul": "marketing",
+        "typ": "Business",
+        "klassen": 13,
+        "methoden": 55,
+        "avg_methoden": 4.2,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "Marketing-Kampagnen, Tracking-Codes, SFA-Leads und Account-Management"
+      },
+      {
+        "modul": "commonext",
+        "typ": "Querschnitt",
+        "klassen": 7,
+        "methoden": 36,
+        "avg_methoden": 5.1,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "System-Info-Services, Setup-Assistent für neue Instanzen"
+      },
+      {
+        "modul": "testtools",
+        "typ": "Test-Infrastruktur",
+        "klassen": 7,
+        "methoden": 31,
+        "avg_methoden": 4.4,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "Basis-Testklassen für Services und Groovy-basierte Integrationstests"
+      },
+      {
+        "modul": "catalina",
+        "typ": "Tomcat-Integration",
+        "klassen": 7,
+        "methoden": 17,
+        "avg_methoden": 2.4,
+        "komplexitaet": "Niedrig",
+        "farbe": "success",
+        "beschreibung": "Tomcat-spezifische Klassen: SSO-Valve, HTTPS-Redirect, Servlet-Container-Hooks"
+      },
+      {
+        "modul": "securityext",
+        "typ": "Querschnitt",
+        "klassen": 2,
+        "methoden": 10,
+        "avg_methoden": 5.0,
+        "komplexitaet": "Mittel",
+        "farbe": "secondary",
+        "beschreibung": "Erweiterte Login-Events, Zertifikat-Services (SSL-Client-Zertifikate)"
+      },
+      {
+        "modul": "humanres",
+        "typ": "Business",
+        "klassen": 2,
+        "methoden": 6,
+        "avg_methoden": 3.0,
+        "komplexitaet": "Niedrig",
+        "farbe": "success",
+        "beschreibung": "Personalwesen: Mitarbeiterdaten und HR-Events (minimale Implementierung)"
+      },
+      {
+        "modul": "sfa",
+        "typ": "Business",
+        "klassen": 1,
+        "methoden": 3,
+        "avg_methoden": 3.0,
+        "komplexitaet": "Niedrig",
+        "farbe": "success",
+        "beschreibung": "Sales Force Automation: Kontakt-Export via vCard (ezvcard)"
+      }
+    ],
+    "tech_debt_kategorien": [
+      {
+        "kategorie": "Komplexität",
+        "anzahl": 11,
+        "kritisch": 1,
+        "hoch": 10,
+        "mittel": 0
+      },
+      {
+        "kategorie": "Architektur",
+        "anzahl": 9,
+        "kritisch": 0,
+        "hoch": 4,
+        "mittel": 5
+      },
+      {
+        "kategorie": "Risiko",
+        "anzahl": 7,
+        "kritisch": 0,
+        "hoch": 1,
+        "mittel": 6
+      },
+      {
+        "kategorie": "Technologie",
+        "anzahl": 3,
+        "kritisch": 0,
+        "hoch": 0,
+        "mittel": 3
+      },
+      {
+        "kategorie": "Security",
+        "anzahl": 1,
+        "kritisch": 0,
+        "hoch": 1,
+        "mittel": 0
+      }
+    ]
+  }
 }
